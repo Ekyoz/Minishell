@@ -22,23 +22,24 @@ TEST_NAME			= $(OUT)/test.out
 
 HEADER_FILES		= minishell
 SRC_FILES		    = main
-TEST_FILES  		=
+TEST_FILES  		= test
 
-#FILE_UTILS_DIR 		= utils/
-#FILE_UTILS 			=
+FILE_BUILTINS_DIR 	= builtins/
+FILE_BUILTINS 		= cd echo env exit export pwd unset
 
-DIR_LIST			= # $(FILE_UTILS_DIR) $(FILE_THREADS_DIR)
-HEADERS				= $(addprefix $(INCLUDE_DIR)/, $(addsuffix .h, $(HEADER_FILES)))
-
-#SRC_FILES			+= $(addprefix $(FILE_UTILS_DIR),$(FILE_UTILS))
+DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_UTILS_DIR)
+SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
 
 #-------- LIBS --------#
 
 LIBFT_DIR			= $(INCLUDE_DIR)/LibFT
 LIBFT_ARCHIVE		= $(LIBFT_DIR)/libft.a
 
-LIB_LIST			= $(LIBFT_DIR)
-LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE)
+GNL_DIR				= $(INCLUDE_DIR)/GNL
+GNL_ARCHIVE			= $(GNL_DIR)/libgnl.a
+
+LIB_LIST			= $(LIBFT_DIR) $(GNL_DIR)
+LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE) $(GNL_ARCHIVE)
 
 
 #------------------------------------------------------------------------------#
@@ -56,15 +57,16 @@ SRC_OUT_DIR			= $(OUT)/run
 DEBUG_OUT_DIR		= $(OUT)/debug
 TEST_OUT_DIR		= $(OUT)/test
 DIRS				= $(SRC_OUT_DIR) $(DEBUG_OUT_DIR) $(TEST_OUT_DIR)
+HEADERS				= $(addprefix $(INCLUDE_DIR)/, $(addsuffix .h, $(HEADER_FILES)))
 
 #-------- SETTINGS --------#
 
 CC					= cc
-CFLAGS 				= -Wall -Werror -Wextra
-CFLAGS_DEBUG		= -Wall -Wextra -g3
+CFLAGS 				= -Wall -Wextra -lreadline
+CFLAGS_DEBUG		= -Wall -Wextra -Werror -g3 -lreadline
 CFLAGS_TEST			= -g3
 OBJF				= .cache_exists
-INCLUDE 			= -I$(INCLUDE_DIR) $(addprefix -I, $(addsuffix $(INCLUDE_DIR), $(LIB_LIST)))
+INCLUDE 			= -I$(INCLUDE_DIR) $(addprefix -I, $(addsuffix /$(INCLUDE_DIR), $(LIB_LIST)))
 INCLUDE_RUN			= -L. $(ARCHIVE_NAME)
 RM					= rm -rf
 AR					= ar rcs
@@ -108,7 +110,7 @@ $(DEBUG_OUT_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 			@$(CC) $(CFLAGS_DEBUG) $(INCLUDE) -c $< -o $@
 			@printf "\033[A\033[K"
 
-$(TEST_OUT_DIR)/%.o: $(TEST_FILES)/%.c $(HEADERS) Makefile | $(OBJF)
+$(TEST_OUT_DIR)/%.o: $(TEST_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 			@echo "$(YELLOW)$(BOLD)Compiling: $(WHITE)$< $(DEF_COLOR)"
 			@$(CC) $(CFLAGS_TEST) $(INCLUDE) -c $< -o $@
 			@printf "\033[A\033[K"
@@ -151,15 +153,8 @@ debug: ar_debug
 
 #------ TEST ------#
 
-ar_test:	lib $(OBJ_TEST) $(HEADERS)
-			@$(AR) $(ARCHIVE_NAME) $(OBJ_TEST)
-			@for archive in $(LIB_LIST_ARCHIVE); do ar -x $$archive; done
-			@ar -qcs $(ARCHIVE_NAME) *.o
-			@$(RM) *.o
-			@$(RM) __.*
-
-test: ar_test
-			@$(CC) $(CFLAGS_TEST) $(OBJ_TEST) $(INCLUDE_RUN) -o $(TEST_NAME)
+test: lib $(OBJ_TEST) $(HEADERS)
+			@$(CC) $(CFLAGS_TEST) $(OBJ_TEST) -o $(TEST_NAME)
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)TEST!$(DEF_COLOR)"
 
 #-------- CLEAN --------#

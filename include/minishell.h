@@ -13,17 +13,25 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
-#include <readline/readline.h>
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <signal.h>
-#include <sys/stat.h>
-#include <dirent.h>
-#include <string.h>
-#include <termio.h>
-#include <curses.h>
+# include "libft.h"
+# include "get_next_line.h"
+# include <stdlib.h>
+# include <unistd.h>
+# include <stdio.h>
+# include <string.h>
+# include <fcntl.h>
+# include <dirent.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
+# include <sys/ioctl.h>
+# include <limits.h>
+# include <errno.h>
+# include <signal.h>
+# include <curses.h>
+# include <term.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+
+
 
 #endif
