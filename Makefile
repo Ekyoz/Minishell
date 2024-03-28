@@ -35,11 +35,11 @@ SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
 LIBFT_DIR			= $(INCLUDE_DIR)/LibFT
 LIBFT_ARCHIVE		= $(LIBFT_DIR)/libft.a
 
-GNL_DIR				= $(INCLUDE_DIR)/GNL
-GNL_ARCHIVE			= $(GNL_DIR)/libgnl.a
-
-LIB_LIST			= $(LIBFT_DIR) $(GNL_DIR)
-LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE) $(GNL_ARCHIVE)
+#GNL_DIR				= $(INCLUDE_DIR)/GNL
+#GNL_ARCHIVE			= $(GNL_DIR)/libgnl.a
+#
+#LIB_LIST			= $(LIBFT_DIR) $(GNL_DIR)
+#LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE) $(GNL_ARCHIVE)
 
 
 #------------------------------------------------------------------------------#
