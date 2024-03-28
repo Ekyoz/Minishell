@@ -56,8 +56,8 @@ typedef struct s_ast_node
 	t_token_type		type;
 	int					file_type;
 	char				**args;
-	struct s_ast_node	*left;
-	struct s_ast_node	*right;
+	struct s_ast_node	*next;
+	struct s_ast_node	*prev;
 }	t_ast_node;
 
 typedef struct s_env
