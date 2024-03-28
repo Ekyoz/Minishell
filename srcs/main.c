@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+//extern char **environ;
+
 void change_directory(char *input)
 {
     char buffer[1024];
@@ -22,10 +24,31 @@ void change_directory(char *input)
     getcwd(buffer, sizeof(buffer));
     printf("%s\n", buffer);
 }
-https://code-with-me.global.jetbrains.com/O42wuVP-QTTQq8Ck6bEd0w#p=CL&fp=6B8E88527F95978E4275B0FD4ED4C4729281E6090AD2D348D281AFEF12D80B42&newUi=true
-int main()
+
+int main(int argc, char *argv[], char *envp[])
 {
     char *input;
+
+
+
+//	(void)argc;
+//
+//	char *newargv[] = { "ls", "-l", "-l", "-l", NULL };
+//	while(envp[i])
+//	{
+//		printf("%s\n", envp[i]);
+//		i++;
+//	}
+//	if (argc != 2) {
+//		fprintf(stderr, "Usage: %s <file-to-exec>\n", argv[0]);
+//		exit(EXIT_FAILURE);
+//	}
+
+//	newargv[0] = argv[1];
+
+//	execve(argv[1], newargv, envp);
+//	perror("execve");   /* execve() returns only on error */
+//	exit(EXIT_FAILURE);
 
     while (true)
     {

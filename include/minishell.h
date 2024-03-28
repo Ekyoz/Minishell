@@ -32,6 +32,39 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+typedef enum e_token_type
+{
+	TOKEN_WORD,
+	TOKEN_PIPE,
+	TOKEN_REDIR_IN,
+	TOKEN_REDIR_OUT,
+	TOKEN_REDIR_APPEND,
+	TOKEN_REDIR_HEREDOC,
+	TOKEN_ENV_VAR,
+}	t_token_type;
+
+typedef struct s_token
+{
+	t_token_type		type;
+	char				*value;
+	struct s_token		*next;
+	struct s_token		*prev;
+}	t_token;
+
+typedef struct s_ast_node
+{
+	t_token_type		type;
+	int					file_type;
+	char				**args;
+	struct s_ast_node	*left;
+	struct s_ast_node	*right;
+}	t_ast_node;
+
+typedef struct s_env
+{
+	char				**original_env;
+	char				***parsed_env;
+}	t_env;
 
 
 #endif

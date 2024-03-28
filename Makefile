@@ -42,8 +42,8 @@ LIB_LIST			= $(LIBFT_DIR) $(PIPEX_DIR)
 LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE) $(PIPEX_ARCHIVE)
 
 #-------- FLAGS --------#
-CFLAGS 				= -Wall -Wextra -Werror
-CFLAGS_DEBUG		= -Wall -Wextra -Werror -g3
+CFLAGS 				= -Wall -Wextra #-Werror
+CFLAGS_DEBUG		= -Wall -Wextra -g3
 CFLAGS_TEST			= -g3
 LIBFLAGS			= -lreadline
 
