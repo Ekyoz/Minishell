@@ -14,6 +14,7 @@
 #define MINISHELL_H
 
 # include "libft.h"
+# include "pipex.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>

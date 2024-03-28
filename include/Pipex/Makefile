@@ -11,46 +11,21 @@
 # **************************************************************************** #
 
 #-------- NAME --------#
-PROJECT_NAME		= Minishell
-NAME				= minishell
-ARCHIVE_NAME		= $(OUT)/lib$(NAME).a
+PROJECT_NAME        = "Pipex"
+NAME				= "pipex"
+ARCHIVE_NAME		= lib$(NAME).a
 RUN_NAME			= $(NAME)
 DEBUG_NAME 			= $(OUT)/debug.out
 TEST_NAME			= $(OUT)/test.out
 
 #-------- FILES --------#
 
-HEADER_FILES		= minishell
-SRC_FILES		    = main
-TEST_FILES  		= test
+HEADER_FILES		= pipex
+SRC_FILES		    = main checkcmd free utils
+TEST_FILES  		=
 
-FILE_BUILTINS_DIR 	= builtins/
-FILE_BUILTINS 		= cd echo env exit export pwd unset
-
-DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_UTILS_DIR)
-SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
-
-#-------- LIBS --------#
-
-LIBFT_DIR			= $(INCLUDE_DIR)/LibFT
-LIBFT_ARCHIVE		= $(LIBFT_DIR)/libft.a
-
-PIPEX_DIR			= $(INCLUDE_DIR)/Pipex
-PIPEX_ARCHIVE		= $(PIPEX_DIR)/libpipex.a
-
-LIB_LIST			= $(LIBFT_DIR) $(PIPEX_DIR)
-LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE) $(PIPEX_ARCHIVE)
-
-#-------- FLAGS --------#
-CFLAGS 				= -Wall -Wextra -Werror
-CFLAGS_DEBUG		= -Wall -Wextra -Werror -g3
-CFLAGS_TEST			= -g3
-LIBFLAGS			= -lreadline
-
-#------------------------------------------------------------------------------#
-#----------------------------- DO NOT TOUCH BELOW -----------------------------#
-#------------------------------------------------------------------------------#
-
+DIR_LIST			= # $(FILE_UTILS_DIR) $(FILE_THREADS_DIR)
+HEADERS				= $(addprefix $(INCLUDE_DIR)/, $(addsuffix .h, $(HEADER_FILES)))
 
 #-------- DIR --------#
 
@@ -61,14 +36,24 @@ OUT					= out
 SRC_OUT_DIR			= $(OUT)/run
 DEBUG_OUT_DIR		= $(OUT)/debug
 TEST_OUT_DIR		= $(OUT)/test
-DIRS				= $(SRC_OUT_DIR) $(DEBUG_OUT_DIR) $(TEST_OUT_DIR)
-HEADERS				= $(addprefix $(INCLUDE_DIR)/, $(addsuffix .h, $(HEADER_FILES)))
+DIRS				= $(SRC_OUT_DIR) $(DEBUG_OUT_DIR)
+
+#-------- LIBS --------#
+
+LIBFT_DIR			= $(INCLUDE_DIR)/LibFt
+LIBFT_ARCHIVE		= $(LIBFT_DIR)/libft.a
+
+LIB_LIST			= $(LIBFT_DIR)
+LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE)
 
 #-------- SETTINGS --------#
 
 CC					= cc
+CFLAGS 				= -Wall -Werror -Wextra -pthread
+CFLAGS_DEBUG		= -Wall -Wextra -pthread -g3
+CFLAGS_TEST			= -g3
 OBJF				= .cache_exists
-INCLUDE 			= -I$(INCLUDE_DIR) $(addprefix -I, $(addsuffix /$(INCLUDE_DIR), $(LIB_LIST)))
+INCLUDE 			= -I$(INCLUDE_DIR) -I$(LIBFT_DIR)/$(INCLUDE_DIR)
 INCLUDE_RUN			= -L. $(ARCHIVE_NAME)
 RM					= rm -rf
 AR					= ar rcs
@@ -112,7 +97,7 @@ $(DEBUG_OUT_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 			@$(CC) $(CFLAGS_DEBUG) $(INCLUDE) -c $< -o $@
 			@printf "\033[A\033[K"
 
-$(TEST_OUT_DIR)/%.o: $(TEST_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
+$(TEST_OUT_DIR)/%.o: $(TEST_FILES)/%.c $(HEADERS) Makefile | $(OBJF)
 			@echo "$(YELLOW)$(BOLD)Compiling: $(WHITE)$< $(DEF_COLOR)"
 			@$(CC) $(CFLAGS_TEST) $(INCLUDE) -c $< -o $@
 			@printf "\033[A\033[K"
@@ -120,7 +105,7 @@ $(TEST_OUT_DIR)/%.o: $(TEST_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 #-------- COMMANDS --------#
 
 $(NAME): archive
-			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME) $(LIBFLAGS)
+			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME)
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR)"
 
 all: $(NAME)
@@ -150,13 +135,20 @@ ar_debug:	lib $(OBJ_DEBUG) $(HEADERS)
 			@$(RM) __.*
 
 debug: ar_debug
-			@$(CC) $(CFLAGS_DEBUG) $(OBJ_DEBUG) $(INCLUDE_RUN) -o $(DEBUG_NAME) $(LIBFLAGS)
+			@$(CC) $(CFLAGS_DEBUG) $(OBJ_DEBUG) $(INCLUDE_RUN) -o $(DEBUG_NAME)
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)DEBUG!$(DEF_COLOR)"
 
 #------ TEST ------#
 
-test: lib $(OBJ_TEST) $(HEADERS)
-			@$(CC) $(CFLAGS_TEST) $(OBJ_TEST) -o $(TEST_NAME) $(LIBFLAGS)
+ar_test:	lib $(OBJ_TEST) $(HEADERS)
+			@$(AR) $(ARCHIVE_NAME) $(OBJ_DEBUG)
+			@for archive in $(LIB_LIST_ARCHIVE); do ar -x $$archive; done
+			@ar -qcs $(ARCHIVE_NAME) *.o
+			@$(RM) *.o
+			@$(RM) __.*
+
+test: ar_debug ar_test
+			@$(CC) $(CFLAGS_TEST) $(OBJ_TEST) $(INCLUDE_RUN) -o $(TEST_NAME)
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)TEST!$(DEF_COLOR)"
 
 #-------- CLEAN --------#
@@ -171,6 +163,7 @@ clean:
 			@$(RM) $(DEBUG_NAME)
 			@$(RM) *.o
 			@$(RM) __.*
+			@$(RM) output outfile infile input
 			@echo "$(ORANGE)Tous les fichier objets de $(CYAN)$(BOLD)$(PROJECT_NAME)$(ORANGE) ont été supprimé!$(DEF_COLOR)"
 
 fclean:		clean

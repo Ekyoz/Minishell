@@ -22,7 +22,7 @@ void change_directory(char *input)
     getcwd(buffer, sizeof(buffer));
     printf("%s\n", buffer);
 }
-
+https://code-with-me.global.jetbrains.com/O42wuVP-QTTQq8Ck6bEd0w#p=CL&fp=6B8E88527F95978E4275B0FD4ED4C4729281E6090AD2D348D281AFEF12D80B42&newUi=true
 int main()
 {
     char *input;
