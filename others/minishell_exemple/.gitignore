@@ -1,0 +1,8 @@
+.DS_Store
+srcs/*/*.o
+libft/*/*.o
+srcs/*.o
+libft/libft.a
+libft.a
+minishell
+minishell.dSYM
