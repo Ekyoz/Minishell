@@ -13,8 +13,7 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
-# include "LibFT/include/libft.h"
-//# include "get_next_line.h"
+# include "libft.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>

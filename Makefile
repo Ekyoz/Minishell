@@ -35,12 +35,14 @@ SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
 LIBFT_DIR			= $(INCLUDE_DIR)/LibFT
 LIBFT_ARCHIVE		= $(LIBFT_DIR)/libft.a
 
-#GNL_DIR				= $(INCLUDE_DIR)/GNL
-#GNL_ARCHIVE			= $(GNL_DIR)/libgnl.a
-#
-#LIB_LIST			= $(LIBFT_DIR) $(GNL_DIR)
-#LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE) $(GNL_ARCHIVE)
+LIB_LIST			= $(LIBFT_DIR)
+LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE)
 
+#-------- FLAGS --------#
+CFLAGS 				= -Wall -Wextra -Werror
+CFLAGS_DEBUG		= -Wall -Wextra -Werror -g3
+CFLAGS_TEST			= -g3
+LIBFLAGS			= -lreadline
 
 #------------------------------------------------------------------------------#
 #----------------------------- DO NOT TOUCH BELOW -----------------------------#
@@ -62,9 +64,6 @@ HEADERS				= $(addprefix $(INCLUDE_DIR)/, $(addsuffix .h, $(HEADER_FILES)))
 #-------- SETTINGS --------#
 
 CC					= cc
-CFLAGS 				= -Wall -Wextra -lreadline
-CFLAGS_DEBUG		= -Wall -Wextra -Werror -g3 -lreadline
-CFLAGS_TEST			= -g3
 OBJF				= .cache_exists
 INCLUDE 			= -I$(INCLUDE_DIR) $(addprefix -I, $(addsuffix /$(INCLUDE_DIR), $(LIB_LIST)))
 INCLUDE_RUN			= -L. $(ARCHIVE_NAME)
@@ -118,7 +117,7 @@ $(TEST_OUT_DIR)/%.o: $(TEST_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 #-------- COMMANDS --------#
 
 $(NAME): archive
-			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME)
+			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME) $(LIBFLAGS)
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR)"
 
 all: $(NAME)
@@ -148,13 +147,13 @@ ar_debug:	lib $(OBJ_DEBUG) $(HEADERS)
 			@$(RM) __.*
 
 debug: ar_debug
-			@$(CC) $(CFLAGS_DEBUG) $(OBJ_DEBUG) $(INCLUDE_RUN) -o $(DEBUG_NAME)
+			@$(CC) $(CFLAGS_DEBUG) $(OBJ_DEBUG) $(INCLUDE_RUN) -o $(DEBUG_NAME) $(LIBFLAGS)
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)DEBUG!$(DEF_COLOR)"
 
 #------ TEST ------#
 
 test: lib $(OBJ_TEST) $(HEADERS)
-			@$(CC) $(CFLAGS_TEST) $(OBJ_TEST) -o $(TEST_NAME)
+			@$(CC) $(CFLAGS_TEST) $(OBJ_TEST) -o $(TEST_NAME) $(LIBFLAGS)
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)TEST!$(DEF_COLOR)"
 
 #-------- CLEAN --------#
