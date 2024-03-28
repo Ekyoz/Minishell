@@ -1,0 +1,38 @@
+
+-------------------CONSTRUCTION DU PROGRAMME----------------
+
+Parser => executor
+
+Parser :
+- Lexer => Prend les caracteres et crees des mots avec pour former des token
+- Command Table => creer la table de commande
+- Gerer les simple et double quote => "" ''
+
+Executor :
+-  creer un process pour chaque commande ( pipe, redirections, commandes)
+
+--------------------Shell subsystems----------------------
+
+- Variables d'environnements (globales) : la remplacer par sa vraie valeur
+- Variables d'environnement (locales) : variables creer dans la session actuelle du shell
+    => my_var="hello" que j'appelle avec $my_var
+    => recuperation des variables avec la commande set
+- gerer crtl + d || ctrl + c || ctrl + \
+
+
+--------------------Builtins-----------------------------
+
+cd : <direcoryname> || - || ....... || /../<direcoryname> || ~
+
+
+--------------------FONCTIONS--------------------
+
+- getcwd : permet de recuperer le chemin actuelle : char *getcwd(char *buf, size_t size) => buf : chemin || size : taille du buff
+-
+
+---------------------CODE------------------------
+
+- creation d'un tableau de structure
+    - chaque tableau contiendra la combinaison:
+        => infile || redirection || commande || argument ||  redirection || outfile || pipe
+
