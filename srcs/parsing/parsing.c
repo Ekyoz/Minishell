@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atresall <atresall@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 16:44:40 by atresall          #+#    #+#             */
-/*   Updated: 2024/03/26 16:44:40 by atresall         ###   ########.fr       */
+/*   Created: 2024/03/29 13:32:53 by atresall          #+#    #+#             */
+/*   Updated: 2024/03/29 13:32:53 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "minishell.h"
 
-int main() {
-	printf("Hello, World!\n");
-	readline("minishell>");
-	return 0;
+t_token *parsing(int argc, char **argv)
+{
+	t_token token;
+
 }
+

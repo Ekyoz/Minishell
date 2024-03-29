@@ -27,8 +27,12 @@ TEST_FILES  		= test
 FILE_BUILTINS_DIR 	= builtins/
 FILE_BUILTINS 		= cd echo env exit export pwd unset
 
-DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_UTILS_DIR)
+FILE_PARSING_DIR	= parsing/
+FILE_PARSING		= parsing
+
+DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR)
 SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
+SRC_FILES			+= $(addprefix $(FILE_PARSING_DIR), $(FILE_PARSING))
 
 #-------- LIBS --------#
 
