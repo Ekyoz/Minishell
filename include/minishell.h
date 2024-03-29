@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/03/26 12:42:21 by atresall         ###   ########.fr       */
+/*   Updated: 2024/03/29 11:58:47 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,23 +48,23 @@ typedef struct s_token
 	t_token_type		type;
 	char				*value;
 	struct s_token		*next;
-	struct s_token		*prev;
 }	t_token;
 
-typedef struct s_ast_node
+typedef struct s_node
 {
 	t_token_type		type;
 	int					file_type;
 	char				**args;
-	struct s_ast_node	*next;
-	struct s_ast_node	*prev;
-}	t_ast_node;
+	struct s_node	*left;
+	struct s_node	*right;
+}	t_node;
 
 typedef struct s_env
 {
 	char				**original_env;
 	char				***parsed_env;
 }	t_env;
+
 
 
 #endif
