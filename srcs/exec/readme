@@ -20,4 +20,13 @@ right => grep salut
 
 ls -l | cat -e > output | echo ouais
 
+node[0]
+
+left => ls -l 
+right => PIPE
+
+node[1]
+
+left => PIPE
+
 
