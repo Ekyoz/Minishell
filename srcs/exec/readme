@@ -1,3 +1,7 @@
+-----------------HELP-------------------
+
+- le pipe a la priorite sur la redirection
+
 ------------------NODE-------------------
 
 ls -l | cat -e
