@@ -6,96 +6,53 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:02:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/14 00:50:21 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/14 15:34:22 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
-#include <stdio.h>
-#include <stddef.h>
-#include <unistd.h>
+#include "header.h"
 
-int get_pipe(t_token *token, t_node *nodes)
+t_token *ft_token(t_token *tokens)
 {
     t_token *tokencp;
 
-    tokencp = token;
-    while(token->type != TOKEN_PIPE)
-    {
-        token = token->next;
-    }
-    if(token->type == TOKEN_PIPE)
-    {
-        nodes->type = TOKEN_PIPE; // 
-        token->type = PIPEUSED; // je mets le type a NULL une fois que je lai stocke
-        token = tokencp;
-        return (1); // je retourne 1 dans le cas ou je trouve un pipe
-    }
-    else
-        return(0); //je retourne 0 dans le cas ou j'ai pas de pipe
-}
-int get_redirection_left(t_token *token, t_node *nodes)
-{
-    t_token *tokencp;
+    tokencp = tokens;
 
-    tokencp = token;
-    while(token->type != TOKEN_REDIR_IN || token->type != TOKEN_REDIR_OUT || 
-        token->type != TOKEN_REDIR_APPEND || token->type != TOKEN_REDIR_HEREDOC || 
-        token->type != PIPEUSED)
-    {
-        token = token->next;
-    }
-    if(token->type == TOKEN_REDIR_IN || token->type == TOKEN_REDIR_OUT || 
-        token->type == TOKEN_REDIR_APPEND || token->type == TOKEN_REDIR_HEREDOC)
-    {
-        nodes->left = init_nodes(nodes);
-        if(token->type == TOKEN_REDIR_IN)
-            nodes->left->type = TOKEN_REDIR_IN;
-        else if(token->type == TOKEN_REDIR_OUT)
-            nodes->left->type = TOKEN_REDIR_OUT;        
-        else if(token->type == TOKEN_REDIR_OUT)
-            nodes->left->type = TOKEN_REDIR_OUT;        
-        else
-            nodes->left->type = TOKEN_REDIR_OUT;        
-        token->type = REDIRUSED; // je mets le type a NULL une fois que je lai stocke
-        token = tokencp;
-        nodes = nodes->left; // j'avance dans mon arbre si il y a une redirection
-        return (1); // je retourne 1 dans le cas ou je trouve une redirection
-    }
-    else
-        return(0); //je retourne 0 dans le cas ou j'ai pas de redirection    
-}
+    tokens->type = TOKEN_WORD;
+    tokens->value = ft_strdup("cat -e input");
+    tokens->next = (t_token *)malloc(sizeof(t_token));
+    tokens = tokens->next;
 
-int get_redirection_right(t_token *token, t_node *nodes)
-{
-    t_token *tokencp;
+    tokens->type = TOKEN_REDIR_OUT;
+    tokens->value = NULL;
+    tokens->next = (t_token *)malloc(sizeof(t_token));
+    tokens = tokens->next;
 
-    tokencp = token;
-    while(token->type != TOKEN_REDIR_IN || token->type != TOKEN_REDIR_OUT || 
-        token->type != TOKEN_REDIR_APPEND || token->type != TOKEN_REDIR_HEREDOC || 
-        token->type != PIPEUSED)
-    {
-        token = token->next;
-    }
-    if(token->type == TOKEN_REDIR_IN || token->type == TOKEN_REDIR_OUT || 
-        token->type == TOKEN_REDIR_APPEND || token->type == TOKEN_REDIR_HEREDOC)
-    {
-        nodes->right = init_nodes(nodes);
-        if(token->type == TOKEN_REDIR_IN)
-            nodes->right->type = TOKEN_REDIR_IN;
-        else if(token->type == TOKEN_REDIR_OUT)
-            nodes->right->type = TOKEN_REDIR_OUT;        
-        else if(token->type == TOKEN_REDIR_OUT)
-            nodes->right->type = TOKEN_REDIR_OUT;        
-        else
-            nodes->right->type = TOKEN_REDIR_OUT;        
-        token->type = REDIRUSED; // je mets le type a NULL une fois que je lai stocke
-        token = tokencp;
-        nodes = nodes->right; // j'avance dans mon arbre si il y a une redirection
-        return (1); // je retourne 1 dans le cas ou je trouve une redirection
-    }
-    else
-        return(0); //je retourne 0 dans le cas ou j'ai pas de redirection    
+    tokens->type = TOKEN_WORD;
+    tokens->value = ft_strdup("output");
+    tokens->next = (t_token *)malloc(sizeof(t_token));
+    tokens = tokens->next;
+
+    tokens->type = TOKEN_REDIR_OUT;
+    tokens->value = NULL;
+    tokens->next = (t_token *)malloc(sizeof(t_token));
+    tokens = tokens->next;
+
+    tokens->type = TOKEN_WORD;
+    tokens->value = ft_strdup("output1");
+    tokens->next = (t_token *)malloc(sizeof(t_token));
+    tokens = tokens->next;
+
+    tokens->type = TOKEN_PIPE;
+    tokens->value = NULL;
+    tokens->next = (t_token *)malloc(sizeof(t_token));
+    tokens = tokens->next;
+
+    tokens->type = TOKEN_WORD;
+    tokens->value = ft_strdup("echo re");
+    tokens->next = NULL;
+
+    return(tokencp);
 }
 
 void create_node(t_token *tokens)
@@ -103,11 +60,16 @@ void create_node(t_token *tokens)
     t_node *nodes;
     t_node *nodescp; // copie de node qui va contenir l'addresse de la branche right du potentiel prochain pipe
     t_token *tokencp;
+    bool				is_pipe; // boolean a 1 si un pipe est sur ma branche
+	bool				is_redirec; // boolean a 1 si une redirec est sur ma branche
 
+    is_pipe = 0;
+    is_redirec = 0;
     tokencp = tokens;
     nodes = init_nodes(nodes);
+    nodescp = nodes; // une recopie pour stocker le premier node
     if(!nodes)
-        return(NULL);
+        return((void) 0);
     if(tokens->next == NULL)
     {
         // j'appelle une fonction qui execute seulement une commande
@@ -117,36 +79,70 @@ void create_node(t_token *tokens)
         // Je stocke dans ma liste les pipe en premier
         // Il faut que je check si c'est bien le premier pipe
         // Si ca l'est pas je le stocke dans la branche de droite
+
         if(get_pipe(tokencp, nodes))
         {
-            nodes->is_pipe = 1; // je mets la variable a 1 pour dire que jai bien trouve un pipe
-            // il faut aussi que je stocke l'adresse du right
+            is_pipe = 1; // je mets la variable a 1 pour dire que jai bien trouve un pipe
+            // il faut aussi que je stocke l'adresse du right pour reprendre a son adresse 
+            
             printf("j'ai bien un pipe\n"); 
         }
         // Ensuite je stocke les redirections
-        if(nodes->is_pipe == 1)
+        if(is_pipe == 1)
         {
-            // ma premiere redirection passe a gauche
+            // tant que j'ai des redirections sur la branche de gauche
+            is_redirec == 1;
+                // ma premiere redirection passe a gauche
             if(get_redirection_left(tokencp, nodes)) 
             {
-                // mes autres redirections a droite si j'ai d'autres redirections
-            }
-            else
+                while(is_redirec == 1)
+                {
+                    nodes->left->type = tokens->type; // a gauche de la redirec c'est forcement une commande
+                    nodes->left->args = ft_split(tokens->value, ' '); // je stocke la commande
+                    tokens = tokens->next->next; // je saute la redirection donc deux next
+                    tokencp = tokens; // je reavance le curseur de ma copie
+                    // mes autres redirections a droite si j'ai d'autres redirections
+                    if(get_redirection_right(tokencp, nodes)) // je regarde a droite si j'ai une redirection
+                    {
+                        is_redirec = 1;
+                    }
+                    else
+                    {
+                        // pas d'autres redirections donc c'est une commande
+                        // il faut que j'arrive a recuperer la bonne commande
+                        nodes->right->type = tokens->type;
+                        nodes->left->args = ft_split(tokens->value, ' ');
+                        tokens = tokens->next->next; // je saute la redirection donc deux next
+                        tokencp = tokens; // je reavance le curseur de ma copie
+                        is_redirec = 0;
+                    }
+                }
+            } 
+            else // jeffectue une commande
             {
-                // jeffectue une commande
+                nodes->left = init_nodes(nodes);
+                nodes->left->type = tokens->type;
+                nodes->left->args = ft_split(tokens->value, ' ');
+                tokens = tokens->next->next; // je saute la redirection donc deux next
+                tokencp = tokens; // je reavance le curseur de ma copie
+                is_redirec = 0;
             }
         }
         else
         {
             // si j'ai pas de pipe je crois que ca revient au meme quand meme
         }
-
-        nodes->is_pipe = 0; // je la remets a 0
-        tokencp = tokencp->next;
+        is_pipe = 0;
+        is_redirec = 1;
+        // apres avoir etabli la branche de gauche je malloc la branche de droite
+        // je me replace a l'adresse de la branche de droite dans mon nodes
+        nodescp->right = init_nodes(nodescp);
+        nodescp = nodescp->right;
+        nodes = nodescp;
     }
 }
 
-int main(int argc, char *argv[], char *envp[])
+int main()
 {
     // char *input;
 
@@ -159,16 +155,17 @@ int main(int argc, char *argv[], char *envp[])
     //     if(!ft_strncmp(input, "exit", 5))
     //         break;
     // }
-    
-    return 0;
+    t_token *tokens;
+
+    tokens = (t_token *)malloc(sizeof(t_token));
+    printf("tokens %p\n", tokens);
+    tokens = ft_token(tokens);
+    printf("tokens %p\n", tokens);
+    while(tokens != NULL)
+    {
+        printf("value %s\n", tokens->value);
+        tokens = tokens->next;
+    }
+    // create_node(tokens);
+    return (0);
 }
-
-    // dans exec
-    // je check ce que c'est
-    // je renvois vers la fonction associe
-    // entre chaque variable je check si j'ai un pipe ou chevron ou double chevron
-    // implementation de l'arbre ast me permettant de regrouper les commandes par deux 
-    // soit commande - pipe - commande soit commande - chevron - commande 
-
-    //dup2 pour rediriger > et <
-    //open en append pour >> et <<
