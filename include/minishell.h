@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/03/29 11:58:47 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/03/29 14:01:39 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,6 @@ typedef struct s_env
 	char				***parsed_env;
 }	t_env;
 
-
+t_token *parsing(char *commands);
 
 #endif

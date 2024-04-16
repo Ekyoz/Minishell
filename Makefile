@@ -55,7 +55,6 @@ LIBFLAGS			= -lreadline
 #----------------------------- DO NOT TOUCH BELOW -----------------------------#
 #------------------------------------------------------------------------------#
 
-
 #-------- DIR --------#
 
 SRC_DIR				= srcs
@@ -91,6 +90,7 @@ BOLD				= \033[1m
 
 #-------- OBJECTS RUN --------#
 
+OBJ					= $(addprefix $(TEST_OUT_DIR)/, $(addsuffix .o, $(TEST_FILES)))
 OBJ			 		= $(addprefix $(SRC_OUT_DIR)/, $(addsuffix .o, $(SRC_FILES)))
 OBJ_DEBUG			= $(addprefix $(DEBUG_OUT_DIR)/, $(addsuffix .o, $(SRC_FILES)))
 OBJ_TEST			= $(addprefix $(TEST_OUT_DIR)/, $(addsuffix .o, $(TEST_FILES)))
@@ -159,8 +159,15 @@ debug: ar_debug
 
 #------ TEST ------#
 
-test: lib $(OBJ_TEST) $(HEADERS)
-			@$(CC) $(CFLAGS_TEST) $(OBJ_TEST) -o $(TEST_NAME) $(LIBFLAGS)
+ar_test:	lib $(OBJ_TEST)
+			@$(AR) $(ARCHIVE_NAME) $(OBJ_TEST)
+			@for archive in $(LIB_LIST_ARCHIVE); do ar -x $$archive; done
+			@ar -qcs $(ARCHIVE_NAME) *.o
+			@$(RM) *.o
+			@$(RM) __.*
+
+test: ar_test
+			@$(CC) $(CFLAGS_TEST) $(OBJ_TEST) $(INCLUDE_RUN) -o $(TEST_NAME) $(LIBFLAGS)
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)TEST!$(DEF_COLOR)"
 
 #-------- CLEAN --------#
