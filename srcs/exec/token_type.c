@@ -6,11 +6,11 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:29:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/14 14:53:16 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/16 15:28:00 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "minishell.h"
 
 int get_pipe(t_token *token, t_node *nodes)
 {
@@ -37,8 +37,8 @@ int get_redirection_left(t_token *token, t_node *nodes)
     t_token *tokencp;
 
     tokencp = token;
-    while(token->type != TOKEN_REDIR_IN || token->type != TOKEN_REDIR_OUT || 
-        token->type != TOKEN_REDIR_APPEND || token->type != TOKEN_REDIR_HEREDOC || 
+    while(token->type != TOKEN_REDIR_IN && token->type != TOKEN_REDIR_OUT && 
+        token->type != TOKEN_REDIR_APPEND && token->type != TOKEN_REDIR_HEREDOC && 
         token->type != PIPEUSED)
     {
         token = token->next;
@@ -46,7 +46,7 @@ int get_redirection_left(t_token *token, t_node *nodes)
     if(token->type == TOKEN_REDIR_IN || token->type == TOKEN_REDIR_OUT || 
         token->type == TOKEN_REDIR_APPEND || token->type == TOKEN_REDIR_HEREDOC)
     {
-        nodes->left = init_nodes(nodes);
+        nodes->left = init_nodes();
         if(token->type == TOKEN_REDIR_IN)
             nodes->left->type = TOKEN_REDIR_IN;
         else if(token->type == TOKEN_REDIR_OUT)
@@ -69,8 +69,8 @@ int get_redirection_right(t_token *token, t_node *nodes)
     t_token *tokencp;
 
     tokencp = token;
-    while(token->type != TOKEN_REDIR_IN || token->type != TOKEN_REDIR_OUT || 
-        token->type != TOKEN_REDIR_APPEND || token->type != TOKEN_REDIR_HEREDOC || 
+    while(token->type != TOKEN_REDIR_IN && token->type != TOKEN_REDIR_OUT && 
+        token->type != TOKEN_REDIR_APPEND && token->type != TOKEN_REDIR_HEREDOC && 
         token->type != PIPEUSED)
     {
         token = token->next;
@@ -78,7 +78,7 @@ int get_redirection_right(t_token *token, t_node *nodes)
     if(token->type == TOKEN_REDIR_IN || token->type == TOKEN_REDIR_OUT || 
         token->type == TOKEN_REDIR_APPEND || token->type == TOKEN_REDIR_HEREDOC)
     {
-        nodes->right = init_nodes(nodes);
+        nodes->right = init_nodes();
         if(token->type == TOKEN_REDIR_IN)
             nodes->right->type = TOKEN_REDIR_IN;
         else if(token->type == TOKEN_REDIR_OUT)

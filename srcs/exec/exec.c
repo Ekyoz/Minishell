@@ -6,11 +6,11 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:02:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/16 13:31:10 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/16 15:13:18 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "minishell.h"
 
 t_token *ft_token(t_token *tokens)
 {
@@ -64,9 +64,12 @@ void create_node(t_token *tokens)
 	bool				is_redirec; // boolean a 1 si une redirec est sur ma branche
 
     is_pipe = 0;
-    is_redirec = 0;
+    is_redirec = 1;
     tokencp = tokens;
-    nodes = init_nodes(nodes);
+    // nodes = (t_node*)malloc(sizeof(t_node));
+    // if(!nodes)
+    //     perror("Malloc Error");
+    nodes = init_nodes();
     nodescp = nodes; // une recopie pour stocker le premier node
     if(!nodes)
         return((void) 0);
@@ -77,8 +80,6 @@ void create_node(t_token *tokens)
     while(tokencp->next != NULL)
     {
         // Je stocke dans ma liste les pipe en premier
-        // Il faut que je check si c'est bien le premier pipe
-        // Si ca l'est pas je le stocke dans la branche de droite
 
         if(get_pipe(tokencp, nodes))
         {
@@ -91,8 +92,7 @@ void create_node(t_token *tokens)
         if(is_pipe == 1)
         {
             // tant que j'ai des redirections sur la branche de gauche
-            is_redirec == 1;
-                // ma premiere redirection passe a gauche
+            // ma premiere redirection passe a gauche
             if(get_redirection_left(tokencp, nodes)) 
             {
                 while(is_redirec == 1)
@@ -160,12 +160,12 @@ int main()
     tokens = (t_token *)malloc(sizeof(t_token));
     printf("tokens %p\n", tokens);
     tokens = ft_token(tokens);
-    // printf("tokens %p\n", tokens);
+    printf("tokens %p\n", tokens);
     while(tokens != NULL)
     {
         printf("value %s\n", tokens->value);
         tokens = tokens->next;
     }
-    // create_node(tokens);
+    create_node(tokens);
     return (0);
 }
