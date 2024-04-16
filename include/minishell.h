@@ -34,19 +34,19 @@
 
 typedef enum e_token_type
 {
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_REDIR_APPEND,
-	TOKEN_REDIR_HEREDOC,
-	TOKEN_ENV_VAR,
+	TOKEN_WORD,      // For commands and arguments
+	TOKEN_PIPE,      // For '|'
+	TOKEN_REDIR_IN,  // For '<'
+	TOKEN_REDIR_OUT, // For '>'
+	TOKEN_REDIR_APPEND, // For '>>'
+	TOKEN_REDIR_HEREDOC, // For '<<'
+	TOKEN_ENV_VAR, // For environment variables
 }	t_token_type;
 
 typedef struct s_token
 {
 	t_token_type		type;
-	char				*value;
+	char 				**cmd;
 	struct s_token		*next;
 }	t_token;
 
