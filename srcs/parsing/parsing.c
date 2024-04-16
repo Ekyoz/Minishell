@@ -14,7 +14,8 @@
 
 t_token *parsing(char *commands)
 {
-	t_token token;
+//	t_token token;
 	printf("%s", commands);
+	return NULL;
 }
 

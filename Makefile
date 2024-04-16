@@ -17,6 +17,7 @@ ARCHIVE_NAME		= $(OUT)/lib$(NAME).a
 RUN_NAME			= $(NAME)
 DEBUG_NAME 			= $(OUT)/debug.out
 TEST_NAME			= $(OUT)/test.out
+EXEC_NAME			= $(OUT)/exec.out
 
 #-------- FILES --------#
 
@@ -27,12 +28,16 @@ TEST_FILES  		= test
 FILE_BUILTINS_DIR 	= builtins/
 FILE_BUILTINS 		= cd echo env exit export pwd unset
 
+FILE_EXEC_DIR		= exec/
+FILE_EXEC			= exec init_nodes token_type
+
 FILE_PARSING_DIR	= parsing/
 FILE_PARSING		= parsing
 
-DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR)
+DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR)
 SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
 SRC_FILES			+= $(addprefix $(FILE_PARSING_DIR), $(FILE_PARSING))
+SRC_FILES			+= $(addprefix $(FILE_EXEC_DIR), $(FILE_EXEC))
 
 #-------- LIBS --------#
 
@@ -48,6 +53,7 @@ LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE) $(PIPEX_ARCHIVE)
 #-------- FLAGS --------#
 CFLAGS 				= -Wall -Wextra #-Werror
 CFLAGS_DEBUG		= -Wall -Wextra -g3
+CFLAGS_EXEC			= -Wall -Wextra #-Werror -g3
 CFLAGS_TEST			= -g3
 LIBFLAGS			= -lreadline
 
@@ -58,13 +64,15 @@ LIBFLAGS			= -lreadline
 #-------- DIR --------#
 
 SRC_DIR				= srcs
+EXEC_DIR			= srcs/exec
 TEST_DIR 			= test
 INCLUDE_DIR			= include
 OUT					= out
 SRC_OUT_DIR			= $(OUT)/run
 DEBUG_OUT_DIR		= $(OUT)/debug
+EXEC_OUT_DIR		= $(OUT)/exec
 TEST_OUT_DIR		= $(OUT)/test
-DIRS				= $(SRC_OUT_DIR) $(DEBUG_OUT_DIR) $(TEST_OUT_DIR)
+DIRS				= $(SRC_OUT_DIR) $(DEBUG_OUT_DIR) $(TEST_OUT_DIR) $(EXEC_OUT_DIR)
 HEADERS				= $(addprefix $(INCLUDE_DIR)/, $(addsuffix .h, $(HEADER_FILES)))
 
 #-------- SETTINGS --------#
@@ -90,15 +98,16 @@ BOLD				= \033[1m
 
 #-------- OBJECTS RUN --------#
 
-OBJ					= $(addprefix $(TEST_OUT_DIR)/, $(addsuffix .o, $(TEST_FILES)))
 OBJ			 		= $(addprefix $(SRC_OUT_DIR)/, $(addsuffix .o, $(SRC_FILES)))
 OBJ_DEBUG			= $(addprefix $(DEBUG_OUT_DIR)/, $(addsuffix .o, $(SRC_FILES)))
+OBJ_EXEC			= $(addprefix $(EXEC_OUT_DIR)/, $(addsuffix .o, $(FILE_EXEC)))
 OBJ_TEST			= $(addprefix $(TEST_OUT_DIR)/, $(addsuffix .o, $(TEST_FILES)))
 
 $(OBJF):
 			@mkdir -p $(SRC_OUT_DIR)
 			@mkdir -p $(DEBUG_OUT_DIR)
 			@mkdir -p $(TEST_OUT_DIR)
+			@mkdir -p $(EXEC_OUT_DIR)
 			@for dirs in $(DIRS); do \
                     for dir in $(DIR_LIST); do \
                         mkdir -p $$dirs/$$dir; \
@@ -114,6 +123,11 @@ $(SRC_OUT_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 $(DEBUG_OUT_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 			@echo "$(YELLOW)$(BOLD)Compiling: $(WHITE)$< $(DEF_COLOR)"
 			@$(CC) $(CFLAGS_DEBUG) $(INCLUDE) -c $< -o $@
+			@printf "\033[A\033[K"
+
+$(EXEC_OUT_DIR)/%.o: $(EXEC_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
+			@echo "$(YELLOW)$(BOLD)Compiling: $(WHITE)$< $(DEF_COLOR)"
+			@$(CC) $(CFLAGS_EXEC) $(INCLUDE) -c $< -o $@
 			@printf "\033[A\033[K"
 
 $(TEST_OUT_DIR)/%.o: $(TEST_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
@@ -157,6 +171,19 @@ debug: ar_debug
 			@$(CC) $(CFLAGS_DEBUG) $(OBJ_DEBUG) $(INCLUDE_RUN) -o $(DEBUG_NAME) $(LIBFLAGS)
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)DEBUG!$(DEF_COLOR)"
 
+#------ EXEC ------#
+
+ar_exec:	lib $(OBJ_EXEC) $(HEADERS)
+			@$(AR) $(ARCHIVE_NAME) $(OBJ_EXEC)
+			@for archive in $(LIB_LIST_ARCHIVE); do ar -x $$archive; done
+			@ar -qcs $(ARCHIVE_NAME) *.o
+			@$(RM) *.o
+			@$(RM) __.*
+
+exec: ar_exec
+			@$(CC) $(CFLAGS_EXEC) $(OBJ_EXEC) $(INCLUDE_RUN) -o $(EXEC_NAME) $(LIBFLAGS)
+			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)DEBUG!$(DEF_COLOR)"
+
 #------ TEST ------#
 
 ar_test:	lib $(OBJ_TEST)
@@ -177,6 +204,8 @@ re:			fclean $(NAME)
 clean:
 			@$(RM) $(SRC_OUT_DIR)
 			@$(RM) $(DEBUG_OUT_DIR)
+			@$(RM) $(TEST_OUT_DIR)
+			@$(RM) $(EXEC_OUT_DIR)
 			@$(RM) $(OUT)
 			@$(RM) $(RUN_NAME)
 			@$(RM) $(DEBUG_NAME)

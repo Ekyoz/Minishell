@@ -29,6 +29,7 @@
 # include <signal.h>
 # include <curses.h>
 # include <term.h>
+# include <stddef.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -41,20 +42,25 @@ typedef enum e_token_type
 	TOKEN_REDIR_APPEND, // For '>>'
 	TOKEN_REDIR_HEREDOC, // For '<<'
 	TOKEN_ENV_VAR, // For environment variables
+	PIPEUSED,
+	REDIRUSED,
 }	t_token_type;
 
 typedef struct s_token
 {
 	t_token_type		type;
-	char 				**cmd;
+	char				*value;
 	struct s_token		*next;
 }	t_token;
 
 typedef struct s_node
 {
-	t_token_type		type;
+	t_token_type		type; //redirection ou pipe ou cmd
 	int					file_type;
-	char				**args;
+	bool				is_pipe; // boolean a 1 si un pipe est sur ma branche
+	bool				is_redirec;
+	int 				tree_level; // entier comptabilisant les sous branches
+	char				**args; // ce qu'il y a dans la commande
 	struct s_node	*left;
 	struct s_node	*right;
 }	t_node;
@@ -66,5 +72,9 @@ typedef struct s_env
 }	t_env;
 
 t_token *parsing(char *commands);
+t_node *init_nodes(t_node *nodes);
+int get_pipe(t_token *token, t_node *nodes);
+int get_redirection_left(t_token *token, t_node *nodes);
+int get_redirection_right(t_token *token, t_node *nodes);
 
 #endif

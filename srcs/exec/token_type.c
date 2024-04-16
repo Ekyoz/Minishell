@@ -6,11 +6,11 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:29:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/14 14:53:16 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/16 14:26:16 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "minishell.h"
 
 int get_pipe(t_token *token, t_node *nodes)
 {
