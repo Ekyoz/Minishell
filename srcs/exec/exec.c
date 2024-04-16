@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:02:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/14 15:34:22 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/16 13:31:10 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ int main()
     tokens = (t_token *)malloc(sizeof(t_token));
     printf("tokens %p\n", tokens);
     tokens = ft_token(tokens);
-    printf("tokens %p\n", tokens);
+    // printf("tokens %p\n", tokens);
     while(tokens != NULL)
     {
         printf("value %s\n", tokens->value);
