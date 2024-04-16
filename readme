@@ -45,7 +45,7 @@ cd : <direcoryname> || - || ....... || /../<direcoryname> || ~
 - Command1 2> error.txt => redirection d'erreur
 - Command1 2> error.txt > output.txt => je redirige deux fois (on peut redirection a l'infini)
 - Si presence espace entre 2 et > bash interprete ca en tant que argument de la commande d'avant
-    => Checker si c'est une redirection de stdin stdout ou stderr 
+=> Checker si c'est une redirection de stdin stdout ou stderr 
 
 
 ---------------------PARSING------------------------
@@ -91,3 +91,5 @@ Token[4]:
     - cmd :
         - cmd[0] : output.txt
     - next : NULL
+=======
+    => Checker si c'est une redirection de stdin stdout ou stderr
