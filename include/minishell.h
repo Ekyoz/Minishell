@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/16 15:13:24 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/17 16:21:20 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,6 @@ typedef struct s_node
 {
 	t_token_type		type; //redirection ou pipe ou cmd
 	int					file_type;
-	bool				is_pipe; // boolean a 1 si un pipe est sur ma branche
-	bool				is_redirec;
 	int 				tree_level; // entier comptabilisant les sous branches
 	char				**args; // ce qu'il y a dans la commande
 	struct s_node	*left; 
@@ -75,5 +73,6 @@ t_node *init_nodes();
 int get_pipe(t_token *token, t_node *nodes);
 int get_redirection_left(t_token *token, t_node *nodes);
 int get_redirection_right(t_token *token, t_node *nodes);
+int get_redirection_main(t_token *token, t_node *nodes);
 
 #endif
