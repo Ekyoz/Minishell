@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/29 13:32:53 by atresall          #+#    #+#             */
-/*   Updated: 2024/03/29 13:32:53 by atresall         ###   ########.fr       */
+/*   Created: 2024/03/29 14:52:50 by atresall          #+#    #+#             */
+/*   Updated: 2024/03/29 16:21:51 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token *parsing(int argc, char **argv)
+t_token *parsing(char *commands)
 {
 	t_token token;
-
+	printf("%s", commands);
 }
 

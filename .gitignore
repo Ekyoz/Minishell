@@ -1,6 +1,7 @@
 *.o
 *.a
 .idea
+.vscode
 out/
 minishell
 pipex
