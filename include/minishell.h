@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/03/29 11:58:47 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/17 16:21:20 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,27 +34,30 @@
 
 typedef enum e_token_type
 {
-	TOKEN_WORD,      // For commands and arguments
-	TOKEN_PIPE,      // For '|'
-	TOKEN_REDIR_IN,  // For '<'
-	TOKEN_REDIR_OUT, // For '>'
-	TOKEN_REDIR_APPEND, // For '>>'
-	TOKEN_REDIR_HEREDOC, // For '<<'
-	TOKEN_ENV_VAR, // For environment variables
+	TOKEN_WORD,
+	TOKEN_PIPE,
+	TOKEN_REDIR_IN,
+	TOKEN_REDIR_OUT,
+	TOKEN_REDIR_APPEND,
+	TOKEN_REDIR_HEREDOC,
+	TOKEN_ENV_VAR,
+	PIPEUSED,
+	REDIRUSED,
 }	t_token_type;
 
 typedef struct s_token
 {
 	t_token_type		type;
-	char 				**cmd;
+	char				*value;
 	struct s_token		*next;
 }	t_token;
 
 typedef struct s_node
 {
-	t_token_type		type;
+	t_token_type		type; //redirection ou pipe ou cmd
 	int					file_type;
-	char				**args;
+	int 				tree_level; // entier comptabilisant les sous branches
+	char				**args; // ce qu'il y a dans la commande
 	struct s_node	*left;
 	struct s_node	*right;
 }	t_node;
@@ -66,5 +69,6 @@ typedef struct s_env
 }	t_env;
 
 
+t_token *parsing(char *commands);
 
 #endif
