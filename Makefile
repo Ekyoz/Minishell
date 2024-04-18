@@ -6,7 +6,7 @@
 #    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/04/16 16:23:56 by bpoyet           ###   ########.fr        #
+#    Updated: 2024/04/18 15:36:07 by bpoyet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ FILE_BUILTINS_DIR 	= builtins/
 FILE_BUILTINS 		= cd echo env exit export pwd unset
 
 FILE_EXEC_DIR		= exec/
-FILE_EXEC			= exec init_nodes token_type
+FILE_EXEC			= exec nodes token_type
 
 FILE_PARSING_DIR	= parsing/
 FILE_PARSING		= parsing

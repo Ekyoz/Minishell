@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:29:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/17 16:01:07 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/18 15:24:22 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int get_pipe(t_token *token, t_node *nodes)
     {
         nodes->type = TOKEN_PIPE; //je met mon type a used
         token->type = PIPEUSED; // je mets le type a USED une fois que je lai stocke
-        // token = tokencp; // je reviens en arriere dans ma liste chainee apres avoir trouve le token
+        nodes->args = token->value;        
         return (1); // je retourne 1 dans le cas ou je trouve un pipe
     }
     else
@@ -47,16 +47,10 @@ int get_redirection_left(t_token *token, t_node *nodes)
         token->type == TOKEN_REDIR_APPEND || token->type == TOKEN_REDIR_HEREDOC))
     {
         nodes->left = init_nodes();
-        if(token->type == TOKEN_REDIR_IN)
-            nodes->left->type = TOKEN_REDIR_IN;
-        else if(token->type == TOKEN_REDIR_OUT)
-            nodes->left->type = TOKEN_REDIR_OUT;        
-        else if(token->type == TOKEN_REDIR_OUT)
-            nodes->left->type = TOKEN_REDIR_OUT;        
-        else
-            nodes->left->type = TOKEN_REDIR_OUT;        
-        nodes = nodes->left;
+        nodes->left->type = token->type;
+        nodes->left->args = token->value;
         token->type = REDIRUSED; // je mets le type a NULL une fois que je lai stocke
+        printf("le type a left %d\n", nodes->left->type);
         // token = tokencp; // je reviens en arriere dans ma liste chainee apres avoir trouve le token
         return (1); // je retourne 1 dans le cas ou je trouve une redirection
     }
@@ -79,17 +73,11 @@ int get_redirection_right(t_token *token, t_node *nodes)
         token->type == TOKEN_REDIR_APPEND || token->type == TOKEN_REDIR_HEREDOC))
     {
         nodes->right = init_nodes();
-        if(token->type == TOKEN_REDIR_IN)
-            nodes->right->type = TOKEN_REDIR_IN;
-        else if(token->type == TOKEN_REDIR_OUT)
-            nodes->right->type = TOKEN_REDIR_OUT;        
-        else if(token->type == TOKEN_REDIR_OUT)
-            nodes->right->type = TOKEN_REDIR_OUT;        
-        else
-            nodes->right->type = TOKEN_REDIR_OUT;        
+        nodes->right->type = token->type;
+        nodes->right->args = token->value;;        
         token->type = REDIRUSED; // je mets le type a NULL une fois que je lai stocke
         token = tokencp; // je reviens en arriere dans ma liste chainee apres avoir trouve le tokenp;
-        nodes = nodes->right; // j'avance dans mon arbre si il y a une redirection
+        // nodes = nodes->right; // j'avance dans mon arbre si il y a une redirection
         return (1); // je retourne 1 dans le cas ou je trouve une redirection
     }
     else
@@ -111,16 +99,9 @@ int get_redirection_main(t_token *token, t_node *nodes)
         token->type == TOKEN_REDIR_APPEND || token->type == TOKEN_REDIR_HEREDOC))
     {
         nodes = init_nodes();
-        if(token->type == TOKEN_REDIR_IN)
-            nodes->type = TOKEN_REDIR_IN;
-        else if(token->type == TOKEN_REDIR_OUT)
-            nodes->type = TOKEN_REDIR_OUT;        
-        else if(token->type == TOKEN_REDIR_OUT)
-            nodes->type = TOKEN_REDIR_OUT;        
-        else
-            nodes->type = TOKEN_REDIR_OUT;        
+        nodes->type = token->type;
+        nodes->args = token->value;      
         token->type = REDIRUSED; // je mets le type a NULL une fois que je lai stocke
-        // token = tokencp; // je reviens en arriere dans ma liste chainee apres avoir trouve le tokenp;
         return (1); // je retourne 1 dans le cas ou je trouve une redirection
     }
     else
