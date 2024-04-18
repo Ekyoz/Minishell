@@ -44,3 +44,18 @@ Token[4]:
     - next : NULL
 =======
     => Checker si c'est une redirection de stdin stdout ou stderr
+
+
+========== Gestion d'erreur ========
+
+-Verifier le nombre de char token
+    '|||' ou '>>>' ou ...
+
+-Verifier les quote
+    "" ou ''
+    si c'est fermer ou pas
+    attendre la fermeture de la quote si c'est pas fermer
+    comportement different entre simple et double
+
+-Verifier les token dans une quote
+    echo "test | hello > test"
