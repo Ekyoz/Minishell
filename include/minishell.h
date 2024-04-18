@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/03/29 14:01:39 by atresall         ###   ########.fr       */
+/*   Updated: 2024/03/29 11:58:47 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@
 # include <signal.h>
 # include <curses.h>
 # include <term.h>
-# include <stddef.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -57,8 +56,6 @@ typedef struct s_node
 {
 	t_token_type		type; //redirection ou pipe ou cmd
 	int					file_type;
-	bool				is_pipe; // boolean a 1 si un pipe est sur ma branche
-	bool				is_redirec;
 	int 				tree_level; // entier comptabilisant les sous branches
 	char				**args; // ce qu'il y a dans la commande
 	struct s_node	*left;
@@ -71,6 +68,8 @@ typedef struct s_env
 	char				***parsed_env;
 }	t_env;
 
+
+t_token *parsing(char *commands);
 t_token *parsing(char *commands);
 t_node *init_nodes(t_node *nodes);
 int get_pipe(t_token *token, t_node *nodes);
