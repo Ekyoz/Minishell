@@ -152,9 +152,9 @@ $(TEST_OUT_DIR)/%.o: $(TEST_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 
 #-------- COMMANDS --------#
 
-$(NAME): archive
-			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME) $(LIBFLAGS)
-			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR)"
+#$(NAME): archive
+#			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME) $(LIBFLAGS)
+#			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR)"
 
 all: $(NAME)
 
@@ -208,7 +208,7 @@ ar_parsing:	lib $(OBJ_PARSING) $(HEADERS)
 			@$(RM) *.o
 			@$(RM) __.*
 
-parsing: ar_parsing
+$(NAME): ar_parsing
 			@$(CC) $(CFLAGS_PARSING) $(OBJ_PARSING) $(INCLUDE_RUN) -o $(PARSING_NAME) $(LIBFLAGS)
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)DEBUG!$(DEF_COLOR)"
 

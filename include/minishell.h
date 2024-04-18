@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/17 16:21:20 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/18 14:18:15 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef enum e_token_type
 typedef struct s_token
 {
 	t_token_type		type;
-	char				*value;
+	char				**value;
 	struct s_token		*next;
 }	t_token;
 
