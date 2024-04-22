@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:29:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/20 20:02:07 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/04/22 16:50:32 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ int get_redirection_left(t_token *token, t_node *nodes)
         nodes->left->type = token->type;
         nodes->left->args = token->value;
         token->type = REDIRUSED; // je mets le type a NULL une fois que je lai stocke
-        printf("le type a left %d\n", nodes->left->type);
         // token = tokencp; // je reviens en arriere dans ma liste chainee apres avoir trouve le token
         return (1); // je retourne 1 dans le cas ou je trouve une redirection
     }

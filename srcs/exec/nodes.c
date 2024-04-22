@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nodes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:30:32 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/19 16:04:51 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/04/22 16:27:54 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ t_node *add_node_right(t_node *nodes, t_token *token)
     nodes->right->args = token->value; // je stocke la commande
     return (nodes);
 }
+
 t_node *add_node(t_node *nodes, t_token *token)
 {
     // nodes = init_nodes(nodes);
