@@ -105,7 +105,6 @@ $(TEST_OUT_DIR)/%.o: $(TEST_FILES)/%.c $(HEADERS) Makefile | $(OBJF)
 #-------- COMMANDS --------#
 
 $(NAME): archive
-			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME)
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR)"
 
 all: $(NAME)
