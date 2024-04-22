@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "*.ejs": "html",
-        "minishell.h": "c",
-        "type_traits": "c"
-    }
-}

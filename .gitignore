@@ -2,7 +2,6 @@
 *.out
 *.a
 .idea
+.vscode
 out/
 minishell
-pipex
-test/
