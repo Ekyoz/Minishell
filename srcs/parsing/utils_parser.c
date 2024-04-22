@@ -22,7 +22,7 @@ bool check_char_before(char* chaine, char caractere, size_t position, int nbCara
 		}
 
 		// Parcourir la chaîne depuis la position de début jusqu'à la position donnée
-		for (int i = debutVerification; i < position; i++) {
+		for (size_t i = debutVerification; i < position; i++) {
 			// Vérifier si le caractère à la position courante est égal au caractère recherché
 			if (chaine[i] == caractere) {
 				return true; // Si trouvé, retourner vrai
