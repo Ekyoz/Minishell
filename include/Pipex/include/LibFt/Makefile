@@ -152,10 +152,10 @@ clean:
 			@$(RM) -rf $(OUT_DIR)
 			@rm -f *.o	
 			@rm -f __.*
-			@echo "$(ORANGE)Tous les fichier objets de $(CYAN)$(BOLD)$(PROJECT_NAME)$(ORANGE) ont été supprimé!$(DEF_COLOR)"
+			@#echo "$(ORANGE)Tous les fichier objets de $(CYAN)$(BOLD)$(PROJECT_NAME)$(ORANGE) ont été supprimé!$(DEF_COLOR)"
 
 fclean:		clean
-			@echo "$(RED)Tous les fichier executable de $(CYAN)$(BOLD)$(PROJECT_NAME)$(RED) ont été supprimé!$(DEF_COLOR)\n"
+			@#echo "$(RED)Tous les fichier executable de $(CYAN)$(BOLD)$(PROJECT_NAME)$(RED) ont été supprimé!$(DEF_COLOR)\n"
 			@for dir in $(LIB_LIST); do make fclean --no-print-directory -C $$dir; done
 			@$(RM) -f $(ARCHIVE_NAME)
 			@$(RM) -f $(TEST_NAME)

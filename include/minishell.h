@@ -34,13 +34,15 @@
 
 typedef enum e_token_type
 {
-	TOKEN_WORD,      // For commands and arguments
-	TOKEN_PIPE,      // For '|'
-	TOKEN_REDIR_IN,  // For '<'
-	TOKEN_REDIR_OUT, // For '>'
-	TOKEN_REDIR_APPEND, // For '>>'
-	TOKEN_REDIR_HEREDOC, // For '<<'
-	TOKEN_ENV_VAR, // For environment variables
+	TOKEN_WORD, // WORD
+	TOKEN_PIPE, // PIPE: |
+	TOKEN_REDIR_IN, // REDIRECTION IN: <
+	TOKEN_REDIR_OUT, // REDIRECTION OUT: >
+	TOKEN_REDIR_APPEND, // REDIRECTION APPEND: >>
+	TOKEN_REDIR_HEREDOC, // REDIRECTION HEREDOC: <<
+	TOKEN_ENV_VAR, // ENV VAR: $
+	TOKEN_OR, // OR: ||
+	TOKEN_AND, // AND: &&
 	PIPEUSED,
 	REDIRUSED,
 }	t_token_type;
@@ -70,6 +72,9 @@ typedef struct s_env
 
 
 t_token *parsing(char *commands);
+bool checker(t_token *head, char *command);
+bool check_char_before(char *string, char c, size_t pos, int len);
+bool check_char_after(char *string, char c, size_t pos, int len);
 t_token *parsing(char *commands);
 t_node *init_nodes(t_node *nodes);
 int get_pipe(t_token *token, t_node *nodes);
