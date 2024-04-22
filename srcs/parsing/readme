@@ -59,3 +59,18 @@ Token[4]:
 
 -Verifier les token dans une quote
     echo "test | hello > test"
+
+-Verifier si la ligne est vide ou pas
+
+
+
+
+============================================================
+                        REDIRE OUT
+============================================================
+*: echo > test      => element de base
+*: echo >> test     => transforme le token en APPEND
+*: echo >>> test    => Afficher: syntax error near unexpected token `>'
+*: echo >           => Affiche: syntax error near unexpected token `newline'
+*: > test           => il faut creer le fichier test
+*: > test           => verifier qu'il y ai aucun token avant
