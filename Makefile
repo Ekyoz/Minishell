@@ -30,7 +30,7 @@ FILE_BUILTINS_DIR 	= builtins/
 FILE_BUILTINS 		= cd echo env exit export pwd unset
 
 FILE_EXEC_DIR		= exec/
-#FILE_EXEC			= exec init_nodes token_type
+FILE_EXEC			= exec nodes token_type
 
 FILE_PARSING_DIR	= parsing/
 FILE_PARSING		= parsing checker utils_parser
