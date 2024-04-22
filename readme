@@ -47,4 +47,3 @@ cd : <direcoryname> || - || ....... || /../<direcoryname> || ~
 - Si presence espace entre 2 et > bash interprete ca en tant que argument de la commande d'avant
     => Checker si c'est une redirection de stdin stdout ou stderr
 
-

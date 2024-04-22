@@ -6,13 +6,11 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/03/29 11:58:47 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/19 14:10:49 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//extern char **environ;
 
 void change_directory(char *input)
 {
@@ -25,36 +23,16 @@ void change_directory(char *input)
     printf("%s\n", buffer);
 }
 
-int main(int argc, char *argv[], char *envp[])
+int main()
 {
     char *input;
-
-
-
-//	(void)argc;
-//
-//	char *newargv[] = { "ls", "-l", "-l", "-l", NULL };
-//	while(envp[i])
-//	{
-//		printf("%s\n", envp[i]);
-//		i++;
-//	}
-//	if (argc != 2) {
-//		fprintf(stderr, "Usage: %s <file-to-exec>\n", argv[0]);
-//		exit(EXIT_FAILURE);
-//	}
-
-//	newargv[0] = argv[1];
-
-//	execve(argv[1], newargv, envp);
-//	perror("execve");   /* execve() returns only on error */
-//	exit(EXIT_FAILURE);
 
     while (true)
     {
         input = readline("Minishell >");
+		printf("Line: %d\n", input[0]);
         add_history(input);
-        change_directory(input);
+		parsing(input);
         if(!ft_strncmp(input, "exit", 5))
             break;
     }

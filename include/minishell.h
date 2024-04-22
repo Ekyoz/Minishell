@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/19 15:05:08 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/03/29 11:58:47 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,15 @@
 
 typedef enum e_token_type
 {
-	TOKEN_WORD,
-	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_REDIR_APPEND,
-	TOKEN_REDIR_HEREDOC,
-	TOKEN_ENV_VAR,
+	TOKEN_WORD, // WORD
+	TOKEN_PIPE, // PIPE: |
+	TOKEN_REDIR_IN, // REDIRECTION IN: <
+	TOKEN_REDIR_OUT, // REDIRECTION OUT: >
+	TOKEN_REDIR_APPEND, // REDIRECTION APPEND: >>
+	TOKEN_REDIR_HEREDOC, // REDIRECTION HEREDOC: <<
+	TOKEN_ENV_VAR, // ENV VAR: $
+	TOKEN_OR, // OR: ||
+	TOKEN_AND, // AND: &&
 	PIPEUSED,
 	REDIRUSED,
 }	t_token_type;
@@ -59,7 +61,7 @@ typedef struct s_node
 	int					file_type;
 	int 				tree_level; // entier comptabilisant les sous branches
 	char				**args; // ce qu'il y a dans la commande
-	struct s_node	*left; 
+	struct s_node	*left;
 	struct s_node	*right;
 }	t_node;
 
@@ -79,5 +81,9 @@ t_node *init_nodes();
 t_node *add_node_left(t_node *nodes, t_token *token);
 t_node *add_node_right(t_node *nodes, t_token *token);
 t_node *add_node(t_node *nodes, t_token *token);
+t_token *parsing(char *commands);
+bool checker(t_token *head, char *command);
+bool check_char_before(char *string, char c, size_t pos, int len);
+bool check_char_after(char *string, char c, size_t pos, int len);
 
 #endif
