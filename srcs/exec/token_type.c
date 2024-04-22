@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token_type.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:29:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/18 15:24:22 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/20 20:02:07 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,6 @@ int get_redirection_right(t_token *token, t_node *nodes)
 
 int get_redirection_main(t_token *token, t_node *nodes)
 {
-    // t_token *tokencp;
-
-    // tokencp = token;
     while(token != NULL && token->type != TOKEN_REDIR_IN && token->type != TOKEN_REDIR_OUT && 
         token->type != TOKEN_REDIR_APPEND && token->type != TOKEN_REDIR_HEREDOC && 
         token->type != PIPEUSED)
@@ -98,7 +95,8 @@ int get_redirection_main(t_token *token, t_node *nodes)
     if(token != NULL && (token->type == TOKEN_REDIR_IN || token->type == TOKEN_REDIR_OUT || 
         token->type == TOKEN_REDIR_APPEND || token->type == TOKEN_REDIR_HEREDOC))
     {
-        nodes = init_nodes();
+        if(!nodes)
+            nodes = init_nodes();
         nodes->type = token->type;
         nodes->args = token->value;      
         token->type = REDIRUSED; // je mets le type a NULL une fois que je lai stocke

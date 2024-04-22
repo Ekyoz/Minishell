@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:02:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/18 15:47:26 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/21 19:06:27 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,25 @@ char **create_string(char *string)
     char **output = ft_split(string, ' ');
     return(output);
 }
+void print_token(t_token * tokens)
+{
+    while(tokens != NULL)
+    {
+        if(tokens->value)
+            printf("token %s -", tokens->value[0]);
+        tokens = tokens->next;
+    }
+    printf("\n");
+}
 
 t_token *ft_token(t_token *tokens)
 {
     // exemple avec cat -e input > output > output 1 | echo re
-    t_token *tokencp;
+    // t_token *tokencp;
 
-    tokencp = tokens;
+    // tokencp = tokens;
 
-    printf("cat -e input > output > output1 | echo re\n");
+    printf("cat -e input > output > output1 | echo re > outfile > outfile1\n");
     tokens->type = TOKEN_WORD;
     tokens->value = create_string("cat -e input");
     tokens->next = (t_token *)malloc(sizeof(t_token));
@@ -42,7 +52,7 @@ t_token *ft_token(t_token *tokens)
     tokens = tokens->next;
 
     tokens->type = TOKEN_REDIR_OUT;
-    tokens->value = create_string("redirecout");
+    tokens->value = create_string("redirecout1");
     tokens->next = (t_token *)malloc(sizeof(t_token));
     tokens = tokens->next;
 
@@ -58,9 +68,30 @@ t_token *ft_token(t_token *tokens)
 
     tokens->type = TOKEN_WORD;
     tokens->value = create_string("echo re");
-    tokens->next = NULL;
+    tokens->next = (t_token *)malloc(sizeof(t_token));
+    tokens = tokens->next;
 
-    return(tokencp);
+    tokens->type = TOKEN_REDIR_OUT;
+    tokens->value = create_string("redirecout2");
+    tokens->next = (t_token *)malloc(sizeof(t_token));
+    tokens = tokens->next;
+
+    tokens->type = TOKEN_WORD;
+    tokens->value = create_string("outfile");
+    tokens->next = (t_token *)malloc(sizeof(t_token));
+    tokens = tokens->next;
+
+    tokens->type = TOKEN_REDIR_OUT;
+    tokens->value = create_string("redirecou3");
+    tokens->next = (t_token *)malloc(sizeof(t_token));
+    tokens = tokens->next;
+
+    tokens->type = TOKEN_WORD;
+    tokens->value = create_string("outfile1");
+    tokens->next = (t_token *)malloc(sizeof(t_token));
+    tokens = tokens->next;
+
+    return tokens;
 }
 
 void print_command(char **command)
@@ -169,17 +200,19 @@ void create_node(t_token *tokens, t_node **nodesbegin)
             {
                 // si j'ai une redirection je stocke la commande de gauche
                 add_node_left(nodes, tokens);
-                tokens = tokens->next; // Je passe au prochain token
+                tokens = tokens->next->next; // Je passe au prochain token
+                printf("dans la redirection main\n");
+                print_token(tokens);
                 tokencp = tokens; // je reavance le curseur de ma copie
-                is_redirec = 0;
             }
             // si j'en ai pas j'effectnodesue une commande
             else
             {
                 add_node(nodes, tokens);
                 tokens = tokens->next; // Je passe au prochain token
+                printf("Pas de redirection\n");
+                print_token(tokens);
                 tokencp = tokens; // je reavance le curseur de ma copie
-                is_redirec = 0; 
             }
         }
         is_redirec = 1;
