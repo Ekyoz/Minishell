@@ -5,5 +5,5 @@
 .vscode
 out/
 minishell
-pipex
 test/
+/srcs/parsing/readme.txt
