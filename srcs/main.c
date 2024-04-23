@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/03/29 11:58:47 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/23 17:14:46 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,18 @@ void change_directory(char *input)
     printf("%s\n", buffer);
 }
 
-int main(int argc, char *argv[], char *envp[])
+int main()
 {
     char *input;
+	t_token *head = NULL;
 
     while (true)
     {
-        input = readline("Minishell >");
+        input = readline("Minishell$ ");
         add_history(input);
-        change_directory(input);
+		parsing(&head, input);
+		printList(head);
+		clear_list(&head);
         if(!ft_strncmp(input, "exit", 5))
             break;
     }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
+#    By: atresall <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/04/16 16:23:56 by bpoyet           ###   ########.fr        #
+#    Updated: 2024/03/03 14:07:07 by atresall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,10 +30,10 @@ FILE_BUILTINS_DIR 	= builtins/
 FILE_BUILTINS 		= cd echo env exit export pwd unset
 
 FILE_EXEC_DIR		= exec/
-FILE_EXEC			= exec init_nodes token_type
+#FILE_EXEC			= exec init_nodes token_type
 
 FILE_PARSING_DIR	= parsing/
-FILE_PARSING		= parsing
+FILE_PARSING		= parsing checker utils_parser token
 
 DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR)
 SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
@@ -63,9 +63,12 @@ LIBFLAGS			= -lreadline
 #----------------------------- DO NOT TOUCH BELOW -----------------------------#
 #------------------------------------------------------------------------------#
 
+
 #-------- DIR --------#
 
 SRC_DIR				= srcs
+EXEC_DIR			= srcs/exec
+TEST_DIR 			= test
 INCLUDE_DIR			= include
 OUT					= out
 
@@ -152,9 +155,12 @@ $(TEST_OUT_DIR)/%.o: $(TEST_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 
 #-------- COMMANDS --------#
 
-#$(NAME): archive
-#			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME) $(LIBFLAGS)
-#			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR)"
+$(NAME): default
+
+default: archive
+			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME) $(LIBFLAGS)
+			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR)"
+
 
 all: $(NAME)
 
@@ -197,7 +203,7 @@ ar_exec:	lib $(OBJ_EXEC) $(HEADERS)
 
 exec: ar_exec
 			@$(CC) $(CFLAGS_EXEC) $(OBJ_EXEC) $(INCLUDE_RUN) -o $(EXEC_NAME) $(LIBFLAGS)
-			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)DEBUG!$(DEF_COLOR)"
+			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)EXEC!$(DEF_COLOR)"
 
 #------ PARSING ------#
 
@@ -208,9 +214,9 @@ ar_parsing:	lib $(OBJ_PARSING) $(HEADERS)
 			@$(RM) *.o
 			@$(RM) __.*
 
-$(NAME): ar_parsing
+parsing: ar_parsing
 			@$(CC) $(CFLAGS_PARSING) $(OBJ_PARSING) $(INCLUDE_RUN) -o $(PARSING_NAME) $(LIBFLAGS)
-			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)DEBUG!$(DEF_COLOR)"
+			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)PARSING!$(DEF_COLOR)"
 
 #------ TEST ------#
 
