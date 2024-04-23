@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:29:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/22 16:50:32 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/23 18:47:34 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 int get_pipe(t_token *token, t_node *nodes)
 {
-    // t_token *tokencp;
-
-    // tokencp = token;
     while(token != NULL && token->type != TOKEN_PIPE)
     {
         token = token->next;
@@ -34,9 +31,6 @@ int get_pipe(t_token *token, t_node *nodes)
 
 int get_redirection_left(t_token *token, t_node *nodes)
 {
-    // t_token *tokencp;
-
-    // tokencp = token;
     while(token != NULL && token->type != TOKEN_REDIR_IN && token->type != TOKEN_REDIR_OUT && 
         token->type != TOKEN_REDIR_APPEND && token->type != TOKEN_REDIR_HEREDOC && 
         token->type != PIPEUSED)
@@ -50,7 +44,6 @@ int get_redirection_left(t_token *token, t_node *nodes)
         nodes->left->type = token->type;
         nodes->left->args = token->value;
         token->type = REDIRUSED; // je mets le type a NULL une fois que je lai stocke
-        // token = tokencp; // je reviens en arriere dans ma liste chainee apres avoir trouve le token
         return (1); // je retourne 1 dans le cas ou je trouve une redirection
     }
     else
@@ -59,9 +52,6 @@ int get_redirection_left(t_token *token, t_node *nodes)
 
 int get_redirection_right(t_token *token, t_node *nodes)
 {
-    t_token *tokencp;
-
-    tokencp = token;
     while(token != NULL && token->type != TOKEN_REDIR_IN && token->type != TOKEN_REDIR_OUT && 
         token->type != TOKEN_REDIR_APPEND && token->type != TOKEN_REDIR_HEREDOC && 
         token->type != PIPEUSED)
@@ -75,8 +65,6 @@ int get_redirection_right(t_token *token, t_node *nodes)
         nodes->right->type = token->type;
         nodes->right->args = token->value;;        
         token->type = REDIRUSED; // je mets le type a NULL une fois que je lai stocke
-        token = tokencp; // je reviens en arriere dans ma liste chainee apres avoir trouve le tokenp;
-        // nodes = nodes->right; // j'avance dans mon arbre si il y a une redirection
         return (1); // je retourne 1 dans le cas ou je trouve une redirection
     }
     else

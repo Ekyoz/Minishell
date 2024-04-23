@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 14:52:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/19 16:21:42 by atresall         ###   ########.fr       */
+/*   Updated: 2024/04/23 20:01:28 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ t_token *parsing(char *commands)
 		}
 		append_token(&head, TOKEN_WORD,ft_split(ft_substr(commands, last_index, i - last_index), ' '));
 	}
-	printList(head);
-	printf("Checker: %d\n", checker(head, commands));
+	// printList(head);
+	// printf("Checker: %d\n", checker(head, commands));
 	return head;
 }
