@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ast_tree.c                                         :+:      :+:    :+:   */
+/*   create_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:02:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/23 19:59:14 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/24 14:40:29 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static void check_left_redirec(t_node **nodes, t_token **token, bool *is_redirec
     }
 }
 
-void create_node(t_token *tokens, t_node **nodesbegin)
+void create_node(t_token *tokens, t_tree **tree)
 {
     t_node *nodes;
     t_node *nodescp; // copie de node qui va contenir l'addresse de la branche right du potentiel prochain pipe
@@ -59,10 +59,10 @@ void create_node(t_token *tokens, t_node **nodesbegin)
 
     is_redirec = 1;
     nodes = init_nodes();
-    nodescp = nodes; // une recopie pour stocker le premier node
-    *nodesbegin = nodescp;
     if(!nodes)
         return((void) 1);
+    nodescp = nodes; // une recopie pour stocker le premier node
+    (*tree)->nodes = nodescp;
     if(tokens->next == NULL)
     {
         add_node(nodes, &tokens);
@@ -89,21 +89,26 @@ void create_node(t_token *tokens, t_node **nodesbegin)
     return((void) 0);
 }
 
-int main()
+int main(int argc, char *argv[], char *envp[])
 {
+    (void)argc;
+    (void)argv;
     char *input;
     t_token *tokens;
-    t_node *nodes;
+    t_tree *tree;
 
+    tree = init_tree(envp);
+    if(!tree)
+        return (1);
     while (true)
     {
         input = readline("Minishell :");
-		printf("Line: %d\n", input[0]);
         add_history(input);
 		tokens = parsing(input);
-        create_node(tokens, &nodes);
+        create_node(tokens, &tree);
         printf("\n");
-        print_tree(nodes);
+        print_tree(tree->nodes);
+        ast_exec(tree);
         if(!ft_strncmp(input, "exit", 5))
             break;
     }

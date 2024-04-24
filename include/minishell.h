@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/23 18:42:36 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/24 15:01:01 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,23 +65,47 @@ typedef struct s_node
 	struct s_node	*right;
 }	t_node;
 
+typedef struct s_tree // structure qui va iterer dans mes nodes et executer les commandes
+{
+	t_node *nodes;
+	char	**envp;
+	char	*path;
+	int fd[500]; //tableau regroupant tous les fd ouverts
+	int pipefd[2];
+	int	errorcode[5];
+	int index;
+} t_tree;
+
 typedef struct s_env
 {
 	char				**original_env;
 	char				***parsed_env;
 }	t_env;
 
-
+// TROUVER LES REDIRECTIONS POUR LES AJOUTER A MON ARBRE AST
 int get_pipe(t_token *token, t_node *nodes);
 int get_redirection_left(t_token *token, t_node *nodes);
 int get_redirection_right(t_token *token, t_node *nodes);
 int get_redirection_main(t_token *token, t_node *nodes);
 
+// FONCTIONS NODES POUR CREER DES NODES SUR MON ARBRE AST
 t_node *init_nodes();
 t_node *add_node(t_node *nodes, t_token **token);
 t_node *add_node_left(t_node *nodes, t_token **token);
 t_node *add_node_right(t_node *nodes, t_token **token, bool *is_redirec);
 void add_branches(t_token *tokens, t_node **node, t_node **nodecp, bool *redir);
+
+//FONCTIONS MANIPULATION DE MON ARBRE
+t_tree *init_tree(char *envp[]);
+
+//EXECUT
+void ast_exec(t_tree *tree);
+
+//CHECKING COMMAND
+char *check_access1(t_tree *tree, t_node *nodes);
+int	get_env_args(char *envp[], t_tree *tree);
+
+//PARSING
 t_token *parsing(char *commands);
 bool checker(t_token *head, char *command);
 bool check_char_before(char *string, char c, size_t pos, int len);
