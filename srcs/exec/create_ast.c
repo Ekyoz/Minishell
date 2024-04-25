@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:02:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/24 14:40:29 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/25 14:29:19 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 void get_print_branch(t_node *node)
 {
     printf("Actuelle gauche %d\n", node->type);
+    if(node->args)
+        printf("l'args vaut %s\n", node->args[0]);
     if(node->left)
     {
         printf("left %d %s\n", node->left->type, node->left->args[0]);
@@ -31,7 +33,8 @@ void print_tree(t_node *node)
     while(node != NULL)
     {
         printf("premier ou droite %d\n", node->type);
-        // printf("nodeleft %p\n", node->left);
+        if(node->args)
+            printf("l'args vaut %s\n", node->args[0]);
         if(node->left)
             get_print_branch(node->left);
         node = node->right;

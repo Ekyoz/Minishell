@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/24 15:01:01 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/25 14:35:31 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,7 @@ typedef struct s_tree // structure qui va iterer dans mes nodes et executer les 
 	t_node *nodes;
 	char	**envp;
 	char	*path;
-	int fd[500]; //tableau regroupant tous les fd ouverts
 	int pipefd[2];
-	int	errorcode[5];
-	int index;
 } t_tree;
 
 typedef struct s_env
