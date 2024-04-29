@@ -6,13 +6,14 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/25 14:35:31 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/26 14:05:50 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
+#define BUFFER 1000
 # include "libft.h"
 # include "pipex.h"
 # include <stdlib.h>
@@ -70,7 +71,7 @@ typedef struct s_tree // structure qui va iterer dans mes nodes et executer les 
 	t_node *nodes;
 	char	**envp;
 	char	*path;
-	int pipefd[2];
+	int **fdpipe;
 } t_tree;
 
 typedef struct s_env

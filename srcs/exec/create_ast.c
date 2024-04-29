@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:02:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/25 14:29:19 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/29 09:58:32 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void print_tree(t_node *node)
             get_print_branch(node->left);
         node = node->right;
     }
+    printf("\n\n");
 }
 
 static void check_left_redirec(t_node **nodes, t_token **token, bool *is_redirec)
@@ -89,6 +90,7 @@ void create_node(t_token *tokens, t_tree **tree)
         }
         add_branches(tokens, &nodes, &nodescp, &is_redirec);
     }
+    printf("\n\n");
     return((void) 0);
 }
 
