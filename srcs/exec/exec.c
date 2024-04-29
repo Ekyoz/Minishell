@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/29 10:30:49 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/04/29 16:17:38 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,80 +40,105 @@ int init_fdpipe(t_tree *tree,t_node *nodes)
 
 void *exec_pipe(t_tree *tree, t_node *nodes)
 {
-    // je check si j'ai un pipe
-        // je pipe 
-            //je fork
-                // dans le fils j'execute la commande
-                    // il faut la bonne redirection du fd suivant
-                    // si je suis le premier pipe
-                    // si je suis un pipe suivant
-                // dans le pere je redirige la sortie de mon pipe
-                    // je redirige soit vers le prochain pipe
-                    // soit je ne redirige pas si dernier pipe
-    
     char *buffer;
 
     buffer = (char *)malloc(sizeof(char) * BUFFER);
-    pid_t pid[4];
+    pid_t pid[3];
     int i;
     int j;
+    int k;
 
     i = 0;
     j = 0;
     i = init_fdpipe(tree, nodes);
-    while(j < i)
+    while(j <= i)
     {
         pid[j] = fork();
         if(pid[j] < 0)
             perror("fork error");
         if(pid[j] == 0)
         {
+            // fprintf(stderr, "j vaut %d\n", j);
             if(j == 0) // premier pipe
             {
                 dup2(tree->fdpipe[j][1], STDOUT_FILENO);
-                close(tree->fdpipe[j][1]);
+                k = 0;
+                while(k < i)
+                {
+                    close(tree->fdpipe[k][0]);
+                    close(tree->fdpipe[k][1]);
+                    k++;
+                }
+                // close(tree->fdpipe[j][1]);
+                // close(tree->fdpipe[j][0]);
             }
-
-            else if(j == (i - 1)) // dernier pipe
+            else if(j == i) // dernier pipe
             {
-                dup2(tree->fdpipe[j][0], STDIN_FILENO);
-                close(tree->fdpipe[j][0]);
+                dup2(tree->fdpipe[j - 1][0], STDOUT_FILENO);
+                k = j - 1;
+                while(k < i)
+                {
+                    close(tree->fdpipe[k][0]);
+                    close(tree->fdpipe[k][1]);
+                    k++;
+                }
+                // close(tree->fdpipe[j - 1][0]);
+                // close(tree->fdpipe[j - 1][1]);
             }
             else // pipe(s) du milieu 
             {
-                dup2(tree->fdpipe[j][0], STDIN_FILENO); // je lis mon pipe actuelle
-                close(tree->fdpipe[j][0]);
-                dup2(tree->fdpipe[j + 1][1], STDOUT_FILENO);
-                close(tree->fdpipe[j + 1][1]);
+                dup2(tree->fdpipe[j - 1][0], STDIN_FILENO); // je lis mon pipe actuelle
+                dup2(tree->fdpipe[j][1], STDOUT_FILENO);
+                k = j - 1;
+                while(k < i)
+                {
+                    close(tree->fdpipe[k][0]);
+                    close(tree->fdpipe[k][1]);
+                    k++;
+                }
+                // close(tree->fdpipe[j - 1][0]);
+                // close(tree->fdpipe[j][1]);
+                // close(tree->fdpipe[j][0]);
+                // close(tree->fdpipe[j - 1][1]);
             }
-            tree->path = check_access1(tree, nodes->left);
+            if(nodes->left)
+                tree->path = check_access1(tree, nodes->left);
+            else
+                tree->path = check_access1(tree, nodes);
+            fprintf(stderr, "le path %s\n", tree->path);
             if(execve(tree->path, nodes->args, NULL) == -1)
             {
-                printf("error execve\n");
+                fprintf(stderr, "error execve\n");
                 return((void*)1);
             }
         }
-        j++;
-        if(j == i)
+        else
         {
-            j--;
-            break;
-        }
-        printf("je suis dans le right node\n");
-        if(nodes->right)
-        {
-            nodes = nodes->right;
+            // if(j > 0)
+            //     close(tree->fdpipe[j - 1][0]);
+            // if(j < i)
+            //     close(tree->fdpipe[j][1]);
+            k = 0;
+            while(k < i)
+            {
+                close(tree->fdpipe[k][0]);
+                close(tree->fdpipe[k][1]);
+                k++;
+            }
+            j++;
+            if(nodes->right)
+            {
+                nodes = nodes->right;
+            }
         }
     }
-    // printf("j vaut %d\n", j);
-    // read(tree->fdpipe[j][0], buffer, BUFFER);
-    // printf("buffer %s\n", buffer);
-    j = 0;
-    while(j < i)
-    {
-        wait(NULL);
-        j++;
-    }
+        j = 0;
+        while(j <= i)
+        {
+            waitpid(pid[j], NULL, 0);
+            fprintf(stderr, "j vaut %d\n", j);
+            j++;
+        }
     return ((void*)0);
 }
 

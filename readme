@@ -37,6 +37,7 @@ cd : <direcoryname> || - || ....... || /../<direcoryname> || ~
         => infile || redirection || commande || argument ||  redirection || outfile || pipe
 
 ---------------COMMANDE CHIANTE------------------
+
 - Command1 < input.txt PAREIL QUE < input.txt command1
 - Command1 < input.txt > output.txt => j'applique ma commande suivant l'entree input et j'ecris dans output
 - Command1 >> output.txt < input.txt => Pareil que en haut mais j'append
@@ -47,3 +48,29 @@ cd : <direcoryname> || - || ....... || /../<direcoryname> || ~
 - Si presence espace entre 2 et > bash interprete ca en tant que argument de la commande d'avant
     => Checker si c'est une redirection de stdin stdout ou stderr
 
+---------------MULTIPLE PIPE--------------
+
+ls -l | head -n 1 | head -n 2
+
+=> 2 pipes 3 redirections
+
+redirection out vers l'ecriture du pipe1 
+
+redirection in vers la lecture du pipe1
+redirection out vers l'ecriture du pipe2
+
+redirection in vers la lecture du pipe2
+
+ls -l | head -n 1 | head -n 2 | head -n 2
+
+=> 3 pipes 4 redirections
+
+redirection out vers l'ecriture du pipe1
+
+redirection in vers la lecture du pipe1
+redirection out vers l'ecriture du pipe2
+
+redirection in vers la lecture du pipe2
+redirection out vers l'ecriture du pipe3
+
+redirection in vers la lecture du pipe3
