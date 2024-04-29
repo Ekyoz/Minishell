@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/29 10:21:27 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/29 10:30:49 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,13 +69,22 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
         if(pid[j] == 0)
         {
             if(j == 0) // premier pipe
+            {
                 dup2(tree->fdpipe[j][1], STDOUT_FILENO);
+                close(tree->fdpipe[j][1]);
+            }
+
             else if(j == (i - 1)) // dernier pipe
+            {
                 dup2(tree->fdpipe[j][0], STDIN_FILENO);
+                close(tree->fdpipe[j][0]);
+            }
             else // pipe(s) du milieu 
             {
                 dup2(tree->fdpipe[j][0], STDIN_FILENO); // je lis mon pipe actuelle
+                close(tree->fdpipe[j][0]);
                 dup2(tree->fdpipe[j + 1][1], STDOUT_FILENO);
+                close(tree->fdpipe[j + 1][1]);
             }
             tree->path = check_access1(tree, nodes->left);
             if(execve(tree->path, nodes->args, NULL) == -1)
@@ -103,6 +112,7 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
     while(j < i)
     {
         wait(NULL);
+        j++;
     }
     return ((void*)0);
 }
