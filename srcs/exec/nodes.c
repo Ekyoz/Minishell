@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nodes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:30:32 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/25 10:30:50 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/04/30 12:42:09 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ t_node *add_node_right(t_node *nodes, t_token **token, bool *is_redirec)
 
 t_node *add_node(t_node *nodes, t_token **token)
 {
-    printf("le token vaut %s\n", (*token)->value[0]);
     nodes->type = (*token)->type;
     nodes->args = (*token)->value;
     *token = (*token)->next;

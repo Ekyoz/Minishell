@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/26 14:05:50 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/01 19:41:24 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,10 @@ typedef struct s_tree // structure qui va iterer dans mes nodes et executer les 
 	t_node *nodes;
 	char	**envp;
 	char	*path;
-	int **fdpipe;
+	int **fdpipe; //fd de chaque pipe
+	int fdout; //fd du file out
+	int fdin; // fd du file in
+	int error;
 } t_tree;
 
 typedef struct s_env
@@ -102,6 +105,14 @@ void ast_exec(t_tree *tree);
 //CHECKING COMMAND
 char *check_access1(t_tree *tree, t_node *nodes);
 int	get_env_args(char *envp[], t_tree *tree);
+
+//REDIREC
+
+void find_redir_out(t_tree *tree, t_node *nodes, int *isredir);
+void find_redir_in(t_tree *tree, t_node *nodes, int *isredir);
+void find_redir_append(t_tree *tree, t_node *nodes, int *isredir);
+int check_redir_out(t_tree *tree, t_node *nodes);
+int check_redir_in(t_tree *tree, t_node *nodes);
 
 //PARSING
 t_token *parsing(char *commands);

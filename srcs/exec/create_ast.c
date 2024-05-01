@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:02:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/29 09:58:32 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/01 12:18:44 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@ void get_print_branch(t_node *node)
         printf("l'args vaut %s\n", node->args[0]);
     if(node->left)
     {
-        printf("left %d %s\n", node->left->type, node->left->args[0]);
+        printf("left %d\n", node->left->type);
         if(node->right)
         {
-            printf("right %d %s\n", node->right->type, node->right->args[0]);
+            printf("right %d\n", node->right->type);
+            // printf("right %d %s\n", node->right->type, node->right->args[0]);
             get_print_branch(node->right);
         }
     }

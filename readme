@@ -50,7 +50,7 @@ cd : <direcoryname> || - || ....... || /../<direcoryname> || ~
 
 ---------------MULTIPLE PIPE--------------
 
-ls -l | head -n 1 | head -n 2
+ls -l | head -n 2 | head -n 1
 
 => 2 pipes 3 redirections
 
@@ -74,3 +74,12 @@ redirection in vers la lecture du pipe2
 redirection out vers l'ecriture du pipe3
 
 redirection in vers la lecture du pipe3
+
+------------ PIPE ET REDIRECTIONS ------------------
+
+- redirection OUT a gauche du pipe j'ecris fdans le file et pas dans le pipe
+    - Quand je lis a droite j'aurai une entree vide
+- Redirection IN a droite du pipe ne fait rien car je lis en priorite l'entree du pipe
+    - Pipe en priorite sur redir IN
+- les dernieres redirections IN ou OUT sont celles a prendre en compte
+    - < output < output1 < cat -e => je cat le output1
