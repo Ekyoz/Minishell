@@ -1,26 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utile_parser.c                                     :+:      :+:    :+:   */
+/*   ft_strchar.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 15:52:07 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/25 15:52:54 by atresall         ###   ########.fr       */
+/*   Created: 2024/04/29 15:42:46 by atresall          #+#    #+#             */
+/*   Updated: 2024/04/29 15:42:46 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-t_token_type is_token(char *c, int pos)
+int ft_strchar(const char *string, char c)
 {
-	if (c[pos] == '>' && c[pos+1] == '>')
-		return TOKEN_REDIR_APPEND;
-	else if (c[pos] == '<' && c[pos+1] == '<')
-		return TOKEN_REDIR_HEREDOC;
-	else if (c[pos] == '>')
-		return TOKEN_REDIR_OUT;
-	else if (c[pos] == '<')
-		return TOKEN_REDIR_IN;
-	return TOKEN_WORD;
+	int i;
+
+	i = -1;
+	while (string[++i])
+	{
+		if (string[i] == c)
+			return i;
+	}
+	return -1;
 }

@@ -6,7 +6,7 @@
 /*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 14:52:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/23 16:42:18 by atresall         ###   ########.fr       */
+/*   Updated: 2024/04/26 13:22:17 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void printList(t_token * node) {
 		if (node->type == TOKEN_WORD)
 		{
 			printf("\033[0;31m\033[1mCOMMAND\033[0m: %s\n", node->value[0]);
-//			for (int j = 1; node->value[j]; j++)
-//				printf("\033[0;33m\033[1mARGS[%d]\033[0m: %s\n",j , node->value[j]);
+			for (int j = 1; node->value[j]; j++)
+				printf("\033[0;33m\033[1mARGS[%d]\033[0m: %s\n",j , node->value[j]);
 		} else
 			printf("\033[0;31m\033[1mCOMMAND\033[0m: NULL\n");
 		printf("===============================\n");
@@ -57,60 +57,20 @@ void printList(t_token * node) {
 
 bool parsing(t_token **head, char *commands)
 {
+	char **pipe_splited_cmd;
+	char **redir_splited_cmd;
 	int i = -1;
-	int last_index = 0;
 	if (commands)
 	{
-		while (commands[++i])
+		pipe_splited_cmd = pipe_spliter(commands);
+		if (!pipe_splited_cmd)
+			return false;
+		while (pipe_splited_cmd[++i])
 		{
-			if(commands[i] == '|' && commands[i + 1] != '|' && commands[i - 1] != '|')
-			{
-				append_token(head, TOKEN_WORD,ft_split(ft_substr(commands, last_index, i - last_index), ' '));
-				append_token(head, TOKEN_PIPE, NULL);
-				last_index = i+1;
-			}
-			else if (commands[i] == '$' && commands[i + 1] != ' ')
-			{
-				append_token(head, TOKEN_WORD,ft_split(ft_substr(commands, last_index, i - last_index), ' '));
-				append_token(head, TOKEN_ENV_VAR, NULL);
-				last_index = i+1;
-			}
-			else if(ft_strnstr(commands + i, "||", 2))
-			{
-				append_token(head, TOKEN_WORD,ft_split(ft_substr(commands, last_index, i - last_index), ' '));
-				append_token(head, TOKEN_OR, NULL);
-				last_index = i+2;
-			}
-			else if(ft_strnstr(commands + i, "&&", 2))
-			{
-				append_token(head, TOKEN_WORD,ft_split(ft_substr(commands, last_index, i - last_index), ' '));
-				append_token(head, TOKEN_AND, NULL);
-				last_index = i+2;
-			}
-			else if (commands[i] == '<' && commands[i + 1] != '<' && commands[i - 1] != '<')
-			{
-				append_token(head, TOKEN_WORD,ft_split(ft_substr(commands, last_index, i - last_index), ' '));
-				append_token(head, TOKEN_REDIR_IN, NULL);
-				last_index = i+1;
-			}
-			else if (commands[i] == '>' && commands[i + 1] != '>' && commands[i - 1] != '>')
-			{
-				append_token(head, TOKEN_WORD,ft_split(ft_substr(commands, last_index, i - last_index), ' '));
-				append_token(head, TOKEN_REDIR_OUT, NULL);
-				last_index = i+1;
-			}
-			else if (ft_strnstr(commands + i, ">>", 2) && commands[i+2] != '>' && commands[i-2] != '>') {
-				append_token(head, TOKEN_WORD,ft_split(ft_substr(commands, last_index, i - last_index), ' '));
-				append_token(head,TOKEN_REDIR_APPEND,NULL);
-				last_index =i + 2;
-			}
-			else if (ft_strnstr(commands + i, "<<", 2) && commands[i+2] != '>' && commands[i-2] != '>') {
-				append_token(head, TOKEN_WORD,ft_split(ft_substr(commands, last_index, i - last_index), ' '));
-				append_token(head,TOKEN_REDIR_HEREDOC,NULL);
-				last_index =i + 2;
-			}
+			redir_splited_cmd = check_redir(pipe_splited_cmd[i]);
+			for (int j = 0; redir_splited_cmd[j]; j++)
+				printf("Pipe nº%d: %s\n", j, redir_splited_cmd[j]);
 		}
-		append_token(head, TOKEN_WORD,ft_split(ft_substr(commands, last_index, i - last_index), ' '));
 	}
 	if (!checker(head, commands))
 		return false;

@@ -33,7 +33,7 @@ FILE_EXEC_DIR		= exec/
 #FILE_EXEC			= exec init_nodes token_type
 
 FILE_PARSING_DIR	= parsing/
-FILE_PARSING		= parsing checker utils_parser token
+FILE_PARSING		= parsing checker utils_parser token pipe redir
 
 DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR)
 SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))

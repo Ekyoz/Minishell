@@ -6,7 +6,7 @@
 /*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:17:19 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/23 17:21:32 by atresall         ###   ########.fr       */
+/*   Updated: 2024/04/26 15:40:48 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ bool checker(t_token **head, char *command)
 		return false;
 	else if (!checker_redire_heredoc(head, command))
 		return false;
-	else if (!checker_pipe(head, command))
-		return false;
+//	else if (!checker_pipe(head, command))
+//		return false;
 //	else if (!checker_env_var(head, command))
 //		return false;
 //	else if (!checker_or(head, command))

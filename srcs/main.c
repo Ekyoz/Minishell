@@ -31,7 +31,6 @@ int main()
     while (true)
     {
         input = readline("Minishell$ ");
-        add_history(input);
 		parsing(&head, input);
 		printList(head);
 		clear_list(&head);

@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/23 16:44:31 by atresall         ###   ########.fr       */
+/*   Updated: 2024/04/25 15:53:00 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,6 @@ typedef struct s_env
 
 
 bool parsing(t_token **head, char *commands);
-bool check_char_before(char *string, char c, size_t pos, int len);
-bool check_char_after(char *string, char c, size_t pos, int len);
 t_token *create_token(t_token_type type, char **value);
 void append_token(t_token **head, t_token_type type, char **value);
 void delete_token(t_token **head, t_token *node_to_delete);
@@ -81,4 +79,9 @@ bool checker(t_token **head, char *command);
 t_token *get_last_token(t_token *head);
 void printList(t_token * node);
 void clear_list(t_token **head);
+int pipe_counter(const char *command);
+char **pipe_spliter(char *command);
+char **check_redir(char *splited_command);
+t_token_type is_token(char *c, int pos);
+
 #endif

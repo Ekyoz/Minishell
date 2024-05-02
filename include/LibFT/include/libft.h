@@ -289,6 +289,24 @@ char				*ft_strtrim(char const *s1, char const *set);
 char				**ft_split(char const *s, char c);
 
 /**
+ * @brief Découpe une chaîne en plusieurs chaînes à chaque occurrence du caractère 'c' et ajoute le caractere dans la liste.
+ *
+ * @param s La chaîne à découper.
+ * @param c Le caractère délimiteur.
+ * @return Un tableau de chaînes, ou NULL si l'allocation a échoué.
+ */
+char** ft_split_sep(char* string, char separator);
+
+/**
+ * @brief Cherche dans une chaine de caractere si il y a le caractere 'c'.
+ *
+ * @param s La chaîne à analyser.
+ * @param c Le caractère a chercher.
+ * @return Retourne la position du caractere si il est trouver, -1 si non.
+ */
+int ft_strchar(const char *string, char c);
+
+/**
  * @brief Applique une fonction à chaque caractère de la chaîne 's'.
  *
  * @param s La chaîne à traiter.
