@@ -47,6 +47,7 @@ cd : <direcoryname> || - || ....... || /../<direcoryname> || ~
 - Command1 2> error.txt > output.txt => je redirige deux fois (on peut redirection a l'infini)
 - Si presence espace entre 2 et > bash interprete ca en tant que argument de la commande d'avant
     => Checker si c'est une redirection de stdin stdout ou stderr
+- Heredoc << se comporte comme un redirin ou redirout
 
 ---------------MULTIPLE PIPE--------------
 
@@ -83,3 +84,14 @@ redirection in vers la lecture du pipe3
     - Pipe en priorite sur redir IN
 - les dernieres redirections IN ou OUT sont celles a prendre en compte
     - < output < output1 < cat -e => je cat le output1
+
+------------ Les bon retours-----------
+
+- Renvoyer le bon code de retour suivan l'erreur
+
+------------- HEREDOC ---------------
+
+- Rediriger au bon endroit si il y qune redirection out avec le Heredoc
+- lire tant qu'il n'y a pas le caractere de fin de chaine
+- quand je heredoc il faut que je check si j'ai bien une redirection
+- <<eof << eof1 => il faut obligatoirement taper eof puis eof1 pour sortir

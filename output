@@ -1,0 +1,11 @@
+total 248
+-rwxrwxr-x 1 bastpoy bastpoy 208920 mai    2 15:03 exec.out
+drwxrwxr-x 4 bastpoy bastpoy   4096 avril 29 10:24 include
+-rw-rw-r-- 1 bastpoy bastpoy   8520 mai    2 14:14 Makefile
+drwxrwxr-x 2 bastpoy bastpoy   4096 avril 17 01:46 others
+drwxrwxr-x 7 bastpoy bastpoy   4096 mai    2 15:03 out
+-rw-r--r-- 1 bastpoy bastpoy      0 mai    2 15:05 output
+-rw-r--r-- 1 bastpoy bastpoy    570 mai    2 11:12 output1
+-rw-rw-r-- 1 bastpoy bastpoy   3418 mai    2 15:03 readme
+-rw-rw-r-- 1 bastpoy bastpoy     17 avril 29 10:24 salut
+drwxrwxr-x 5 bastpoy bastpoy   4096 avril 29 10:24 srcs

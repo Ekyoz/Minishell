@@ -1,22 +1,11 @@
 total 240
 -rw-rw-r-- 1 bastpoy bastpoy   8512 May  1 19:05 Makefile
--rwxrwxr-x 1 bastpoy bastpoy 205528 May  1 19:41 exec.out
+-rwxrwxr-x 1 bastpoy bastpoy 205528 May  2 11:10 exec.out
 drwxrwxr-x 4 bastpoy bastpoy   4096 Apr 29 10:24 include
 drwxrwxr-x 2 bastpoy bastpoy   4096 Apr 17 01:46 others
-drwxrwxr-x 7 bastpoy bastpoy   4096 May  1 19:41 out
--rw-r--r-- 1 bastpoy bastpoy      0 May  1 19:41 output
--rw-r--r-- 1 bastpoy bastpoy      0 May  1 19:41 output1
--rw-rw-r-- 1 bastpoy bastpoy   3034 May  1 11:04 readme
--rw-rw-r-- 1 bastpoy bastpoy     17 Apr 29 10:24 salut
-drwxrwxr-x 5 bastpoy bastpoy   4096 Apr 29 10:24 srcs
-total 244
--rw-rw-r-- 1 bastpoy bastpoy   8512 May  1 19:05 Makefile
--rwxrwxr-x 1 bastpoy bastpoy 205528 May  1 19:41 exec.out
-drwxrwxr-x 4 bastpoy bastpoy   4096 Apr 29 10:24 include
-drwxrwxr-x 2 bastpoy bastpoy   4096 Apr 17 01:46 others
-drwxrwxr-x 7 bastpoy bastpoy   4096 May  1 19:41 out
--rw-r--r-- 1 bastpoy bastpoy      0 May  1 19:41 output
--rw-r--r-- 1 bastpoy bastpoy    570 May  1 19:41 output1
+drwxrwxr-x 7 bastpoy bastpoy   4096 May  2 11:10 out
+-rw-r--r-- 1 bastpoy bastpoy      0 May  2 11:12 output
+-rw-r--r-- 1 bastpoy bastpoy      0 May  2 11:12 output1
 -rw-rw-r-- 1 bastpoy bastpoy   3034 May  1 11:04 readme
 -rw-rw-r-- 1 bastpoy bastpoy     17 Apr 29 10:24 salut
 drwxrwxr-x 5 bastpoy bastpoy   4096 Apr 29 10:24 srcs

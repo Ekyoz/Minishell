@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:52:24 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/01 19:41:10 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/02 11:15:59 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void find_redir_in(t_tree *tree, t_node *nodes, int *isredir)
         }
         else
         {
-            fprintf(stderr, "la dedans\n");
             tree->fdin = open(nodes->right->args[0], O_RDONLY, 0644);
             if(tree->fdin < 0)
                 tree->error = 2;                
@@ -65,11 +64,9 @@ void find_redir_append(t_tree *tree, t_node *nodes, int *isredir)
             tree->fdout = open(nodes->right->left->args[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
             if(tree->fdout < 0)
                 tree->error = 2;
-            fprintf(stderr, "la dedans2\n");
         }
         else
         {
-            fprintf(stderr, "la dedans3\n");
             tree->fdout = open(nodes->right->args[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
             if(tree->fdout < 0)
                 tree->error = 2;                
@@ -88,7 +85,6 @@ int check_redir_out(t_tree *tree, t_node *nodes)
     {
         find_redir_out(tree, nodes, &isredir);
         find_redir_append(tree, nodes, &isredir);
-        printf("la\n");
         nodes = nodes->right;
     }
     if(isredir == 1)
@@ -96,7 +92,6 @@ int check_redir_out(t_tree *tree, t_node *nodes)
         dup2(tree->fdout, STDOUT_FILENO);
         close(tree->fdout);
     }
-    fprintf(stderr, "is redir out %d\n", isredir);
     return (isredir);
 }
 
@@ -116,6 +111,5 @@ int check_redir_in(t_tree *tree, t_node *nodes)
         dup2(tree->fdin, STDIN_FILENO);
         close(tree->fdin);
     }
-    fprintf(stderr, "is redir in %d\n", isredir);
     return (isredir);
 }
