@@ -95,3 +95,9 @@ redirection in vers la lecture du pipe3
 - lire tant qu'il n'y a pas le caractere de fin de chaine
 - quand je heredoc il faut que je check si j'ai bien une redirection
 - <<eof << eof1 => il faut obligatoirement taper eof puis eof1 pour sortir
+
+PROCEDURE
+
+- Ecrire dans un document tampon => .heredoc
+- Si il y a redirection rediriger ce document vers le nouveau
+- le commande cat va ecrire le contenu du fichier heredoc dans la sortie

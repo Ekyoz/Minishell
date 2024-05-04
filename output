@@ -1,11 +1,12 @@
-total 248
--rwxrwxr-x 1 bastpoy bastpoy 208920 mai    2 15:03 exec.out
-drwxrwxr-x 4 bastpoy bastpoy   4096 avril 29 10:24 include
--rw-rw-r-- 1 bastpoy bastpoy   8520 mai    2 14:14 Makefile
-drwxrwxr-x 2 bastpoy bastpoy   4096 avril 17 01:46 others
-drwxrwxr-x 7 bastpoy bastpoy   4096 mai    2 15:03 out
--rw-r--r-- 1 bastpoy bastpoy      0 mai    2 15:05 output
--rw-r--r-- 1 bastpoy bastpoy    570 mai    2 11:12 output1
--rw-rw-r-- 1 bastpoy bastpoy   3418 mai    2 15:03 readme
--rw-rw-r-- 1 bastpoy bastpoy     17 avril 29 10:24 salut
-drwxrwxr-x 5 bastpoy bastpoy   4096 avril 29 10:24 srcs
+total 72
+-rw-r--r-- 1 bpoyet 2023_lyon  8520 May  3 09:14 Makefile
+-rwxr-xr-x 1 bpoyet 2023_lyon 48960 May  4 14:37 exec.out
+drwxr-xr-x 4 bpoyet 2023_lyon    51 May  3 09:14 include
+-rw-r--r-- 1 bpoyet 2023_lyon     0 May  4 14:12 infile
+drwxr-xr-x 2 bpoyet 2023_lyon    25 Apr 16 14:50 others
+drwxr-xr-x 7 bpoyet 2023_lyon    91 May  4 14:37 out
+-rw-r--r-- 1 bpoyet 2023_lyon    22 May  4 13:42 outfile
+-rw-r--r-- 1 bpoyet 2023_lyon     0 May  4 14:37 output
+-rw-r--r-- 1 bpoyet 2023_lyon  3686 May  4 11:22 readme
+-rw-r--r-- 1 bpoyet 2023_lyon    17 Apr 26 14:16 salut
+drwxr-xr-x 5 bpoyet 2023_lyon    63 Apr 22 13:55 srcs

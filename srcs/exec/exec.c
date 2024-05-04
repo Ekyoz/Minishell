@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/02 14:13:27 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/04 14:44:42 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int init_fdpipe(t_tree *tree,t_node *nodes)
             perror("error creation pipe");
         j++;
     }
-    printf("i vaut %d\n", i);
     return (i);
 }
 
@@ -44,6 +43,7 @@ void *ft_execve(t_tree *tree, t_node *nodes)
     if(execve(tree->path, nodes->args, NULL) == -1)
     {
         fprintf(stderr, "error execve\n");
+        perror("error");
         return((void*)1);
     }
     return((void*)0);
@@ -67,6 +67,7 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
         {
             if(j == 0) // premier pipe
             {
+                heredoc(tree, nodes->left);
                 if(!check_redir_out(tree, nodes->left) || !check_redir_in(tree, nodes->left))
                     dup2(tree->fdpipe[0][1], STDOUT_FILENO);
                 check_redir_in(tree, nodes->left);
@@ -75,6 +76,7 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
             }
             else if(j == i) // dernier pipe
             {
+                heredoc(tree, nodes->left);
                 check_redir_out(tree, nodes->left);
                 dup2(tree->fdpipe[j - 1][0], STDIN_FILENO);
                 close(tree->fdpipe[j - 1][0]);
@@ -82,6 +84,7 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
             }
             else // pipe(s) du milieu 
             {
+                heredoc(tree, nodes->left);
                 dup2(tree->fdpipe[j - 1][0], STDIN_FILENO); // je lis mon pipe actuelle
                 // dup2(tree->fdpipe[j][1], STDOUT_FILENO); 
                 if(!check_redir_out(tree, nodes->left))
@@ -91,10 +94,12 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
                 close(tree->fdpipe[j][0]);
                 close(tree->fdpipe[j][1]);
             }
-            if(check_redir_in(tree, nodes->left) || check_redir_out(tree, nodes->left))
+            if(check_redir_in(tree, nodes->left) || check_redir_out(tree, nodes->left)
+                || find_heredoc(nodes->left))
                 ft_execve(tree, nodes->left->left);
             else if(nodes->left)
             {
+                fprintf(stderr,"type de cmd exec %d\n", nodes->left->type);
                 ft_execve(tree, nodes->left);
             }
             else
@@ -106,19 +111,20 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
                 close(tree->fdpipe[j - 1][0]);
             if(j < i)
                 close(tree->fdpipe[j][1]);
+            waitpid(pid[j], NULL, 0);
+            if(access(".here_doc", F_OK) != -1)
+                unlink(".here_doc");
             j++;
             if(nodes->right)
-            {
                 nodes = nodes->right;
-            }
         }
     }
-        j = 0;
-        while(j <= i)
-        {
-            waitpid(pid[j], NULL, 0);
-            j++;
-        }
+        // j = 0;
+        // while(j <= i)
+        // {
+        //     waitpid(pid[j], NULL, 0);
+        //     j++;
+        // }
     return ((void*)0);
 }
 
@@ -152,11 +158,17 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
         return ((void*)1);
     if(pid == 0)
     {
+        heredoc(tree, nodes);
         check_redir_out(tree, nodes);
         check_redir_in(tree, nodes);
         ft_execve(tree, nodes->left);
     }
-    waitpid(pid, NULL, 0);
+    else
+    {
+        waitpid(pid, NULL, 0);
+        if(access(".here_doc", F_OK) != -1)
+            unlink(".here_doc");
+    }
     return((void*)0);
 }
 

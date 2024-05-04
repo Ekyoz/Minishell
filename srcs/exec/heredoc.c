@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/02 23:26:02 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/04 14:48:57 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void init_eofword(t_node *nodes, char ***eofword)
+static void init_eofword(t_node *nodes, char ***eofword)// fonction qui init tous les eof
 {
     int i;
 
@@ -23,15 +23,23 @@ static void init_eofword(t_node *nodes, char ***eofword)
             i++;
         nodes = nodes->right;
     }
-    *eofword = (char **)malloc(sizeof(char *) * (i + 1));
-    //proteger le malloc
-    
+    fprintf(stderr, "i vaut %d\n", i);
+    if(i > 0)
+        *eofword = (char **)malloc(sizeof(char *) * (i + 1));
+        //proteger le malloc
+    else
+        *eofword = NULL;
 }
 
-static char **find_heredoc(t_tree *tree, t_node *nodes)
+static void get_her_tok(t_node *nodes)
+{
+
+}
+
+//je trouve les heredoc et je retourne tous les eof dans un char**
+char **find_heredoc(t_node *nodes) 
 {
     char **eofword;
-
     int i;
 
     i = 0 ;
@@ -46,6 +54,7 @@ static char **find_heredoc(t_tree *tree, t_node *nodes)
                 if(nodes->right->left->type == TOKEN_WORD)
                 {
                     eofword[i] = ft_strdup(nodes->right->left->args[0]);
+                    fprintf(stderr, "eof %s\n", eofword[i]);
                     i++;
                 }
                 else
@@ -56,7 +65,8 @@ static char **find_heredoc(t_tree *tree, t_node *nodes)
             }
             else if(nodes->right->type == TOKEN_WORD) // si mon token dapres est un word
             {
-                eofword[i] = ft_strdup(nodes->right->left->args[0]);
+                eofword[i] = ft_strdup(nodes->right->args[0]);
+                fprintf(stderr, "eof %s\n", eofword[i]);
                 i++;
             }
             else // sinon je n'ai pas d'eof donc erreur
@@ -67,25 +77,34 @@ static char **find_heredoc(t_tree *tree, t_node *nodes)
         }
         nodes = nodes->right;
     }
+    if(i != 0)
+        eofword[i] = NULL;
     return (eofword);
 }
 
 void heredoc(t_tree *tree, t_node *nodes)
 {
-    // si j'ai un redir out
-    int fd;
+    char *input;
+    char **eofword;
 
-    fd = 0;
-    if(check_redir_out(tree, nodes))
+    eofword = find_heredoc(nodes);
+    if(eofword)
     {
-        fd = tree->fdout; //je redirige pour ecrire mon heredoc dans un fichier
-    }
-    if(!find_heredoc(tree, nodes))
-    {
-
-    }
-    else// il faut que je lise tant que j'ai pas tous les eof de finis
-    {
-        // readline();
+        tree->fdin = open(".here_doc",  O_WRONLY | O_CREAT | O_TRUNC, 0777);
+        if(tree->fdin < 0)
+            perror("error opening");
+        fprintf(stderr, "dans la boucle\n");
+        while(*eofword)
+        {
+            input = readline("> ");
+            write(tree->fdin, input, ft_strlen(input));
+            write(tree->fdin, "\n", 1);
+            if(!ft_strcmp(*eofword, input))
+                eofword++;
+        }
+        close(tree->fdin);
+        tree->fdin = open(".here_doc", O_RDONLY);
+        dup2(tree->fdin, STDIN_FILENO);
+        close(tree->fdin);
     }
 }
