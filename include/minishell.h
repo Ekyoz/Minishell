@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/04 14:36:43 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/05 17:56:51 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ t_tree *init_tree(char *envp[]);
 
 //EXECUT
 void ast_exec(t_tree *tree);
+void *ft_execve(t_tree *tree, t_node *nodes);
+void *exec_pipe(t_tree *tree, t_node *nodes);
 
 //CHECKING COMMAND
 char *check_access1(t_tree *tree, t_node *nodes);

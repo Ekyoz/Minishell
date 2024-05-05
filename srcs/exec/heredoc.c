@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/04 14:48:57 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/05 17:58:10 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,6 @@ static void init_eofword(t_node *nodes, char ***eofword)// fonction qui init tou
         //proteger le malloc
     else
         *eofword = NULL;
-}
-
-static void get_her_tok(t_node *nodes)
-{
-
 }
 
 //je trouve les heredoc et je retourne tous les eof dans un char**

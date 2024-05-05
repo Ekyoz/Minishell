@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+         #
+#    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/05/02 14:14:32 by bastpoy          ###   ########.fr        #
+#    Updated: 2024/05/05 17:49:35 by bpoyet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ FILE_BUILTINS_DIR 	= builtins/
 FILE_BUILTINS 		= cd echo env exit export pwd unset
 
 FILE_EXEC_DIR		= exec/
-FILE_EXEC			= command tree create_ast exec nodes token_type ../parsing/checker ../parsing/parsing ../parsing/utils_parser redirec heredoc
+FILE_EXEC			= command tree create_ast exec nodes token_type ../parsing/checker ../parsing/parsing ../parsing/utils_parser redirec heredoc pipe
 
 FILE_PARSING_DIR	= parsing/
 FILE_PARSING		= parsing checker utils_parser

@@ -6,13 +6,13 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:17:58 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/24 15:01:05 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/05 17:34:24 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// je check ma commande avec le chemin d ema variable d'environnement
+// je check ma commande avec le chemin de ma variable d'environnement
 char	*check_access1(t_tree *tree, t_node *nodes)
 {
 	char	*path;
