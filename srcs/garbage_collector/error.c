@@ -1,24 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstiter_bonus.c                                 :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.42.fr>          +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/15 17:34:16 by alexandre         #+#    #+#             */
-/*   Updated: 2023/11/17 15:21:51 by atresall         ###   ########.fr       */
+/*   Created: 2024/05/07 16:43:01 by bpoyet            #+#    #+#             */
+/*   Updated: 2024/05/07 17:36:16 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_lstiter(t_list *lst, void (*f)(void *))
+void print_error(int errorcode, t_node *node, t_tree *tree)
 {
-	if (!lst || !f)
-		return ;
-	while (lst)
-	{
-		f(lst->content);
-		lst = lst->next;
-	}
+    if(errorcode = 1 && tree->error[0] == 0) // command not found
+    {
+        Printf("Command not found: %s\n", node->args[0]);
+        exit(errno);
+    }
 }

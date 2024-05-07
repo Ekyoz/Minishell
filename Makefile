@@ -6,7 +6,7 @@
 #    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/05/05 17:49:35 by bpoyet           ###   ########.fr        #
+#    Updated: 2024/05/07 17:04:25 by bpoyet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,30 +26,38 @@ HEADER_FILES		= minishell
 SRC_FILES		    = main
 TEST_FILES  		= test
 
+FILE_AST_DIR		= ast/
+FILE_AST 			= create_ast nodes token_type tree
+
 FILE_BUILTINS_DIR 	= builtins/
 FILE_BUILTINS 		= cd echo env exit export pwd unset
 
-FILE_EXEC_DIR		= exec/
-FILE_EXEC			= command tree create_ast exec nodes token_type ../parsing/checker ../parsing/parsing ../parsing/utils_parser redirec heredoc pipe
+FILE_EXEC_DIR		= exec/ 
+FILE_EXEC			= command exec redirec heredoc pipe
+
+FILE_GARBAGE_DIR	= garbage_collector/
+FILE_GARBAGE		= error.c
 
 FILE_PARSING_DIR	= parsing/
 FILE_PARSING		= parsing checker utils_parser
 
-DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR)
+DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR) $(FILE_AST_DIR) $(FILE_GARBAGE_DIR)
 SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
 SRC_FILES			+= $(addprefix $(FILE_PARSING_DIR), $(FILE_PARSING))
 SRC_FILES			+= $(addprefix $(FILE_EXEC_DIR), $(FILE_EXEC))
+SRC_FILES			+= $(addprefix $(FILE_AST_DIR), $(FILE_AST))
+SRC_FILES			+= $(addprefix $(FILE_GARBAGE_DIR), $(FILE_GARBAGE))
 
 #-------- LIBS --------#
 
 LIBFT_DIR			= $(INCLUDE_DIR)/LibFT
 LIBFT_ARCHIVE		= $(LIBFT_DIR)/libft.a
 
-PIPEX_DIR			= $(INCLUDE_DIR)/Pipex
-PIPEX_ARCHIVE		= $(PIPEX_DIR)/libpipex.a
+# PIPEX_DIR			= $(INCLUDE_DIR)/Pipex
+# PIPEX_ARCHIVE		= $(PIPEX_DIR)/libpipex.a
 
-LIB_LIST			= $(LIBFT_DIR) $(PIPEX_DIR)
-LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE) $(PIPEX_ARCHIVE)
+LIB_LIST			= $(LIBFT_DIR) # $(PIPEX_DIR)
+LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE) # $(PIPEX_ARCHIVE)
 
 #-------- FLAGS --------#
 CFLAGS 				= -Wall -Wextra #-Werror

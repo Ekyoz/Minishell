@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:02:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/01 12:18:44 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/07 16:55:52 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ int main(int argc, char *argv[], char *envp[])
     t_token *tokens;
     t_tree *tree;
 
+    printf("la faut rentrer\n");
     tree = init_tree(envp);
     if(!tree)
         return (1);

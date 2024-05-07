@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/05 17:56:51 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/07 17:36:18 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 #define BUFFER 1000
 # include "libft.h"
-# include "pipex.h"
+// # include "pipex.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -74,7 +74,7 @@ typedef struct s_tree // structure qui va iterer dans mes nodes et executer les 
 	int **fdpipe; //fd de chaque pipe
 	int fdout; //fd du file out
 	int fdin; // fd du file in
-	int error;
+	int error[4];
 } t_tree;
 
 typedef struct s_env
@@ -107,9 +107,9 @@ void *exec_pipe(t_tree *tree, t_node *nodes);
 //CHECKING COMMAND
 char *check_access1(t_tree *tree, t_node *nodes);
 int	get_env_args(char *envp[], t_tree *tree);
+int	check_cmd1(t_tree *tree, t_node *node);
 
 //REDIREC
-
 void find_redir_out(t_tree *tree, t_node *nodes, int *isredir);
 void find_redir_in(t_tree *tree, t_node *nodes, int *isredir);
 void find_redir_append(t_tree *tree, t_node *nodes, int *isredir);
@@ -117,6 +117,9 @@ int check_redir_out(t_tree *tree, t_node *nodes);
 int check_redir_in(t_tree *tree, t_node *nodes);
 void heredoc(t_tree *tree, t_node *nodes);
 char **find_heredoc(t_node *nodes);
+
+//FONCTIONS DU GARBAGE COLLECTOR
+void print_error(int errorcode, t_node *node, t_tree *tree);
 
 //PARSING
 t_token *parsing(char *commands);

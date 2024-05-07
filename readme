@@ -101,3 +101,28 @@ PROCEDURE
 - Ecrire dans un document tampon => .heredoc
 - Si il y a redirection rediriger ce document vers le nouveau
 - le commande cat va ecrire le contenu du fichier heredoc dans la sortie
+
+------------- GESTION ERREURS -----------
+
+- Retourner le bon code erreur et le stocker
+- Dans le cas d'une commande errone je n'ai pas forcement besoin de rentrer dans l'exe, pareil pour l'ouverture de fichier
+- L'erreur de commandes doit arriver apres l'erreur de fichier
+- Si la commande marche masi que le fichier ne s'ouvre pas je ne fais pas la commande
+- 
+
+Cas d'erreur
+
+cmd pas bonne
+file bon
+ => Affichage commande pas bonne et creation du file 
+
+cmd pas bonne 
+file pas bon
+=> affichage erreur file
+
+cmd bonne
+file pas bon
+file 2 pas bon
+=>erreur file1 pas le deux
+
+
