@@ -16,7 +16,7 @@ void print_error(int errorcode, t_node *node, t_tree *tree)
 {
     if(errorcode = 1 && tree->error[1] == 1) // command not found
     {
-        Printf("Command not found: %s\n", node->args[0]);
+        printf("Command not found: %s\n", node->args[0]);
         exit(errno);
     }
 }

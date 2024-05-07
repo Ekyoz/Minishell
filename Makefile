@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
+#    By: atresall <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/05/07 17:04:25 by bpoyet           ###   ########.fr        #
+#    Updated: 2024/03/03 14:07:07 by atresall         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,17 +26,17 @@ HEADER_FILES		= minishell
 SRC_FILES		    = main
 TEST_FILES  		= test
 
-FILE_AST_DIR		= ast/
-FILE_AST 			= create_ast nodes token_type tree
-
 FILE_BUILTINS_DIR 	= builtins/
 FILE_BUILTINS 		= cd echo env exit export pwd unset
 
-FILE_EXEC_DIR		= exec/ 
-FILE_EXEC			= command exec redirec heredoc pipe
+FILE_EXEC_DIR		= exec/
+FILE_EXEC			= command exec heredoc pipe redirec
+
+FILE_AST_DIR		= ast/
+FILE_AST			= create_ast nodes token_type tree
 
 FILE_GARBAGE_DIR	= garbage_collector/
-FILE_GARBAGE		= error.c
+FILE_GARBAGE		= error
 
 FILE_PARSING_DIR	= parsing/
 FILE_PARSING		= parsing checker utils_parser
@@ -53,11 +53,8 @@ SRC_FILES			+= $(addprefix $(FILE_GARBAGE_DIR), $(FILE_GARBAGE))
 LIBFT_DIR			= $(INCLUDE_DIR)/LibFT
 LIBFT_ARCHIVE		= $(LIBFT_DIR)/libft.a
 
-# PIPEX_DIR			= $(INCLUDE_DIR)/Pipex
-# PIPEX_ARCHIVE		= $(PIPEX_DIR)/libpipex.a
-
-LIB_LIST			= $(LIBFT_DIR) # $(PIPEX_DIR)
-LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE) # $(PIPEX_ARCHIVE)
+LIB_LIST			= $(LIBFT_DIR)
+LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE)
 
 #-------- FLAGS --------#
 CFLAGS 				= -Wall -Wextra #-Werror
@@ -163,9 +160,12 @@ $(TEST_OUT_DIR)/%.o: $(TEST_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 
 #-------- COMMANDS --------#
 
-$(NAME): archive
+$(NAME): default
+
+default: archive
 			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME) $(LIBFLAGS)
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR)"
+
 
 all: $(NAME)
 
@@ -208,7 +208,7 @@ ar_exec:	lib $(OBJ_EXEC) $(HEADERS)
 
 exec: ar_exec
 			@$(CC) $(CFLAGS_EXEC) $(OBJ_EXEC) $(INCLUDE_RUN) -o $(EXEC_NAME) $(LIBFLAGS)
-			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)DEBUG!$(DEF_COLOR)"
+			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)EXEC!$(DEF_COLOR)"
 
 #------ PARSING ------#
 
@@ -221,7 +221,7 @@ ar_parsing:	lib $(OBJ_PARSING) $(HEADERS)
 
 parsing: ar_parsing
 			@$(CC) $(CFLAGS_PARSING) $(OBJ_PARSING) $(INCLUDE_RUN) -o $(PARSING_NAME) $(LIBFLAGS)
-			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)DEBUG!$(DEF_COLOR)"
+			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)PARSING!$(DEF_COLOR)"
 
 #------ TEST ------#
 
@@ -237,7 +237,7 @@ test: ar_test
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)TEST!$(DEF_COLOR)"
 
 #-------- CLEAN --------#
-re:			fclean $(NAME)
+re:			fclean run
 			@echo "$(GREEN)Nettoyage et recompilage de $(PROJECT_NAME)!$(DEF_COLOR)"
 
 clean:

@@ -127,4 +127,7 @@ bool checker(t_token *head, char *command);
 bool check_char_before(char *string, char c, size_t pos, int len);
 bool check_char_after(char *string, char c, size_t pos, int len);
 
+
+void create_node(t_token *tokens, t_tree **tree);
+void print_tree(t_node *node);
 #endif

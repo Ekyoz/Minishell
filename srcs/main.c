@@ -12,29 +12,29 @@
 
 #include "minishell.h"
 
-void change_directory(char *input)
+int main(int argc, char *argv[], char *envp[])
 {
-    char buffer[1024];
+	(void)argc;
+	(void)argv;
+	char *input;
+	t_token *tokens;
+	t_tree *tree;
 
-    getcwd(buffer, sizeof(buffer));
-    if(chdir(input) == -1)
-        perror("chdir");
-    getcwd(buffer, sizeof(buffer));
-    printf("%s\n", buffer);
-}
-
-int main()
-{
-    char *input;
-
-    while (true)
-    {
-        input = readline("Minishell >");
-		printf("Line: %d\n", input[0]);
-        add_history(input);
-		parsing(input);
-        if(!ft_strncmp(input, "exit", 5))
-            break;
-    }
-    return 0;
+	printf("la faut rentrer\n");
+	tree = init_tree(envp);
+	if(!tree)
+		return (1);
+	while (true)
+	{
+		input = readline("Minishell :");
+		add_history(input);
+		tokens = parsing(input);
+		create_node(tokens, &tree);
+		printf("\n");
+		print_tree(tree->nodes);
+		ast_exec(tree);
+		if(!ft_strncmp(input, "exit", 5))
+			break;
+	}
+	return 0;
 }
