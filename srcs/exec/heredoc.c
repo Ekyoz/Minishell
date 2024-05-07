@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/05 17:58:10 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/07 19:36:13 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void init_eofword(t_node *nodes, char ***eofword)// fonction qui init tou
             i++;
         nodes = nodes->right;
     }
-    fprintf(stderr, "i vaut %d\n", i);
     if(i > 0)
         *eofword = (char **)malloc(sizeof(char *) * (i + 1));
         //proteger le malloc

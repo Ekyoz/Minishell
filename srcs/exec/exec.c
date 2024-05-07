@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/07 17:36:43 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/07 19:39:19 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,12 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
         return ((void*)1);
     if(pid == 0)
     {
-        if(!check_cmd1(tree, nodes))
-            exit(2);
         heredoc(tree, nodes);
         check_redir_out(tree, nodes);
         check_redir_in(tree, nodes);
+        if(!check_cmd1(tree, nodes->left))
+            print_error(1, nodes->left, tree);
+        fprintf(stderr, "je vais pas la\n");
         ft_execve(tree, nodes->left);
     }
     else

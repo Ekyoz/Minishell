@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/07 17:36:18 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/07 19:19:21 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ char **find_heredoc(t_node *nodes);
 
 //FONCTIONS DU GARBAGE COLLECTOR
 void print_error(int errorcode, t_node *node, t_tree *tree);
+void check_error_code(t_tree *tree, t_node *nodes);
 
 //PARSING
 t_token *parsing(char *commands);

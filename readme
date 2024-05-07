@@ -125,4 +125,11 @@ file pas bon
 file 2 pas bon
 =>erreur file1 pas le deux
 
+TYPE D'ERREUR file
+
+- no such file or directory => le fichier existe pas
+- permission denied => Pas de permissions sur le fichier 
+    - Pas les permissions
+    - Un / pour signifier un chemin
+
 
