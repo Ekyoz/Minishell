@@ -6,7 +6,7 @@
 /*   By: atresall <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:20:15 by atresall          #+#    #+#             */
-/*   Updated: 2024/02/13 14:55:46 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/07 13:22:27 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,12 +152,21 @@ void *ft_calloc(size_t ELEMENTCOUNT, size_t ELEMENTSIZE);
 /**
  * @brief Change la taille de la mémoire allouée pointée par ptr à new_size octets.
  *
- * @param PTR Pointeur vers la mémoire précédemment allouée avec malloc, calloc ou realloc à redimensionner.
- * @param OLD_SIZE: La taille actuelle de la mémoire allouée pointée par ptr.
+ * @param PTR: Pointeur vers la mémoire précédemment allouée avec malloc, calloc ou realloc à redimensionner.
+ * @param OLD_SIZE: La taille actuelle de la mémoire.
  * @param NEW_SIZE: La nouvelle taille requise de la mémoire.
  * @return Un pointeur vers la mémoire nouvellement allouée, ou NULL si l'opération a échoué.
  */
-void				*ft_realloc(void *ptr, size_t old_size, size_t new_size);
+void *ft_realloc(void *ptr, size_t old_size, size_t new_size);
+
+/**
+ * @brief Copie la chaîne de caractères source dans la chaîne de caractères destination.
+ *
+ * @param dest La chaîne de destination.
+ * @param src La chaîne source.
+ * @return Un pointeur vers la chaîne de destination.
+ */
+char *ft_strcpy(char *dest, const char *src);
 
 /**
  * @brief Recherche un caractère dans une chaîne.
@@ -203,6 +212,14 @@ size_t				ft_strlcpy(char *dest, char *src, size_t size);
  * @return La longueur de la chaîne.
  */
 size_t				ft_strlen(const char *str);
+
+/**
+ * @brief Calcule la longueur d'un tableau.
+ *
+ * @param ARRAY: Le tableau dont on veut connaître la longueur.
+ * @return La longueur du tableau.
+ */
+size_t 				ft_strlen_array(char **array);
 
 /**
  * @brief Calcule la longueur d'une chaîne, jusqu'à un maximum de 'maxlen' caractères.

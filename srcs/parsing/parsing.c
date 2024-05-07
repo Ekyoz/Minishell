@@ -6,73 +6,65 @@
 /*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 14:52:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/26 13:22:17 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/07 15:40:18 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void print_token_type(t_token_type type)
-{
-	if (type == TOKEN_PIPE)
-		printf("\033[0;94m\033[1mTOKEN\033[0m: PIPE\n");
-	else if (type == TOKEN_REDIR_IN)
-		printf("\033[0;94m\033[1mTOKEN\033[0m: REDIR_IN\n");
-	else if (type == TOKEN_REDIR_OUT)
-		printf("\033[0;94m\033[1mTOKEN\033[0m: REDIR_OUT\n");
-	else if (type == TOKEN_REDIR_APPEND)
-		printf("\033[0;94m\033[1mTOKEN\033[0m: REDIR_APPEND\n");
-	else if (type == TOKEN_REDIR_HEREDOC)
-		printf("\033[0;94m\033[1mTOKEN\033[0m: REDIR_HEREDOC\n");
-	else if (type == TOKEN_ENV_VAR)
-		printf("\033[0;94m\033[1mTOKEN\033[0m: ENV_VAR\n");
-	else if (type == TOKEN_WORD)
-		printf("\033[0;94m\033[1mTOKEN\033[0m: WORD\n");
-	else if (type == TOKEN_OR)
-		printf("\033[0;94m\033[1mTOKEN\033[0m: OR\n");
-	else if (type == TOKEN_AND)
-		printf("\033[0;94m\033[1mTOKEN\033[0m: AND\n");
-}
-
-void printList(t_token * node) {
-	int i = 0;
-	while(node != NULL) {
-		i++;
-		printf("=========[ Token n %d ]=========\n", i);
-		print_token_type(node->type);
-		if (node->type == TOKEN_WORD)
-		{
-			printf("\033[0;31m\033[1mCOMMAND\033[0m: %s\n", node->value[0]);
-			for (int j = 1; node->value[j]; j++)
-				printf("\033[0;33m\033[1mARGS[%d]\033[0m: %s\n",j , node->value[j]);
-		} else
-			printf("\033[0;31m\033[1mCOMMAND\033[0m: NULL\n");
-		printf("===============================\n");
-		printf("\n");
-		node = node->next;
-	}
-	printf("Nombre total de tokens: \033[0;31m\033[1m%d\033[0m\n", i);
-}
-
-
 bool parsing(t_token **head, char *commands)
 {
-	char **pipe_splited_cmd;
-	char **redir_splited_cmd;
-	int i = -1;
+	char **c_pipe = NULL; // command separer par la pipe
+	char **c_splitted = NULL; // command separer par tous les tokens
+	char **c_cmd = NULL; // list de la comamnde avec les flags
+	char **c_args = NULL; // les elements qui sont pas les flags
+	char **c_redirs = NULL; // liste des redirection et des fichiers
+	int i_pipe = -1;
+	int i_args;
+	int i_redirs;
 	if (commands)
 	{
-		pipe_splited_cmd = pipe_spliter(commands);
-		if (!pipe_splited_cmd)
+		c_pipe = pipe_splitter(commands);
+		if (!c_pipe)
 			return false;
-		while (pipe_splited_cmd[++i])
+		while (c_pipe[++i_pipe])
 		{
-			redir_splited_cmd = check_redir(pipe_splited_cmd[i]);
-			for (int j = 0; redir_splited_cmd[j]; j++)
-				printf("Pipe nº%d: %s\n", j, redir_splited_cmd[j]);
+			i_args = -1;
+			i_redirs = -1;
+			c_splitted = splitter(c_pipe[i_pipe]);
+			if (!c_splitted)
+				return false;
+			if (!there_token(c_pipe[i_pipe])) // si il y a pas de redirection
+			{
+				if (c_splitted[0][0] == '-')
+					return false;
+				c_cmd = extract_flags(c_splitted);
+				c_args = miss_elements(c_splitted, c_cmd);
+				append_token(head, TOKEN_WORD, c_cmd);
+				while (c_args[++i_args])
+					append_token(head, TOKEN_WORD,string_to_array(c_args[i_args]));
+			}
+			else if (there_token(c_pipe[i_pipe]))// si il y a une/des redirections
+			{
+				c_redirs = redir(c_splitted);
+				if (is_token(c_pipe[0], 0) == TOKEN_WORD)
+				{
+					printf("test");
+//					c_args = miss_elements(c_splitted,extract_flags(c_splitted));
+//					c_args = miss_elements(c_args, c_redirs);
+					append_token(head, TOKEN_WORD, extract_flags(c_redirs));
+				}
+//				while (c_others[++i_others])
+//					append_token(head, TOKEN_WORD,string_to_array(c_others[i_others]));
+				while (c_redirs[++i_redirs])
+					append_token(head,is_token(c_redirs[i_redirs], 0),string_to_array(c_redirs[i_redirs]));
+			}
+			if (i_pipe < pipe_counter(commands) - 1)
+				append_token(head, TOKEN_PIPE, NULL);
 		}
 	}
-	if (!checker(head, commands))
-		return false;
+//	if (!checker(head, commands))
+//		return false;
 	return true;
 }
+

@@ -67,6 +67,7 @@ void split_string(char** result, char* string, char separator) {
 		result[index][1] = '\0';
 		index++;
 	}
+	result[index] = NULL;
 }
 
 char** ft_split_sep(char* string, char separator) {

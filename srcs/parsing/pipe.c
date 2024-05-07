@@ -40,7 +40,7 @@ char *pipe_end(char *command)
 	return command;
 }
 
-char **pipe_spliter(char *command)
+char **pipe_splitter(char *command)
 {
 	int i = -1;
 	int j = -1;

@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/25 15:53:00 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/03 17:49:19 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,17 @@ t_token *get_last_token(t_token *head);
 void printList(t_token * node);
 void clear_list(t_token **head);
 int pipe_counter(const char *command);
-char **pipe_spliter(char *command);
-char **check_redir(char *splited_command);
-t_token_type is_token(char *c, int pos);
+char **pipe_splitter(char *command);
+t_token_type is_token(char *command, int pos);
+int split_count(char *command);
+bool there_token(char *command);
+char **splitter(char *command);
+char **split_token(char *command);
+char **extract_flags(char **command);
+char **miss_elements(char **list_base, char **list_miss);
+char **string_to_array(char *string);
+char **redir(char **cmd);
+void add_element_n(char ***list, int pos, char *value);
+char *next_word(char *cmd, int pos);
 
 #endif
