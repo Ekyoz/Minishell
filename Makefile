@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: atresall <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/03/03 14:07:07 by atresall         ###   ########.fr        #
+#    Updated: 2024/05/08 16:17:37 by bastpoy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,7 @@ LIB_LIST			= $(LIBFT_DIR)
 LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE)
 
 #-------- FLAGS --------#
-CFLAGS 				= -Wall -Wextra #-Werror
+CFLAGS 				= -Wall -Wextra -g3#-Werror
 CFLAGS_DEBUG		= -Wall -Wextra -g3
 CFLAGS_EXEC			= -Wall -Wextra -g3 #-Werror
 CFLAGS_PARSING		= -Wall -Wextra -g3 #-Werror

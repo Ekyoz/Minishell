@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/07 19:19:21 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/08 18:23:08 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ typedef struct s_tree // structure qui va iterer dans mes nodes et executer les 
 	int **fdpipe; //fd de chaque pipe
 	int fdout; //fd du file out
 	int fdin; // fd du file in
+	int fdoutcp;
 	int error[4];
 } t_tree;
 
@@ -119,8 +120,7 @@ void heredoc(t_tree *tree, t_node *nodes);
 char **find_heredoc(t_node *nodes);
 
 //FONCTIONS DU GARBAGE COLLECTOR
-void print_error(int errorcode, t_node *node, t_tree *tree);
-void check_error_code(t_tree *tree, t_node *nodes);
+void print_error(int errorcode, t_tree *tree, t_node *node);
 
 //PARSING
 t_token *parsing(char *commands);

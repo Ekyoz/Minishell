@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:52:24 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/07 19:25:28 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/08 19:51:38 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void find_redir_out(t_tree *tree, t_node *nodes, int *isredir)
         {
             tree->fdout = open(nodes->right->left->args[0], O_TRUNC | O_CREAT | O_WRONLY, 0644);
             if(tree->fdout < 0 && tree->error[0] == 0)
-                check_error_code(tree, nodes->right->left); 
+                print_error(1, tree, nodes->right->left); 
         }
         else
         {
             tree->fdout = open(nodes->right->args[0], O_TRUNC | O_CREAT | O_WRONLY, 0644);
             if(tree->fdout < 0 && tree->error[0] == 0)
             {
-                check_error_code(tree, nodes->right);               
+                print_error(1, tree, nodes->right);               
             }
         }
         *isredir = 1;
@@ -44,14 +44,14 @@ void find_redir_in(t_tree *tree, t_node *nodes, int *isredir)
         {
             tree->fdin = open(nodes->right->left->args[0], O_RDONLY, 0644);
             if(tree->fdin < 0 && tree->error[0] == 0)
-                check_error_code(tree, nodes->right->left);
+                print_error(1, tree, nodes->right->left);
         }
         else
         {
             tree->fdin = open(nodes->right->args[0], O_RDONLY, 0644);
             if(tree->fdin < 0 && tree->error[0] == 0)
             {
-                check_error_code(tree, nodes->right);
+                print_error(1, tree, nodes->right);
             }
         }
         *isredir = 1;
@@ -67,13 +67,13 @@ void find_redir_append(t_tree *tree, t_node *nodes, int *isredir)
         {
             tree->fdout = open(nodes->right->left->args[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
             if(tree->fdout < 0 && tree->error[0] == 0)
-                check_error_code(tree, nodes->right->left);
+                print_error(1, tree, nodes->right->left);
         }
         else
         {
             tree->fdout = open(nodes->right->args[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
             if(tree->fdout < 0 && tree->error[0] == 0)
-                check_error_code(tree, nodes->right);                
+                print_error(1, tree, nodes->right);                
         }
         *isredir = 1;
     }
@@ -93,6 +93,7 @@ int check_redir_out(t_tree *tree, t_node *nodes)
     }
     if(isredir == 1)
     {
+        tree->fdoutcp = dup(STDOUT_FILENO);
         dup2(tree->fdout, STDOUT_FILENO);
         close(tree->fdout);
     }

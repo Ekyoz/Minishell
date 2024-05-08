@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 17:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/05 17:56:29 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/08 19:51:53 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,9 @@ static void dup_pipe(t_tree *tree, t_node *nodes, int j, int i)
     }
     else if(j == i) // dernier pipe
     {
-        heredoc(tree, nodes->left);
-        check_redir_out(tree, nodes->left);
+        heredoc(tree, nodes);
+        check_redir_out(tree, nodes);
+        check_redir_in(tree, nodes);
         dup2(tree->fdpipe[j - 1][0], STDIN_FILENO);
         close(tree->fdpipe[j - 1][0]);
         close(tree->fdpipe[j - 1][1]);
@@ -89,14 +90,25 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
             dup_pipe(tree, nodes, j, i);
             if(check_redir_in(tree, nodes->left) || check_redir_out(tree, nodes->left)
                 || find_heredoc(nodes->left))
-                ft_execve(tree, nodes->left->left);
+                {
+                    if(!check_cmd1(tree, nodes->left->left))
+                        print_error(2, tree, nodes->left->left);
+                    ft_execve(tree, nodes->left->left);
+
+                }
             else if(nodes->left)
             {
-                fprintf(stderr,"type de cmd exec %d\n", nodes->left->type);
+                if(!check_cmd1(tree, nodes->left))
+                    print_error(2, tree, nodes->left);
+                // fprintf(stderr,"type de cmd exec %d\n", nodes->left->type);
                 ft_execve(tree, nodes->left);
             }
             else
+            {
+                if(!check_cmd1(tree, nodes))
+                    print_error(2, tree, nodes);
                 ft_execve(tree, nodes);
+            }
         }
         else
         {
@@ -105,7 +117,7 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
             if(j < i)
                 close(tree->fdpipe[j][1]);
             waitpid(pid[j], NULL, 0);
-            if(access(".here_doc", F_OK) != -1)
+            if(access(".here_doc", F_OK) != -1) // je supprime le heredoc
                 unlink(".here_doc");
             j++;
             if(nodes->right)

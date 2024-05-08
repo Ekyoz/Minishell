@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/07 19:39:19 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/08 18:20:55 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void *exec_cmd(t_tree *tree, t_node *nodes)
     if(pid == 0)
     {
         if(!check_cmd1(tree, nodes))
-            print_error(1, nodes, tree);
+            print_error(2, tree, nodes);
         tree->path = check_access1(tree, nodes);
         if(execve(tree->path, nodes->args, NULL) == -1)
         {
@@ -60,15 +60,16 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
         check_redir_out(tree, nodes);
         check_redir_in(tree, nodes);
         if(!check_cmd1(tree, nodes->left))
-            print_error(1, nodes->left, tree);
-        fprintf(stderr, "je vais pas la\n");
+            print_error(2, tree, nodes->left);
         ft_execve(tree, nodes->left);
+        exit(0);
     }
     else
     {
         waitpid(pid, NULL, 0);
         if(access(".here_doc", F_OK) != -1)
             unlink(".here_doc");
+
     }
     return((void*)0);
 }
