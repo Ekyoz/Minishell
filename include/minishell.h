@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/08 18:23:08 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/09 19:03:33 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,10 @@ void find_redir_in(t_tree *tree, t_node *nodes, int *isredir);
 void find_redir_append(t_tree *tree, t_node *nodes, int *isredir);
 int check_redir_out(t_tree *tree, t_node *nodes);
 int check_redir_in(t_tree *tree, t_node *nodes);
+int testopening(t_tree *tree, t_node *nodes);
+int testredir(t_node *nodes);
+
+//heredoc
 void heredoc(t_tree *tree, t_node *nodes);
 char **find_heredoc(t_node *nodes);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 17:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/08 19:51:53 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/09 19:05:34 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,35 @@ static void dup_pipe(t_tree *tree, t_node *nodes, int j, int i)
 {
     if(j == 0) // premier pipe
     {
+        // testopening(tree, nodes->left);
         heredoc(tree, nodes->left);
-        if(!check_redir_out(tree, nodes->left) || !check_redir_in(tree, nodes->left))
+        if(!check_redir_out(tree, nodes->left) 
+            && check_cmd1(tree, nodes->left))
+        {
             dup2(tree->fdpipe[0][1], STDOUT_FILENO);
+        }
         check_redir_in(tree, nodes->left);
         close(tree->fdpipe[0][1]);
         close(tree->fdpipe[0][0]);
     }
     else if(j == i) // dernier pipe
     {
+        // testopening(tree, nodes);
         heredoc(tree, nodes);
         check_redir_out(tree, nodes);
-        check_redir_in(tree, nodes);
-        dup2(tree->fdpipe[j - 1][0], STDIN_FILENO);
+        if(!check_redir_in(tree, nodes))
+            dup2(tree->fdpipe[j - 1][0], STDIN_FILENO);
         close(tree->fdpipe[j - 1][0]);
         close(tree->fdpipe[j - 1][1]);
     }
     else // pipe(s) du milieu 
     {
+        // testopening(tree, nodes->left);
         heredoc(tree, nodes->left);
-        dup2(tree->fdpipe[j - 1][0], STDIN_FILENO); // je lis mon pipe actuelle
-        // dup2(tree->fdpipe[j][1], STDOUT_FILENO); 
-        if(!check_redir_out(tree, nodes->left))
+        if(!check_redir_in(tree, nodes->left))
+            dup2(tree->fdpipe[j - 1][0], STDIN_FILENO); // je lis mon pipe actuelle
+        if(!check_redir_out(tree, nodes->left) 
+            && check_cmd1(tree, nodes->left))
             dup2(tree->fdpipe[j][1], STDOUT_FILENO);
         close(tree->fdpipe[j - 1][0]);
         close(tree->fdpipe[j - 1][1]);
@@ -88,19 +95,16 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
         if(pid[j] == 0)
         {
             dup_pipe(tree, nodes, j, i);
-            if(check_redir_in(tree, nodes->left) || check_redir_out(tree, nodes->left)
-                || find_heredoc(nodes->left))
-                {
-                    if(!check_cmd1(tree, nodes->left->left))
-                        print_error(2, tree, nodes->left->left);
-                    ft_execve(tree, nodes->left->left);
-
-                }
+            if(testredir(nodes->left))// je regarde si jai des redirections  
+            {
+                if(!check_cmd1(tree, nodes->left->left))
+                    print_error(2, tree, nodes->left->left);
+                ft_execve(tree, nodes->left->left);
+            }
             else if(nodes->left)
             {
                 if(!check_cmd1(tree, nodes->left))
                     print_error(2, tree, nodes->left);
-                // fprintf(stderr,"type de cmd exec %d\n", nodes->left->type);
                 ft_execve(tree, nodes->left);
             }
             else
@@ -124,11 +128,5 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
                 nodes = nodes->right;
         }
     }
-        // j = 0;
-        // while(j <= i)
-        // {
-        //     waitpid(pid[j], NULL, 0);
-        //     j++;
-        // }
     return ((void*)0);
 }

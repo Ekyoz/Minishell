@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/08 18:20:55 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/09 16:47:51 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void ast_exec(t_tree *tree)
     {
         if(nodes->type == TOKEN_PIPE)
         {
-            printf("dans un pipe\n");
+            // printf("dans un pipe\n");
             exec_pipe(tree, nodes);
             out = 0;            
         }
