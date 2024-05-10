@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:17:58 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/07 18:35:17 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/10 12:12:56 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,6 @@ int	check_cmd1(t_tree *tree, t_node *node)
 		free(path);
 		i++;
 	}
+	fprintf(stderr, "commande pas bonne\n");
 	return(0);
 }

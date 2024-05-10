@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/09 16:47:51 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/10 17:00:09 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void *exec_cmd(t_tree *tree, t_node *nodes)
         return((void *)1);
     if(pid == 0)
     {
+        choose_builtin(nodes, tree->env);
         if(!check_cmd1(tree, nodes))
             print_error(2, tree, nodes);
         tree->path = check_access1(tree, nodes);

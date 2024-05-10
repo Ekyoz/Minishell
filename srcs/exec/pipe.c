@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 17:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/09 19:05:34 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/10 12:15:48 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,12 @@ static void dup_pipe(t_tree *tree, t_node *nodes, int j, int i)
     if(j == 0) // premier pipe
     {
         // testopening(tree, nodes->left);
+        // fprintf(stderr, "node left %d\n", nodes->left->type);
         heredoc(tree, nodes->left);
         if(!check_redir_out(tree, nodes->left) 
-            && check_cmd1(tree, nodes->left))
+            && check_cmd1(tree, nodes->left->left))
         {
+            // fprintf(stderr, "je rentre la\n");
             dup2(tree->fdpipe[0][1], STDOUT_FILENO);
         }
         check_redir_in(tree, nodes->left);

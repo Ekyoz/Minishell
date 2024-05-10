@@ -6,13 +6,13 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:11:51 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/09 18:57:04 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/10 15:06:04 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_tree *init_tree(char *envp[])
+t_tree *init_tree(char *envp[], t_env *env)
 {
     t_tree *tree;
 
@@ -22,6 +22,7 @@ t_tree *init_tree(char *envp[])
         perror("Malloc error of tree");
         return(NULL);
     }
+    tree->env = env;
     tree->fdin = -1;
     tree->fdout = -1;
     tree->fdoutcp = -1;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+         #
+#    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/05/08 16:17:37 by bastpoy          ###   ########.fr        #
+#    Updated: 2024/05/10 13:58:01 by bpoyet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ FILE_BUILTINS_DIR 	= builtins/
 FILE_BUILTINS 		= cd echo env exit export pwd unset
 
 FILE_EXEC_DIR		= exec/
-FILE_EXEC			= command exec heredoc pipe redirec
+FILE_EXEC			= command exec heredoc pipe
 
 FILE_AST_DIR		= ast/
 FILE_AST			= create_ast nodes token_type tree
@@ -41,12 +41,16 @@ FILE_GARBAGE		= error
 FILE_PARSING_DIR	= parsing/
 FILE_PARSING		= parsing checker utils_parser
 
-DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR) $(FILE_AST_DIR) $(FILE_GARBAGE_DIR)
+FILE_REDIRECTION_DIR 	= redirection/
+FILE_REDIRECTION		= testopenredir redirec
+
+DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR) $(FILE_AST_DIR) $(FILE_GARBAGE_DIR) $(FILE_REDIRECTION_DIR)
 SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
 SRC_FILES			+= $(addprefix $(FILE_PARSING_DIR), $(FILE_PARSING))
 SRC_FILES			+= $(addprefix $(FILE_EXEC_DIR), $(FILE_EXEC))
 SRC_FILES			+= $(addprefix $(FILE_AST_DIR), $(FILE_AST))
 SRC_FILES			+= $(addprefix $(FILE_GARBAGE_DIR), $(FILE_GARBAGE))
+SRC_FILES			+= $(addprefix $(FILE_REDIRECTION_DIR), $(FILE_REDIRECTION))
 
 #-------- LIBS --------#
 

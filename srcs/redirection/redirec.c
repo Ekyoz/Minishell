@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:52:24 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/09 19:05:13 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/10 13:11:12 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ int check_redir_out(t_tree *tree, t_node *nodes)
         dup2(tree->fdout, STDOUT_FILENO);
         // close(tree->fdout);
     }
+    // fprintf(stderr, "is redir vaut %d\n", isredir);
     return (isredir);
 }
 
@@ -117,43 +118,4 @@ int check_redir_in(t_tree *tree, t_node *nodes)
         close(tree->fdin);
     }
     return (isredir);
-}
-
-//je teste si les fichiers s'ouvrent avant de vraiment les ouvrir
-int testopening(t_tree *tree, t_node *nodes)
-{
-    int isredir;
-
-    isredir = 0;
-    while(nodes)
-    {
-        find_redir_in(tree, nodes, &isredir);
-        find_redir_out(tree, nodes, &isredir);
-        find_redir_append(tree, nodes, &isredir);
-        if(tree->fdout != -1)
-        {
-            close(tree->fdout);
-            tree->fdout =-1;
-        }
-        if(tree->fdin != -1)
-        {
-            close(tree->fdin);
-            tree->fdin = -1;
-        }
-        nodes = nodes->right;
-    }
-    return (isredir);
-}
-int testredir(t_node *nodes)
-{
-    while(nodes)
-    {
-        if(nodes->type == TOKEN_REDIR_APPEND || nodes->type == TOKEN_REDIR_IN
-            || nodes->type == TOKEN_REDIR_OUT)
-        {
-            return(1);    
-        }
-        nodes = nodes->right;
-    }
-    return(0);
 }

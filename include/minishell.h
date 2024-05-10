@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/09 19:03:33 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/10 17:04:34 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,18 @@ typedef struct s_node
 	struct s_node	*right;
 }	t_node;
 
+typedef struct s_env
+{
+	char			*value;
+	bool			secret;
+	struct s_env	*next;
+}				t_env;
+
+
 typedef struct s_tree // structure qui va iterer dans mes nodes et executer les commandes
 {
 	t_node *nodes;
+	t_env *env;
 	char	**envp;
 	char	*path;
 	int **fdpipe; //fd de chaque pipe
@@ -78,11 +87,6 @@ typedef struct s_tree // structure qui va iterer dans mes nodes et executer les 
 	int error[4];
 } t_tree;
 
-typedef struct s_env
-{
-	char				**original_env;
-	char				***parsed_env;
-}	t_env;
 
 // TROUVER LES REDIRECTIONS POUR LES AJOUTER A MON ARBRE AST
 int get_pipe(t_token *token, t_node *nodes);
@@ -98,7 +102,7 @@ t_node *add_node_right(t_node *nodes, t_token **token, bool *is_redirec);
 void add_branches(t_token *tokens, t_node **node, t_node **nodecp, bool *redir);
 
 //FONCTIONS MANIPULATION DE MON ARBRE
-t_tree *init_tree(char *envp[]);
+t_tree *init_tree(char *envp[], t_env *env);
 
 //EXECUT
 void ast_exec(t_tree *tree);
@@ -125,6 +129,16 @@ char **find_heredoc(t_node *nodes);
 
 //FONCTIONS DU GARBAGE COLLECTOR
 void print_error(int errorcode, t_tree *tree, t_node *node);
+
+//ENVIRONNEMENT
+t_env	*init_env(char **env_array);
+int displayenv(t_env *env);
+
+//BUILTIN
+//PWD
+int choose_builtin(t_node *nodes, t_env *env);
+//UNSET
+void unset(t_node *nodes, t_env *env);
 
 //PARSING
 t_token *parsing(char *commands);

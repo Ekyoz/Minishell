@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/08 19:16:38 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/10 16:24:48 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ int main(int argc, char *argv[], char *envp[])
 	char *input;
 	t_token *tokens;
 	t_tree *tree;
+	t_env *env;
 
-	tree = init_tree(envp);
+	env = init_env(envp);
+	// displayenv(env);
+	tree = init_tree(envp, env);
 	if(!tree)
 		return (1);
 	while (true)
