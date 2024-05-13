@@ -6,453 +6,525 @@
 /*   By: atresall <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 14:20:15 by atresall          #+#    #+#             */
-/*   Updated: 2024/02/13 14:55:46 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:31:50 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-/*----------Include----------*/
 # include <inttypes.h>
 # include <limits.h>
 # include <stdlib.h>
 # include <unistd.h>
 
-/*----------Struct-----------*/
-/*
- * List for chain list
+/**
+ * @struct s_list
+ * @brief Une structure pour représenter une liste chaînée.
+ *
+ * @var s_list::content
+ * Le membre 'content' contient les données du nœud de la liste.
+ *
+ * @var s_list::next
+ * Le membre 'next' pointe vers le prochain nœud de la liste.
  */
 typedef struct s_list
 {
 	void			*content;
 	struct s_list	*next;
 }					t_list;
-
-/*--------Prototype----------*/
-
-/*---Get---*/
-
-/*
- * Get the number of digits in a long long integer
- * Parameters:
- *- num: The number for which to count digits
+/**
+ * @brief Obtenez le nombre de chiffres dans un nombre long long.
+ *
+ * @param NUM: Le nombre à vérifier.
+ * @return Le nombre de chiffres dans 'NUM'.
  */
-int					ft_getdigits(long long num);
+int ft_getdigits(long long NUM);
 
-/*---Is---*/
-
-/*
- * Check if a character is alphanumeric
- * Parameters:
- *- c: The character to check
+/**
+ * @brief Vérifie si un caractère est alphanumérique.
+ *
+ * @param C: Le caractère à vérifier.
+ * @return Non-zéro si 'C' est alphanumérique, et 0 sinon.
  */
-int					ft_isalnum(int c);
+int ft_isalnum(int C);
 
-/*
- * Check if a character is alphabetic
- * Parameters:
- *- c: The character to check
+/**
+ * @brief Vérifie si un caractère est alphabétique.
+ *
+ * @param C: Le caractère à vérifier.
+ * @return Non-zéro si 'C' est alphabétique, et 0 sinon.
  */
-int					ft_isalpha(int c);
+int ft_isalpha(int C);
 
-/*
- * Check if a character is ASCII
- * Parameters:
- *- c: The character to check
+/**
+ * @brief Vérifie si un caractère est un caractère ASCII valide.
+ *
+ * @param C: Le caractère à vérifier.
+ * @return Non-zéro si 'C' est un caractère ASCII valide, et 0 sinon.
  */
-int					ft_isascii(int c);
+int ft_isascii(int C);
 
-/*
- * Check if a character is a digit
- * Parameters:
- *- c: The character to check
+/**
+ * @brief Vérifie si un caractère est un chiffre.
+ *
+ * @param C: Le caractère à vérifier.
+ * @return Non-zéro si 'C' est un chiffre, et 0 sinon.
  */
-int					ft_isdigit(int c);
+int ft_isdigit(int C);
 
-/*
- * Check if a character is printable
- * Parameters:
- *- c: The character to check
+/**
+ * @brief Vérifie si un caractère est imprimable.
+ *
+ * @param C: Le caractère à vérifier.
+ * @return Non-zéro si 'C' est imprimable, et 0 sinon.
  */
-int					ft_isprint(int c);
+int ft_isprint(int C);
 
-/*---Mem---*/
-
-/*
- * Set a block of memory to zero
- * Parameters:
- *- s: Pointer to the memory block
- *- n: Number of bytes to set to zero
+/**
+ * @brief Met les premiers 'N' octets de la zone commençant à 'S' à zéro.
+ *
+ * @param S: Pointeur vers la zone mémoire.
+ * @param N: Nombre d'octets à mettre à zéro.
  */
-void				ft_bzero(void *s, size_t n);
+void ft_bzero(void *S, size_t N);
 
-/*
- * Locate a character in a block of memory
- * Parameters:
- *- memoryBlock: Pointer to the memory block
- *- searchChar: Character to search for
- *- size: Number of bytes to search within
+/**
+ * @brief Recherche un caractère dans un bloc de mémoire.
+ *
+ * @param MEMORYBLOCK: Le bloc de mémoire à analyser.
+ * @param SEARCHCHAR: Le caractère à rechercher.
+ * @param SIZE: La taille du bloc de mémoire.
+ * @return Un pointeur vers le caractère recherché dans le bloc de mémoire, ou NULL si le caractère n'est pas trouvé.
  */
-void				*ft_memchr(const void *memoryBlock, int searchChar,
-						size_t size);
+void *ft_memchr(const void *MEMORYBLOCK, int SEARCHCHAR, size_t SIZE);
 
-/*
- * Compare two blocks of memory
- * Parameters:
- *- str1: Pointer to the first memory block
- *- str2: Pointer to the second memory block
- *- n: Number of bytes to compare
+/**
+ * @brief Compare les n premiers octets de deux zones de mémoire.
+ *
+ * @param STR1: La première zone de mémoire.
+ * @param STR2: La deuxième zone de mémoire.
+ * @param N: Le nombre d'octets à comparer.
+ * @return Un entier inférieur, égal, ou supérieur à zéro, si STR1 est respectivement inférieur, égal ou supérieur à STR2.
  */
-int					ft_memcmp(const void *str1, const void *str2, size_t n);
+int ft_memcmp(const void *STR1, const void *STR2, size_t N);
 
-/*
- * Copy a block of memory
- * Parameters:
- *- destination: Pointer to the destination memory block
- *- source: Pointer to the source memory block
- *- size: Number of bytes to copy
+/**
+ * @brief Copie N octets de la zone mémoire source à la zone mémoire destination.
+ *
+ * @param DESTINATION: La zone mémoire de destination.
+ * @param SOURCE: La zone mémoire source.
+ * @param SIZE: Le nombre d'octets à copier.
+ * @return Un pointeur vers la zone mémoire de destination.
  */
-void				*ft_memcpy(void *destination, const void *source,
-						size_t size);
+void *ft_memcpy(void *DESTINATION, const void *SOURCE, size_t SIZE);
 
-/*
- * Copy a block of memory, handling overlapping blocks
- * Parameters:
- *- destination: Pointer to the destination memory block
- *- source: Pointer to the source memory block
- *- n: Number of bytes to copy
+/**
+ * @brief Déplace N octets de la zone mémoire source à la zone mémoire destination.
+ *
+ * @param DESTINATION: La zone mémoire de destination.
+ * @param SOURCE: La zone mémoire source.
+ * @param N: Le nombre d'octets à déplacer.
+ * @return Un pointeur vers la zone mémoire de destination.
  */
-void				*ft_memmove(void *destination, const void *source,
-						size_t n);
+void *ft_memmove(void *DESTINATION, const void *SOURCE, size_t N);
 
-/*
- * Set a block of memory to a specified value
- * Parameters:
- *- pointer: Pointer to the memory block
- *- value: Value to set
- *- size: Number of bytes to set
+/**
+ * @brief Remplit une zone mémoire avec un octet donné.
+ *
+ * @param POINTER: La zone mémoire à remplir.
+ * @param VALUE: L'octet à utiliser pour remplir la zone mémoire.
+ * @param SIZE: Le nombre d'octets de la zone mémoire à remplir.
+ * @return Un pointeur vers la zone mémoire.
  */
-void				*ft_memset(void *pointer, int value, size_t size);
+void *ft_memset(void *POINTER, int VALUE, size_t SIZE);
 
-/*
- * Allocate memory for an array of elements
- * Parameters:
- *- elementCount: Number of elements to allocate memory for
- *- elementSize: Size of each element in bytes
+/**
+ * @brief Alloue de la mémoire pour un tableau de N éléments de taille donnée, et la remplit avec des zéros.
+ *
+ * @param ELEMENTCOUNT: Le nombre d'éléments du tableau.
+ * @param ELEMENTSIZE: La taille de chaque élément.
+ * @return Un pointeur vers le tableau alloué, ou NULL si l'allocation a échoué.
  */
-void				*ft_calloc(size_t elementCount, size_t elementSize);
+void *ft_calloc(size_t ELEMENTCOUNT, size_t ELEMENTSIZE);
 
-/*
- * Reallocate memory for an existing pointer
- * Parameters:
- *- ptr: Pointer to the previously allocated memory
- *- newSize: New size in bytes
+
+/**
+ * @brief Change la taille de la mémoire allouée pointée par ptr à new_size octets.
+ *
+ * @param PTR: Pointeur vers la mémoire précédemment allouée avec malloc, calloc ou realloc à redimensionner.
+ * @param OLD_SIZE: La taille actuelle de la mémoire.
+ * @param NEW_SIZE: La nouvelle taille requise de la mémoire.
+ * @return Un pointeur vers la mémoire nouvellement allouée, ou NULL si l'opération a échoué.
  */
-void				*ft_realloc(void *ptr, size_t old_size, size_t new_size);
+void *ft_realloc(void *ptr, size_t old_size, size_t new_size);
 
-/*---Str---*/
+/**
+ * @brief Copie la chaîne de caractères source dans la chaîne de caractères destination.
+ *
+ * @param dest La chaîne de destination.
+ * @param src La chaîne source.
+ * @return Un pointeur vers la chaîne de destination.
+ */
+char *ft_strcpy(char *dest, const char *src);
 
-/*
- * Locate the first occurrence of a character in a string
- * Parameters:
- *- str: The string to search in
- *- searchChar: The character to search for
+/**
+ * @brief Recherche un caractère dans une chaîne.
+ *
+ * @param STR: La chaîne à analyser.
+ * @param SEARCHCHAR: Le caractère à rechercher.
+ * @return Un pointeur vers le caractère recherché dans la chaîne, ou NULL si le caractère n'est pas trouvé.
  */
 char				*ft_strchr(const char *str, int searchChar);
 
-/*
- * Duplicate a string and malloc it
- * Parameters:
- *- str1: The string to duplicate
+/**
+ * @brief Crée une copie de la chaîne donnée.
+ *
+ * @param STR: La chaîne à copier.
+ * @return Un pointeur vers la nouvelle chaîne, ou NULL si l'allocation a échoué.
  */
-char				*ft_strdup(const char *str1);
+char				*ft_strdup(const char *str);
 
-/*
- * Concatenate strings with size limitation
- * Parameters:
- *- destination: Pointer to the destination string
- *- source: Pointer to the source string
- *- size: Size of the destination buffer
+/**
+ * @brief Concatène deux chaînes en limitant la taille totale de la chaîne résultante.
+ *
+ * @param DESTINATION: La chaîne de destination.
+ * @param SOURCE: La chaîne source.
+ * @param SIZE: La taille maximale de la chaîne résultante.
+ * @return La longueur totale de la chaîne qu'on aurait obtenue sans limite de taille.
  */
-size_t				ft_strlcat(char *destination, const char *source,
-						size_t size);
+size_t				ft_strlcat(char *destination, const char *source, size_t size);
 
-/*
- * Copy strings with size limitation
- * Parameters:
- *- dest: Pointer to the destination string
- *- src: Pointer to the source string
- *- size: Size of the destination buffer
+/**
+ * @brief Concatène deux chaînes
+ *
+ * @param DESTINATION: La chaîne de destination.
+ * @param SOURCE: La chaîne source.
+ * @return Le resultat des 2 chaine concatene
+ */
+char* ft_strcat(char* destination, const char* source);
+
+/**
+ * @brief Copie jusqu'à size caractères de la chaîne source vers la chaîne destination.
+ *
+ * @param DEST: La chaîne de destination.
+ * @param SRC: La chaîne source.
+ * @param SIZE: Le nombre maximal de caractères à copier.
+ * @return La longueur de la chaîne source.
  */
 size_t				ft_strlcpy(char *dest, char *src, size_t size);
 
-/*
- * Get the length of a string
- * Parameters:
- *- str: The string to calculate length for
+/**
+ * @brief Calcule la longueur d'une chaîne.
+ *
+ * @param STR: La chaîne dont on veut connaître la longueur.
+ * @return La longueur de la chaîne.
  */
 size_t				ft_strlen(const char *str);
 
-/*
- * Get the length of a string up to a specified number of characters
- * Parameters:
- *- str: The string to calculate length for
- *- maxlen: Maximum number of characters to count
+/**
+ * @brief Calcule la longueur d'un tableau.
+ *
+ * @param ARRAY: Le tableau dont on veut connaître la longueur.
+ * @return La longueur du tableau.
+ */
+size_t 				ft_strlen_array(char **array);
+
+/**
+ * @brief Calcule la longueur d'une chaîne, jusqu'à un maximum de 'maxlen' caractères.
+ *
+ * @param str La chaîne dont on veut connaître la longueur.
+ * @param maxlen Le nombre maximal de caractères à compter.
+ * @return La longueur de la chaîne, jusqu'à un maximum de 'maxlen' caractères.
  */
 size_t				ft_strnlen(const char *str, size_t maxlen);
 
-/*
- * Compare two strings up to a specified number of characters
- * Parameters:
- *- s1: First string to compare
- *- s2: Second string to compare
- *- n: Number of characters to compare
+/**
+ * @brief Compare les 'n' premiers caractères de deux chaînes.
+ *
+ * @param s1 La première chaîne à comparer.
+ * @param s2 La deuxième chaîne à comparer.
+ * @param n Le nombre de caractères à comparer.
+ * @return Un entier inférieur, égal, ou supérieur à zéro, si 's1' est respectivement inférieur, égal ou supérieur à 's2'.
  */
 int					ft_strncmp(char *s1, char *s2, size_t n);
 
-/*
- *Compare two string up
- *Parameters:
- *- s1: First string to compare
- *- s2: Second string to compare
+/**
+ * @brief Compare deux chaînes.
+ *
+ * @param s1 La première chaîne à comparer.
+ * @param s2 La deuxième chaîne à comparer.
+ * @return Un entier inférieur, égal, ou supérieur à zéro, si 's1' est respectivement inférieur, égal ou supérieur à 's2'.
  */
 int					ft_strcmp(const char *s1, const char *s2);
 
-/*
- * Locate a substring in a string
- * Parameters:
- *- source: The string to search in
- *- search: The substring to search for
- *- size: Maximum number of characters to search
+/**
+ * @brief Recherche une sous-chaîne dans une chaîne, jusqu'à un maximum de 'size' caractères.
+ *
+ * @param source La chaîne dans laquelle effectuer la recherche.
+ * @param search La sous-chaîne à rechercher.
+ * @param size Le nombre maximal de caractères à analyser dans 'source'.
+ * @return Un pointeur vers la première occurrence de 'search' dans 'source', ou NULL si 'search' n'est pas trouvé.
  */
-char				*ft_strnstr(const char *source, const char *search,
-						size_t size);
+char				*ft_strnstr(const char *source, const char *search, size_t size);
 
-/*
- * Locate the last occurrence of a character in a string
- * Parameters:
- *- str: The string to search in
- *- ch: The character to search for
+/**
+ * @brief Recherche la dernière occurrence d'un caractère dans une chaîne.
+ *
+ * @param str La chaîne dans laquelle effectuer la recherche.
+ * @param ch Le caractère à rechercher.
+ * @return Un pointeur vers la dernière occurrence de 'ch' dans 'str', ou NULL si 'ch' n'est pas trouvé.
  */
 char				*ft_strrchr(const char *str, int ch);
 
-/*
- * Extract a substring from a string
- * Parameters:
- *- s: The string to extract from
- *- start: The starting index of the substring
- *- len: The length of the substring
+/**
+ * @brief Crée une sous-chaîne de la chaîne 's', commençant à 'start' et de longueur 'len'.
+ *
+ * @param s La chaîne d'origine.
+ * @param start L'indice de départ de la sous-chaîne dans 's'.
+ * @param len La longueur de la sous-chaîne.
+ * @return Un pointeur vers la nouvelle sous-chaîne, ou NULL si l'allocation a échoué.
  */
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 
-/*
- * Concatenate two strings
- * Parameters:
- *- s1: The first string
- *- s2: The second string
+/**
+ * @brief Concatène deux chaînes.
+ *
+ * @param s1 La première chaîne.
+ * @param s2 La deuxième chaîne.
+ * @return Un pointeur vers la nouvelle chaîne, ou NULL si l'allocation a échoué.
  */
 char				*ft_strjoin(char const *s1, char const *s2);
 
-/*
- * Trim characters specified in 'set' from the beginning and end of a string
- * Parameters:
- *- s1: The string to trim
- *- set: The set of characters to trim
+/**
+ * @brief Supprime les caractères spécifiés en début et fin de chaîne.
+ *
+ * @param s1 La chaîne à traiter.
+ * @param set Les caractères à supprimer.
+ * @return Un pointeur vers la nouvelle chaîne, ou NULL si l'allocation a échoué.
  */
 char				*ft_strtrim(char const *s1, char const *set);
 
-/*
- * Split a string into an array of substrings based on a delimiter character
- * Parameters:
- *- s: The string to split
- *- c: The delimiter character
+/**
+ * @brief Découpe une chaîne en plusieurs chaînes à chaque occurrence du caractère 'c'.
+ *
+ * @param s La chaîne à découper.
+ * @param c Le caractère délimiteur.
+ * @return Un tableau de chaînes, ou NULL si l'allocation a échoué.
  */
 char				**ft_split(char const *s, char c);
 
-/*
- * Apply a function to each character of a string
- * Parameters:
- *- s: The string to iterate through
- *- f: The function to apply
+/**
+ * @brief Découpe une chaîne en plusieurs chaînes à chaque occurrence du caractère 'c' et ajoute le caractere dans la liste.
+ *
+ * @param s La chaîne à découper.
+ * @param c Le caractère délimiteur.
+ * @return Un tableau de chaînes, ou NULL si l'allocation a échoué.
+ */
+char** ft_split_sep(char* string, char separator);
+
+/**
+ * @brief Cherche dans une chaine de caractere si il y a le caractere 'c'.
+ *
+ * @param s La chaîne à analyser.
+ * @param c Le caractère a chercher.
+ * @return Retourne la position du caractere si il est trouver, -1 si non.
+ */
+int ft_strchar(const char *string, char c);
+
+/**
+ * @brief Applique une fonction à chaque caractère de la chaîne 's'.
+ *
+ * @param s La chaîne à traiter.
+ * @param f La fonction à appliquer à chaque caractère.
+ * @return Un pointeur vers la nouvelle chaîne, ou NULL si l'allocation a échoué.
  */
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 
-/*
- * Iterate through a string and apply a function to each character
- * Parameters:
- *- s: The string to iterate through
- *- f: The function to apply
+/**
+ * @brief Applique une fonction à chaque caractère de la chaîne 's'.
+ *
+ * @param s La chaîne à traiter.
+ * @param f La fonction à appliquer à chaque caractère.
  */
 void				ft_striteri(char *s, void (*f)(unsigned int, char *));
 
-/*
- * Reverse a string
- * Parameters:
- *- str: The string to reverse
+/**
+ * @brief Inverse une chaîne de caractères.
+ *
+ * @param str La chaîne à inverser.
+ * @return Un pointeur vers la chaîne inversée.
  */
 char				*ft_strrev(char *str);
 
-/*---To---*/
-
-/*
- * Convert a character to lowercase
- * Parameters:
- *- c: The character to convert
+/**
+ * @brief Convertit un caractère en minuscule.
+ *
+ * @param c Le caractère à convertir.
+ * @return Le caractère converti en minuscule.
  */
 int					ft_tolower(int c);
 
-/*
- * Convert a character to uppercase
- * Parameters:
- *- c: The character to convert
+/**
+ * @brief Convertit un caractère en majuscule.
+ *
+ * @param c Le caractère à convertir.
+ * @return Le caractère converti en majuscule.
  */
 int					ft_toupper(int c);
 
-/*
- * Convert a string to an integer
- * Parameters:
- *- str: The string to convert
+/**
+ * @brief Convertit une chaîne de caractères en un entier.
+ *
+ * @param str La chaîne à convertir.
+ * @return L'entier résultant de la conversion.
  */
 int					ft_atoi(const char *str);
 
-/*
- * Convert an integer to a string
- * Parameters:
- *- n: The integer to convert
+/**
+ * @brief Convertit un entier en une chaîne de caractères.
+ *
+ * @param n L'entier à convertir.
+ * @return Un pointeur vers la chaîne résultant de la conversion.
  */
 char				*ft_itoa(int n);
 
-/*
- * Convert a size_t number to a hexadecimal string
- * Parameters:
- *- num: The size_t number to convert
+/**
+ * @brief Convertit un nombre de type size_t en une chaîne de caractères en hexadécimal.
+ *
+ * @param num Le nombre à convertir.
+ * @return Un pointeur vers la chaîne résultant de la conversion.
  */
 char				*ft_ltoh(size_t num);
 
-/*---Put---*/
-
-/*
- * Print a character to a file descriptor
- * Parameters:
- *- c: The character to print
- *- fd: File descriptor
+/**
+ * @brief Écrit le caractère 'c' sur le descripteur de fichier donné.
+ *
+ * @param c Le caractère à écrire.
+ * @param fd Le descripteur de fichier sur lequel écrire.
+ * @return Le nombre de caractères écrits.
  */
 int					ft_putchar_fd(char c, int fd);
 
-/*
- * Print a string to a file descriptor
- * Parameters:
- *- s: The string to print
- *- fd: File descriptor
+/**
+ * @brief Écrit la chaîne 's' sur le descripteur de fichier donné.
+ *
+ * @param s La chaîne à écrire.
+ * @param fd Le descripteur de fichier sur lequel écrire.
+ * @return Le nombre de caractères écrits.
  */
 int					ft_putstr_fd(char *s, int fd);
 
-/*
- * Print a string followed by a newline to a file descriptor
- * Parameters:
- *- s: The string to print
- *- fd: File descriptor
+/**
+ * @brief Écrit la chaîne 's' et un retour à la ligne sur le descripteur de fichier donné.
+ *
+ * @param s La chaîne à écrire.
+ * @param fd Le descripteur de fichier sur lequel écrire.
+ * @return Le nombre de caractères écrits.
  */
 int					ft_putendl_fd(char *s, int fd);
 
-/*
- * Print an integer to a file descriptor
- * Parameters:
- *- n: The integer to print
- *- fd: File descriptor
+/**
+ * @brief Écrit le nombre 'n' sur le descripteur de fichier donné.
+ *
+ * @param n Le nombre à écrire.
+ * @param fd Le descripteur de fichier sur lequel écrire.
+ * @return Le nombre de caractères écrits.
  */
 int					ft_putnbr_fd(ssize_t n, int fd);
 
-/*
- * Print a pointer address to a file descriptor in hexadecimal format
- * Parameters:
- *- num: The pointer address
- *- base: The base of the output (e.g., "0123456789abcdef")
- *- fd: File descriptor
+/**
+ * @brief Écrit le nombre 'num' en hexadécimal sur le descripteur de fichier donné.
+ *
+ * @param num Le nombre à écrire.
+ * @param base La base de conversion.
+ * @param fd Le descripteur de fichier sur lequel écrire.
+ * @return Le nombre de caractères écrits.
  */
 int					ft_putptr_fd(uintptr_t num, const char *base, int fd);
 
-/*
- * Print an unsigned integer to a file descriptor in hexadecimal format
- * Parameters:
- *- num: The unsigned integer
- *- base: The base of the output (e.g., "0123456789abcdef")
- *- fd: File descriptor
+/**
+ * @brief Écrit le nombre 'num' en hexadécimal sur le descripteur de fichier donné.
+ *
+ * @param num Le nombre à écrire.
+ * @param base La base de conversion.
+ * @param fd Le descripteur de fichier sur lequel écrire.
+ * @return Le nombre de caractères écrits.
  */
 int					ft_puthex_fd(unsigned int num, const char *base, int fd);
 
-/*---List---*/
-
-/*
- * Create a new linked list element
- * Parameters:
- *- content: The content to be added to the list node
+/**
+ * @brief Crée un nouvel élément de liste.
+ *
+ * @param content Le contenu du nouvel élément.
+ * @return Un pointeur vers le nouvel élément de liste.
  */
 t_list				*ft_lstnew(void *content);
 
-/*
- * Add a new element at the beginning of a linked list
- * Parameters:
- *- lst: The address of a pointer to the first link of a list
- *- new: The element to add at the beginning of the list
+/**
+ * @brief Ajoute l'élément 'new' au début de la liste.
+ *
+ * @param lst Un pointeur vers le premier lien de la liste.
+ * @param new L'élément à ajouter à la liste.
  */
 void				ft_lstadd_front(t_list **lst, t_list *new);
 
-/*
- * Count the number of elements in a linked list
- * Parameters:
- *- lst: The beginning of the linked list
+/**
+ * @brief Compte le nombre d'éléments de la liste.
+ *
+ * @param lst Le premier maillon de la liste.
+ * @return Le nombre d'éléments de la liste.
  */
 int					ft_lstsize(t_list *lst);
 
-/*
- * Get the last element of a linked list
- * Parameters:
- *- lst: The beginning of the linked list
+/**
+ * @brief Retourne le dernier élément de la liste.
+ *
+ * @param lst Le premier maillon de la liste.
+ * @return Le dernier élément de la liste.
  */
 t_list				*ft_lstlast(t_list *lst);
 
-/*
- * Add a new element at the end of a linked list
- * Parameters:
- *- lst: The address of a pointer to the first link of a list
- *- new: The element to add at the end of the list
+/**
+ * @brief Ajoute l'élément 'new' à la fin de la liste.
+ *
+ * @param lst Un pointeur vers le premier lien de la liste.
+ * @param new L'élément à ajouter à la liste.
  */
 void				ft_lstadd_back(t_list **lst, t_list *new);
 
-/*
- * Delete an element from a linked list
- * Parameters:
- *- lst: The element to delete
- *- del: The function used to delete the content of the element
+/**
+ * @brief Supprime un élément de la liste et libère la mémoire de l'élément.
+ *
+ * @param lst L'élément de la liste à supprimer.
+ * @param del L'adresse de la fonction permettant de supprimer le contenu.
  */
 void				ft_lstdelone(t_list *lst, void (*del)(void *));
 
-/*
- * Delete an entire linked list
- * Parameters:
- *- lst: The address of a pointer to the first link of a list
- *- del: The function used to delete the content of each element
+/**
+ * @brief Supprime et libère la liste.
+ *
+ * @param lst Un pointeur vers le premier lien de la liste.
+ * @param del L'adresse de la fonction permettant de supprimer le contenu.
  */
 void				ft_lstclear(t_list **lst, void (*del)(void *));
 
-/*
- * Iterate through a linked list and apply a function to each element
- * Parameters:
- *- lst: The beginning of the linked list
- *- f: The function to apply to each element
+/**
+ * @brief Applique une fonction à la liste 'lst'.
+ *
+ * @param lst La liste sur laquelle itérer.
+ * @param f La fonction à appliquer à chaque élément.
  */
 void				ft_lstiter(t_list *lst, void (*f)(void *));
 
-/*
- * Create a new linked list by applying a function to each element of a list
- * Parameters:
- *- lst: The beginning of the linked list
- *- f: The function to apply to each element
- *- del: The function used to delete the content of each element if needed
+/**
+ * @brief Applique une fonction à la liste 'lst' et crée une nouvelle liste.
+ *
+ * @param lst La liste sur laquelle itérer.
+ * @param f La fonction à appliquer à chaque élément.
+ * @param del L'adresse de la fonction permettant de supprimer le contenu.
+ * @return La nouvelle liste.
  */
-t_list				*ft_lstmap(t_list *lst, void *(*f)(void *),
-						void (*del)(void *));
+t_list				*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 #endif

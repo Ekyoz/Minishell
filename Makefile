@@ -33,11 +33,15 @@ FILE_EXEC_DIR		= exec/
 #FILE_EXEC			= exec init_nodes token_type
 
 FILE_PARSING_DIR	= parsing/
-FILE_PARSING		= parsing checker utils_parser
+FILE_PARSING		= parsing checker token pipe redir quote
 
-DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR)
+FILE_PARS_UTILS_DIR	= parsing/utils/
+FILE_PARS_UTILS		= parser redir utils token
+
+DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR) $(FILE_PARS_UTILS_DIR)
 SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
 SRC_FILES			+= $(addprefix $(FILE_PARSING_DIR), $(FILE_PARSING))
+SRC_FILES			+= $(addprefix $(FILE_PARS_UTILS_DIR), $(FILE_PARS_UTILS))
 SRC_FILES			+= $(addprefix $(FILE_EXEC_DIR), $(FILE_EXEC))
 
 #-------- LIBS --------#
@@ -155,9 +159,12 @@ $(TEST_OUT_DIR)/%.o: $(TEST_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 
 #-------- COMMANDS --------#
 
-$(NAME): archive
+$(NAME): default
+
+default: archive
 			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME) $(LIBFLAGS)
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR)"
+
 
 all: $(NAME)
 
@@ -200,7 +207,7 @@ ar_exec:	lib $(OBJ_EXEC) $(HEADERS)
 
 exec: ar_exec
 			@$(CC) $(CFLAGS_EXEC) $(OBJ_EXEC) $(INCLUDE_RUN) -o $(EXEC_NAME) $(LIBFLAGS)
-			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)DEBUG!$(DEF_COLOR)"
+			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)EXEC!$(DEF_COLOR)"
 
 #------ PARSING ------#
 
@@ -213,7 +220,7 @@ ar_parsing:	lib $(OBJ_PARSING) $(HEADERS)
 
 parsing: ar_parsing
 			@$(CC) $(CFLAGS_PARSING) $(OBJ_PARSING) $(INCLUDE_RUN) -o $(PARSING_NAME) $(LIBFLAGS)
-			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)DEBUG!$(DEF_COLOR)"
+			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)PARSING!$(DEF_COLOR)"
 
 #------ TEST ------#
 
@@ -229,7 +236,7 @@ test: ar_test
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)TEST!$(DEF_COLOR)"
 
 #-------- CLEAN --------#
-re:			fclean $(NAME)
+re:			fclean run
 			@echo "$(GREEN)Nettoyage et recompilage de $(PROJECT_NAME)!$(DEF_COLOR)"
 
 clean:

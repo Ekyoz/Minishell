@@ -13,7 +13,7 @@
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include "./LibFt/include/libft.h"
+# include "libft.h"
 # include <errno.h>
 # include <fcntl.h>
 # include <stdio.h>

@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/03/29 11:58:47 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/08 15:23:05 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,25 @@ typedef struct s_env
 }	t_env;
 
 
-t_token *parsing(char *commands);
-bool checker(t_token *head, char *command);
-bool check_char_before(char *string, char c, size_t pos, int len);
-bool check_char_after(char *string, char c, size_t pos, int len);
-t_token *parsing(char *commands);
-t_node *init_nodes(t_node *nodes);
-int get_pipe(t_token *token, t_node *nodes);
-int get_redirection_left(t_token *token, t_node *nodes);
-int get_redirection_right(t_token *token, t_node *nodes);
+bool parsing(t_token **head, char *commands);
+t_token *create_token(t_token_type type, char **value);
+void append_token(t_token **head, t_token_type type, char **value);
+void delete_token(t_token **head, t_token *node_to_delete);
+bool checker(t_token **head, char *command);
+t_token *get_last_token(t_token *head);
+void printList(t_token * node);
+void clear_list(t_token **head);
+int pipe_counter(const char *command);
+char **pipe_splitter(char *command);
+t_token_type is_token(char *command, int pos);
+int split_count(char *command);
+bool there_token(char *command);
+char **splitter(char *command);
+char **split_token(char *command);
+char **extract_flags(char **command);
+char **miss_elements(char **list_base, char **list_miss);
+char **string_to_array(char *string);
+char **redir(char **cmd);
+char **quote(char **cmd);
 
 #endif
