@@ -6,44 +6,61 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/10 17:14:19 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/13 16:15:36 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void unset(t_node *nodes, t_env *env)
+int unset(t_node *nodes, t_env **env)
 {
     t_env *prev;
+    t_env *actual;
 
+    actual = *env;
     prev = NULL;
     if(nodes->args[1])
     {
-        while(env)
+        while(actual)
         {
             // si la variable de mon path vaut une valeur presente dans l'environnement
-            if(!ft_strncmp(nodes->args[1], env->value, ft_strlen(nodes->args[1])))
+            if(!ft_strncmp(nodes->args[1], actual->value, ft_strlen(nodes->args[1])))
             {
-                fprintf(stderr, "la je suis dans le bon arg\n");
                 if(prev)
                 {
-                    prev->next = env->next;
-                    free(env);
-                    env = prev->next;
+                    // fprintf(stderr, "prev %s \n next %s\n", prev->value, actual->next->value);
+                    prev->next = actual->next;
                 }
                 else
                 {
-                    prev = env->next;
-                    free(env);
-                    env = prev;
+                    *env = actual->next;
                 }
+                free(actual);
+                return(0);
             }
             else
             {
-                prev = env;
-                env = env->next;
+                prev = actual;
+                actual = actual->next;
             }
         }
     }
-    exit(0);
+    return(1);
 }
+
+int unset_export(t_node *nodes, t_env *env)
+{
+    if(!ft_strncmp(nodes->args[0], "unset", 5))
+    {
+        unset(nodes, &env);
+        // displayenv(env);
+        return(1);
+    }
+    else if(!ft_strncmp(nodes->args[0], "export", 5))
+    {
+        return(1);
+    }
+    else
+        return(0);
+}
+

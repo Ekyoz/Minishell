@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 17:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/10 12:15:48 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/13 14:41:48 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,13 @@ static void dup_pipe(t_tree *tree, t_node *nodes, int j, int i)
         // testopening(tree, nodes->left);
         // fprintf(stderr, "node left %d\n", nodes->left->type);
         heredoc(tree, nodes->left);
-        if(!check_redir_out(tree, nodes->left) 
-            && check_cmd1(tree, nodes->left->left))
+        //si jai pas de redir out et une in
+        if(!check_redir_out(tree, nodes->left) && 
+            !testopening(tree, nodes->left))
         {
-            // fprintf(stderr, "je rentre la\n");
-            dup2(tree->fdpipe[0][1], STDOUT_FILENO);
+            //si j'ai un builtin ou une commande bonne
+            if(check_cmd1(tree, nodes->left))
+                    dup2(tree->fdpipe[0][1], STDOUT_FILENO);
         }
         check_redir_in(tree, nodes->left);
         close(tree->fdpipe[0][1]);
@@ -85,6 +87,7 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
     pid_t pid[3];
     int i;
     int j;
+    int builtin;
 
     i = 0;
     j = 0;
@@ -97,20 +100,26 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
         if(pid[j] == 0)
         {
             dup_pipe(tree, nodes, j, i);
-            if(testredir(nodes->left))// je regarde si jai des redirections  
+            if(testredir(nodes->left)) // Si redirections  
             {
+                if(choose_builtin(nodes->left->left, tree->env))
+                    exit(0);
                 if(!check_cmd1(tree, nodes->left->left))
                     print_error(2, tree, nodes->left->left);
                 ft_execve(tree, nodes->left->left);
             }
-            else if(nodes->left)
+            else if(nodes->left) // pas de redir et une commande a gauche
             {
+                if(choose_builtin(nodes->left, tree->env))
+                    exit(0);
                 if(!check_cmd1(tree, nodes->left))
                     print_error(2, tree, nodes->left);
                 ft_execve(tree, nodes->left);
             }
-            else
+            else // pas de redir et pas de pipe
             {
+                if(choose_builtin(nodes, tree->env))
+                    exit(0);
                 if(!check_cmd1(tree, nodes))
                     print_error(2, tree, nodes);
                 ft_execve(tree, nodes);

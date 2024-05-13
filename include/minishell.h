@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/10 17:04:34 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/13 16:15:40 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,13 @@ t_env	*init_env(char **env_array);
 int displayenv(t_env *env);
 
 //BUILTIN
-//PWD
 int choose_builtin(t_node *nodes, t_env *env);
+//PWD
+int getpwd_env(t_env *env);
 //UNSET
-void unset(t_node *nodes, t_env *env);
+int unset_export(t_node *nodes, t_env *env);
+//ENV
+int displayenv(t_env *env);
 
 //PARSING
 t_token *parsing(char *commands);

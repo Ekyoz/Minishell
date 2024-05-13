@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/10 17:12:50 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/13 16:16:22 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,18 +69,6 @@ t_env	*init_env(char **env_array)
 	return (env);
 }
 
-int displayenv(t_env *env)
-{
-    if(!env)
-        return(1);
-    while(env)
-    {
-        printf("%s\n", env->value);
-        env = env->next;
-    }
-    return(0);
-}
-
 int getpwd_env(t_env *env)
 {
     char pwd[1024];
@@ -102,31 +90,4 @@ int getpwd_env(t_env *env)
         env = env->next;
     }
     return(1);
-}
-
-int choose_builtin(t_node *nodes, t_env *env)
-{
-    fprintf(stderr, "node %s \n", nodes->args[0]);
-    if(!ft_strncmp(nodes->args[0], "pwd", 3))
-    {
-        getpwd_env(env);
-        exit(0);
-    }
-    else if(!ft_strncmp(nodes->args[0], "unset", 5))
-    {
-        unset(nodes, env);
-    }
-    else if(!ft_strncmp(nodes->args[0], "env", 3))
-    {
-        if(displayenv(env) == 1)
-        {
-            perror("");
-            exit(errno);
-        }
-    }
-    else
-    {
-        return (0);
-    }
-    return(0);
 }

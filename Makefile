@@ -6,7 +6,7 @@
 #    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/05/10 13:58:01 by bpoyet           ###   ########.fr        #
+#    Updated: 2024/05/13 16:02:40 by bpoyet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ SRC_FILES		    = main
 TEST_FILES  		= test
 
 FILE_BUILTINS_DIR 	= builtins/
-FILE_BUILTINS 		= cd echo env exit export pwd unset
+FILE_BUILTINS 		= cd echo env exit export pwd unset builtin
 
 FILE_EXEC_DIR		= exec/
 FILE_EXEC			= command exec heredoc pipe

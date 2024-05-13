@@ -3,11 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/03/26 16:31:39 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:03:59 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int displayenv(t_env *env)
+{
+    if(!env)
+        return(1);
+    while(env)
+    {
+        printf("%s\n", env->value);
+        env = env->next;
+    }
+    return(0);
+}

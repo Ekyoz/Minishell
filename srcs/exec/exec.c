@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/10 17:00:09 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/13 15:58:45 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,27 +25,28 @@ void *ft_execve(t_tree *tree, t_node *nodes)
     return((void*)0);
 }
 
-void *exec_cmd(t_tree *tree, t_node *nodes)
+int exec_cmd(t_tree *tree, t_node *nodes)
 {
     pid_t pid;
     
+    if(choose_builtin(nodes, tree->env))
+        return(0);
     pid = fork();
     if(pid == -1 )
-        return((void *)1);
+        return(1);
     if(pid == 0)
     {
-        choose_builtin(nodes, tree->env);
         if(!check_cmd1(tree, nodes))
             print_error(2, tree, nodes);
         tree->path = check_access1(tree, nodes);
         if(execve(tree->path, nodes->args, NULL) == -1)
         {
             perror("error");
-            return((void*)1);
+            return(1);
         }
     }
     waitpid(pid, NULL, 0);
-    return((void*)0);
+    return(0);
 }
 
 void *exec_cmd_out(t_tree *tree, t_node *nodes)
@@ -57,20 +58,19 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
         return ((void*)1);
     if(pid == 0)
     {
+        choose_builtin(nodes->left, tree->env);
         heredoc(tree, nodes);
         check_redir_out(tree, nodes);
         check_redir_in(tree, nodes);
         if(!check_cmd1(tree, nodes->left))
             print_error(2, tree, nodes->left);
         ft_execve(tree, nodes->left);
-        exit(0);
     }
     else
     {
         waitpid(pid, NULL, 0);
         if(access(".here_doc", F_OK) != -1)
             unlink(".here_doc");
-
     }
     return((void*)0);
 }
