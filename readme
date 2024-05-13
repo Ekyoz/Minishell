@@ -37,6 +37,7 @@ cd : <direcoryname> || - || ....... || /../<direcoryname> || ~
         => infile || redirection || commande || argument ||  redirection || outfile || pipe
 
 ---------------COMMANDE CHIANTE------------------
+
 - Command1 < input.txt PAREIL QUE < input.txt command1
 - Command1 < input.txt > output.txt => j'applique ma commande suivant l'entree input et j'ecris dans output
 - Command1 >> output.txt < input.txt => Pareil que en haut mais j'append
@@ -46,4 +47,90 @@ cd : <direcoryname> || - || ....... || /../<direcoryname> || ~
 - Command1 2> error.txt > output.txt => je redirige deux fois (on peut redirection a l'infini)
 - Si presence espace entre 2 et > bash interprete ca en tant que argument de la commande d'avant
     => Checker si c'est une redirection de stdin stdout ou stderr
+- Heredoc << se comporte comme un redirin ou redirout
 
+---------------MULTIPLE PIPE--------------
+
+ls -l | head -n 2 | head -n 1
+
+=> 2 pipes 3 redirections
+
+redirection out vers l'ecriture du pipe1 
+
+redirection in vers la lecture du pipe1
+redirection out vers l'ecriture du pipe2
+
+redirection in vers la lecture du pipe2
+
+ls -l | head -n 1 | head -n 2 | head -n 2
+
+=> 3 pipes 4 redirections
+
+redirection out vers l'ecriture du pipe1
+
+redirection in vers la lecture du pipe1
+redirection out vers l'ecriture du pipe2
+
+redirection in vers la lecture du pipe2
+redirection out vers l'ecriture du pipe3
+
+redirection in vers la lecture du pipe3
+
+------------ PIPE ET REDIRECTIONS ------------------
+
+- redirection OUT a gauche du pipe j'ecris fdans le file et pas dans le pipe
+    - Quand je lis a droite j'aurai une entree vide
+- Redirection IN a droite du pipe ne fait rien car je lis en priorite l'entree du pipe
+    - Pipe en priorite sur redir IN
+- les dernieres redirections IN ou OUT sont celles a prendre en compte
+    - < output < output1 < cat -e => je cat le output1
+
+------------ Les bon retours-----------
+
+- Renvoyer le bon code de retour suivan l'erreur
+
+------------- HEREDOC ---------------
+
+- Rediriger au bon endroit si il y qune redirection out avec le Heredoc
+- lire tant qu'il n'y a pas le caractere de fin de chaine
+- quand je heredoc il faut que je check si j'ai bien une redirection
+- <<eof << eof1 => il faut obligatoirement taper eof puis eof1 pour sortir
+
+PROCEDURE
+
+- Ecrire dans un document tampon => .heredoc
+- Si il y a redirection rediriger ce document vers le nouveau
+- le commande cat va ecrire le contenu du fichier heredoc dans la sortie
+
+------------- GESTION ERREURS -----------
+
+- Retourner le bon code erreur et le stocker
+- Dans le cas d'une commande errone je n'ai pas forcement besoin de rentrer dans l'exe, pareil pour l'ouverture de fichier
+- L'erreur de commandes doit arriver apres l'erreur de fichier
+- Si la commande marche masi que le fichier ne s'ouvre pas je ne fais pas la commande
+- 
+
+Cas d'erreur
+
+cmd pas bonne
+file bon
+ => Affichage commande pas bonne et creation du file 
+
+cmd pas bonne 
+file pas bon
+=> affichage erreur file
+
+cmd bonne
+file pas bon
+file 2 pas bon
+=>erreur file1 pas le deux
+
+TYPE D'ERREUR file
+
+- no such file or directory => le fichier existe pas
+- permission denied => Pas de permissions sur le fichier 
+    - Pas les permissions
+    - Un / pour signifier un chemin
+
+si j'ai une commande
+si j'ai une redirection

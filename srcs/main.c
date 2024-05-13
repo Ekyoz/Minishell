@@ -6,25 +6,37 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/23 17:14:46 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/10 16:24:48 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int main()
+int main(int argc, char *argv[], char *envp[])
 {
-    char *input;
-	t_token *head = NULL;
+	(void)argc;
+	(void)argv;
+	char *input;
+	t_token *tokens;
+	t_tree *tree;
+	t_env *env;
 
-    while (true)
-    {
-        input = readline("Minishell$ ");
-		parsing(&head, input);
-		printList(head);
-		clear_list(&head);
-        if(!ft_strncmp(input, "exit", 5))
-            break;
-    }
-    return 0;
+	env = init_env(envp);
+	// displayenv(env);
+	tree = init_tree(envp, env);
+	if(!tree)
+		return (1);
+	while (true)
+	{
+		input = readline("Minishell :");
+		add_history(input);
+		parsing(&tokens, input);
+		create_node(tokens, &tree);
+		print_tree(tree->nodes);
+		printf("\n");
+		ast_exec(tree);
+		if(!ft_strncmp(input, "exit", 5))
+			break;
+	}
+	return 0;
 }

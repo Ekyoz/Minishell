@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/08 15:23:05 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:15:40 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #define MINISHELL_H
 
 # include "libft.h"
-# include "pipex.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -34,17 +33,17 @@
 
 typedef enum e_token_type
 {
-	TOKEN_WORD, // WORD
-	TOKEN_PIPE, // PIPE: |
-	TOKEN_REDIR_IN, // REDIRECTION IN: <
-	TOKEN_REDIR_OUT, // REDIRECTION OUT: >
-	TOKEN_REDIR_APPEND, // REDIRECTION APPEND: >>
-	TOKEN_REDIR_HEREDOC, // REDIRECTION HEREDOC: <<
-	TOKEN_ENV_VAR, // ENV VAR: $
-	TOKEN_OR, // OR: ||
-	TOKEN_AND, // AND: &&
-	PIPEUSED,
-	REDIRUSED,
+	TOKEN_WORD, // WORD 0
+	TOKEN_PIPE, // PIPE: | 1
+	TOKEN_REDIR_IN, // REDIRECTION IN: < 2
+	TOKEN_REDIR_OUT, // REDIRECTION OUT: > 3
+	TOKEN_REDIR_APPEND, // REDIRECTION APPEND: >> 4
+	TOKEN_REDIR_HEREDOC, // REDIRECTION HEREDOC: << 5
+	TOKEN_ENV_VAR, // ENV VAR: $ 6
+	TOKEN_OR, // OR: || 7
+	TOKEN_AND, // AND: && 8
+	PIPEUSED, // 9
+	REDIRUSED, // 10
 }	t_token_type;
 
 typedef struct s_token
@@ -66,11 +65,86 @@ typedef struct s_node
 
 typedef struct s_env
 {
-	char				**original_env;
-	char				***parsed_env;
-}	t_env;
+	char			*value;
+	bool			secret;
+	struct s_env	*next;
+}				t_env;
 
 
+typedef struct s_tree // structure qui va iterer dans mes nodes et executer les commandes
+{
+	t_node *nodes;
+	t_env *env;
+	char	**envp;
+	char	*path;
+	int **fdpipe; //fd de chaque pipe
+	int fdout; //fd du file out
+	int fdin; // fd du file in
+	int fdoutcp;
+	int error[4];
+} t_tree;
+
+
+// TROUVER LES REDIRECTIONS POUR LES AJOUTER A MON ARBRE AST
+int get_pipe(t_token *token, t_node *nodes);
+int get_redirection_left(t_token *token, t_node *nodes);
+int get_redirection_right(t_token *token, t_node *nodes);
+int get_redirection_main(t_token *token, t_node *nodes);
+
+// FONCTIONS NODES POUR CREER DES NODES SUR MON ARBRE AST
+t_node *init_nodes();
+t_node *add_node(t_node *nodes, t_token **token);
+t_node *add_node_left(t_node *nodes, t_token **token);
+t_node *add_node_right(t_node *nodes, t_token **token, bool *is_redirec);
+void add_branches(t_token *tokens, t_node **node, t_node **nodecp, bool *redir);
+
+//FONCTIONS MANIPULATION DE MON ARBRE
+t_tree *init_tree(char *envp[], t_env *env);
+
+//EXECUT
+void ast_exec(t_tree *tree);
+void *ft_execve(t_tree *tree, t_node *nodes);
+void *exec_pipe(t_tree *tree, t_node *nodes);
+
+//CHECKING COMMAND
+char *check_access1(t_tree *tree, t_node *nodes);
+int	get_env_args(char *envp[], t_tree *tree);
+int	check_cmd1(t_tree *tree, t_node *node);
+
+//REDIREC
+void find_redir_out(t_tree *tree, t_node *nodes, int *isredir);
+void find_redir_in(t_tree *tree, t_node *nodes, int *isredir);
+void find_redir_append(t_tree *tree, t_node *nodes, int *isredir);
+int check_redir_out(t_tree *tree, t_node *nodes);
+int check_redir_in(t_tree *tree, t_node *nodes);
+int testopening(t_tree *tree, t_node *nodes);
+int testredir(t_node *nodes);
+
+//heredoc
+void heredoc(t_tree *tree, t_node *nodes);
+char **find_heredoc(t_node *nodes);
+
+//FONCTIONS DU GARBAGE COLLECTOR
+void print_error(int errorcode, t_tree *tree, t_node *node);
+
+//ENVIRONNEMENT
+t_env	*init_env(char **env_array);
+int displayenv(t_env *env);
+
+//BUILTIN
+int choose_builtin(t_node *nodes, t_env *env);
+//PWD
+int getpwd_env(t_env *env);
+//UNSET
+int unset_export(t_node *nodes, t_env *env);
+//ENV
+int displayenv(t_env *env);
+
+void create_node(t_token *tokens, t_tree **tree);
+void print_tree(t_node *node);
+
+
+//PARSING
 bool parsing(t_token **head, char *commands);
 t_token *create_token(t_token_type type, char **value);
 void append_token(t_token **head, t_token_type type, char **value);
@@ -91,5 +165,6 @@ char **miss_elements(char **list_base, char **list_miss);
 char **string_to_array(char *string);
 char **redir(char **cmd);
 char **quote(char **cmd);
+
 
 #endif
