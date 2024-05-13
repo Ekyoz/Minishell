@@ -40,11 +40,11 @@ DIRS				= $(SRC_OUT_DIR) $(DEBUG_OUT_DIR)
 
 #-------- LIBS --------#
 
-LIBFT_DIR			= $(INCLUDE_DIR)/LibFt
-LIBFT_ARCHIVE		= $(LIBFT_DIR)/libft.a
+LIBFT_DIR			= ../LibFT
+#LIBFT_ARCHIVE		= $(LIBFT_DIR)/libft.a
 
 LIB_LIST			= $(LIBFT_DIR)
-LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE)
+LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME)
 
 #-------- SETTINGS --------#
 
@@ -105,7 +105,7 @@ $(TEST_OUT_DIR)/%.o: $(TEST_FILES)/%.c $(HEADERS) Makefile | $(OBJF)
 #-------- COMMANDS --------#
 
 $(NAME): archive
-			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME)
+#			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME)
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR)"
 
 all: $(NAME)
@@ -115,7 +115,7 @@ lib:
 
 #-------- RUN ---------#
 
-archive:	lib $(OBJ) $(HEADERS)
+archive:	$(OBJ) $(HEADERS)
 			@$(AR) $(ARCHIVE_NAME) $(OBJ)
 			@for archive in $(LIB_LIST_ARCHIVE); do ar -x $$archive; done
 			@ar -qcs $(ARCHIVE_NAME) *.o

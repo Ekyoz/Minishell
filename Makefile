@@ -33,11 +33,15 @@ FILE_EXEC_DIR		= exec/
 #FILE_EXEC			= exec init_nodes token_type
 
 FILE_PARSING_DIR	= parsing/
-FILE_PARSING		= parsing checker utils_parser token
+FILE_PARSING		= parsing checker token pipe redir quote
 
-DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR)
+FILE_PARS_UTILS_DIR	= parsing/utils/
+FILE_PARS_UTILS		= parser redir utils token
+
+DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR) $(FILE_PARS_UTILS_DIR)
 SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
 SRC_FILES			+= $(addprefix $(FILE_PARSING_DIR), $(FILE_PARSING))
+SRC_FILES			+= $(addprefix $(FILE_PARS_UTILS_DIR), $(FILE_PARS_UTILS))
 SRC_FILES			+= $(addprefix $(FILE_EXEC_DIR), $(FILE_EXEC))
 
 #-------- LIBS --------#
@@ -232,7 +236,7 @@ test: ar_test
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès en version $(YELLOW)$(BOLD)TEST!$(DEF_COLOR)"
 
 #-------- CLEAN --------#
-re:			fclean $(NAME)
+re:			fclean run
 			@echo "$(GREEN)Nettoyage et recompilage de $(PROJECT_NAME)!$(DEF_COLOR)"
 
 clean:
