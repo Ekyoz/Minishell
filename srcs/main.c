@@ -17,7 +17,7 @@ int main(int argc, char *argv[], char *envp[])
 	(void)argc;
 	(void)argv;
 	char *input;
-	t_token *tokens;
+	t_token *tokens = NULL;
 	t_tree *tree;
 	t_env *env;
 
@@ -29,12 +29,14 @@ int main(int argc, char *argv[], char *envp[])
 	while (true)
 	{
 		input = readline("Minishell :");
-		add_history(input);
+//		add_history(input);
 		parsing(&tokens, input);
+		printList(tokens);
 		create_node(tokens, &tree);
 		print_tree(tree->nodes);
 		printf("\n");
 		ast_exec(tree);
+		clear_list(&tokens);
 		if(!ft_strncmp(input, "exit", 5))
 			break;
 	}

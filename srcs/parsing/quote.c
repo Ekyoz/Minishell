@@ -46,8 +46,8 @@ char **quote(char **cmd)
 	while (cmd[++i_cmd])
 	{
 //		j_cmd = -1;
-		i_d[0][i_cmd] = ft_strchar(cmd[i_cmd], '\"');
-		i_s[0][i_cmd] = ft_strchar(cmd[i_cmd], '\'');
+//		i_d[0][i_cmd] = ft_strchar(cmd[i_cmd], '\"');
+//		i_s[0][i_cmd] = ft_strchar(cmd[i_cmd], '\'');
 		if (i_d[0][0] > -1) // double quote
 		{
 

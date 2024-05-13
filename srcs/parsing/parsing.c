@@ -38,21 +38,15 @@ bool parsing(t_token **head, char *commands)
 			{
 				if (c_splitted[0][0] == '-')
 					return false;
-				c_cmd = extract_flags(c_splitted);
-				c_args = miss_elements(c_splitted, c_cmd);
-				append_token(head, TOKEN_WORD, c_cmd);
-				while (c_args[++i_args])
-					append_token(head, TOKEN_WORD,string_to_array(c_args[i_args]));
+				append_token(head, TOKEN_WORD, c_splitted);
 			}
 			else if (there_token(c_pipe[i_pipe]))// si il y a une/des redirections
 			{
 				c_redirs = redir(c_splitted);
-				c_cmd = extract_flags(miss_elements(c_splitted, c_redirs));
-				c_args = miss_elements(c_splitted, c_cmd);
-				c_args = miss_elements(c_args, c_redirs);
+				c_cmd = miss_elements(c_splitted, c_redirs);
 				append_token(head, TOKEN_WORD, c_cmd);
-				while (c_args[++i_args])
-					append_token(head, TOKEN_WORD, string_to_array(c_args[i_args]));
+//				while (c_args[++i_args])
+//					append_token(head, TOKEN_WORD, string_to_array(c_args[i_args]));
 				while (c_redirs[++i_redirs])
 				{
 					append_token(head,is_token(c_redirs[i_redirs], 0),string_to_array(c_redirs[i_redirs]));

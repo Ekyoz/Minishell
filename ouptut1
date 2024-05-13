@@ -1,0 +1,12 @@
+total 108$
+-rw-r--r-- 1 atresall 2023_lyon    34 May 13 16:30 AUTHORS$
+drwxrwxr-x 4 atresall 2023_lyon    51 May 13 17:01 include$
+-rw-r--r-- 1 atresall 2023_lyon  8991 May 13 17:08 Makefile$
+-rwxr-xr-x 1 atresall 2023_lyon 81024 May 13 17:09 minishell$
+drwxrwxr-x 2 atresall 2023_lyon   175 May 13 17:08 others$
+-rw-r--r-- 1 atresall 2023_lyon     0 May 13 17:20 oufile$
+drwxr-xr-x 7 atresall 2023_lyon   108 May 13 17:14 out$
+-rw-r--r-- 1 atresall 2023_lyon     0 May 13 17:23 outfile$
+-rw-r--r-- 1 atresall 2023_lyon   663 May 13 17:22 output$
+-rw-r--r-- 1 atresall 2023_lyon  4502 May 13 17:01 readme$
+drwxr-xr-x 8 atresall 2023_lyon   118 May 13 17:20 srcs$

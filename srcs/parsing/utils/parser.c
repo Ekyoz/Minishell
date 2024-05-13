@@ -37,8 +37,8 @@ char **extract_flags(char **command) {
 			ft_strcpy(c_flag[i_flags], command[i_command]);
 			i_flags++;
 		}
-		else if (command[i_command][0] != '-')
-			break;
+//		else if (command[i_command][0] != '-')
+//			break;
 	}
 
 	c_flag[i_flags] = NULL;
