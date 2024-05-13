@@ -30,7 +30,7 @@ int main(int argc, char *argv[], char *envp[])
 	{
 		input = readline("Minishell :");
 		add_history(input);
-		tokens = parsing(input);
+		parsing(&tokens, input);
 		create_node(tokens, &tree);
 		print_tree(tree->nodes);
 		printf("\n");

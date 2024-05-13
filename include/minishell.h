@@ -13,9 +13,7 @@
 #ifndef MINISHELL_H
 #define MINISHELL_H
 
-#define BUFFER 1000
 # include "libft.h"
-// # include "pipex.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -28,7 +26,6 @@
 # include <limits.h>
 # include <errno.h>
 # include <signal.h>
-#include <stdbool.h>
 # include <curses.h>
 # include <term.h>
 # include <readline/readline.h>
@@ -37,7 +34,7 @@
 typedef enum e_token_type
 {
 	TOKEN_WORD, // WORD 0
-	TOKEN_PIPE, // PIPE: | 1 
+	TOKEN_PIPE, // PIPE: | 1
 	TOKEN_REDIR_IN, // REDIRECTION IN: < 2
 	TOKEN_REDIR_OUT, // REDIRECTION OUT: > 3
 	TOKEN_REDIR_APPEND, // REDIRECTION APPEND: >> 4
@@ -143,13 +140,31 @@ int unset_export(t_node *nodes, t_env *env);
 //ENV
 int displayenv(t_env *env);
 
-//PARSING
-t_token *parsing(char *commands);
-bool checker(t_token *head, char *command);
-bool check_char_before(char *string, char c, size_t pos, int len);
-bool check_char_after(char *string, char c, size_t pos, int len);
-
-
 void create_node(t_token *tokens, t_tree **tree);
 void print_tree(t_node *node);
+
+
+//PARSING
+bool parsing(t_token **head, char *commands);
+t_token *create_token(t_token_type type, char **value);
+void append_token(t_token **head, t_token_type type, char **value);
+void delete_token(t_token **head, t_token *node_to_delete);
+bool checker(t_token **head, char *command);
+t_token *get_last_token(t_token *head);
+void printList(t_token * node);
+void clear_list(t_token **head);
+int pipe_counter(const char *command);
+char **pipe_splitter(char *command);
+t_token_type is_token(char *command, int pos);
+int split_count(char *command);
+bool there_token(char *command);
+char **splitter(char *command);
+char **split_token(char *command);
+char **extract_flags(char **command);
+char **miss_elements(char **list_base, char **list_miss);
+char **string_to_array(char *string);
+char **redir(char **cmd);
+char **quote(char **cmd);
+
+
 #endif

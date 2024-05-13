@@ -39,14 +39,18 @@ FILE_GARBAGE_DIR	= garbage_collector/
 FILE_GARBAGE		= error
 
 FILE_PARSING_DIR	= parsing/
-FILE_PARSING		= parsing checker utils_parser
+FILE_PARSING		= parsing checker token pipe redir quote
+
+FILE_PARS_UTILS_DIR	= parsing/utils/
+FILE_PARS_UTILS		= parser redir utils token
 
 FILE_REDIRECTION_DIR 	= redirection/
 FILE_REDIRECTION		= testopenredir redirec
 
-DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR) $(FILE_AST_DIR) $(FILE_GARBAGE_DIR) $(FILE_REDIRECTION_DIR)
+DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR) $(FILE_AST_DIR) $(FILE_GARBAGE_DIR) $(FILE_REDIRECTION_DIR) $(FILE_PARS_UTILS_DIR)
 SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
 SRC_FILES			+= $(addprefix $(FILE_PARSING_DIR), $(FILE_PARSING))
+SRC_FILES			+= $(addprefix $(FILE_PARS_UTILS_DIR), $(FILE_PARS_UTILS))
 SRC_FILES			+= $(addprefix $(FILE_EXEC_DIR), $(FILE_EXEC))
 SRC_FILES			+= $(addprefix $(FILE_AST_DIR), $(FILE_AST))
 SRC_FILES			+= $(addprefix $(FILE_GARBAGE_DIR), $(FILE_GARBAGE))
@@ -169,7 +173,6 @@ $(NAME): default
 default: archive
 			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME) $(LIBFLAGS)
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR)"
-
 
 all: $(NAME)
 

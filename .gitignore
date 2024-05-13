@@ -1,9 +1,8 @@
 *.o
-*.out
 *.a
+*.out
 .idea
 .vscode
 out/
 minishell
 test/
-srcs/exec/readme.txt

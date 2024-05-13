@@ -12,19 +12,20 @@
 
 #include "libft.h"
 
-void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
+void *ft_realloc(void *ptr, size_t old_size, size_t new_size)
 {
-	void	*new_ptr;
+	void *new_ptr = malloc(new_size);
+	if (new_ptr == NULL) {
+		return NULL; // Échec de l'allocation
+	}
 
-	new_ptr = malloc(new_size);
-	if (new_ptr == NULL)
-	{
-		return (NULL);
-	}
-	if (ptr != NULL)
-	{
-		ft_memcpy(new_ptr, ptr, old_size);
-		free(ptr);
-	}
-	return (new_ptr);
+	// Copie des données de l'ancien bloc vers le nouveau
+	ft_memcpy(new_ptr, ptr, old_size);
+
+	// Libération de l'ancien bloc
+	free(ptr);
+
+	return new_ptr;
 }
+
+
