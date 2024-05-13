@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/13 16:15:36 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/13 21:48:18 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int unset(t_node *nodes, t_env **env)
 
 int unset_export(t_node *nodes, t_env *env)
 {
+    fprintf(stderr, "la gros le node %s\n", nodes->args[0]);
     if(!ft_strncmp(nodes->args[0], "unset", 5))
     {
         unset(nodes, &env);

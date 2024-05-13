@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/13 15:58:45 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/13 21:47:02 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,17 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
 {
     pid_t pid;
 
+    unset_export(nodes->left, tree->env); // export et unset en dehors du fils
     pid = fork();
     if(pid == -1)
         return ((void*)1);
     if(pid == 0)
     {
-        choose_builtin(nodes->left, tree->env);
         heredoc(tree, nodes);
         check_redir_out(tree, nodes);
         check_redir_in(tree, nodes);
+        if(choose_builtin(nodes->left, tree->env))
+            exit(0);
         if(!check_cmd1(tree, nodes->left))
             print_error(2, tree, nodes->left);
         ft_execve(tree, nodes->left);

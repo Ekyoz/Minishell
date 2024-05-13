@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/10 16:24:48 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/13 21:50:34 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int main(int argc, char *argv[], char *envp[])
 		input = readline("Minishell :");
 //		add_history(input);
 		parsing(&tokens, input);
-		printList(tokens);
+		// printList(tokens);
 		create_node(tokens, &tree);
 		print_tree(tree->nodes);
 		printf("\n");

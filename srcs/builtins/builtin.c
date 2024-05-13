@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:02:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/13 16:07:59 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/13 20:57:31 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@ int choose_builtin(t_node *nodes, t_env *env)
         getpwd_env(env);
         return(1);
     }
-    // else if(!ft_strncmp(nodes->args[0], "unset", 5))
-    // {
-    //     unset(nodes, &env);
-    //     // displayenv(env);
-    //     return(1);
-    // }
+    else if(!ft_strncmp(nodes->args[0], "unset", 5))
+    {
+        return(1);
+    }
     else if(!ft_strncmp(nodes->args[0], "env", 3))
     {
         if(displayenv(env) == 1)
