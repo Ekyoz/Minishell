@@ -3,6 +3,7 @@
 *.out
 .idea
 .vscode
+.DS_Store
 out/
 minishell
 test/
