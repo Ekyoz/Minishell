@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   token_utils.c                                      :+:      :+:    :+:   */
+/*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 16:58:20 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/03 16:58:20 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:31:16 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ char **split_token(char *command)
 	i_final = 0;
 	s_last_word = 0;
 	e_last_word = 0;
-	c_final = (char **)malloc(sizeof(char *) * split_count(command)+1);
-
+	// c_final = (char **)malloc(sizeof(char *) * split_count(command)+1);
+	c_final = (char **) malloc(sizeof(char *) * (split_count(command)+1));
 	if (!there_token(command))
 	{
 		c_final[i_final] = command;

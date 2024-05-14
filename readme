@@ -134,3 +134,21 @@ TYPE D'ERREUR file
 
 si j'ai une commande
 si j'ai une redirection
+
+STATUS CODE $?
+
+0 : success
+127 : command not found
+130 : equivalent au ctrl + c
+1 : Permission Denied, no such file or directory
+2 : Erreur syntaxe
+
+cattt > output | ls -l => je retourne 0 car ls -l marche dans tous les cas
+ls -l | catttttttt > output => je retourne 127 command not found
+
+---------------------- SIGNAL ------------------------
+
+- CTRL + C – SIGINT 2
+- CTRL + D – SIGQUIT 3
+
+- Faire des fonctions handler pour chaque SIGNAL

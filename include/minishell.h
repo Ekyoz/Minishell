@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/13 16:15:40 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/14 11:39:37 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_tree // structure qui va iterer dans mes nodes et executer les 
 	int fdin; // fd du file in
 	int fdoutcp;
 	int error[4];
+	int statuscode;
 } t_tree;
 
 
@@ -126,13 +127,14 @@ char **find_heredoc(t_node *nodes);
 
 //FONCTIONS DU GARBAGE COLLECTOR
 void print_error(int errorcode, t_tree *tree, t_node *node);
+void read_status(t_tree *tree);
 
 //ENVIRONNEMENT
 t_env	*init_env(char **env_array);
 int displayenv(t_env *env);
 
 //BUILTIN
-int choose_builtin(t_node *nodes, t_env *env);
+int choose_builtin(t_tree *tree, t_node *nodes, t_env *env);
 //PWD
 int getpwd_env(t_env *env);
 //UNSET

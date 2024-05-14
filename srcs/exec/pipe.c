@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 17:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/13 14:41:48 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/14 15:44:23 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,10 +87,11 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
     pid_t pid[3];
     int i;
     int j;
-    int builtin;
+    int status;
 
     i = 0;
     j = 0;
+    status = 0;
     i = init_fdpipe(tree, nodes);
     while(j <= i)
     {
@@ -102,7 +103,7 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
             dup_pipe(tree, nodes, j, i);
             if(testredir(nodes->left)) // Si redirections  
             {
-                if(choose_builtin(nodes->left->left, tree->env))
+                if(choose_builtin(tree, nodes->left->left, tree->env))
                     exit(0);
                 if(!check_cmd1(tree, nodes->left->left))
                     print_error(2, tree, nodes->left->left);
@@ -110,7 +111,7 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
             }
             else if(nodes->left) // pas de redir et une commande a gauche
             {
-                if(choose_builtin(nodes->left, tree->env))
+                if(choose_builtin(tree, nodes->left, tree->env))
                     exit(0);
                 if(!check_cmd1(tree, nodes->left))
                     print_error(2, tree, nodes->left);
@@ -118,7 +119,7 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
             }
             else // pas de redir et pas de pipe
             {
-                if(choose_builtin(nodes, tree->env))
+                if(choose_builtin(tree, nodes, tree->env))
                     exit(0);
                 if(!check_cmd1(tree, nodes))
                     print_error(2, tree, nodes);
@@ -134,6 +135,8 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
             waitpid(pid[j], NULL, 0);
             if(access(".here_doc", F_OK) != -1) // je supprime le heredoc
                 unlink(".here_doc");
+            if(WIFEXITED(status))
+                tree->statuscode = WEXITSTATUS(status);
             j++;
             if(nodes->right)
                 nodes = nodes->right;

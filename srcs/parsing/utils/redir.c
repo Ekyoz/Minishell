@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:54:35 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/07 11:54:35 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/14 14:02:07 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ char **splitter(char *command) //splitter par les espace et par les tokens
 	i_final = 0;
 	i_token = -1;
 	c_space = ft_split(command, ' ');
-	c_final = (char **) malloc(sizeof(char *) * split_count(command)+1);
-
+	c_final = (char **) malloc(sizeof(char *) * (split_count(command)+1));
 	while (c_space[++i_space])
 	{
 		if (!there_token(c_space[i_space])) // si il n'y a pas de token
@@ -76,5 +75,5 @@ char **splitter(char *command) //splitter par les espace et par les tokens
 		}
 	}
 	c_final[i_final] = NULL;
-	return quote(c_final);
+	return c_final;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/13 21:47:02 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/14 16:25:05 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,12 @@ void *ft_execve(t_tree *tree, t_node *nodes)
 int exec_cmd(t_tree *tree, t_node *nodes)
 {
     pid_t pid;
+    int status;
     
-    if(choose_builtin(nodes, tree->env))
+
+    status = 0;
+    if(choose_builtin(tree, nodes, tree->env) ||
+        unset_export(nodes, tree->env))
         return(0);
     pid = fork();
     if(pid == -1 )
@@ -42,18 +46,22 @@ int exec_cmd(t_tree *tree, t_node *nodes)
         if(execve(tree->path, nodes->args, NULL) == -1)
         {
             perror("error");
-            return(1);
+            exit(EXIT_FAILURE);
         }
     }
-    waitpid(pid, NULL, 0);
+    waitpid(pid, &status, 0);
+    if(WIFEXITED(status))
+        tree->statuscode = WEXITSTATUS(status);
     return(0);
 }
 
 void *exec_cmd_out(t_tree *tree, t_node *nodes)
 {
     pid_t pid;
+    int status;
 
-    unset_export(nodes->left, tree->env); // export et unset en dehors du fils
+    status = 0;
+    unset_export(nodes->left, tree->env);
     pid = fork();
     if(pid == -1)
         return ((void*)1);
@@ -62,17 +70,19 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
         heredoc(tree, nodes);
         check_redir_out(tree, nodes);
         check_redir_in(tree, nodes);
-        if(choose_builtin(nodes->left, tree->env))
-            exit(0);
+        if(choose_builtin(tree, nodes->left, tree->env))
+            exit(0); 
         if(!check_cmd1(tree, nodes->left))
             print_error(2, tree, nodes->left);
         ft_execve(tree, nodes->left);
     }
     else
     {
-        waitpid(pid, NULL, 0);
+        waitpid(pid, &status, 0);
         if(access(".here_doc", F_OK) != -1)
             unlink(".here_doc");
+        if(WIFEXITED(status))
+            tree->statuscode = WEXITSTATUS(status);
     }
     return((void*)0);
 }
