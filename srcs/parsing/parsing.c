@@ -17,10 +17,8 @@ bool parsing(t_token **head, char *commands)
 	char **c_pipe = NULL; // command separer par la pipe
 	char **c_splitted = NULL; // command separer par tous les tokens
 	char **c_cmd = NULL; // list de la comamnde avec les flags
-	char **c_args = NULL; // les elements qui sont pas les flags
 	char **c_redirs = NULL; // liste des redirection et des fichiers
 	int i_pipe = -1;
-	int i_args;
 	int i_redirs;
 	if (commands)
 	{
@@ -29,7 +27,6 @@ bool parsing(t_token **head, char *commands)
 			return false;
 		while (c_pipe[++i_pipe])
 		{
-			i_args = -1;
 			i_redirs = -1;
 			c_splitted = splitter(c_pipe[i_pipe]);
 			if (!c_splitted)

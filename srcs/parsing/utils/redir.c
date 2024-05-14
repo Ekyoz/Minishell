@@ -76,5 +76,5 @@ char **splitter(char *command) //splitter par les espace et par les tokens
 		}
 	}
 	c_final[i_final] = NULL;
-	return quote(c_final);
+	return c_final;
 }
