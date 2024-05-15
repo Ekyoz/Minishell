@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/14 16:25:05 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/15 17:53:40 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int exec_cmd(t_tree *tree, t_node *nodes)
 {
     pid_t pid;
     int status;
-    
 
     status = 0;
     if(choose_builtin(tree, nodes, tree->env) ||
@@ -50,6 +49,11 @@ int exec_cmd(t_tree *tree, t_node *nodes)
         }
     }
     waitpid(pid, &status, 0);
+    fprintf(stderr, "status %d\n", status);
+    if (WIFSIGNALED(status))
+    {
+        fprintf(stderr, "je suis la dedans gros\n");
+    }
     if(WIFEXITED(status))
         tree->statuscode = WEXITSTATUS(status);
     return(0);

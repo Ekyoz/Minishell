@@ -6,7 +6,7 @@
 #    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/05/14 10:49:30 by bpoyet           ###   ########.fr        #
+#    Updated: 2024/05/15 13:00:17 by bpoyet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ LIB_LIST			= $(LIBFT_DIR)
 LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE)
 
 #-------- FLAGS --------#
-CFLAGS 				= -Wall -Wextra -g3#-Werror
+CFLAGS 				= -Wall -Wextra -g3 #-Werror
 CFLAGS_DEBUG		= -Wall -Wextra -g3
 CFLAGS_EXEC			= -Wall -Wextra -g3 #-Werror
 CFLAGS_PARSING		= -Wall -Wextra -g3 #-Werror

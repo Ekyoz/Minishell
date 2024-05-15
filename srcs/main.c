@@ -6,11 +6,13 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/14 16:22:58 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/15 15:58:20 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int signal_status = 0;
 
 int main(int argc, char *argv[], char *envp[])
 {
@@ -25,18 +27,22 @@ int main(int argc, char *argv[], char *envp[])
 	env = init_env(envp);
 	// displayenv(env);
 	tree = init_tree(envp, env);
+	set_signal();
 
 	if(!tree)
 		return (1);
+
 	while (true)
 	{
 		input = readline("Minishell :");
+		if(input == NULL) // handle ctrl + d
+			exit(0);
 		// add_history(input);
 		parsing(&tokens, input);
 		// printList(tokens);
 		create_node(tokens, &tree);
-		print_tree(tree->nodes);
-		printf("\n");
+		// print_tree(tree->nodes);
+		// printf("\n");
 		ast_exec(tree);
 		clear_list(&tokens);
 		if(!ft_strncmp(input, "exit", 5))

@@ -6,12 +6,14 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/14 11:39:37 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/15 17:23:49 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
+// #define _GNU_SOURCE
+#define _XOPEN_SOURCE 700
 
 # include "libft.h"
 # include <stdlib.h>
@@ -30,6 +32,8 @@
 # include <term.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+
+extern int signal_status;
 
 typedef enum e_token_type
 {
@@ -97,10 +101,12 @@ t_node *init_nodes();
 t_node *add_node(t_node *nodes, t_token **token);
 t_node *add_node_left(t_node *nodes, t_token **token);
 t_node *add_node_right(t_node *nodes, t_token **token, bool *is_redirec);
+void create_node(t_token *tokens, t_tree **tree);
 void add_branches(t_token *tokens, t_node **node, t_node **nodecp, bool *redir);
 
 //FONCTIONS MANIPULATION DE MON ARBRE
 t_tree *init_tree(char *envp[], t_env *env);
+void print_tree(t_node *node);
 
 //EXECUT
 void ast_exec(t_tree *tree);
@@ -142,9 +148,9 @@ int unset_export(t_node *nodes, t_env *env);
 //ENV
 int displayenv(t_env *env);
 
-void create_node(t_token *tokens, t_tree **tree);
-void print_tree(t_node *node);
-
+//SIGNAUX
+void set_signal(void);
+void set_signal_cmd(int sig);
 
 //PARSING
 bool parsing(t_token **head, char *commands);

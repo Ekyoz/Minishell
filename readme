@@ -152,3 +152,16 @@ ls -l | catttttttt > output => je retourne 127 command not found
 - CTRL + D – SIGQUIT 3
 
 - Faire des fonctions handler pour chaque SIGNAL
+
+- ctrl + c :- nouvelle ligne 
+            - heredoc => sort du heredoc et nouvelle ligne
+            - process => sors et nouvelle ligne
+
+- ctrl + d :- quitte le bash
+            - si dans heredoc quitte en envoyant ce message d'erreur:
+            Minishell: warning: here-document at line 1 delimited by end-of-file (wanted `eof')
+            - si danc un process genre sleep => ne fait rien
+
+- ctrl + \ :- Ne fais rien
+            - process: quitte avec le message "Quit (core dumped)"
+            - heredoc: ne fais rien
