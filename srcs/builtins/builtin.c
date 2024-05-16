@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:02:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/14 14:50:25 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/16 19:27:18 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 // ils ne peuvent donc pas etre dans un fork() je les execute a part
 int choose_builtin(t_tree *tree, t_node *nodes, t_env *env)
 {
+    (void)tree;
     // fprintf(stderr, "node %s \n", nodes->args[0]);
     if(!ft_strncmp(nodes->args[0], "pwd", 4))
     {
@@ -45,11 +46,11 @@ int choose_builtin(t_tree *tree, t_node *nodes, t_env *env)
     {
         return(1);
     }
-    else if(!ft_strncmp(nodes->args[0], "$?", 3))
-    {
-        read_status(tree);
-        return(1);
-    }
+    // else if(!ft_strncmp(nodes->args[0], "$?", 3))
+    // {
+    //     read_status(tree);
+    //     return(1);
+    // }
     else
         return (0);
 }

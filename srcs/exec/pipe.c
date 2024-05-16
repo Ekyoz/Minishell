@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 17:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/14 15:44:23 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/16 19:27:43 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,10 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
     i = init_fdpipe(tree, nodes);
     while(j <= i)
     {
+        if(is_heredoc(nodes->left))
+            set_signal_heredoc();
+        else
+            set_signal_cmd();
         pid[j] = fork();
         if(pid[j] < 0)
             perror("fork error");
@@ -136,7 +140,7 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
             if(access(".here_doc", F_OK) != -1) // je supprime le heredoc
                 unlink(".here_doc");
             if(WIFEXITED(status))
-                tree->statuscode = WEXITSTATUS(status);
+                signal_status = WEXITSTATUS(status);
             j++;
             if(nodes->right)
                 nodes = nodes->right;

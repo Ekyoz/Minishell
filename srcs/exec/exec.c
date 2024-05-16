@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/15 17:53:40 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/16 20:02:41 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,13 @@ int exec_cmd(t_tree *tree, t_node *nodes)
     if(choose_builtin(tree, nodes, tree->env) ||
         unset_export(nodes, tree->env))
         return(0);
+    signal(SIGINT, empty_signal);
     pid = fork();
     if(pid == -1 )
         return(1);
     if(pid == 0)
     {
+        set_signal_cmd();
         if(!check_cmd1(tree, nodes))
             print_error(2, tree, nodes);
         tree->path = check_access1(tree, nodes);
@@ -49,13 +51,20 @@ int exec_cmd(t_tree *tree, t_node *nodes)
         }
     }
     waitpid(pid, &status, 0);
-    fprintf(stderr, "status %d\n", status);
-    if (WIFSIGNALED(status))
+    printf("juste avant\n");
+    if(WIFSIGNALED(status))
     {
-        fprintf(stderr, "je suis la dedans gros\n");
+        printf("dans le signal\n");
+
     }
+    // if (signal_status != 0)
+    //     return(1);
     if(WIFEXITED(status))
-        tree->statuscode = WEXITSTATUS(status);
+    {
+        signal_status = WEXITSTATUS(status);
+        fprintf(stderr, "le status vaut %d et %d\n", signal_status, status);
+    }
+    
     return(0);
 }
 
@@ -65,7 +74,12 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
     int status;
 
     status = 0;
-    unset_export(nodes->left, tree->env);
+    if(nodes->left)
+        unset_export(nodes->left, tree->env);
+    if(is_heredoc(nodes))
+        set_signal_heredoc();
+    else
+        set_signal_cmd();
     pid = fork();
     if(pid == -1)
         return ((void*)1);
@@ -80,13 +94,15 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
             print_error(2, tree, nodes->left);
         ft_execve(tree, nodes->left);
     }
-    else
+    waitpid(pid, &status, 0);
+    if(access(".here_doc", F_OK) != -1)
+        unlink(".here_doc");
+    if (signal_status != 0)
+        return(1);
+    if(WIFEXITED(status))
     {
-        waitpid(pid, &status, 0);
-        if(access(".here_doc", F_OK) != -1)
-            unlink(".here_doc");
-        if(WIFEXITED(status))
-            tree->statuscode = WEXITSTATUS(status);
+        fprintf(stderr, "le status vaut %d\n", status);
+        signal_status = WEXITSTATUS(status);
     }
     return((void*)0);
 }
@@ -103,14 +119,12 @@ void ast_exec(t_tree *tree)
     {
         if(nodes->type == TOKEN_PIPE)
         {
-            // printf("dans un pipe\n");
             exec_pipe(tree, nodes);
             out = 0;            
         }
         else if(nodes->type == TOKEN_REDIR_IN || nodes->type == TOKEN_REDIR_OUT || 
         nodes->type == TOKEN_REDIR_APPEND || nodes->type == TOKEN_REDIR_HEREDOC)
         {
-            printf("dans redir\n");
             exec_cmd_out(tree, nodes);
             out = 0;
         }

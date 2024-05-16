@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/07 19:36:13 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/16 17:28:57 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void init_eofword(t_node *nodes, char ***eofword)// fonction qui init tou
 }
 
 //je trouve les heredoc et je retourne tous les eof dans un char**
-char **find_heredoc(t_node *nodes) 
+static char **find_heredoc(t_node *nodes) 
 {
     char **eofword;
     int i;
@@ -76,6 +76,21 @@ char **find_heredoc(t_node *nodes)
     return (eofword);
 }
 
+bool is_heredoc(t_node *nodes)
+{
+    if(nodes)
+    {
+        while(nodes)
+        {
+            printf("nodes type %d\n", nodes->type);
+            if(nodes->type == TOKEN_REDIR_HEREDOC)
+                return(1);
+            nodes = nodes->right;
+        }
+    }
+    return(0);
+}
+
 void heredoc(t_tree *tree, t_node *nodes)
 {
     char *input;
@@ -87,10 +102,14 @@ void heredoc(t_tree *tree, t_node *nodes)
         tree->fdin = open(".here_doc",  O_WRONLY | O_CREAT | O_TRUNC, 0777);
         if(tree->fdin < 0)
             perror("error opening");
-        fprintf(stderr, "dans la boucle\n");
         while(*eofword)
         {
             input = readline("> ");
+            if(!input)
+            {
+                printf("minishell: warning: here-document at line 1 delimited by end-of-file (wanted `%s')\n", *eofword);
+                exit(0);
+            }
             write(tree->fdin, input, ft_strlen(input));
             write(tree->fdin, "\n", 1);
             if(!ft_strcmp(*eofword, input))

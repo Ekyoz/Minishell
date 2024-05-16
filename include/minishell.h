@@ -6,14 +6,14 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/15 17:23:49 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/16 20:05:22 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 #define MINISHELL_H
 // #define _GNU_SOURCE
-#define _XOPEN_SOURCE 700
+// #define _XOPEN_SOURCE 700
 
 # include "libft.h"
 # include <stdlib.h>
@@ -86,7 +86,7 @@ typedef struct s_tree // structure qui va iterer dans mes nodes et executer les 
 	int fdin; // fd du file in
 	int fdoutcp;
 	int error[4];
-	int statuscode;
+	int repeatstatus;
 } t_tree;
 
 
@@ -129,7 +129,7 @@ int testredir(t_node *nodes);
 
 //heredoc
 void heredoc(t_tree *tree, t_node *nodes);
-char **find_heredoc(t_node *nodes);
+bool is_heredoc(t_node *nodes);
 
 //FONCTIONS DU GARBAGE COLLECTOR
 void print_error(int errorcode, t_tree *tree, t_node *node);
@@ -150,7 +150,9 @@ int displayenv(t_env *env);
 
 //SIGNAUX
 void set_signal(void);
-void set_signal_cmd(int sig);
+void set_signal_cmd(void);
+void set_signal_heredoc(void);
+void    empty_signal(int sig);
 
 //PARSING
 bool parsing(t_token **head, char *commands);

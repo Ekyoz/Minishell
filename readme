@@ -140,6 +140,7 @@ STATUS CODE $?
 0 : success
 127 : command not found
 130 : equivalent au ctrl + c
+131 : ctrl + \
 1 : Permission Denied, no such file or directory
 2 : Erreur syntaxe
 
@@ -148,8 +149,9 @@ ls -l | catttttttt > output => je retourne 127 command not found
 
 ---------------------- SIGNAL ------------------------
 
-- CTRL + C – SIGINT 2
-- CTRL + D – SIGQUIT 3
+- CTRL + C – SIGINT 2 => erreur 131
+- CTRL + \ – SIGQUIT 3 => erreur 130
+- CTRL + d – EOF => erreur 
 
 - Faire des fonctions handler pour chaque SIGNAL
 

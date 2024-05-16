@@ -6,7 +6,7 @@
 #    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/05/15 13:00:17 by bpoyet           ###   ########.fr        #
+#    Updated: 2024/05/16 16:40:34 by bpoyet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,7 @@ FILE_REDIRECTION_DIR 	= redirection/
 FILE_REDIRECTION		= testopenredir redirec
 
 FILE_SIGNAL_DIR		= signal/
-FILE_SIGNAL 		= ctrl_c
+FILE_SIGNAL 		= signal_cmd signal_heredoc signal
 
 DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR) $(FILE_AST_DIR) $(FILE_GARBAGE_DIR) $(FILE_REDIRECTION_DIR) $(FILE_PARS_UTILS_DIR) $(FILE_SIGNAL_DIR)
 SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
