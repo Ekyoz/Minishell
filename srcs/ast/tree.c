@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:11:51 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/16 18:55:45 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/21 15:10:45 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ t_tree *init_tree(char *envp[], t_env *env)
     tree->error[1] = 0;
     tree->error[2] = 0;
     tree->error[3] = 0;
+    tree->pid[0] = 0;
+    tree->pid[1] = 0;
+    tree->pid[2] = 0;
     tree->repeatstatus = 0;
     //ERREUR A GERER DANS LE CAS OU IL NY A PAS DENVIRONNEMENT
     get_env_args(envp, tree);

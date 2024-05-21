@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/16 22:58:46 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/21 17:17:24 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ typedef struct s_tree // structure qui va iterer dans mes nodes et executer les 
 	int fdoutcp;
 	int error[4];
 	int repeatstatus;
+	int status;
+	pid_t pid[3];
 } t_tree;
 
 
@@ -111,7 +113,15 @@ void print_tree(t_node *node);
 //EXECUT
 void ast_exec(t_tree *tree);
 void *ft_execve(t_tree *tree, t_node *nodes);
+void parent_process(int status, pid_t pid);
+pid_t do_fork(t_tree *tree, pid_t pid);
+
+//PIPE
 void *exec_pipe(t_tree *tree, t_node *nodes);
+void close_pipe(int fd1, int fd2, int fd3, int fd4);
+void first_pipe(t_tree *tree, t_node *node);
+void last_pipe(t_tree *tree, t_node *node, int j);
+void mid_pipe(t_tree *tree, t_node *node, int j);
 
 //CHECKING COMMAND
 char *check_access1(t_tree *tree, t_node *nodes);
@@ -152,6 +162,8 @@ int displayenv(t_env *env);
 void set_signal(void);
 void set_signal_cmd(void);
 void set_signal_heredoc(void);
+void get_signal_cmd(int status, pid_t pid);
+void hdoc_or_cmd(t_node *nodes);
 
 //PARSING
 bool parsing(t_token **head, char *commands);

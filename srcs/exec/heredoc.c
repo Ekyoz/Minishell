@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/16 17:28:57 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/21 16:30:26 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,6 @@ bool is_heredoc(t_node *nodes)
     {
         while(nodes)
         {
-            printf("nodes type %d\n", nodes->type);
             if(nodes->type == TOKEN_REDIR_HEREDOC)
                 return(1);
             nodes = nodes->right;

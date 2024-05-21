@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:32:58 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/17 15:28:12 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/21 12:19:09 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void sig_handler_cmd(int sig)
     if(sig == SIGQUIT)
     {
         write(2, "Quit (core dumped)\n", 19);
-        signal_status
+        signal_status = 131 ;
     }
     // else
     //     exit(128 + sig);

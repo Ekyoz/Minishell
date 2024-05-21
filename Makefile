@@ -6,7 +6,7 @@
 #    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/05/16 16:40:34 by bpoyet           ###   ########.fr        #
+#    Updated: 2024/05/21 17:19:15 by bpoyet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,7 @@ FILE_BUILTINS_DIR 	= builtins/
 FILE_BUILTINS 		= cd echo env exit export pwd unset builtin
 
 FILE_EXEC_DIR		= exec/
-FILE_EXEC			= command exec heredoc pipe
+FILE_EXEC			= command exec heredoc pipe fork utils_pipe
 
 FILE_AST_DIR		= ast/
 FILE_AST			= create_ast nodes token_type tree
