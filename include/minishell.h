@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/16 20:05:22 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/16 22:58:46 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,6 @@ int displayenv(t_env *env);
 void set_signal(void);
 void set_signal_cmd(void);
 void set_signal_heredoc(void);
-void    empty_signal(int sig);
 
 //PARSING
 bool parsing(t_token **head, char *commands);

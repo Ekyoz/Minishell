@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/16 19:54:45 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/17 15:11:15 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main(int argc, char *argv[], char *envp[])
 
 	while (true)
 	{
-		// set_signal();
+		set_signal();
 		input = readline("Minishell :");
 		if(input == NULL) // handle ctrl + d
 			exit(0);

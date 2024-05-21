@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/16 20:02:41 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/17 15:20:51 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,12 @@ int exec_cmd(t_tree *tree, t_node *nodes)
     if(choose_builtin(tree, nodes, tree->env) ||
         unset_export(nodes, tree->env))
         return(0);
-    signal(SIGINT, empty_signal);
+    set_signal_cmd();
     pid = fork();
     if(pid == -1 )
         return(1);
     if(pid == 0)
     {
-        set_signal_cmd();
         if(!check_cmd1(tree, nodes))
             print_error(2, tree, nodes);
         tree->path = check_access1(tree, nodes);
@@ -51,12 +50,12 @@ int exec_cmd(t_tree *tree, t_node *nodes)
         }
     }
     waitpid(pid, &status, 0);
-    printf("juste avant\n");
-    if(WIFSIGNALED(status))
-    {
-        printf("dans le signal\n");
-
-    }
+    // if(WIFSIGNALED(status))
+    // {
+        // printf("dans le signal %d\n", signal_status);
+        // signal_status = WTERMSIG(status);
+        // printf("%d\n", signal_status);
+    // }
     // if (signal_status != 0)
     //     return(1);
     if(WIFEXITED(status))
@@ -64,7 +63,6 @@ int exec_cmd(t_tree *tree, t_node *nodes)
         signal_status = WEXITSTATUS(status);
         fprintf(stderr, "le status vaut %d et %d\n", signal_status, status);
     }
-    
     return(0);
 }
 
@@ -97,8 +95,6 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
     waitpid(pid, &status, 0);
     if(access(".here_doc", F_OK) != -1)
         unlink(".here_doc");
-    if (signal_status != 0)
-        return(1);
     if(WIFEXITED(status))
     {
         fprintf(stderr, "le status vaut %d\n", status);
