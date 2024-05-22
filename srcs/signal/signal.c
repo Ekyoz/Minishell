@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:52:31 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/21 14:21:51 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/22 12:04:43 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void get_signal_cmd(int status, pid_t pid)
     if(WIFEXITED(status))
     {
         signal_status = WEXITSTATUS(status);
-        fprintf(stderr, "le status vaut %d et %d\n", signal_status, status);
+        // fprintf(stderr, "le status vaut %d et %d\n", signal_status, status);
     }
 }
 void hdoc_or_cmd(t_node *nodes)

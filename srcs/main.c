@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/21 13:34:21 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/22 17:25:13 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,13 @@ int main(int argc, char *argv[], char *envp[])
 			exit(0);
 		// add_history(input);
 		parsing(&tokens, input);
-		// printList(tokens);
+		printList(tokens);
 		create_node(tokens, &tree);
 		// print_tree(tree->nodes);
 		// printf("\n");
 		ast_exec(tree);
 		clear_list(&tokens);
-		if(!ft_strncmp(input, "exit", 5))
-			break;
+		free_tree(tree);
 	}
 	return 0;
 }

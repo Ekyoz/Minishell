@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/21 17:17:24 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/22 17:38:39 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ typedef struct s_env
 typedef struct s_tree // structure qui va iterer dans mes nodes et executer les commandes
 {
 	t_node *nodes;
-	t_env *env;
-	char	**envp;
-	char	*path;
-	int **fdpipe; //fd de chaque pipe
-	int fdout; //fd du file out
+	t_env *env; // mon environnement
+	char	**envp; // mes path pour les commandes
+	char	*path; //  le path retourner par le check_access
+	int **fdpipe; // fd de chaque pipe 
+	int fdout; // fd du file out
 	int fdin; // fd du file in
 	int fdoutcp;
 	int error[4];
@@ -137,13 +137,16 @@ int check_redir_in(t_tree *tree, t_node *nodes);
 int testopening(t_tree *tree, t_node *nodes);
 int testredir(t_node *nodes);
 
-//heredoc
+//HEREDOC
 void heredoc(t_tree *tree, t_node *nodes);
 bool is_heredoc(t_node *nodes);
 
 //FONCTIONS DU GARBAGE COLLECTOR
 void print_error(int errorcode, t_tree *tree, t_node *node);
 void read_status(t_tree *tree);
+void free_tree(t_tree *tree);
+void free_env(t_env *env);
+void free_pipe(int **fdpipe);
 
 //ENVIRONNEMENT
 t_env	*init_env(char **env_array);
@@ -157,6 +160,8 @@ int getpwd_env(t_env *env);
 int unset_export(t_node *nodes, t_env *env);
 //ENV
 int displayenv(t_env *env);
+//EXIT
+void exit_function(t_tree *tree, t_node *node);
 
 //SIGNAUX
 void set_signal(void);

@@ -6,7 +6,7 @@
 #    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/05/21 17:19:15 by bpoyet           ###   ########.fr        #
+#    Updated: 2024/05/22 14:43:46 by bpoyet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ FILE_AST_DIR		= ast/
 FILE_AST			= create_ast nodes token_type tree
 
 FILE_GARBAGE_DIR	= garbage_collector/
-FILE_GARBAGE		= error status_code
+FILE_GARBAGE		= error status_code free_tree free_tree1
 
 FILE_PARSING_DIR	= parsing/
 FILE_PARSING		= parsing checker token pipe redir quote

@@ -167,3 +167,12 @@ ls -l | catttttttt > output => je retourne 127 command not found
 - ctrl + \ :- Ne fais rien
             - process: quitte avec le message "Quit (core dumped)"
             - heredoc: ne fais rien
+
+------------------- FREE -------------------
+
+- t_env => qui correspond aux variables d'environnement env
+- eofword => mots permettant la delimitation du heredoc
+- fdpipe => nombre de fd alloue pour le pipe
+- t_tree => Allocation de mon tree
+- init_nodes => nouveau noeud 
+- envp => qui correspond aux path de mes commandes
