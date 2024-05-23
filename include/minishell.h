@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/16 14:10:55 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/23 16:39:09 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void read_status(t_tree *tree);
 void free_tree(t_tree **tree);
 void free_env(t_env *env);
 void free_pipe(t_tree *tree);
-void malloc_err(t_tree *tree);
+void err_free_all(t_tree *tree);
 void malloc_tree_err(t_env *env);
 
 //ENVIRONNEMENT

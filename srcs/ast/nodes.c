@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:30:32 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 14:54:26 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/23 16:39:09 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ t_node *init_nodes(t_tree *tree)
 
     nodes = (t_node*)malloc(sizeof(t_node));
     if(!nodes)
-        malloc_err(tree);
+        err_free_all(tree);
     nodes->type = TOKEN_WORD;
     nodes->file_type = 0;
     nodes->tree_level = 0;

@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 10:42:56 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/23 16:40:12 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,14 @@ int exec_cmd(t_tree *tree, t_node *nodes, char *envp[])
     pid = fork();
     set_signal_cmd();
     if(pid == -1 )
-        return(1);
+        err_free_all(tree);
     if(pid == 0)
     {
         if(!check_cmd1(tree, nodes))
             print_error(2, tree, nodes);
         tree->path = check_access1(tree, nodes);
         if(execve(tree->path, nodes->args, envp) == -1)
-        {
-            perror("error");
-            exit(EXIT_FAILURE);
-        }
+            err_free_all(tree);
     }
     get_signal_cmd(status, pid);
     return(0);

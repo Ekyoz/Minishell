@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/23 15:22:26 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/23 16:45:59 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void init_eofword(t_tree *tree, t_node *nodes, char ***eofword) // foncti
     if(i > 0)
     {
         *eofword = (char **)malloc(sizeof(char *) * (i + 1));
-        if(*eofword)
-            malloc_err(tree);
+        if(!(*eofword))
+            err_free_all(tree);
     }
     else
         *eofword = NULL;
@@ -52,7 +52,7 @@ static char **find_heredoc(t_tree *tree, t_node *nodes)
                 {
                     eofword[i] = ft_strdup(nodes->right->left->args[0]);
                     if(!eofword[i])
-                        malloc_err(tree);
+                        err_free_all(tree);
                     fprintf(stderr, "eof %s\n", eofword[i]);
                     i++;
                 }
@@ -66,7 +66,7 @@ static char **find_heredoc(t_tree *tree, t_node *nodes)
             {
                 eofword[i] = ft_strdup(nodes->right->args[0]);
                 if(!eofword[i])
-                    malloc_err(tree);
+                    err_free_all(tree);
                 fprintf(stderr, "eof %s\n", eofword[i]);
                 i++;
             }
@@ -120,7 +120,8 @@ void heredoc(t_tree *tree, t_node *nodes)
         }
         close(tree->fdin);
         tree->fdin = open(".here_doc", O_RDONLY);
-        dup2(tree->fdin, STDIN_FILENO);
+        if(dup2(tree->fdin, STDIN_FILENO) == -1)
+            err_free_all(tree);
         close(tree->fdin);
     }
 }

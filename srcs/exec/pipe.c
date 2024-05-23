@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 17:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 15:02:03 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/23 16:50:21 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,14 @@ static int init_fdpipe(t_tree *tree,t_node *nodes)
     }
     tree->fdpipe = (int **)malloc(sizeof(int*) * i); // je malloc le nombre de pipe
     if(!tree->fdpipe)
-        malloc_err(tree);
+        err_free_all(tree);
     while(j < i)
     {
         tree->fdpipe[j] = malloc(sizeof(int) * 2);
         if(!tree->fdpipe[j])
-            malloc_err(tree);
+            err_free_all(tree);
         if(pipe(tree->fdpipe[j]) == -1)
-            perror("error creation pipe");
+            err_free_all(tree);
         j++;
     }
     return (i);

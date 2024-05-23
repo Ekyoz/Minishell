@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:43:01 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 14:37:11 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/23 16:49:30 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ void print_error(int errorcode, t_tree *tree, t_node *node)
             close(tree->fdin);
         if(tree->fdout != -1)
         {
-            dup2(tree->fdoutcp, STDOUT_FILENO);
+            if(dup2(tree->fdoutcp, STDOUT_FILENO) == -1)
+                err_free_all(tree);
             // close(tree->fdout);
             close(tree->fdoutcp);
         }
@@ -43,9 +44,10 @@ void print_error(int errorcode, t_tree *tree, t_node *node)
     exit(127);
 }
 
-void malloc_err(t_tree *tree)
+void err_free_all(t_tree *tree)
 {
     free_tree(&tree);
+    signal_status = 1;
     exit(1);
 }
 
