@@ -87,7 +87,7 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
     pid_t pid[3];
     int i;
     int j;
-    int builtin;
+//    int builtin;
 
     i = 0;
     j = 0;

@@ -88,6 +88,6 @@ int	check_cmd1(t_tree *tree, t_node *node)
 		free(path);
 		i++;
 	}
-	fprintf(stderr, "commande pas bonne\n");
+//	fprintf(stderr, "commande pas bonne\n");
 	return(0);
 }

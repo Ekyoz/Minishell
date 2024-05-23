@@ -25,7 +25,7 @@ void *ft_execve(t_tree *tree, t_node *nodes)
     return((void*)0);
 }
 
-int exec_cmd(t_tree *tree, t_node *nodes)
+int exec_cmd(t_tree *tree, t_node *nodes, char *envp[])
 {
     pid_t pid;
     
@@ -39,7 +39,7 @@ int exec_cmd(t_tree *tree, t_node *nodes)
         if(!check_cmd1(tree, nodes))
             print_error(2, tree, nodes);
         tree->path = check_access1(tree, nodes);
-        if(execve(tree->path, nodes->args, NULL) == -1)
+        if(execve(tree->path, nodes->args, envp) == -1)
         {
             perror("error");
             return(1);
@@ -75,7 +75,7 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
     return((void*)0);
 }
 
-void ast_exec(t_tree *tree)
+void ast_exec(t_tree *tree, char *envp[])
 {
     t_node *nodes;
     int out;
@@ -94,18 +94,18 @@ void ast_exec(t_tree *tree)
         else if(nodes->type == TOKEN_REDIR_IN || nodes->type == TOKEN_REDIR_OUT || 
         nodes->type == TOKEN_REDIR_APPEND || nodes->type == TOKEN_REDIR_HEREDOC)
         {
-            printf("dans redir\n");
+//            printf("dans redir\n");
             exec_cmd_out(tree, nodes);
             out = 0;
         }
         else if(nodes->type == TOKEN_WORD)
         {
-            exec_cmd(tree, nodes);
+            exec_cmd(tree, nodes, envp);
             out = 0;
         }
         else
         {
-            printf("dans aucun\n");
+//            printf("dans aucun\n");
         }
         nodes = nodes->right;
     }

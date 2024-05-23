@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:02:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/07 16:55:52 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/16 15:33:12 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void get_print_branch(t_node *node)
         if(node->right)
         {
             printf("right %d\n", node->right->type);
-            // printf("right %d %s\n", node->right->type, node->right->args[0]);
+             printf("right %d %s\n", node->right->type, node->right->args[0]);
             get_print_branch(node->right);
         }
     }
@@ -91,7 +91,7 @@ void create_node(t_token *tokens, t_tree **tree)
         }
         add_branches(tokens, &nodes, &nodescp, &is_redirec);
     }
-    printf("\n\n");
+//    printf("\n\n");
     return((void) 0);
 }
 
