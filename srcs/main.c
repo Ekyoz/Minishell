@@ -26,7 +26,7 @@ int main(int argc, char *argv[], char *envp[])
 	while (true)
 	{
 		set_signal();
-		input = readline("Minishell :");
+		input = readline("\n\033[0;94mMinishell\033[0m\033[0;0m $ \033[0m");
 		if(input == NULL) // handle ctrl + d
 		{
 			free_tree(&tree);
@@ -39,7 +39,7 @@ int main(int argc, char *argv[], char *envp[])
 		// add_history(input);
 		if(parsing(&tokens, input, env))
 		{
-			printList(tokens);
+			// printList(tokens);
 			create_node(tokens, &tree);
 			ast_exec(tree, envp);
 			free_tree(&tree);

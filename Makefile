@@ -113,6 +113,7 @@ INCLUDE 			= -I$(INCLUDE_DIR) $(addprefix -I, $(addsuffix /$(INCLUDE_DIR), $(LIB
 INCLUDE_RUN			= -L. $(ARCHIVE_NAME)
 RM					= rm -rf
 AR					= ar rcs
+COUNTER				= 0
 
 #-------- COLORS --------#
 
@@ -151,26 +152,31 @@ $(SRC_OUT_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 			@echo "$(YELLOW)$(BOLD)Compiling: $(WHITE)$< $(DEF_COLOR)"
 			@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 			@printf "\033[A\033[K"
+			$(eval COUNTER=$(shell expr $(COUNTER) + 1))
 
 $(DEBUG_OUT_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 			@echo "$(YELLOW)$(BOLD)Compiling: $(WHITE)$< $(DEF_COLOR)"
 			@$(CC) $(CFLAGS_DEBUG) $(INCLUDE) -c $< -o $@
 			@printf "\033[A\033[K"
+			$(eval COUNTER=$(shell expr $(COUNTER) + 1))
 
 $(EXEC_OUT_DIR)/%.o: $(EXEC_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 			@echo "$(YELLOW)$(BOLD)Compiling: $(WHITE)$< $(DEF_COLOR)"
 			@$(CC) $(CFLAGS_EXEC) $(INCLUDE) -c $< -o $@
 			@printf "\033[A\033[K"
+			$(eval COUNTER=$(shell expr $(COUNTER) + 1))
 
 $(PARSING_OUT_DIR)/%.o: $(PARSING_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 			@echo "$(YELLOW)$(BOLD)Compiling: $(WHITE)$< $(DEF_COLOR)"
 			@$(CC) $(CFLAGS_PARSING) $(INCLUDE) -c $< -o $@
 			@printf "\033[A\033[K"
+			$(eval COUNTER=$(shell expr $(COUNTER) + 1))
 
 $(TEST_OUT_DIR)/%.o: $(TEST_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 			@echo "$(YELLOW)$(BOLD)Compiling: $(WHITE)$< $(DEF_COLOR)"
 			@$(CC) $(CFLAGS_TEST) $(INCLUDE) -c $< -o $@
 			@printf "\033[A\033[K"
+			$(eval COUNTER=$(shell expr $(COUNTER) + 1))
 
 #-------- COMMANDS --------#
 
@@ -178,7 +184,7 @@ $(NAME): default
 
 default: archive $(OBJ) $(HEADERS)
 			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME) $(LIBFLAGS)
-			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR)"
+			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR) ($(YELLOW)$(BOLD)$(COUNTER)$(DEF_COLOR) $(WHITE)fichiers$(DEF_COLOR))"
 
 all: $(NAME)
 
