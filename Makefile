@@ -6,7 +6,7 @@
 #    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/05/13 16:02:40 by bpoyet           ###   ########.fr        #
+#    Updated: 2024/05/22 14:43:46 by bpoyet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,13 +30,13 @@ FILE_BUILTINS_DIR 	= builtins/
 FILE_BUILTINS 		= cd echo env exit export pwd unset builtin
 
 FILE_EXEC_DIR		= exec/
-FILE_EXEC			= command exec heredoc pipe
+FILE_EXEC			= command exec heredoc pipe fork utils_pipe
 
 FILE_AST_DIR		= ast/
 FILE_AST			= create_ast nodes token_type tree
 
 FILE_GARBAGE_DIR	= garbage_collector/
-FILE_GARBAGE		= error
+FILE_GARBAGE		= error status_code free_tree free_tree1
 
 FILE_PARSING_DIR	= parsing/
 FILE_PARSING		= parsing checker token pipe redir quote
@@ -47,7 +47,10 @@ FILE_PARS_UTILS		= parser redir utils token
 FILE_REDIRECTION_DIR 	= redirection/
 FILE_REDIRECTION		= testopenredir redirec
 
-DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR) $(FILE_AST_DIR) $(FILE_GARBAGE_DIR) $(FILE_REDIRECTION_DIR) $(FILE_PARS_UTILS_DIR)
+FILE_SIGNAL_DIR		= signal/
+FILE_SIGNAL 		= signal_cmd signal_heredoc signal
+
+DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR) $(FILE_AST_DIR) $(FILE_GARBAGE_DIR) $(FILE_REDIRECTION_DIR) $(FILE_PARS_UTILS_DIR) $(FILE_SIGNAL_DIR)
 SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
 SRC_FILES			+= $(addprefix $(FILE_PARSING_DIR), $(FILE_PARSING))
 SRC_FILES			+= $(addprefix $(FILE_PARS_UTILS_DIR), $(FILE_PARS_UTILS))
@@ -55,6 +58,8 @@ SRC_FILES			+= $(addprefix $(FILE_EXEC_DIR), $(FILE_EXEC))
 SRC_FILES			+= $(addprefix $(FILE_AST_DIR), $(FILE_AST))
 SRC_FILES			+= $(addprefix $(FILE_GARBAGE_DIR), $(FILE_GARBAGE))
 SRC_FILES			+= $(addprefix $(FILE_REDIRECTION_DIR), $(FILE_REDIRECTION))
+SRC_FILES			+= $(addprefix $(FILE_SIGNAL_DIR), $(FILE_SIGNAL))
+
 
 #-------- LIBS --------#
 
@@ -65,7 +70,7 @@ LIB_LIST			= $(LIBFT_DIR)
 LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE)
 
 #-------- FLAGS --------#
-CFLAGS 				= -Wall -Wextra -g3#-Werror
+CFLAGS 				= -Wall -Wextra -g3 #-Werror
 CFLAGS_DEBUG		= -Wall -Wextra -g3
 CFLAGS_EXEC			= -Wall -Wextra -g3 #-Werror
 CFLAGS_PARSING		= -Wall -Wextra -g3 #-Werror

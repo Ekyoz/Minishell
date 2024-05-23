@@ -6,11 +6,13 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/10 16:24:48 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/23 13:57:20 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int signal_status = 0;
 
 int main(int argc, char *argv[], char *envp[])
 {
@@ -21,24 +23,28 @@ int main(int argc, char *argv[], char *envp[])
 	t_tree *tree;
 	t_env *env;
 
-	env = init_env(envp);
-	// displayenv(env);
-	tree = init_tree(envp, env);
-	if(!tree)
-		return (1);
 	while (true)
 	{
+		set_signal();
 		input = readline("Minishell :");
-//		add_history(input);
-		parsing(&tokens, input);
-		printList(tokens);
-		create_node(tokens, &tree);
-		print_tree(tree->nodes);
-		printf("\n");
-		ast_exec(tree);
-		clear_list(&tokens);
-		if(!ft_strncmp(input, "exit", 5))
-			break;
+		if(input == NULL) // handle ctrl + d
+		{
+			free_tree(&tree);
+			exit(0);
+		}
+		// mettre env dans tree
+		env = init_env(envp);
+		// displayenv(env);
+		tree = init_tree(envp, env);
+		// add_history(input);
+		if(parsing(&tokens, input))
+		{
+			// printList(tokens);
+			create_node(tokens, &tree);
+			ast_exec(tree);
+			free_tree(&tree);
+			clear_list(&tokens);
+		}
 	}
 	return 0;
 }
