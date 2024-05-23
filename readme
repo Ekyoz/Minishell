@@ -134,3 +134,45 @@ TYPE D'ERREUR file
 
 si j'ai une commande
 si j'ai une redirection
+
+STATUS CODE $?
+
+0 : success
+127 : command not found
+130 : equivalent au ctrl + c
+131 : ctrl + \
+1 : Permission Denied, no such file or directory
+2 : Erreur syntaxe
+
+cattt > output | ls -l => je retourne 0 car ls -l marche dans tous les cas
+ls -l | catttttttt > output => je retourne 127 command not found
+
+---------------------- SIGNAL ------------------------
+
+- CTRL + C – SIGINT 2 => erreur 131
+- CTRL + \ – SIGQUIT 3 => erreur 130
+- CTRL + d – EOF => erreur 
+
+- Faire des fonctions handler pour chaque SIGNAL
+
+- ctrl + c :- nouvelle ligne 
+            - heredoc => sort du heredoc et nouvelle ligne
+            - process => sors et nouvelle ligne
+
+- ctrl + d :- quitte le bash
+            - si dans heredoc quitte en envoyant ce message d'erreur:
+            Minishell: warning: here-document at line 1 delimited by end-of-file (wanted `eof')
+            - si danc un process genre sleep => ne fait rien
+
+- ctrl + \ :- Ne fais rien
+            - process: quitte avec le message "Quit (core dumped)"
+            - heredoc: ne fais rien
+
+------------------- FREE -------------------
+
+- t_env => qui correspond aux variables d'environnement env
+- eofword => mots permettant la delimitation du heredoc
+- fdpipe => nombre de fd alloue pour le pipe
+- t_tree => Allocation de mon tree
+- init_nodes => nouveau noeud 
+- envp => qui correspond aux path de mes commandes

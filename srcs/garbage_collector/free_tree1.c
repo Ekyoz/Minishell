@@ -1,25 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   free_tree1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/15 17:15:18 by bpoyet           ###   ########.fr       */
+/*   Created: 2024/05/22 14:43:09 by bpoyet            #+#    #+#             */
+/*   Updated: 2024/05/23 11:32:00 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int displayenv(t_env *env)
+void free_env(t_env *env)
 {
-    if(!env)
-        return(1);
+    t_env *envcp;
+
     while(env)
     {
-        printf("%s\n", env->value);
+        envcp = env;
+        if(env->value)
+            free(env->value);
         env = env->next;
+        free(envcp);
     }
-    return(0);
+}
+
+void free_pipe(t_tree *tree)
+{
+    int i;
+
+    i = 0;
+
+    while(tree->nodes->type == TOKEN_PIPE)
+    {
+        i++;
+        tree->nodes = tree->nodes->right;
+    }
+    while(i > 0)
+    {
+        free(tree->fdpipe[i - 1]);
+        i--;
+    }
+    free(tree->fdpipe);
 }

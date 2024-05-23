@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   signal_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/15 17:15:18 by bpoyet           ###   ########.fr       */
+/*   Created: 2024/05/16 16:33:55 by bpoyet            #+#    #+#             */
+/*   Updated: 2024/05/16 16:54:20 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int displayenv(t_env *env)
+static void sig_handler_heredoc(int sig)
 {
-    if(!env)
-        return(1);
-    while(env)
+    if(sig == SIGINT) // ctrl + c
     {
-        printf("%s\n", env->value);
-        env = env->next;
+        write(1,"\n", 1);
+        // return((void)0);
     }
-    return(0);
+}
+
+void set_signal_heredoc(void)
+{
+    struct sigaction sig;
+    
+    sigemptyset(&sig.sa_mask);
+    sig.sa_flags = 0;
+    sig.sa_handler = sig_handler_heredoc;
+
+    if(sigaction(SIGINT, &sig, NULL) == -1)
+    {
+        perror("Error ctrl + c\n");
+        exit(0);
+    }
+    signal(SIGQUIT, SIG_IGN);
 }

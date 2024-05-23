@@ -125,9 +125,10 @@ bool quoted(char **cmd)
 		return true;
 	if (quote_len % 2 != 0)
 	{
-		cmd = ft_strjoin(cmd, readline(">"));
+		// cmd = ft_strjoin(cmd, readline(">"));
 		return true;
 	}
+	return true;
 }
 
 // int get_first_quote(char **cmd, char first_quote)

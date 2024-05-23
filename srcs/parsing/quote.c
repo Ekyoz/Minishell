@@ -12,9 +12,6 @@
 
 #include "minishell.h"
 
-static char *get_text(char **cmd);
-static char **del_array(char **array, int index);
-
 char **quote(char **cmd)
 {
 	if (!quoted(cmd))
@@ -122,38 +119,38 @@ char **quote(char **cmd)
 // 	return c_final;
 // }
 
-
-static char **del_array(char **array, int index) {
-	int size = (int)ft_strlen_array(array);
-
-	if (index < 0 || index >= size) {
-		printf("Index hors limites.\n");
-		return array;
-	}
-
-	// Sauvegarde de la chaîne à l'index spécifié
-	char *removed_string = array[index];
-
-	// Libération de la mémoire occupée par la chaîne supprimée
-	free(removed_string);
-
-	// Déplacement des éléments suivants vers la gauche pour remplir le vide
-	for (int i = index; i < (size) - 1; i++) {
-		array[i] = array[i + 1];
-	}
-
-	// Réduction de la taille du tableau
-	(size)--;
-
-	// Réallocation de la mémoire pour réduire la taille du tableau
-	char **temp = (char **)realloc(array, sizeof(char *) * (size));
-	if (temp == NULL) {
-		printf("Erreur lors de la réallocation de mémoire.\n");
-		exit(1);
-	}
-
-	temp[size] = NULL;
-
-
-	return temp;
-}
+//
+// static char **del_array(char **array, int index) {
+// 	int size = (int)ft_strlen_array(array);
+//
+// 	if (index < 0 || index >= size) {
+// 		printf("Index hors limites.\n");
+// 		return array;
+// 	}
+//
+// 	// Sauvegarde de la chaîne à l'index spécifié
+// 	char *removed_string = array[index];
+//
+// 	// Libération de la mémoire occupée par la chaîne supprimée
+// 	free(removed_string);
+//
+// 	// Déplacement des éléments suivants vers la gauche pour remplir le vide
+// 	for (int i = index; i < (size) - 1; i++) {
+// 		array[i] = array[i + 1];
+// 	}
+//
+// 	// Réduction de la taille du tableau
+// 	(size)--;
+//
+// 	// Réallocation de la mémoire pour réduire la taille du tableau
+// 	char **temp = (char **)realloc(array, sizeof(char *) * (size));
+// 	if (temp == NULL) {
+// 		printf("Erreur lors de la réallocation de mémoire.\n");
+// 		exit(1);
+// 	}
+//
+// 	temp[size] = NULL;
+//
+//
+// 	return temp;
+// }
