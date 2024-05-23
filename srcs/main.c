@@ -26,7 +26,7 @@ int main(int argc, char *argv[], char *envp[])
 	while (true)
 	{
 		set_signal();
-		input = readline("Minishell :");
+		input = readline("\n\033[0;94mMinishell\033[0m\033[0;0m $ \033[0m");
 		if(input == NULL) // handle ctrl + d
 		{
 			free_tree(&tree);
