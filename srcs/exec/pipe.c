@@ -64,7 +64,7 @@ static void execute_pipe(t_tree *tree, t_node *node)
         exit(0);
     if(!check_cmd1(tree, node))
         print_error(2, tree, node);
-    ft_execve(tree, node);    
+    ft_execve(tree, node);
 }
 
 static void parent_process_pipe(int i, int *j, t_tree *tree, t_node **node)

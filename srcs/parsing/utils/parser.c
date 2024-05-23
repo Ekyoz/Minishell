@@ -6,7 +6,7 @@
 /*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:52:07 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/03 17:49:20 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:03:46 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ char **extract_flags(char **command) {
 char **miss_elements(char **l_base, char **l_miss) {
 	int i_missing = 0;
 	int i_base = -1;
-	int i_miss = 0;
+	int i_miss;
 	char **missing;
-	bool find = false;
+	bool find;
 
 	missing = (char**)malloc((ft_strlen_array(l_base) + 1) * sizeof(char*));
 
@@ -82,4 +82,20 @@ char **string_to_array(char *string)
 	array[0] = ft_strdup(string);
 	array[1] = NULL;
 	return array;
+}
+
+char **clean_space(char **cmd)
+{
+	int i = -1;
+	int j = 0;
+
+	while (cmd[++i]) {
+		if (ft_strcmp(cmd[i], " ") != 0)
+			cmd[j++] = cmd[i];
+		else
+			free(cmd[i]);
+	}
+	cmd[j] = NULL;
+
+	return cmd;
 }

@@ -22,33 +22,33 @@ PARSING_NAME		= parsing.out
 
 #-------- FILES --------#
 
-HEADER_FILES		= minishell
-SRC_FILES		    = main
-TEST_FILES  		= test
+HEADER_FILES			= minishell
+SRC_FILES		    	= main
+TEST_FILES  			= test
 
-FILE_BUILTINS_DIR 	= builtins/
-FILE_BUILTINS 		= cd echo env exit export pwd unset builtin
+FILE_BUILTINS_DIR 		= builtins/
+FILE_BUILTINS 			= cd echo env exit export pwd unset builtin
 
-FILE_EXEC_DIR		= exec/
-FILE_EXEC			= command exec heredoc pipe fork utils_pipe
+FILE_EXEC_DIR			= exec/
+FILE_EXEC				= command exec heredoc pipe fork utils_pipe
 
-FILE_AST_DIR		= ast/
-FILE_AST			= create_ast nodes token_type tree
+FILE_AST_DIR			= ast/
+FILE_AST				= create_ast nodes token_type tree
 
-FILE_GARBAGE_DIR	= garbage_collector/
-FILE_GARBAGE		= error status_code free_tree free_tree1
+FILE_GARBAGE_DIR		= garbage_collector/
+FILE_GARBAGE			= error status_code free_tree free_tree1
 
-FILE_PARSING_DIR	= parsing/
-FILE_PARSING		= parsing checker token pipe redir quote
+FILE_PARSING_DIR		= parsing/
+FILE_PARSING			= parsing checker token pipe redir quote splitter expand
 
-FILE_PARS_UTILS_DIR	= parsing/utils/
-FILE_PARS_UTILS		= parser redir utils token
+FILE_PARS_UTILS_DIR		= parsing/utils/
+FILE_PARS_UTILS			= parser utils token quote pipe
 
 FILE_REDIRECTION_DIR 	= redirection/
 FILE_REDIRECTION		= testopenredir redirec
 
-FILE_SIGNAL_DIR		= signal/
-FILE_SIGNAL 		= signal_cmd signal_heredoc signal
+FILE_SIGNAL_DIR			= signal/
+FILE_SIGNAL 			= signal_cmd signal_heredoc signal
 
 DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR) $(FILE_AST_DIR) $(FILE_GARBAGE_DIR) $(FILE_REDIRECTION_DIR) $(FILE_PARS_UTILS_DIR) $(FILE_SIGNAL_DIR)
 SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
@@ -75,6 +75,7 @@ CFLAGS_DEBUG		= -Wall -Wextra -g3
 CFLAGS_EXEC			= -Wall -Wextra -g3 #-Werror
 CFLAGS_PARSING		= -Wall -Wextra -g3 #-Werror
 CFLAGS_TEST			= -g3
+VFALGS				= -s
 LIBFLAGS			= -lreadline
 
 #------------------------------------------------------------------------------#
@@ -175,7 +176,7 @@ $(TEST_OUT_DIR)/%.o: $(TEST_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 
 $(NAME): default
 
-default: archive
+default: archive $(OBJ) $(HEADERS)
 			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME) $(LIBFLAGS)
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR)"
 
@@ -195,6 +196,9 @@ archive:	lib $(OBJ) $(HEADERS)
 
 run: $(NAME)
 			./$(RUN_NAME)
+
+valgrind: $(NAME)
+			valgrind $(VFALGS) ./$(RUN_NAME)
 
 #------- DEBUG --------#
 
@@ -237,7 +241,7 @@ parsing: ar_parsing
 
 #------ TEST ------#
 
-ar_test:	lib $(OBJ_TEST)
+ar_test:	lib $(OBJ_TEST) $(HEADERS)
 			@$(AR) $(ARCHIVE_NAME) $(OBJ_TEST)
 			@for archive in $(LIB_LIST_ARCHIVE); do ar -x $$archive; done
 			@ar -qcs $(ARCHIVE_NAME) *.o

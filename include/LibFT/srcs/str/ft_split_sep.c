@@ -11,6 +11,9 @@
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 int count_separators(const char* string, char separator) {
 	int count = 0;
@@ -35,7 +38,6 @@ void split_string(char** result, char* string, char separator) {
 	int start = 0;
 	int i = 0;
 
-	// Vérifie si le premier caractère est un séparateur
 	if (string[0] == separator) {
 		start = 1;
 	}
@@ -43,7 +45,6 @@ void split_string(char** result, char* string, char separator) {
 	while (i <= length) {
 		if (string[i] == separator || string[i] == '\0') {
 			int substring_length = i - start;
-			// Vérifie si la sous-chaîne n'est pas vide
 			if (substring_length > 0) {
 				result[index] = (char*)malloc((substring_length + 1) * sizeof(char));
 				ft_strlcpy(result[index], string + start, substring_length + 1);
@@ -60,7 +61,6 @@ void split_string(char** result, char* string, char separator) {
 		i++;
 	}
 
-	// Vérifie si le dernier caractère est un séparateur
 	if (string[length - 1] == separator) {
 		result[index] = (char*)malloc(2 * sizeof(char));
 		result[index][0] = separator;
@@ -70,9 +70,36 @@ void split_string(char** result, char* string, char separator) {
 	result[index] = NULL;
 }
 
-char** ft_split_sep(char* string, char separator) {
-	int separator_count = count_separators(string, separator);
-	char** result = allocate_memory(separator_count);
-	split_string(result, string, separator);
+char** ft_split_sep(char* str, char separator) {
+	int len = ft_strlen(str);
+	int capacity = 10;
+	char **result = malloc(capacity * sizeof(char *));
+	int count = 0;
+
+	int start = 0;
+
+	for (int i = 0; i <= len; i++) {
+		if (str[i] == separator || str[i] == '\0') {
+			if (start != i) {
+				result[count] = strndup(str + start, i - start);
+				count++;
+				if (count >= capacity) {
+					capacity *= 2;
+					result = realloc(result, capacity * sizeof(char *));
+				}
+			}
+			if (str[i] != '\0') {
+				result[count] = strndup(str + i, 1);
+				count++;
+				if (count >= capacity) {
+					capacity *= 2;
+					result = realloc(result, capacity * sizeof(char *));
+				}
+			}
+			start = i + 1;
+		}
+	}
+
+	result[count] = NULL;
 	return result;
 }

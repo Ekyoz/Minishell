@@ -37,13 +37,13 @@ int main(int argc, char *argv[], char *envp[])
 		// displayenv(env);
 		tree = init_tree(envp, env);
 		// add_history(input);
-		if(parsing(&tokens, input))
+		if(parsing(&tokens, input, env))
 		{
-			// printList(tokens);
+			printList(tokens);
 			create_node(tokens, &tree);
-			ast_exec(tree);
+			ast_exec(tree, envp);
 			free_tree(&tree);
-			clear_list(&tokens);
+			clear_token(&tokens);
 		}
 	}
 	return 0;

@@ -6,30 +6,11 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/22 14:41:44 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/16 16:11:39 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*ft_strndup(char *buffer, int len)
-{
-	char	*new;
-	int		i;
-
-	i = 0;
-	while (buffer[i] && i < len)
-		i++;
-	new = malloc((i + 1) * sizeof(char));
-	i = 0;
-	while (buffer[i] && i < len)
-	{
-		new[i] = buffer[i];
-		i++;
-	}
-	new[i] = '\0';
-	return (new);
-}
 
 void	env_add_back(t_env **env, t_env *new)
 {
@@ -60,7 +41,7 @@ t_env	*init_env(char **env_array)
 	while (env_array[i] != NULL)
 	{
 		new = malloc(sizeof(t_env));
-		new->value = ft_strndup(env_array[i], ft_strlen(env_array[i]));
+		new->value = ft_strndup(env_array[i], ft_strlen(env_array[i])+1);
 		new->next = NULL;
 		new->secret = 0;
 		env_add_back(&env, new);

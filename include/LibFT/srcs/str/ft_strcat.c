@@ -15,6 +15,9 @@
 char* ft_strcat(char* destination, const char* source) {
 	char* ptr = destination;
 
+	if (!destination || !source)
+		return (char *)source;
+
 	// Finding the end of the destination string
 	while (*ptr != '\0') {
 		ptr++;
