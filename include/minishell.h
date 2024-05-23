@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/13 16:15:40 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/16 14:10:55 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef enum e_token_type
 	TOKEN_REDIR_OUT, // REDIRECTION OUT: > 3
 	TOKEN_REDIR_APPEND, // REDIRECTION APPEND: >> 4
 	TOKEN_REDIR_HEREDOC, // REDIRECTION HEREDOC: << 5
-	TOKEN_ENV_VAR, // ENV VAR: $ 6
 	TOKEN_OR, // OR: || 7
 	TOKEN_AND, // AND: && 8
 	PIPEUSED, // 9
@@ -84,6 +83,9 @@ typedef struct s_tree // structure qui va iterer dans mes nodes et executer les 
 	int error[4];
 } t_tree;
 
+//***********************************//
+// 				EXEC				 //
+//***********************************//
 
 // TROUVER LES REDIRECTIONS POUR LES AJOUTER A MON ARBRE AST
 int get_pipe(t_token *token, t_node *nodes);
@@ -102,7 +104,7 @@ void add_branches(t_token *tokens, t_node **node, t_node **nodecp, bool *redir);
 t_tree *init_tree(char *envp[], t_env *env);
 
 //EXECUT
-void ast_exec(t_tree *tree);
+void ast_exec(t_tree *tree, char *envp[]);
 void *ft_execve(t_tree *tree, t_node *nodes);
 void *exec_pipe(t_tree *tree, t_node *nodes);
 
@@ -129,7 +131,6 @@ void print_error(int errorcode, t_tree *tree, t_node *node);
 
 //ENVIRONNEMENT
 t_env	*init_env(char **env_array);
-int displayenv(t_env *env);
 
 //BUILTIN
 int choose_builtin(t_node *nodes, t_env *env);
@@ -144,27 +145,44 @@ void create_node(t_token *tokens, t_tree **tree);
 void print_tree(t_node *node);
 
 
-//PARSING
-bool parsing(t_token **head, char *commands);
-t_token *create_token(t_token_type type, char **value);
-void append_token(t_token **head, t_token_type type, char **value);
+//***********************************//
+// 				EXEC				 //
+//***********************************//
+
+bool parsing(t_token **head, char *commands, t_env *env);
+
+//Token
+void append_token(t_token **head, t_token_type type, char **value, t_env *env);
 void delete_token(t_token **head, t_token *node_to_delete);
-bool checker(t_token **head, char *command);
-t_token *get_last_token(t_token *head);
-void printList(t_token * node);
-void clear_list(t_token **head);
+void clear_token(t_token **head);
+t_token_type is_token(char *command, int pos);
+bool there_token(char *command);
+
+//Pipe
 int pipe_counter(const char *command);
 char **pipe_splitter(char *command);
-t_token_type is_token(char *command, int pos);
-int split_count(char *command);
-bool there_token(char *command);
+
+//Splitter
 char **splitter(char *command);
-char **split_token(char *command);
+
+char **ft_arraydup(char **array);
+void printList(t_token * node);
 char **extract_flags(char **command);
 char **miss_elements(char **list_base, char **list_miss);
 char **string_to_array(char *string);
 char **redir(char **cmd);
 char **quote(char **cmd);
-
+char **clean_space(char **cmd);
+int quote_len(char **cmd, char quote);
+bool quoted(char **cmd);
+void get_first_quote(char **cmd, int pos[2], char *c_quote);
+void get_last_quote(char **cmd, int pos[2], char *c_quote);
+void free_array(char **array);
+char **add_text(char **cmd);
+char is_open(char **cmd);
+char *join_array(char **cmd);
+char get_first_quote_char(char **cmd, int *l_final);
+char **expand(char **cmd, t_env *env);
+void checker(t_token **head);
 
 #endif

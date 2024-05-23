@@ -6,44 +6,64 @@
 /*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:55:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/07 14:23:55 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/22 15:13:25 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char *next_word(char *cmd, int pos)
+void free_array(char **array)
 {
-	char **l_words;
-
-	if (pos > (int)ft_strlen(cmd)-1)
-		return NULL;
-
-	l_words = splitter(cmd);
-	return l_words[pos+1];
+	if (array == NULL)
+		return;
+	int i = -1;
+	while (array[++i])
+		free(array[i]);
+	free(array);
 }
 
-void add_element_n(char ***list_ptr, int pos, char *value)
+char **ft_arraydup(char **array)
 {
-	char** list = *list_ptr;
-	int listSize = ft_strlen_array(*list_ptr);
-	printf("listSize: %d\n", listSize);
+	int i = -1;
+	char **dup = (char **) malloc(sizeof (char *) * (ft_strlen_array(array) +1));
 
-	// Augmente la taille de la liste
-	list = realloc(list, (listSize + 1) * sizeof(char*));
+	while (array[++i])
+		dup[i] = ft_strdup(array[i]);
+	dup[i] = NULL;
+	return dup;
+}
 
-	// Décale les chaînes vers la droite pour faire de la place pour la nouvelle chaîne
-	for (int i = listSize; i > pos; i--) {
-		list[i] = list[i - 1];
+char *join_array(char **cmd)
+{
+	int len = (int)ft_strlen_array(cmd);
+	// Calcul de la taille totale nécessaire pour la chaîne résultante
+	int total_length = 0;
+	for (int i = 0; i < len; i++) {
+		total_length += (int)ft_strlen(cmd[i]) + 1; // +1 pour l'espace entre chaque mot
 	}
 
-	// Alloue de la mémoire pour la nouvelle chaîne et copie la valeur
-	list[pos] = malloc((strlen(value) + 1) * sizeof(char));
-	strcpy(list[pos], value);
+	// Allocation de mémoire pour la chaîne résultante
+	char *result = (char *)malloc(total_length + 1); // +1 pour le caractère nul de fin de chaîne
+	if (result == NULL) {
+		printf("Erreur lors de l'allocation de mémoire.\n");
+		exit(1);
+	}
 
-	// Met à jour la liste et sa taille via les pointeurs
-	*list_ptr = list;
+	// Copie des chaînes avec des espaces entre elles dans la chaîne résultante
+	int index = 0;
+	for (int i = 0; i <(int) len; i++) {
+		ft_strcpy(&result[index], cmd[i]);
+		index += (int)ft_strlen(cmd[i]);
+		if (i < len - 1) {
+			result[index] = ' '; // Ajout d'un espace entre chaque mot
+			index++;
+		}
+	}
+	result[index] = '\0'; // Ajout du caractère nul de fin de chaîne
+
+	return result;
 }
+
 
 void print_token_type(t_token_type type)
 {
@@ -57,8 +77,6 @@ void print_token_type(t_token_type type)
 		printf("\033[0;94m\033[1mTOKEN\033[0m: REDIR_APPEND\n");
 	else if (type == TOKEN_REDIR_HEREDOC)
 		printf("\033[0;94m\033[1mTOKEN\033[0m: REDIR_HEREDOC\n");
-	else if (type == TOKEN_ENV_VAR)
-		printf("\033[0;94m\033[1mTOKEN\033[0m: ENV_VAR\n");
 	else if (type == TOKEN_WORD)
 		printf("\033[0;94m\033[1mTOKEN\033[0m: WORD\n");
 	else if (type == TOKEN_OR)
@@ -69,6 +87,7 @@ void print_token_type(t_token_type type)
 
 void printList(t_token * node) {
 	int i = 0;
+	printf("\n");
 	while(node != NULL) {
 		i++;
 		printf("=========[ Token n %d ]=========\n", i);
@@ -83,5 +102,5 @@ void printList(t_token * node) {
 		printf("\n");
 		node = node->next;
 	}
-	printf("Nombre total de tokens: \033[0;31m\033[1m%d\033[0m\n", i);
+	printf("Nombre total de tokens: \033[0;31m\033[1m%d\033[0m\n\n", i);
 }

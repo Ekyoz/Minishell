@@ -40,7 +40,7 @@ FILE_STR		=	ft_split ft_strchr ft_strdup ft_striteri ft_strjoin \
 				ft_strlcat ft_strlcpy ft_strlen ft_strmapi ft_strncmp \
 				ft_strnstr ft_strrchr ft_strrev ft_strtrim ft_substr \
 				ft_strnlen ft_strcmp ft_strchar ft_split_sep ft_strcpy \
-				ft_strlen_array ft_strcat
+				ft_strlen_array ft_strcat ft_strndup
 				
 FILE_TO_DIR	=	to/
 FILE_TO		=	ft_atoi ft_itoa ft_ltoh ft_tolower ft_toupper
@@ -71,11 +71,7 @@ LIB_LIST_ARCHIVE	=
 #-------- SETTINGS --------#
 
 CC				= gcc
-ifeq ($(FLAGS),1)
-    CFLAGS = 								#Flags for tests
-else
-    CFLAGS = -Wall -Werror -Wextra			#Flags for run
-endif
+CFLAGS 			= -Wall -Werror -Wextra -g3			#Flags for run
 OBJF			=	.cache_exists
 INCLUDE 		= -I$(INCLUDE_DIR) 
 INCLUDE_RUN		= -L. $(ARCHIVE_NAME)

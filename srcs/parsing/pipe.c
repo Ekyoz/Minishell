@@ -12,33 +12,7 @@
 
 #include "minishell.h"
 
-int pipe_counter(const char *command)
-{
-	int i = -1;
-	int pipe = 1;
-	while (command[++i])
-	{
-		if (command[i] == '|')
-			pipe++;
-	}
-	return pipe;
-}
-
-char *pipe_end(char *command)
-{
-	char *input;
-	size_t i = ft_strlen(command);
-
-	while (command[--i] == ' ');
-	command = ft_substr(command, 0, i+1);
-	if (command[ft_strlen(command) - 1] == '|')
-	{
-		input = readline("> ");
-		command = ft_strjoin(command, input);
-		command = pipe_end(command);
-	}
-	return command;
-}
+static char *pipe_end(char *command);
 
 char **pipe_splitter(char *command)
 {
@@ -59,4 +33,20 @@ char **pipe_splitter(char *command)
 	if (i != pipe_counter(command))
 		return NULL;
 	return pipe_splited;
+}
+
+static char *pipe_end(char *command)
+{
+	char *input;
+	size_t i = ft_strlen(command);
+
+	while (command[--i] == ' ');
+	command = ft_substr(command, 0, i+1);
+	if (command[ft_strlen(command) - 1] == '|')
+	{
+		input = readline("> ");
+		command = ft_strjoin(command, input);
+		command = pipe_end(command);
+	}
+	return command;
 }
