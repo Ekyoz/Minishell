@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/22 14:52:30 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/23 10:41:21 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void exit_function(t_tree *tree, t_node *node)
     if(!node->args[1]) // dans le cas ou j'ai seulement un exit
     {
         printf("exit\n");
-        free_tree(tree);
+        free_tree(&tree);
         exit(0);
     }  
     check_numeric(node); //je check si l'argument est un nombre
@@ -103,7 +103,7 @@ void exit_function(t_tree *tree, t_node *node)
             no_numeric_msg(node->args[1]);
         signal_status = code % 256;
         printf("exit\n");
-        free_tree(tree);
+        free_tree(&tree);
         printf("la\n");
         exit(0);
     }

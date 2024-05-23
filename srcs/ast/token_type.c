@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/14 14:29:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/04/23 18:47:34 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/23 14:55:14 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int get_pipe(t_token *token, t_node *nodes)
         return(0); //je retourne 0 dans le cas ou j'ai pas de pipe
 }
 
-int get_redirection_left(t_token *token, t_node *nodes)
+int get_redirection_left(t_token *token, t_node *nodes, t_tree * tree)
 {
     while(token != NULL && token->type != TOKEN_REDIR_IN && token->type != TOKEN_REDIR_OUT && 
         token->type != TOKEN_REDIR_APPEND && token->type != TOKEN_REDIR_HEREDOC && 
@@ -40,7 +40,7 @@ int get_redirection_left(t_token *token, t_node *nodes)
     if(token != NULL && (token->type == TOKEN_REDIR_IN || token->type == TOKEN_REDIR_OUT || 
         token->type == TOKEN_REDIR_APPEND || token->type == TOKEN_REDIR_HEREDOC))
     {
-        nodes->left = init_nodes();
+        nodes->left = init_nodes(tree);
         nodes->left->type = token->type;
         nodes->left->args = token->value;
         token->type = REDIRUSED; // je mets le type a NULL une fois que je lai stocke
@@ -50,7 +50,7 @@ int get_redirection_left(t_token *token, t_node *nodes)
         return(0); //je retourne 0 dans le cas ou j'ai pas de redirection    
 }
 
-int get_redirection_right(t_token *token, t_node *nodes)
+int get_redirection_right(t_token *token, t_node *nodes, t_tree * tree)
 {
     while(token != NULL && token->type != TOKEN_REDIR_IN && token->type != TOKEN_REDIR_OUT && 
         token->type != TOKEN_REDIR_APPEND && token->type != TOKEN_REDIR_HEREDOC && 
@@ -61,7 +61,7 @@ int get_redirection_right(t_token *token, t_node *nodes)
     if(token != NULL && (token->type == TOKEN_REDIR_IN || token->type == TOKEN_REDIR_OUT || 
         token->type == TOKEN_REDIR_APPEND || token->type == TOKEN_REDIR_HEREDOC))
     {
-        nodes->right = init_nodes();
+        nodes->right = init_nodes(tree);
         nodes->right->type = token->type;
         nodes->right->args = token->value;;        
         token->type = REDIRUSED; // je mets le type a NULL une fois que je lai stocke
@@ -71,7 +71,7 @@ int get_redirection_right(t_token *token, t_node *nodes)
         return(0); //je retourne 0 dans le cas ou j'ai pas de redirection    
 }
 
-int get_redirection_main(t_token *token, t_node *nodes)
+int get_redirection_main(t_token *token, t_node *nodes, t_tree * tree)
 {
     while(token != NULL && token->type != TOKEN_REDIR_IN && token->type != TOKEN_REDIR_OUT && 
         token->type != TOKEN_REDIR_APPEND && token->type != TOKEN_REDIR_HEREDOC && 
@@ -83,7 +83,7 @@ int get_redirection_main(t_token *token, t_node *nodes)
         token->type == TOKEN_REDIR_APPEND || token->type == TOKEN_REDIR_HEREDOC))
     {
         if(!nodes)
-            nodes = init_nodes();
+            nodes = init_nodes(tree);
         nodes->type = token->type;
         nodes->args = token->value;      
         token->type = REDIRUSED; // je mets le type a NULL une fois que je lai stocke

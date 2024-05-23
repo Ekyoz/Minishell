@@ -6,22 +6,23 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:00:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/21 17:18:22 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/23 13:29:41 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void close_pipe(int fd1, int fd2, int fd3, int fd4)
+void close_all_pipes(int **fdpipe, int i)
 {
-    if(fd1 != -1)
-        close(fd1);
-    if(fd2 != -1)
-        close(fd2);
-    if(fd3 != -1)
-        close(fd3);
-    if(fd4 != -1)
-        close(fd4);
+    int j;
+
+    j = 0;
+    while(j < i)
+    {
+        close(fdpipe[j][0]);
+        close(fdpipe[j][1]);
+        j++;
+    }
 }
 
 void first_pipe(t_tree *tree, t_node *node)

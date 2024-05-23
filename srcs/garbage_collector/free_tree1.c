@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/22 17:48:20 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/23 11:32:00 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,21 @@ void free_env(t_env *env)
     }
 }
 
-void free_pipe(int **fdpipe)
+void free_pipe(t_tree *tree)
 {
     int i;
 
     i = 0;
-    while(fdpipe[i])
+
+    while(tree->nodes->type == TOKEN_PIPE)
     {
-        free(fdpipe[i]);
         i++;
+        tree->nodes = tree->nodes->right;
     }
-    free(fdpipe);
+    while(i > 0)
+    {
+        free(tree->fdpipe[i - 1]);
+        i--;
+    }
+    free(tree->fdpipe);
 }

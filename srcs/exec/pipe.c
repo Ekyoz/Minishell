@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 17:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/21 17:20:22 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/23 15:02:03 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ static int init_fdpipe(t_tree *tree,t_node *nodes)
         nodes = nodes->right;
     }
     tree->fdpipe = (int **)malloc(sizeof(int*) * i); // je malloc le nombre de pipe
-        // proteger les malloc
+    if(!tree->fdpipe)
+        malloc_err(tree);
     while(j < i)
     {
         tree->fdpipe[j] = malloc(sizeof(int) * 2);
-            // proteger les malloc
+        if(!tree->fdpipe[j])
+            malloc_err(tree);
         if(pipe(tree->fdpipe[j]) == -1)
             perror("error creation pipe");
         j++;
@@ -42,18 +44,17 @@ static void dup_pipe(t_tree *tree, t_node *nodes, int j, int i)
     if(j == 0) // premier pipe
     {
         first_pipe(tree, nodes->left);
-        close_pipe(tree->fdpipe[0][1], tree->fdpipe[0][0], -1, -1);
+        close_all_pipes(tree->fdpipe, i);
     }
     else if(j == i) // dernier pipe
     {
         last_pipe(tree, nodes, j);
-        close_pipe(tree->fdpipe[j - 1][0], tree->fdpipe[j - 1][1], -1, -1);
+        close_all_pipes(tree->fdpipe, i);
     }
     else // pipe(s) du milieu 
     {
         mid_pipe(tree, nodes->left, j);
-        close_pipe(tree->fdpipe[j - 1][0], tree->fdpipe[j - 1][1],
-            tree->fdpipe[j][0], tree->fdpipe[j][1]);
+        close_all_pipes(tree->fdpipe, i);
     }
 }
 
@@ -72,7 +73,7 @@ static void parent_process_pipe(int i, int *j, t_tree *tree, t_node **node)
         close(tree->fdpipe[*j - 1][0]);
     if(*j < i)
         close(tree->fdpipe[*j][1]);
-    parent_process(tree->status, tree->pid[*j]);
+    // parent_process(tree->status, tree->pid[*j]);
     *j = *j + 1;
     if((*node)->right)
         (*node) = (*node)->right;
@@ -93,7 +94,7 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
         tree->pid[j] = do_fork(tree, tree->pid[j]);
         if(tree->pid[j] == 0)
         {
-            dup_pipe(tree, nodes, j, i);
+            dup_pipe(tree, nodes, j, i); // je fais mes redirections si necessaires
             if(testredir(nodes->left)) // Si redirections  
                 execute_pipe(tree, nodes->left->left);
             else if(nodes->left) // pas de redir et une commande a gauche
@@ -102,6 +103,12 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
                 execute_pipe(tree, nodes);
         }
         parent_process_pipe(i, &j, tree, &nodes);
+    }
+    j = 0;
+    while(j <= i)
+    {
+        parent_process(tree->status, tree->pid[j]);
+        j++;
     }
     return ((void*)0);
 }

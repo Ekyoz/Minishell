@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:43:01 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/22 14:15:59 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/23 14:37:11 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,20 @@ void print_error(int errorcode, t_tree *tree, t_node *node)
     if(tree->fdout != -1)
         close(tree->fdout);
     if(tree->fdoutcp != -1)
-        close(tree->fdoutcp);    
+        close(tree->fdoutcp);
+    free_tree(&tree);
     exit(127);
 }
+
+void malloc_err(t_tree *tree)
+{
+    free_tree(&tree);
+    exit(1);
+}
+
+void malloc_tree_err(t_env *env)
+{
+    free_env(env);
+    exit(1);
+}
+

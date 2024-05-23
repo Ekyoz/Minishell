@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:14:56 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/22 17:39:03 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/23 11:56:14 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,23 +52,18 @@ static void free_nodes(t_node *nodes)
     t_node *nodecp1;
     t_node *nodebegin;
 
+    nodecp = NULL;
     nodecp1 = nodes;
     nodebegin = nodes;
     if(nodes->right)
     {
-        if(nodes->right)
-        {
-            nodecp = nodes->right;
-            free_r_l(nodes->right, nodecp);
-        }
+        // nodecp = nodes->right;
+        free_r_l(nodes->right, nodecp);
     }
     if(nodecp1->left)
     {
-        if(nodecp1->left)
-        {
-            nodecp1 = nodecp1->left;
-            free_r_l(nodecp1->left, nodecp1);
-        }
+        // nodecp1 = nodecp1->left;
+        free_r_l(nodecp1->left, nodecp1);
     }
     free_nodes_args(nodebegin);
     free(nodebegin);
@@ -87,30 +82,32 @@ static void free_envp(t_tree *tree)
     free(tree->envp);
 }
 
-void free_tree(t_tree *tree)
+void free_tree(t_tree **tree)
 {
-    if(tree)
+    if((*tree))
     {
-        if(tree->nodes)
+        if((*tree)->fdpipe)
         {
-            free_nodes(tree->nodes);
-            tree->nodes = NULL;
+            free_pipe((*tree));
+            (*tree)->fdpipe = NULL;
         }
-        if (tree->env)
+        if((*tree)->nodebegin)
         {
-            free_env(tree->env);
-            tree->env = NULL;
+            free_nodes((*tree)->nodebegin);
+            (*tree)->nodebegin = NULL;
+            (*tree)->nodes = NULL;
         }
-        if(tree->envp)
+        if ((*tree)->env)
         {
-            free_envp(tree);
-            tree->envp = NULL;
+            free_env((*tree)->env);
+            (*tree)->env = NULL;
         }
-        if(tree->fdpipe)
+        if((*tree)->envp)
         {
-            free_pipe(tree->fdpipe);
-            tree->fdpipe = NULL;
+            free_envp((*tree));
+            (*tree)->envp = NULL;
         }
-        free(tree);
+        free((*tree));
+        (*tree) = NULL;
     }
 }

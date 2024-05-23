@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/22 17:38:39 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/23 15:07:00 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct s_env
 
 typedef struct s_tree // structure qui va iterer dans mes nodes et executer les commandes
 {
+	t_node *nodebegin;
 	t_node *nodes;
 	t_env *env; // mon environnement
 	char	**envp; // mes path pour les commandes
@@ -94,17 +95,17 @@ typedef struct s_tree // structure qui va iterer dans mes nodes et executer les 
 
 // TROUVER LES REDIRECTIONS POUR LES AJOUTER A MON ARBRE AST
 int get_pipe(t_token *token, t_node *nodes);
-int get_redirection_left(t_token *token, t_node *nodes);
-int get_redirection_right(t_token *token, t_node *nodes);
-int get_redirection_main(t_token *token, t_node *nodes);
+int get_redirection_left(t_token *token, t_node *nodes, t_tree *tree);
+int get_redirection_right(t_token *token, t_node *nodes, t_tree *tree);
+int get_redirection_main(t_token *token, t_node *nodes, t_tree *tree);
 
 // FONCTIONS NODES POUR CREER DES NODES SUR MON ARBRE AST
-t_node *init_nodes();
+t_node *init_nodes(t_tree *tree);
 t_node *add_node(t_node *nodes, t_token **token);
-t_node *add_node_left(t_node *nodes, t_token **token);
-t_node *add_node_right(t_node *nodes, t_token **token, bool *is_redirec);
+t_node *add_node_left(t_node *nodes, t_token **token, t_tree *tree);
+t_node *add_node_right(t_node *nodes, t_token **token, bool *is_redirec, t_tree *tree);
 void create_node(t_token *tokens, t_tree **tree);
-void add_branches(t_token *tokens, t_node **node, t_node **nodecp, bool *redir);
+void add_branches(t_token *tokens, t_node **node, t_node **nodecp, t_tree *tree);
 
 //FONCTIONS MANIPULATION DE MON ARBRE
 t_tree *init_tree(char *envp[], t_env *env);
@@ -118,14 +119,14 @@ pid_t do_fork(t_tree *tree, pid_t pid);
 
 //PIPE
 void *exec_pipe(t_tree *tree, t_node *nodes);
-void close_pipe(int fd1, int fd2, int fd3, int fd4);
 void first_pipe(t_tree *tree, t_node *node);
 void last_pipe(t_tree *tree, t_node *node, int j);
 void mid_pipe(t_tree *tree, t_node *node, int j);
+void close_all_pipes(int **fdpipe, int i);
 
 //CHECKING COMMAND
 char *check_access1(t_tree *tree, t_node *nodes);
-int	get_env_args(char *envp[], t_tree *tree);
+void	get_env_args(char *envp[], t_tree *tree);
 int	check_cmd1(t_tree *tree, t_node *node);
 
 //REDIREC
@@ -144,9 +145,11 @@ bool is_heredoc(t_node *nodes);
 //FONCTIONS DU GARBAGE COLLECTOR
 void print_error(int errorcode, t_tree *tree, t_node *node);
 void read_status(t_tree *tree);
-void free_tree(t_tree *tree);
+void free_tree(t_tree **tree);
 void free_env(t_env *env);
-void free_pipe(int **fdpipe);
+void free_pipe(t_tree *tree);
+void malloc_err(t_tree *tree);
+void malloc_tree_err(t_env *env);
 
 //ENVIRONNEMENT
 t_env	*init_env(char **env_array);
