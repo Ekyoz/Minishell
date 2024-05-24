@@ -24,11 +24,18 @@ Executor :
 
 cd : <direcoryname> || - || ....... || /../<direcoryname> || ~
 
+- getcwd => obtenir le repertoir actuelle
+- chdir => permet de changer le nouveau repertoire en specifiant en parametre le chemin
 
---------------------FONCTIONS--------------------
-
-- getcwd : permet de recuperer le chemin actuelle : char *getcwd(char *buf, size_t size) => buf : chemin || size : taille du buff
--
+- Commande speciale
+    cd - et cd -- => pas oblige    
+    cd ~ => meme commande que cd mais marche quand meme sans l'env HOME 
+    cd / => revient a la racine
+    cd => retourne au home avec l'env. Si pas d'env HOME erreur "bash: cd: HOME not set"
+- Erreur
+    - No such file or directory
+    - Permission Denied => Dossier ou j'ai pas les permissions
+    - not a directory => rentrer dans un fichier
 
 ---------------------CODE------------------------
 

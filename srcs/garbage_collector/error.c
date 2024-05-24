@@ -6,11 +6,12 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:43:01 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 16:49:30 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/24 13:30:04 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 
 void print_error(int errorcode, t_tree *tree, t_node *node)
 {

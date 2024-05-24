@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:14:56 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 11:56:14 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/24 16:09:30 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,11 @@ void free_tree(t_tree **tree)
             (*tree)->nodebegin = NULL;
             (*tree)->nodes = NULL;
         }
-        if ((*tree)->env)
-        {
-            free_env((*tree)->env);
-            (*tree)->env = NULL;
-        }
+        // if ((*tree)->env)
+        // {
+        //     free_env((*tree)->env);
+        //     (*tree)->env = NULL;
+        // }
         if((*tree)->envp)
         {
             free_envp((*tree));

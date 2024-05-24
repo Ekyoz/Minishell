@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/23 16:39:09 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/24 15:45:02 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,8 @@ void malloc_tree_err(t_env *env);
 
 //ENVIRONNEMENT
 t_env	*init_env(char **env_array);
+char *get_env(t_env *env, char *envvar);
+int set_env(t_tree *tree, t_env *env, char *var, char *value);
 int displayenv(t_env *env);
 
 //BUILTIN
@@ -165,6 +167,8 @@ int unset_export(t_node *nodes, t_env *env);
 int displayenv(t_env *env);
 //EXIT
 void exit_function(t_tree *tree, t_node *node);
+//CD
+void do_cd(t_tree *tree, t_node *node);
 
 //SIGNAUX
 void set_signal(void);
