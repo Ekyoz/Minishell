@@ -1,13 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
+/*   free_twodim_array.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/03/26 16:31:39 by atresall         ###   ########.fr       */
+/*   Created: 2024/05/27 16:40:03 by bastpoy           #+#    #+#             */
+/*   Updated: 2024/05/27 16:46:45 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void ft_free_array(void **ptr)
+{
+    int i;
+    
+    i = 0;
+    while(ptr[i])
+    {
+        free(ptr[i]);
+        i++;
+    }
+    if(ptr)
+        free(ptr);
+    ptr = NULL;
+}

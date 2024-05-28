@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/24 15:45:02 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/28 16:21:14 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,25 +150,39 @@ void free_env(t_env *env);
 void free_pipe(t_tree *tree);
 void err_free_all(t_tree *tree);
 void malloc_tree_err(t_env *env);
+void command_not_found(t_tree *tree, char *cmd);
+void ft_free_array(void **ptr);
 
 //ENVIRONNEMENT
 t_env	*init_env(char **env_array);
 char *get_env(t_env *env, char *envvar);
 int set_env(t_tree *tree, t_env *env, char *var, char *value);
 int displayenv(t_env *env);
+ssize_t get_index_env(t_env *env, char *word);
+void	env_add_back(t_env **env, t_env *new);
+int env_length(t_env *env);
 
 //BUILTIN
 int choose_builtin(t_tree *tree, t_node *nodes, t_env *env);
 //PWD
 int getpwd_env(t_env *env);
 //UNSET
-int unset_export(t_node *nodes, t_env *env);
+int do_unset(t_node *node, t_env *env);
+//EXPORT
+int do_export(t_tree *tree, t_node *node);
+char **env_to_string(t_tree *tree, t_env *env);
+void		sort_env(char **envstr);
+int check_export_var(char *var);
+int print_err_export(char *err);
+size_t	get_char_by_index(char *str, char c);
 //ENV
 int displayenv(t_env *env);
 //EXIT
 void exit_function(t_tree *tree, t_node *node);
 //CD
 void do_cd(t_tree *tree, t_node *node);
+//ECHO
+int do_echo(t_node *node);
 
 //SIGNAUX
 void set_signal(void);

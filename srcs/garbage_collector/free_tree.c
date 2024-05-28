@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:14:56 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/24 16:09:30 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/27 12:58:03 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void free_nodes_args(t_node *node)
         while(node->args[i])
         {
             if(node->args[i])
-                free(node->args[i]);
+            free(node->args[i]);
             i++;
         }
         free(node->args);
@@ -84,6 +84,7 @@ static void free_envp(t_tree *tree)
 
 void free_tree(t_tree **tree)
 {
+    
     if((*tree))
     {
         if((*tree)->fdpipe)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 16:40:12 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/28 15:49:13 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void parent_process(int status, pid_t pid)
         unlink(".here_doc");
     if(WIFEXITED(status))
     {
-        // fprintf(stderr, "le status vaut %d\n", status);
         signal_status = WEXITSTATUS(status);
     }
 
@@ -30,8 +29,7 @@ void *ft_execve(t_tree *tree, t_node *nodes)
     tree->path = check_access1(tree, nodes);
     if(execve(tree->path, nodes->args, NULL) == -1)
     {
-        fprintf(stderr, "error execve\n");
-        perror("error");
+        perror("");
         return((void*)1);
     }
     return((void*)0);
@@ -44,7 +42,7 @@ int exec_cmd(t_tree *tree, t_node *nodes, char *envp[])
 
     status = 0;
     if(choose_builtin(tree, nodes, tree->env) ||
-        unset_export(nodes, tree->env))
+        do_unset(nodes, tree->env))
         return(0);
     pid = fork();
     set_signal_cmd();
@@ -70,7 +68,7 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
     pid = 0;
     status = 0;
     if(nodes->left)
-        unset_export(nodes->left, tree->env);
+        do_unset(nodes->left, tree->env);
     hdoc_or_cmd(nodes);
     pid = do_fork(tree, pid);
     if(pid == 0)
@@ -106,6 +104,4 @@ void ast_exec(t_tree *tree, char *envp[])
     {
         exec_cmd(tree, nodes, envp);
     }
-    else
-        printf("dans aucun\n");
 }

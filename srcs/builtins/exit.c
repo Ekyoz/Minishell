@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/23 10:41:21 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/28 15:51:42 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,18 @@ long long	ft_atoi_exit(char *str, int i, int *pbm)
 
 static void no_numeric_msg(char *str)
 {
-    printf("exit\n");
-    printf("Minishell : exit: %s: numeric argument required\n", str);
+    ft_putstr_fd("exit\n", 2);
+	ft_putstr_fd("Minishell : exit: ", 2);
+	ft_putstr_fd(str, 2);
+	ft_putstr_fd(": numeric argument required\n", 2);
     signal_status = 1;
     exit(1);
 }
 
 static void many_argument_msg()
 {
-    printf("exit\n");
-    printf("Minishell: exit: too many arguments\n");
+	ft_putstr_fd("exit\n", 2);
+	ft_putstr_fd("Minishell: exit: too many arguments\n", 2);
     signal_status = 1;
     exit(1);
 }
@@ -86,7 +88,7 @@ void exit_function(t_tree *tree, t_node *node)
     i = 0;
     if(!node->args[1]) // dans le cas ou j'ai seulement un exit
     {
-        printf("exit\n");
+        ft_putstr_fd("exit\n", 2);
         free_tree(&tree);
         exit(0);
     }  
@@ -102,9 +104,8 @@ void exit_function(t_tree *tree, t_node *node)
         if(maxlong == 1)
             no_numeric_msg(node->args[1]);
         signal_status = code % 256;
-        printf("exit\n");
+        ft_putstr_fd("exit\n", 2);
         free_tree(&tree);
-        printf("la\n");
         exit(0);
     }
 }

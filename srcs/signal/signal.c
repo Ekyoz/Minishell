@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:52:31 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/22 12:04:43 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/28 15:46:20 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,11 @@ void get_signal_cmd(int status, pid_t pid)
     // if(WIFSIGNALED(status))
     // {
     //     signal_status = WTERMSIG(status);
-    //     printf("signal status %d\n", signal_status);
     // }
-    // if (signal_status != 0)
-    //     return(1);
+
     if(WIFEXITED(status))
     {
         signal_status = WEXITSTATUS(status);
-        // fprintf(stderr, "le status vaut %d et %d\n", signal_status, status);
     }
 }
 void hdoc_or_cmd(t_node *nodes)

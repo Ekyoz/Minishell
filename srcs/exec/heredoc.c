@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/23 16:45:59 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/28 15:43:59 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static char **find_heredoc(t_tree *tree, t_node *nodes)
                 }
                 else
                 {
-                    printf("error errdoc\n");
+                    ft_putstr_fd("error errdoc\n", 2);
                     return(NULL);
                 }
             }

@@ -3,28 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:30:34 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/24 17:12:40 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/28 15:52:56 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int change_dir(char *path)
-{
-
-    if(!chdir(path))
-    {
-        printf("le path est change %s \n", path);
-        return(1);
-    }
-    else
-        return(0);
-}
-
-static int test_directory(char * path, int home)
+static int test_directory(char * path)
 {
 	struct stat	st;
 
@@ -41,75 +29,75 @@ static int test_directory(char * path, int home)
 	else
 		ft_putstr_fd(": Not a directory", 2);
 	ft_putchar_fd('\n', 2);
-	if (home)
-		free(path);
 	return (1);
+}
+
+static int change_dir(t_tree *tree, t_node *node, char *path)
+{
+    char cwd[1024];
+
+    if(!chdir(path))
+    {
+        getcwd(cwd, sizeof(cwd));
+        set_env(tree, tree->env, "PWD=", cwd);
+        return(1);
+    }
+    else
+        test_directory(node->args[1]);
+    return (0);
+}
+
+static void tild(t_tree *tree, t_node *node, char* homepath)
+{
+    char *path;
+
+    homepath = get_env(tree->env, "HOME="); // me renvoie le path de l'home
+    if(!homepath) 
+    {
+        ft_putstr_fd("cd: HOME not set\n", 2);
+        signal_status = 1;
+        return;
+    }
+    path = ft_substr(node->args[1], 1, ft_strlen(node->args[1]) - 1); // je decalle de un pour enlever le tild
+    path = ft_strjoin(homepath, path);
+    if (change_dir(tree, node, path))
+        set_env(tree, tree->env, "PWD=", path);
+}
+
+static int cd_alone(t_tree *tree, t_node *node)
+{
+    char *homepath;
+
+    homepath = get_env(tree->env, "HOME=");
+    if(!homepath) // je vais dans le path de HOME
+    {
+        ft_putstr_fd("cd: HOME not set\n", 2);
+        signal_status = 1;
+    }
+    change_dir(tree, node, homepath);           
+    free(homepath);
+    return(0);
 }
 
 void do_cd(t_tree *tree, t_node *node)
 {
     char *homepath;
-    char *path;
-    char cwd[1024];
 
+    homepath = NULL;
     if(node->args && node->args[1] && node->args[2])
     {
-        write(2, "cd: too many arguments\n", 23);
+        ft_putstr_fd("cd: too many arguments\n", 2);
         err_free_all(tree);
     }
-    if(!node->args[1]) // dans le cas de cd tout seul
-    {
-        // il faut que j'aille chercher la variable d'environnement
-        homepath = get_env(tree->env, "HOME=");
-        if(!homepath) // je vais dans le path de HOME
-        {
-            ft_putstr_fd("cd: HOME not set\n", 2);
-            signal_status = 1;
-        }
-        free(homepath);
-    }
-    //erreur sur le - et --
-    if(node->args && !ft_strncmp(node->args[1], "-", 1)) 
+    else if(!node->args[1]) // dans le cas de cd tout seul
+        cd_alone(tree, node);
+    else if(node->args && !ft_strncmp(node->args[1], "-", 1)) // tiret
     {
         ft_putstr_fd("argument not supported\n", 2);
         signal_status = 1;
     }
-    // check le ~
-    if(node->args && !ft_strncmp(node->args[1], "~", 1))
-    {
-        homepath = get_env(tree->env, "HOME="); // me renvoie le path de l'home
-        if(!homepath) 
-        {
-            ft_putstr_fd("cd: HOME not set\n", 2);
-            signal_status = 1;
-            return;
-        }
-        path = ft_substr(node->args[1], 1, ft_strlen(node->args[1]) - 1); // je decalle de un pour enlever le tild
-        path = ft_strjoin(homepath, path);
-        if (change_dir(path))
-            set_env(tree, tree->env, "PWD=", path);
-        else
-            test_directory(path, 1);
-    }
+    else if(node->args && !ft_strncmp(node->args[1], "~", 1)) // tild
+        tild(tree, node, homepath);
     else // cd commande normal
-    {
-        // getcwd(NULL, 0);
-        homepath = get_env(tree->env, "PWD="); // me renvoie le path de l'home
-        if(!homepath) 
-        {
-            ft_putstr_fd("cd: HOME not set\n", 2);
-            signal_status = 1;
-            return;
-        }
-        path = NULL;
-        // path = ft_strjoin(homepath, "/");
-        // path = ft_strjoin(path, node->args[1]);
-        if (getcwd(cwd, sizeof(cwd)) != NULL)
-            path = cwd;
-        // printf("le path %s\n", path);
-        if (change_dir(path))
-            set_env(tree, tree->env, "PWD=", path);
-        else
-            test_directory(path, 1);
-    }
+        change_dir(tree, node, node->args[1]);  
 }
