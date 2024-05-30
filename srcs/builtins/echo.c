@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:30:51 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/28 13:12:35 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:16:28 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int do_echo(t_node *node)
     if(!node->args[1])
     {
         ft_putchar_fd('\n', 1);
-        return(0);
+        return(1);
     }
     i = check_n(node->args);
     if(i > 1)

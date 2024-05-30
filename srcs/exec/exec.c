@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/29 14:36:36 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/30 14:45:33 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,24 +68,23 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
     status = 0;
     if(nodes->left)
         do_unset(nodes->left, tree->env);
-    hdoc_or_cmd(nodes);
+    ft_putstr_fd("avant le fork\n", 2);
     pid = do_fork(tree, pid);
     if(pid == 0)
     {
+        hdoc_or_cmd(nodes);
+        ft_putstr_fd("je suis la\n", 2);
         heredoc(tree, nodes);
         check_redir_out(tree, nodes);
         check_redir_in(tree, nodes);
-        if(nodes->left)
-        {
-            printf("node.type %d\n", nodes->left->type);
-            if(choose_builtin(tree, nodes->left, tree->env))
-                exit(0);
-            if(!check_cmd1(tree, nodes->left))
-                print_error(2, tree, nodes->left);
-            ft_execve(tree, nodes->left);
-        }
+        if(choose_builtin(tree, nodes->left, tree->env))
+            exit(0);
+        if(!check_cmd1(tree, nodes->left))
+            print_error(2, tree, nodes->left);
+        ft_execve(tree, nodes->left);
     }
     parent_process(status, pid);
+    printf("apres le parent\n");
     return((void*)0);
 }
 

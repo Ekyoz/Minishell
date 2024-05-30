@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/29 15:12:27 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:10:37 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,30 +97,44 @@ void heredoc(t_tree *tree, t_node *nodes)
 {
     char *input;
     char **eofword;
+    int i;
 
+    i = 0;
     eofword = find_heredoc(tree, nodes);
     if(eofword)
     {
         tree->fdin = open(".here_doc",  O_WRONLY | O_CREAT | O_TRUNC, 0777);
         if(tree->fdin < 0)
-            perror("error opening");
-        while(*eofword)
+            err_free_all(tree);
+        while(eofword[i])
         {
+            set_signal_heredoc();
+            if(signal_status ==  130)
+            {
+                ft_putstr_fd("rentre la dedans\n", 2);
+                return;
+            }
             input = readline("> ");
             if(!input)
             {
-                printf("minishell: warning: here-document at line 1 delimited by end-of-file (wanted `%s')\n", *eofword);
-                exit(0);
+                ft_putstr_fd("minishell: warning: here-document at line 1 delimited by end-of-file (wanted `", 2);
+                ft_putstr_fd(eofword[i], 2);
+                ft_putstr_fd("')\n", 2);
+                ft_free_array((void*)eofword);
+                err_free_all(tree);
             }
-            write(tree->fdin, input, ft_strlen(input));
-            write(tree->fdin, "\n", 1);
-            if(!ft_strcmp(*eofword, input))
-                eofword++;
+            ft_putstr_fd(input, tree->fdin);
+            ft_putstr_fd("\n", tree->fdin);
+            if(!ft_strcmp(eofword[i], input))
+                i++;
         }
+        ft_free_array((void*)eofword);
         close(tree->fdin);
         tree->fdin = open(".here_doc", O_RDONLY);
         if(dup2(tree->fdin, STDIN_FILENO) == -1)
             err_free_all(tree);
         close(tree->fdin);
+        if(!nodes->left) // si je n 'ai pas de commande a gauche
+            err_free_all(tree);
     }
 }

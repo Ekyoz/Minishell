@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/29 14:31:50 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:21:15 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,7 +179,7 @@ size_t	get_char_by_index(char *str, char c);
 //ENV
 int displayenv(t_env *env);
 //EXIT
-int exit_function(t_tree *tree, t_node *node);
+int do_exit(t_tree *tree, t_node *node);
 //CD
 int do_cd(t_tree *tree, t_node *node);
 //ECHO

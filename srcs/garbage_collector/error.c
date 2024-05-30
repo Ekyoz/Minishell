@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:43:01 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/29 11:33:56 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:19:12 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void print_error(int errorcode, t_tree *tree, t_node *node)
         close(tree->fdout);
     if(tree->fdoutcp != -1)
         close(tree->fdoutcp);
-    free_tree(&tree, 0);
+    free_tree(&tree, 1);
     exit(127);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:02:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/29 12:00:42 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/30 16:22:49 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int choose_builtin(t_tree *tree, t_node *nodes, t_env *env)
     else if(!ft_strncmp(nodes->args[0], "echo", 5))
         return(do_echo(nodes));
     else if(!ft_strncmp(nodes->args[0], "exit", 5))
-        return(exit_function(tree, nodes));
+        return(do_exit(tree, nodes));
     else
         return (0);
 }
