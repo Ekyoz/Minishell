@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:17:58 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 16:39:09 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/30 18:13:04 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*check_access1(t_tree *tree, t_node *nodes)
 }
 
 // je recuere les path de mon envp
-void	get_env_args(char *envp[], t_tree *tree)
+void	get_env_args(char **envp, t_tree *tree)
 {
 	int		j;
 	char	*temp;

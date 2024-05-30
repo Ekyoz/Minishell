@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/30 16:21:15 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/30 18:28:53 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void create_node(t_token *tokens, t_tree **tree);
 void add_branches(t_token *tokens, t_node **node, t_node **nodecp, t_tree *tree);
 
 //FONCTIONS MANIPULATION DE MON ARBRE
-t_tree *init_tree(char *envp[], t_env *env);
+t_tree *init_tree(t_env *env);
 void print_tree(t_node *node);
 
 //EXECUT
@@ -126,7 +126,7 @@ void close_all_pipes(int **fdpipe, int i);
 
 //CHECKING COMMAND
 char *check_access1(t_tree *tree, t_node *nodes);
-void	get_env_args(char *envp[], t_tree *tree);
+void	get_env_args(char **envp, t_tree *tree);
 int	check_cmd1(t_tree *tree, t_node *node);
 
 //REDIREC
@@ -158,7 +158,6 @@ void ft_exit(t_tree *tree);
 t_env	*init_env(char **env_array);
 char *get_env(t_env *env, char *envvar);
 int set_env(t_tree *tree, t_env *env, char *var, char *value);
-int displayenv(t_env *env);
 ssize_t get_index_env(t_env *env, char *word);
 void	env_add_back(t_env **env, t_env *new);
 int env_length(t_env *env);

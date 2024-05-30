@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 17:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 16:50:21 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/30 18:26:25 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ static void dup_pipe(t_tree *tree, t_node *nodes, int j, int i)
 static void execute_pipe(t_tree *tree, t_node *node)
 {
     if(choose_builtin(tree, node, tree->env))
+    {
+        ft_putstr_fd("dans ce fichih builtin\n\n\n\n", 2);
         exit(0);
+    }
     if(!check_cmd1(tree, node))
         print_error(2, tree, node);
     ft_execve(tree, node);
@@ -98,7 +101,9 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
             if(testredir(nodes->left)) // Si redirections  
                 execute_pipe(tree, nodes->left->left);
             else if(nodes->left) // pas de redir et une commande a gauche
+            {
                 execute_pipe(tree, nodes->left);
+            }
             else // pas de redir et pas de pipe
                 execute_pipe(tree, nodes);
         }

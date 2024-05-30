@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:02:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/16 15:33:12 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/30 18:06:56 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void create_node(t_token *tokens, t_tree **tree)
         add_branches(tokens, &nodes, &nodescp, *tree);
         is_redirec = 1;
     }
-    printf("\n\n");
     return((void) 0);
 }
 
