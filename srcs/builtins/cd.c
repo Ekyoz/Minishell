@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:30:34 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/28 15:52:56 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/29 12:00:15 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static int cd_alone(t_tree *tree, t_node *node)
     return(0);
 }
 
-void do_cd(t_tree *tree, t_node *node)
+int do_cd(t_tree *tree, t_node *node)
 {
     char *homepath;
 
@@ -99,5 +99,6 @@ void do_cd(t_tree *tree, t_node *node)
     else if(node->args && !ft_strncmp(node->args[1], "~", 1)) // tild
         tild(tree, node, homepath);
     else // cd commande normal
-        change_dir(tree, node, node->args[1]);  
+        change_dir(tree, node, node->args[1]);
+    return(1);
 }

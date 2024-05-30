@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/28 16:29:36 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/29 13:53:41 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,12 @@ int do_unset(t_node *node, t_env *env)
 
     i = 0;
     if(!node->args[1])
-        return(0);
+        return(1);
     while(node->args[i])
     {
         unset(node->args[i], &env);
         i++;
     }
-    return(0);
+    return(1);
 }
 

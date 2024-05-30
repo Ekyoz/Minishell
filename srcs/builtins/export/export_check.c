@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_entry.c                                      :+:      :+:    :+:   */
+/*   export_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:08:51 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/28 15:34:12 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/29 11:15:57 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void		sort_env(char **envstr)
     ft_free_array((void **)envstr);
 }
 
-int check_export_var(char *var)
+int check_export_var(char *var, int *ret)
 {
     int i;
     int alpha_found;
@@ -96,6 +96,8 @@ int check_export_var(char *var)
     alpha_found = 0;
 	if(var[0] == '=')
 		return(0);
+	if(ft_strchr(var, '=') == NULL)
+		return(*ret = 1, 1);
     while(var[i] && var[i] != '=')
     {
 		if (ft_isalpha(var[i]))

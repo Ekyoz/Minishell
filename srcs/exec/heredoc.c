@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/28 15:43:59 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/29 15:12:27 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static char **find_heredoc(t_tree *tree, t_node *nodes)
         {
             if(nodes->right->type != TOKEN_WORD) // si mon token dapres est different d'un word
             {
-                if(nodes->right->left->type == TOKEN_WORD)
+                printf("le node de droite %d\n", nodes->right->type);
+                if(nodes->right->left && nodes->right->left->type == TOKEN_WORD)
                 {
                     eofword[i] = ft_strdup(nodes->right->left->args[0]);
                     if(!eofword[i])
@@ -62,7 +63,7 @@ static char **find_heredoc(t_tree *tree, t_node *nodes)
                     return(NULL);
                 }
             }
-            else if(nodes->right->type == TOKEN_WORD) // si mon token dapres est un word
+            else // si mon token dapres est un word
             {
                 eofword[i] = ft_strdup(nodes->right->args[0]);
                 if(!eofword[i])
@@ -70,8 +71,6 @@ static char **find_heredoc(t_tree *tree, t_node *nodes)
                 fprintf(stderr, "eof %s\n", eofword[i]);
                 i++;
             }
-            else // sinon je n'ai pas d'eof donc erreur
-                exit(2);
         }
         nodes = nodes->right;
     }

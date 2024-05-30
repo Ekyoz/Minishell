@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/28 16:20:51 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/29 11:59:20 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,15 @@ static int modify(char *word, t_env *env, ssize_t index)
 	return(0);
 }
 
-static void put(t_tree *tree, t_env *env, char *str)
+static int put(t_tree *tree, t_env *env, char *str, int *ret)
 {
 	size_t length;
 	ssize_t index;
     char *word;
 	char *strcp;
 
+	if(*ret == 1)
+		return(*ret = 0, signal_status = 1, 1);
 	strcp = ft_strdup(str);
 	length = get_char_by_index(str, '=');
 	if(length == (size_t)-1)
@@ -73,30 +75,31 @@ static void put(t_tree *tree, t_env *env, char *str)
 		add(tree, env, strcp);
 	else
 		modify(strcp, env, index);
+	return(0);
 }
 
 int do_export(t_tree *tree, t_node *node)
 {
     char **strenv;
     int i;
+	int ret;
 
+	ret = 0;
     i = 1;
     if(!ft_strncmp(node->args[0], "export=", 7))
-    {
-        command_not_found(tree, node->args[0]);
-        return(0);
-    }
+        return (command_not_found(tree, node->args[0]));
     if(!ft_strncmp(node->args[0], "export", 7) && !node->args[1]) // export sans arguments
     {
         strenv = env_to_string(tree, tree->env);
         sort_env(strenv);
-        return(0);
+        return(1);
     }
     while(node->args[i]) // variable a ajouter
     {
-        if(!check_export_var(node->args[i]))
-            return (print_err_export(node->args[i]));
-		put(tree, tree->env, node->args[i]);
+        if(!check_export_var(node->args[i], &ret))
+            (print_err_export(node->args[i]));
+		else
+			put(tree, tree->env, node->args[i], &ret);
         i++;
     }
     return(1);

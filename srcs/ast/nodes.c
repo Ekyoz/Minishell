@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nodes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:30:32 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 16:39:09 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/29 15:00:54 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,12 @@
 
 t_node *add_node_left(t_node *nodes, t_token **token, t_tree *tree)
 {
-    nodes->left = init_nodes(tree); 
-    nodes->left->type = (*token)->type; // a gauche de la redirec c'est forcement une commande
-    nodes->left->args = (*token)->value; // je stocke la commande
+    if((*token)->type != REDIRUSED)
+    {
+        nodes->left = init_nodes(tree); 
+        nodes->left->type = (*token)->type; // a gauche de la redirec c'est forcement une commande
+        nodes->left->args = (*token)->value; // je stocke la commande
+    }
     *token = (*token)->next;
     if((*token) != NULL && ((*token)->type == PIPEUSED || (*token)->type == REDIRUSED))
         (*token) = (*token)->next; // Je passe au prochain token

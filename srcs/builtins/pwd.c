@@ -6,12 +6,18 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/28 15:57:18 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/29 12:02:29 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int error_pwd(t_tree *tree)
+{
+	perror("pwd: ");
+	err_free_all(tree);
+	return(1);
+}
 
 char *get_env(t_env *env, char *envvar)
 {
@@ -72,7 +78,7 @@ int set_env(t_tree *tree, t_env *env, char *var, char *value)
 	return(0);
 }
 
-int getpwd_env(t_env *env)
+int do_pwd(t_tree *tree, t_env *env)
 {
     char pwd[1024];
 	char *path;
@@ -83,8 +89,9 @@ int getpwd_env(t_env *env)
         {
 			path = ft_substr(env->value, 4, strlen(env->value) - 4);
 			ft_putstr_fd(path , 2);
+			ft_putchar_fd('\n',1);
 			free(path);
-			return(0);
+			return(1);
         }
         env = env->next;
     }
@@ -92,12 +99,9 @@ int getpwd_env(t_env *env)
 	{
 		ft_putstr_fd(pwd, 1);
 		ft_putchar_fd('\n',1);
-		return(0);
+		return(1);
 	}
 	else
-	{
-		perror("");
-		exit(errno);
-	}
+		error_pwd(tree);
     return(1);
 }

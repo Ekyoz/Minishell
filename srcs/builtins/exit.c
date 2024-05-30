@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/28 15:51:42 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/29 12:13:40 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static void check_numeric(t_node *node)
 	}
 }
 
-void exit_function(t_tree *tree, t_node *node)
+int exit_function(t_tree *tree, t_node *node)
 {
     int i;
     int maxlong;
@@ -87,11 +87,7 @@ void exit_function(t_tree *tree, t_node *node)
     maxlong = 0;
     i = 0;
     if(!node->args[1]) // dans le cas ou j'ai seulement un exit
-    {
-        ft_putstr_fd("exit\n", 2);
-        free_tree(&tree);
-        exit(0);
-    }  
+		ft_exit(tree);
     check_numeric(node); //je check si l'argument est un nombre
     while(node->args[i])
         i++;
@@ -105,7 +101,8 @@ void exit_function(t_tree *tree, t_node *node)
             no_numeric_msg(node->args[1]);
         signal_status = code % 256;
         ft_putstr_fd("exit\n", 2);
-        free_tree(&tree);
-        exit(0);
+		free_env(tree->env);
+        exit(signal_status);
     }
+	return(1);
 }

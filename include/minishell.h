@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/28 16:21:14 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/29 14:31:50 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ t_tree *init_tree(char *envp[], t_env *env);
 void print_tree(t_node *node);
 
 //EXECUT
-void ast_exec(t_tree *tree, char *envp[]);
+void ast_exec(t_tree *tree);
 void *ft_execve(t_tree *tree, t_node *nodes);
 void parent_process(int status, pid_t pid);
 pid_t do_fork(t_tree *tree, pid_t pid);
@@ -145,13 +145,14 @@ bool is_heredoc(t_node *nodes);
 //FONCTIONS DU GARBAGE COLLECTOR
 void print_error(int errorcode, t_tree *tree, t_node *node);
 void read_status(t_tree *tree);
-void free_tree(t_tree **tree);
+void free_tree(t_tree **tree, int env);
 void free_env(t_env *env);
 void free_pipe(t_tree *tree);
 void err_free_all(t_tree *tree);
 void malloc_tree_err(t_env *env);
-void command_not_found(t_tree *tree, char *cmd);
+int command_not_found(t_tree *tree, char *cmd);
 void ft_free_array(void **ptr);
+void ft_exit(t_tree *tree);
 
 //ENVIRONNEMENT
 t_env	*init_env(char **env_array);
@@ -165,22 +166,22 @@ int env_length(t_env *env);
 //BUILTIN
 int choose_builtin(t_tree *tree, t_node *nodes, t_env *env);
 //PWD
-int getpwd_env(t_env *env);
+int do_pwd(t_tree *tree, t_env *env);
 //UNSET
 int do_unset(t_node *node, t_env *env);
 //EXPORT
 int do_export(t_tree *tree, t_node *node);
 char **env_to_string(t_tree *tree, t_env *env);
 void		sort_env(char **envstr);
-int check_export_var(char *var);
+int check_export_var(char *var, int *ret);
 int print_err_export(char *err);
 size_t	get_char_by_index(char *str, char c);
 //ENV
 int displayenv(t_env *env);
 //EXIT
-void exit_function(t_tree *tree, t_node *node);
+int exit_function(t_tree *tree, t_node *node);
 //CD
-void do_cd(t_tree *tree, t_node *node);
+int do_cd(t_tree *tree, t_node *node);
 //ECHO
 int do_echo(t_node *node);
 
