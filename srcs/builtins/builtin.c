@@ -41,10 +41,10 @@ int choose_builtin(t_tree *tree, t_node *nodes, t_env *env)
     {
         return(1);
     }
-    else if(!ft_strncmp(nodes->args[0], "echo", 5))
-    {
-        return(1);
-    }
+//    else if(!ft_strncmp(nodes->args[0], "echo", 5))
+//    {
+//        return(1);
+//    }
     else if(!ft_strncmp(nodes->args[0], "exit", 5))
     {
         exit_function(tree, nodes);

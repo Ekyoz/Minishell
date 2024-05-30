@@ -12,14 +12,17 @@
 
 #include "minishell.h"
 
-int pipe_counter(const char *command)
+int	pipe_counter(const char *command)
 {
-	int i = -1;
-	int pipe = 1;
+	int	i;
+	int	pipe;
+
+	i = -1;
+	pipe = 1;
 	while (command[++i])
 	{
 		if (command[i] == '|')
 			pipe++;
 	}
-	return pipe;
+	return (pipe);
 }

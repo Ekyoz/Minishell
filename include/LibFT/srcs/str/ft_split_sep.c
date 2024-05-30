@@ -11,95 +11,82 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 
-int count_separators(const char* string, char separator) {
-	int count = 0;
-	int length = ft_strlen(string);
-	int i = 0;
-	while (i < length) {
-		if (string[i] == separator) {
+static int	count_words(const char *str, char sep)
+{
+	int	count;
+	int	in_word;
+
+	count = 0;
+	in_word = 0;
+	while (*str)
+	{
+		if (*str != sep && !in_word)
+		{
+			in_word = 1;
 			count++;
 		}
-		i++;
-	}
-	return count;
-}
-
-char** allocate_memory(int count) {
-	return (char**)malloc((count * 2 + 1) * sizeof(char*));
-}
-
-void split_string(char** result, char* string, char separator) {
-	int length = ft_strlen(string);
-	int index = 0;
-	int start = 0;
-	int i = 0;
-
-	if (string[0] == separator) {
-		start = 1;
-	}
-
-	while (i <= length) {
-		if (string[i] == separator || string[i] == '\0') {
-			int substring_length = i - start;
-			if (substring_length > 0) {
-				result[index] = (char*)malloc((substring_length + 1) * sizeof(char));
-				ft_strlcpy(result[index], string + start, substring_length + 1);
-				index++;
-			}
-			if (string[i] == separator) {
-				result[index] = (char*)malloc(2 * sizeof(char));
-				result[index][0] = separator;
-				result[index][1] = '\0';
-				index++;
-			}
-			start = i + 1;
+		else if (*str == sep)
+		{
+			in_word = 0;
 		}
-		i++;
+		str++;
 	}
-
-	if (string[length - 1] == separator) {
-		result[index] = (char*)malloc(2 * sizeof(char));
-		result[index][0] = separator;
-		result[index][1] = '\0';
-		index++;
-	}
-	result[index] = NULL;
+	return (count);
 }
 
-char** ft_split_sep(char* str, char separator) {
-	int len = ft_strlen(str);
-	int capacity = 10;
-	char **result = malloc(capacity * sizeof(char *));
-	int count = 0;
+static char	*word_dup(char *start, size_t len)
+{
+	char	*word;
 
-	int start = 0;
+	word = (char *)malloc(len + 1);
+	if (!word)
+		return (NULL);
+	ft_strlcpy(word, start, len + 1);
+	return (word);
+}
 
-	for (int i = 0; i <= len; i++) {
-		if (str[i] == separator || str[i] == '\0') {
-			if (start != i) {
-				result[count] = strndup(str + start, i - start);
-				count++;
-				if (count >= capacity) {
-					capacity *= 2;
-					result = realloc(result, capacity * sizeof(char *));
-				}
-			}
-			if (str[i] != '\0') {
-				result[count] = strndup(str + i, 1);
-				count++;
-				if (count >= capacity) {
-					capacity *= 2;
-					result = realloc(result, capacity * sizeof(char *));
-				}
-			}
-			start = i + 1;
+static int	add_word(char **result, char *start, int len, int index)
+{
+	result[index] = word_dup(start, len);
+	return (1);
+}
+
+static int	split_loop(char *str, char sep, char **result)
+{
+	int		i;
+	char	*start;
+
+	i = 0;
+	while (*str)
+	{
+		if (*str != sep)
+		{
+			start = str;
+			while (*str && *str != sep)
+				str++;
+			if (!add_word(result, start, str - start, i++))
+				return (-1);
+		}
+		else
+		{
+			if (!add_word(result, str, 1, i++))
+				return (-1);
+			str++;
 		}
 	}
+	result[i] = NULL;
+	return (0);
+}
 
-	result[count] = NULL;
-	return result;
+char	**ft_split_sep(char *str, char sep)
+{
+	char	**result;
+
+	result = (char **)malloc((count_words(str, sep) * 2 + 1) * sizeof(char *));
+	if (!result)
+		return (NULL);
+	if (split_loop(str, sep, result) == -1)
+		return (NULL);
+	return (result);
 }

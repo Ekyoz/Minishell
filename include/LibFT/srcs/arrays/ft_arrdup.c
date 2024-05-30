@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strndup.c                                       :+:      :+:    :+:   */
+/*   ft_arrdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandre <atresall@student.42lyon.fr>     +#+  +:+       +#+        */
+/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/16 14:45:10 by alexandre         #+#    #+#             */
-/*   Updated: 2024/05/28 15:51:11 by alexandre        ###   ########.fr       */
+/*   Created: 2024/05/24 11:40:08 by atresall          #+#    #+#             */
+/*   Updated: 2024/05/24 11:40:08 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strndup(char *str, size_t n)
+char	**ft_arrdup(char **array)
 {
-	char	*new_str;
+	int		i;
+	char	**dup;
 
-	new_str = (char *)malloc((n + 1) * sizeof(char));
-	if (new_str == NULL)
+	i = -1;
+	if (array == NULL)
 		return (NULL);
-	ft_strlcpy(new_str, str, n);
-	new_str[n] = '\0';
-	return (new_str);
+	dup = (char **)malloc(sizeof(char *) * (ft_arrlen(array) + 1));
+	if (dup == NULL)
+		return (NULL);
+	while (array[++i])
+		dup[i] = ft_strdup(array[i]);
+	dup[i] = NULL;
+	return (dup);
 }

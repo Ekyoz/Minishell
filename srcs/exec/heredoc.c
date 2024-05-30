@@ -26,7 +26,7 @@ static void init_eofword(t_tree *tree, t_node *nodes, char ***eofword) // foncti
     if(i > 0)
     {
         *eofword = (char **)malloc(sizeof(char *) * (i + 1));
-        if(*eofword)
+        if(!*eofword)
             malloc_err(tree);
     }
     else

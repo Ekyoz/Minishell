@@ -12,33 +12,34 @@
 
 #include "minishell.h"
 
-t_token_type is_token(char *c, int pos)
+t_token_type	is_token(char *c, int pos)
 {
-	if (c[pos] == '>' && c[pos+1] == '>')
-		return TOKEN_REDIR_APPEND;
-	else if (c[pos] == '<' && c[pos+1] == '<')
-		return TOKEN_REDIR_HEREDOC;
+	if (c[pos] == '>' && c[pos + 1] == '>')
+		return (TOKEN_REDIR_APPEND);
+	else if (c[pos] == '<' && c[pos + 1] == '<')
+		return (TOKEN_REDIR_HEREDOC);
 	else if (c[pos] == '>')
-		return TOKEN_REDIR_OUT;
+		return (TOKEN_REDIR_OUT);
 	else if (c[pos] == '<')
-		return TOKEN_REDIR_IN;
-	return TOKEN_WORD;
+		return (TOKEN_REDIR_IN);
+	return (TOKEN_WORD);
 }
 
-bool there_token(char *command)
+bool	there_token(char *command)
 {
-	int i = -1;
+	int	i;
 
+	i = -1;
 	while (command[++i])
 	{
 		if (ft_strnstr(command, ">>", ft_strlen(command)))
-			return true;
+			return (true);
 		if (ft_strnstr(command, "<<", ft_strlen(command)))
-			return true;
+			return (true);
 		if (command[i] == '>')
-			return true;
+			return (true);
 		if (command[i] == '<')
-			return true;
+			return (true);
 	}
-	return false;
+	return (false);
 }

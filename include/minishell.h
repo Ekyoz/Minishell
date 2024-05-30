@@ -180,7 +180,7 @@ void hdoc_or_cmd(t_node *nodes);
 bool parsing(t_token **head, char *commands, t_env *env);
 
 //Token
-void append_token(t_token **head, t_token_type type, char **value, t_env *env);
+void append_token(t_token **head, t_token_type type, char **value);
 void delete_token(t_token **head, t_token *node_to_delete);
 void clear_token(t_token **head);
 t_token_type is_token(char *command, int pos);
@@ -191,26 +191,26 @@ int pipe_counter(const char *command);
 char **pipe_splitter(char *command);
 
 //Splitter
-char **splitter(char *command);
+char **splitter(char *command, t_env *env);
 
-char **ft_arraydup(char **array);
-void printList(t_token * node);
+void print_list(t_token * node);
 char **extract_flags(char **command);
 char **miss_elements(char **list_base, char **list_miss);
 char **string_to_array(char *string);
 char **redir(char **cmd);
-char **quote(char **cmd);
+char **quote(char **cmd, t_env *env);
 char **clean_space(char **cmd);
-int quote_len(char **cmd, char quote);
 bool quoted(char **cmd);
-void get_first_quote(char **cmd, int pos[2], char *c_quote);
-void get_last_quote(char **cmd, int pos[2], char *c_quote);
-void free_array(char **array);
-char **add_text(char **cmd);
-char is_open(char **cmd);
-char *join_array(char **cmd);
-char get_first_quote_char(char **cmd, int *l_final);
-char **expand(char **cmd, t_env *env);
+void get_first_quote(char **cmd, int pos[2], char *c_quote, int last_line[2]);
+void get_last_quote(char **cmd, int pos[2], char *c_quote, int last_line[2]);
+bool is_open(char **cmd, int last_line);
+char **expand_array(char **cmd, t_env *env);
+char *expand_string(char *cmd, t_env *env);
 void checker(t_token **head);
+int quote_len(char **cmd, int first_quote[2], int last_quote[2]);
+void	free_array(char **array);
+
+int add_file(const char *line);
+void add_file_to_history();
 
 #endif

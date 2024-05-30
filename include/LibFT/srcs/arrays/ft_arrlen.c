@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen_array.c                                  :+:      :+:    :+:   */
+/*   ft_arrlen.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,12 +12,14 @@
 
 #include "libft.h"
 
-size_t	ft_strlen_array(char **array)
+size_t	ft_arrlen(char **array)
 {
-	size_t size = 0;
-	// Parcourt le tableau jusqu'à trouver un pointeur NULL
-	while (array[size]) {
+	size_t	size;
+
+	size = 0;
+	while (array[size])
+	{
 		size++;
 	}
-	return size;
+	return (size);
 }
