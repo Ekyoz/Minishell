@@ -7,3 +7,5 @@
 out/
 minishell
 test/
+minishell_history.txt
+others/tester

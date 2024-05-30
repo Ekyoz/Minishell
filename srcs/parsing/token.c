@@ -12,19 +12,19 @@
 
 #include "minishell.h"
 
-static t_token *create_token(t_token_type type, char **value, t_env *env, t_token *prev);
+static t_token *create_token(t_token_type type, char **value, t_token *prev);
 
-void append_token(t_token **head, t_token_type type, char **value, t_env *env)
+void append_token(t_token **head, t_token_type type, char **value)
 {
 	t_token *last_token = *head;
 	if (*head == NULL)
 	{
-		*head = create_token(type, value, env, last_token);
+		*head = create_token(type, ft_arrdup(value), last_token);
 		return ;
 	}
 	while (last_token->next != NULL)
 		last_token = last_token->next;
-	last_token->next = create_token(type, value, env, last_token);
+	last_token->next = create_token(type, ft_arrdup(value), last_token);
 }
 
 void delete_token(t_token **head, t_token *node_to_delete)
@@ -54,9 +54,9 @@ void delete_token(t_token **head, t_token *node_to_delete)
 	free(temp);
 }
 
-static t_token *create_token(t_token_type type, char **value, t_env *env, t_token *prev)
+static t_token *create_token(t_token_type type, char **value, t_token *prev)
 {
-	t_token *token = (t_token *) malloc(sizeof(t_token));
+	t_token *token = (t_token *) malloc(sizeof(t_token)*1);
 	if (!token)
 		return NULL;
 	token->type = type;
@@ -68,10 +68,10 @@ static t_token *create_token(t_token_type type, char **value, t_env *env, t_toke
 			if (prev->type == TOKEN_REDIR_HEREDOC)
 				token->value = clean_space(value);
 			else
-				token->value = expand(clean_space(value), env);
+				token->value = clean_space(value);
 		}
 		else
-			token->value = expand(clean_space(value), env);
+			token->value = clean_space(value);
 	}
 	token->next = NULL;
 	return token;

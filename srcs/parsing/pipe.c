@@ -12,41 +12,47 @@
 
 #include "minishell.h"
 
-static char *pipe_end(char *command);
+static char	*pipe_end(char *command);
 
-char **pipe_splitter(char *command)
+char	**pipe_splitter(char *command)
 {
-	int i = -1;
-	int j = -1;
-	char **pipe_splited;
+	int		i;
+	int		j;
+	char	**pipe_splited;
 
+	i = -1;
+	j = -1;
 	command = pipe_end(command);
 	add_history(command);
-
+	add_file(command);
 	pipe_splited = ft_split(command, '|');
 	while (pipe_splited[++i])
 	{
-		while (pipe_splited[i][++j] == ' ');
-		pipe_splited[i] = ft_substr(pipe_splited[i], j, ft_strlen(pipe_splited[i]) - j);
+		while (pipe_splited[i][++j] == ' ')
+			;
+		pipe_splited[i] = ft_substr(pipe_splited[i], j,
+				ft_strlen(pipe_splited[i]) - j);
 		j = -1;
 	}
 	if (i != pipe_counter(command))
-		return NULL;
-	return pipe_splited;
+		return (NULL);
+	return (pipe_splited);
 }
 
-static char *pipe_end(char *command)
+static char	*pipe_end(char *command)
 {
-	char *input;
-	size_t i = ft_strlen(command);
+	char	*input;
+	size_t	i;
 
-	while (command[--i] == ' ');
-	command = ft_substr(command, 0, i+1);
+	i = ft_strlen(command);
+	while (command[--i] == ' ')
+		;
+	command = ft_substr(command, 0, i + 1);
 	if (command[ft_strlen(command) - 1] == '|')
 	{
 		input = readline("> ");
 		command = ft_strjoin(command, input);
 		command = pipe_end(command);
 	}
-	return command;
+	return (command);
 }

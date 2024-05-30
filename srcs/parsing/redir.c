@@ -18,7 +18,7 @@ char **redir(char **cmd)
 	int i_split = 0;
 	char **l_final;
 
-	l_final = (char **) malloc( sizeof(char *) * ft_strlen_array(cmd)+1);
+	l_final = (char **) malloc( sizeof(char *) * ft_arrlen(cmd)+1);
 
 	while (cmd[++i_cmd])
 	{

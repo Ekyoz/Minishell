@@ -6,151 +6,153 @@
 /*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 15:28:56 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/22 16:00:51 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/24 12:58:47 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char **quote(char **cmd)
+static char	*get_quoted(char **cmd, int first_quote[2], int last_quote[2]);
+static char	**set_quote(char **cmd, t_env *env, int last_line[2]);
+static int	quote_strings(char **tableau);
+
+char	**quote(char **cmd, t_env *env)
 {
-	if (!quoted(cmd))
-		return cmd;
+	char	**temp_cmd;
+	int		i;
+	int		last_line[2];
 
-	int first_quote[2];
-	int last_quote[2];
-	char c_quote;
-	get_first_quote(cmd, first_quote, &c_quote);
-	get_last_quote(cmd, last_quote, &c_quote);
-
-	for (int i = 0; cmd[i]; i++)
-	{
-		printf("cmd[%d]: %s\n", i, cmd[i]);
-	}
-
-
-	printf("first quote: [%d][%d] = %c\n", first_quote[0], first_quote[1], c_quote);
-	printf("last quote: [%d][%d] = %c\n", last_quote[0], last_quote[1], c_quote);
-
-	return cmd;
+	if (quoted(cmd) == false)
+		return (expand_array(cmd, env));
+	i = -1;
+	temp_cmd = ft_arrdup(cmd);
+	last_line[0] = -1;
+	last_line[1] = -1;
+	printf("Quote strings: %d\n", quote_strings(temp_cmd));
+	while (cmd[++i])
+		if (ft_strchar(cmd[i], '"') == -1 &&
+			ft_strchar(cmd[i], '\'') == -1)
+			cmd[i] = expand_string(cmd[i], env);
+	i = -1;
+	while (++i < quote_strings(temp_cmd))
+		cmd = set_quote(cmd, env, last_line);
+	return (cmd);
 }
 
-// char **quote(char **cmd)
-// {
-// 	int diff;
-// 	char *text;
-// 	char first_quote;
-// 	char **temp;
-// 	int i_temp = 0;
-//
-// 	while (is_open(cmd) != 0)
-// 		cmd = add_text(cmd);
-//
-// 	first_quote = get_first_quote_char(cmd, NULL);
-//
-// 	temp = ft_arraydup(cmd);
-//
-// 	while ((quote_len(temp, '\'') > 0 || quote_len(temp, '"') > 0))
-// 	{
-// 		diff = get_last_quote(temp, first_quote) - get_first_quote(temp, first_quote);
-// 		text = get_text(temp);
-// 		printf("text: %s\n", text);
-// 		if (diff > 0)
-// 		{
-// 			while (diff > 0)
-// 			{
-// 				temp = del_array(temp,get_last_quote(temp, first_quote)-diff+1);
-// 				diff--;
-// 			}
-// 		}
-// 		temp[get_first_quote(temp,first_quote)] = ft_strdup(text);
-// 		free(text);
-// 		cmd = temp;
-// 		temp = ft_arraydup(&cmd[get_last_quote(temp, first_quote)+1]);
-// 		printf("test\n");
-// 	}
-//
-// 	return cmd;
-// }
+static char	**set_quote(char **cmd, t_env *env, int last_line[2])
+{
+	int		i;
+	int		first_quote[2] = {0, 0};
+	int		last_quote[2] = {0, 0};
+	char	c_quote;
+	char	*c_quoted;
+	char	*after;
+	char	*before;
 
-// static char *get_text(char **cmd)
-// {
-// 	int i_cmd = -1;
-// 	int i_final = 0;
-// 	int j_cmd;
-// 	int l_final = 0;
-// 	char first_quote = get_first_quote_char(cmd, &l_final);
-// 	char *c_final;
-// 	char *before;
-// 	char *after;
-//
-// 	if (first_quote == 0)
-// 		return NULL;
-//
-// 	j_cmd = ft_strchar(cmd[get_first_quote(cmd, first_quote)], first_quote)+1; // position[2] de la premiere quote
-//
-// 	cmd = &cmd[get_first_quote(cmd, first_quote)];
-//
-// 	c_final = (char *)malloc(sizeof(char) * (l_final+1));
-//
-// 	while (i_cmd < get_last_quote(cmd, first_quote) && cmd[++i_cmd])
-// 	{
-// 		while (cmd[i_cmd][j_cmd] && cmd[i_cmd][j_cmd] != first_quote)
-// 		{
-// 			c_final[i_final++] = cmd[i_cmd][j_cmd];
-// 			j_cmd++;
-// 		}
-// 		j_cmd = 0;
-// 	}
-//
-// 	c_final[i_final] = '\0';
-//
-// 	before = ft_substr(cmd[get_first_quote(cmd, first_quote)], 0,ft_strchar(cmd[get_first_quote(cmd, first_quote)], first_quote));
-// 	if (get_last_quote(cmd, first_quote) == get_first_quote(cmd, first_quote))
-// 		after = ft_substr(cmd[get_last_quote(cmd, first_quote)], ft_strlen(before) + ft_strlen(c_final)+2, ft_strlen(cmd[get_first_quote(cmd, first_quote)]));
-// 	else
-// 	{
-// 		after = ft_substr(cmd[get_last_quote(cmd, first_quote)],ft_strchar(cmd[get_last_quote(cmd, first_quote)], first_quote)+1,
-// 						  ft_strlen(cmd[get_last_quote(cmd, first_quote)]) + ft_strchar(cmd[get_last_quote(cmd, first_quote)], first_quote));
-// 	}
-// 	c_final = ft_strcat(before, c_final);
-//  	c_final = ft_strcat(c_final, after);
-//
-// 	return c_final;
-// }
+	after = NULL;
+	before = NULL;
+	i = -1;
+	get_first_quote(cmd, first_quote, &c_quote, last_line);
+	get_last_quote(cmd, last_quote, &c_quote, last_line);
 
-//
-// static char **del_array(char **array, int index) {
-// 	int size = (int)ft_strlen_array(array);
-//
-// 	if (index < 0 || index >= size) {
-// 		printf("Index hors limites.\n");
-// 		return array;
-// 	}
-//
-// 	// Sauvegarde de la chaîne à l'index spécifié
-// 	char *removed_string = array[index];
-//
-// 	// Libération de la mémoire occupée par la chaîne supprimée
-// 	free(removed_string);
-//
-// 	// Déplacement des éléments suivants vers la gauche pour remplir le vide
-// 	for (int i = index; i < (size) - 1; i++) {
-// 		array[i] = array[i + 1];
-// 	}
-//
-// 	// Réduction de la taille du tableau
-// 	(size)--;
-//
-// 	// Réallocation de la mémoire pour réduire la taille du tableau
-// 	char **temp = (char **)realloc(array, sizeof(char *) * (size));
-// 	if (temp == NULL) {
-// 		printf("Erreur lors de la réallocation de mémoire.\n");
-// 		exit(1);
-// 	}
-//
-// 	temp[size] = NULL;
-//
-//
-// 	return temp;
-// }
+	c_quoted = get_quoted(cmd, first_quote, last_quote);
+	if (c_quote != '\'')
+		c_quoted = expand_string(c_quoted, env);
+
+	if (first_quote[1] > 0)
+		before = ft_substr(cmd[first_quote[0]], 0, first_quote[1]);
+	if (last_quote[1] < (int)ft_strlen(cmd[last_quote[0]]))
+		after = ft_substr(cmd[last_quote[0]], last_quote[1] + 1,
+				ft_strlen(cmd[last_quote[0]])-1);
+
+	i = last_quote[0];
+	while ((i-1) >= first_quote[0])
+		cmd = ft_arrdel(cmd, i--);
+
+	if (before != NULL)
+		c_quoted = ft_strjoin(expand_string(before, env), c_quoted);
+	if (after != NULL)
+		c_quoted = ft_strjoin(c_quoted, expand_string(after, env));
+	cmd[first_quote[0]] = ft_strdup(c_quoted);
+	printf("Before: %s\nAfter: %s\n", before, after);
+
+	last_line[0] = first_quote[0]-1;
+	last_line[1] = last_quote[1]-1;
+
+	return (cmd);
+}
+
+static char	*get_quoted(char **cmd, int first_quote[2], int last_quote[2])
+{
+	char	*quoted;
+	char	quote;
+	int		i_cmd;
+	int		len;
+
+	i_cmd = -1;
+	quoted = (char *)malloc(sizeof(char) * quote_len(cmd, first_quote,
+				last_quote));
+	quote = cmd[first_quote[0]][first_quote[1]];
+	while (++i_cmd <= last_quote[0])
+	{
+		if (i_cmd == first_quote[0])
+		{
+			len = ft_strchar(&cmd[first_quote[0]][first_quote[1] + 1], quote);
+			quoted = ft_substr(cmd[i_cmd], first_quote[1] + 1, len);
+		}
+		else if (i_cmd > first_quote[0] && i_cmd < last_quote[0])
+			quoted = ft_strjoin(quoted, cmd[i_cmd]);
+		else if (i_cmd == last_quote[0])
+			quoted = ft_strjoin(quoted, ft_substr(cmd[i_cmd], 0,
+						last_quote[1]));
+	}
+	return (quoted);
+}
+
+static int	quote_strings(char **tableau)
+{
+	int		len;
+	int		s_quote;
+	int		d_quote;
+	char	*str;
+
+	len = 0;
+	s_quote = 0;
+	d_quote = 0;
+	while (*tableau)
+	{
+		str = *tableau;
+		while (*str)
+		{
+			if (*str == '\'')
+			{
+				if (!d_quote)
+				{
+					if (s_quote)
+					{
+						s_quote = 0;
+						len++;
+					}
+					else
+						s_quote = 1;
+				}
+			}
+			else if (*str == '\"')
+			{
+				if (!s_quote)
+				{
+					if (d_quote)
+					{
+						d_quote = 0;
+						len++;
+					}
+					else
+						d_quote = 1;
+				}
+			}
+			str++;
+		}
+		tableau++;
+	}
+	return (len);
+}

@@ -34,6 +34,10 @@ void print_error(int errorcode, t_tree *tree, t_node *node)
         ft_putstr_fd(node->args[0], 2);
         ft_putstr_fd(": command not found\n", 2);
     }
+	if(errorcode == 3)
+	{
+		printf("Quote not close\n");
+	}
     if(tree->fdout != -1)
         close(tree->fdout);
     if(tree->fdoutcp != -1)

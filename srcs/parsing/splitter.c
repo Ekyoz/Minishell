@@ -15,7 +15,7 @@
 static char **split_token(char *command);
 static int split_count(char *command);
 
-char **splitter(char *command) //splitter par les espace et par les tokens
+char **splitter(char *command, t_env *env) //splitter par les espace et par les tokens
 {
 	int i_space;
 	int i_final;
@@ -26,10 +26,9 @@ char **splitter(char *command) //splitter par les espace et par les tokens
 
 	i_space = -1;
 	i_final = 0;
-	i_token = -1;
 	c_token = NULL;
 	c_space = ft_split_sep(command, ' ');
-	c_final = (char **) malloc(sizeof(char *) * (ft_strlen_array(c_space)+1));
+	c_final = (char **) malloc(sizeof(char *) * (ft_arrlen(c_space)+1));
 
 	while (c_space[++i_space])
 	{
@@ -46,8 +45,8 @@ char **splitter(char *command) //splitter par les espace et par les tokens
 	}
 	c_final[i_final] = NULL;
 
-	// return quote(c_final);
-    return c_final;
+	 return quote(c_final, env);
+//    return c_final;
 }
 
 static int split_count(char *command) {
