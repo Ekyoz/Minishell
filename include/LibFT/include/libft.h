@@ -332,6 +332,16 @@ char				*ft_strcat(char *destination, const char *source);
  */
 size_t				ft_strlcpy(char *dest, char *src, size_t size);
 
+
+/**
+ * @brief Duplique une chaine de caractere jusqu'a n caractere.
+ *
+ * @param SRC: La chaîne a dupliquer.
+ * @param SIZE: Le nombre maximal de caractères à dupliquer.
+ * @return La chaine dupliquer.
+ */
+char *ft_strndup(char *str, size_t size);
+
 /**
  * @brief Duplique une chaine de caractere jusqu'a n caractere.
  *
