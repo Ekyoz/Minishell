@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:02:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/07 16:55:52 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/16 15:33:12 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void get_print_branch(t_node *node)
         if(node->right)
         {
             printf("right %d\n", node->right->type);
-            // printf("right %d %s\n", node->right->type, node->right->args[0]);
             get_print_branch(node->right);
         }
     }
@@ -43,16 +42,16 @@ void print_tree(t_node *node)
     printf("\n\n");
 }
 
-static void check_left_redirec(t_node **nodes, t_token **token, bool *is_redirec)
+static void check_left_redirec(t_node **nodes, t_token **token, bool *is_redirec, t_tree *tree)
 {
     *nodes = (*nodes)->left;// je suis sur la redirection
     while(*is_redirec == 1)
     { 
-        add_node_left(*nodes, token);
-        if(get_redirection_right(*token, *nodes)) // je regarde a droite si j'ai une redirection
+        add_node_left(*nodes, token, tree);
+        if(get_redirection_right(*token, *nodes, tree)) // je regarde a droite si j'ai une redirection
             *nodes = (*nodes)->right; // decalle branche de droite    
         else // pas d'autres redirections donc c'est une commande, il faut que j'arrive a recuperer la bonne commande
-            add_node_right(*nodes, token, is_redirec);
+            add_node_right(*nodes, token, is_redirec, tree);
     }
 }
 
@@ -63,11 +62,12 @@ void create_node(t_token *tokens, t_tree **tree)
 	bool is_redirec; // boolean a 1 si une redirec est sur ma branche
 
     is_redirec = 1;
-    nodes = init_nodes();
+    nodes = init_nodes(*tree);
     if(!nodes)
         return((void) 1);
     nodescp = nodes; // une recopie pour stocker le premier node
     (*tree)->nodes = nodescp;
+    (*tree)->nodebegin = nodescp; // creer une autre copie pour pouvoir free
     if(tokens->next == NULL)
     {
         add_node(nodes, &tokens);
@@ -77,19 +77,20 @@ void create_node(t_token *tokens, t_tree **tree)
     {
         if(get_pipe(tokens, nodes))// Je stocke dans ma liste les pipe en premier
         {
-            if(get_redirection_left(tokens, nodes)) // tant que j'ai des redirections sur la branche de gauche ma premiere redirection passe a gauche
-                check_left_redirec(&nodes, &tokens, &is_redirec);
+            if(get_redirection_left(tokens, nodes, *tree)) // tant que j'ai des redirections sur la branche de gauche ma premiere redirection passe a gauche
+                check_left_redirec(&nodes, &tokens, &is_redirec, *tree);
             else // je fais une commande a gauche
-                add_node_left(nodes, &tokens);
+                add_node_left(nodes, &tokens, *tree);
         }
         else
         {
-            if(get_redirection_main(tokens, nodes)) // CONDITION pas de pipe je verifie si j'ai une redirection
-                add_node_left(nodes, &tokens);
+            if(get_redirection_main(tokens, nodes, *tree)) // CONDITION pas de pipe je verifie si j'ai une redirection
+                add_node_left(nodes, &tokens, *tree);
             else // si j'en ai pas j'effectue une commande
                 add_node(nodes, &tokens);
         }
-        add_branches(tokens, &nodes, &nodescp, &is_redirec);
+        add_branches(tokens, &nodes, &nodescp, *tree);
+        is_redirec = 1;
     }
     printf("\n\n");
     return((void) 0);

@@ -6,80 +6,73 @@
 /*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:52:07 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/03 17:49:20 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:03:46 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char **extract_flags(char **command) {
-	char **c_flag;
-	char *first_flag = command[0];
-	int i_count = -1;
-	int i_flags = 1;
-	int i_command = 0;
-	int count = 0;
+static bool	is_missing(char *element, char **l_miss);
 
-	while (command[++i_count])
-		if (command[i_count][0] == '-')
-			count++;
+char	**miss_elements(char **l_base, char **l_miss)
+{
+	int		i_base;
+	int		i_missing;
+	char	**missing;
 
-	c_flag = (char **)malloc((count + 2) * sizeof(char *));
-	c_flag[0] = (char *)malloc((ft_strlen(first_flag) + 1) * sizeof(char));
-
-	ft_strcpy(c_flag[0], first_flag);
-
-	while (command[++i_command])
+	i_base = 0;
+	i_missing = 0;
+	missing = (char **)malloc((ft_arrlen(l_base) + 1) * sizeof(char *));
+	if (!missing)
+		return (NULL);
+	while (l_base[i_base])
 	{
-		if (command[i_command][0] == '-')
-		{
-			c_flag[i_flags] = (char *)malloc((ft_strlen(command[i_command]) + 1) * sizeof(char));
-			ft_strcpy(c_flag[i_flags], command[i_command]);
-			i_flags++;
-		}
-//		else if (command[i_command][0] != '-')
-//			break;
-	}
-
-	c_flag[i_flags] = NULL;
-
-	return c_flag;
-}
-
-char **miss_elements(char **l_base, char **l_miss) {
-	int i_missing = 0;
-	int i_base = -1;
-	int i_miss = 0;
-	char **missing;
-	bool find = false;
-
-	missing = (char**)malloc((ft_strlen_array(l_base) + 1) * sizeof(char*));
-
-	while (l_base[++i_base])
-	{
-		i_miss = -1;
-		find = false;
-		while (l_miss[++i_miss])
-		{
-			if (ft_strcmp(l_base[i_base], l_miss[i_miss]) == 0)
-			{
-				find = true;
-				break;
-			}
-		}
-		if (!find)
+		if (is_missing(l_base[i_base], l_miss))
 			missing[i_missing++] = ft_strdup(l_base[i_base]);
+		i_base++;
 	}
 	missing[i_missing] = NULL;
-
-	return missing;
+	return (missing);
 }
 
-char **string_to_array(char *string)
+char	**string_to_array(char *string)
 {
-	char **array;
+	char	**array;
+
 	array = (char **)malloc(2 * sizeof(char *));
 	array[0] = ft_strdup(string);
 	array[1] = NULL;
-	return array;
+	return (array);
+}
+
+char	**clean_space(char **cmd)
+{
+	int	i;
+	int	j;
+
+	i = -1;
+	j = 0;
+	while (cmd[++i])
+	{
+		if (ft_strcmp(cmd[i], " ") != 0)
+			cmd[j++] = cmd[i];
+		else
+			free(cmd[i]);
+	}
+	cmd[j] = NULL;
+	return (cmd);
+}
+
+static bool	is_missing(char *element, char **l_miss)
+{
+	int	i;
+
+	i = 0;
+	while (l_miss[i])
+	{
+		if (ft_strcmp(element, l_miss[i]) == 0)
+			return (false);
+		i++;
+	}
+	return (true);
 }

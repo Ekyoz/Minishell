@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/13 16:15:36 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/14 11:26:15 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,32 @@ int unset(t_node *nodes, t_env **env)
 
     actual = *env;
     prev = NULL;
-    if(nodes->args[1])
+    if(nodes->args)
     {
-        while(actual)
+        if(nodes->args[1])
         {
-            // si la variable de mon path vaut une valeur presente dans l'environnement
-            if(!ft_strncmp(nodes->args[1], actual->value, ft_strlen(nodes->args[1])))
+            while(actual)
             {
-                if(prev)
+                // si la variable de mon path vaut une valeur presente dans l'environnement
+                if(!ft_strncmp(nodes->args[1], actual->value, ft_strlen(nodes->args[1])))
                 {
-                    // fprintf(stderr, "prev %s \n next %s\n", prev->value, actual->next->value);
-                    prev->next = actual->next;
+                    if(prev)
+                    {
+                        // fprintf(stderr, "prev %s \n next %s\n", prev->value, actual->next->value);
+                        prev->next = actual->next;
+                    }
+                    else
+                    {
+                        *env = actual->next;
+                    }
+                    free(actual);
+                    return(0);
                 }
                 else
                 {
-                    *env = actual->next;
+                    prev = actual;
+                    actual = actual->next;
                 }
-                free(actual);
-                return(0);
-            }
-            else
-            {
-                prev = actual;
-                actual = actual->next;
             }
         }
     }
@@ -50,17 +53,21 @@ int unset(t_node *nodes, t_env **env)
 
 int unset_export(t_node *nodes, t_env *env)
 {
-    if(!ft_strncmp(nodes->args[0], "unset", 5))
+    if(nodes->args[0])
     {
-        unset(nodes, &env);
-        // displayenv(env);
-        return(1);
+        if(!ft_strncmp(nodes->args[0], "unset", 5))
+        {
+            unset(nodes, &env);
+            // displayenv(env);
+            return(1);
+        }
+        else if(!ft_strncmp(nodes->args[0], "export", 5))
+        {
+            return(1);
+        }
+        else
+            return(0);
     }
-    else if(!ft_strncmp(nodes->args[0], "export", 5))
-    {
-        return(1);
-    }
-    else
-        return(0);
+    return(0);
 }
 

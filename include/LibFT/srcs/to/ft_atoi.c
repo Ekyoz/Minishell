@@ -23,9 +23,9 @@ int	verif_input(unsigned long long n)
 
 int	ft_atoi(const char *str)
 {
-	unsigned long long nb;
-	size_t i;
-	int sign;
+	unsigned long long	nb;
+	size_t				i;
+	int					sign;
 
 	nb = 0;
 	i = 0;

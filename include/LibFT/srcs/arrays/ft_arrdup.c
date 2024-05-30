@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.c                                          :+:      :+:    :+:   */
+/*   ft_arrdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/19 14:17:19 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/17 13:23:37 by atresall         ###   ########.fr       */
+/*   Created: 2024/05/24 11:40:08 by atresall          #+#    #+#             */
+/*   Updated: 2024/05/24 11:40:08 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	checker(t_token **head)
+char	**ft_arrdup(char **array)
 {
-	t_token	*token;
+	int		i;
+	char	**dup;
 
-	token = *head;
-	while (token)
-	{
-		if (token->type == TOKEN_WORD)
-		{
-			if (token->value[0] == NULL)
-				delete_token(head, token);
-		}
-		token = token->next;
-	}
+	i = -1;
+	if (array == NULL)
+		return (NULL);
+	dup = (char **)malloc(sizeof(char *) * (ft_arrlen(array) + 1));
+	if (dup == NULL)
+		return (NULL);
+	while (array[++i])
+		dup[i] = ft_strdup(array[i]);
+	dup[i] = NULL;
+	return (dup);
 }

@@ -1,14 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   ft_arrlen.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 16:30:51 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/22 14:12:35 by bpoyet           ###   ########.fr       */
+/*   Created: 2024/05/07 13:19:39 by atresall          #+#    #+#             */
+/*   Updated: 2024/05/07 14:23:18 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
+size_t	ft_arrlen(char **array)
+{
+	size_t	size;
+
+	size = 0;
+	while (array[size])
+	{
+		size++;
+	}
+	return (size);
+}

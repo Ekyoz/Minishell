@@ -12,23 +12,23 @@
 
 #include "libft.h"
 
-char* ft_strcat(char* destination, const char* source) {
-	char* ptr = destination;
+char	*ft_strcat(char *destination, const char *source)
+{
+	char	*ptr;
 
-	// Finding the end of the destination string
-	while (*ptr != '\0') {
+	ptr = destination;
+	if (!destination || !source)
+		return ((char *)source);
+	while (*ptr != '\0')
+	{
 		ptr++;
 	}
-
-	// Appending the source string to the destination string
-	while (*source != '\0') {
+	while (*source != '\0')
+	{
 		*ptr = *source;
 		ptr++;
 		source++;
 	}
-
-	// Adding the null terminator to the concatenated string
 	*ptr = '\0';
-
-	return destination;
+	return (destination);
 }

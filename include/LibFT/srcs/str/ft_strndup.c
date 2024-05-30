@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen_array.c                                  :+:      :+:    :+:   */
+/*   ft_strndup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: alexandre <atresall@student.42lyon.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/07 13:19:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/07 14:23:18 by atresall         ###   ########.fr       */
+/*   Created: 2024/05/16 14:45:10 by alexandre         #+#    #+#             */
+/*   Updated: 2024/05/28 15:51:11 by alexandre        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_strlen_array(char **array)
+char	*ft_strndup(char *str, size_t n)
 {
-	size_t size = 0;
-	// Parcourt le tableau jusqu'à trouver un pointeur NULL
-	while (array[size] != NULL) {
-		size++;
-	}
-	return size;
+	char	*new_str;
+
+	new_str = (char *)malloc((n + 1) * sizeof(char));
+	if (new_str == NULL)
+		return (NULL);
+	ft_strlcpy(new_str, str, n);
+	new_str[n] = '\0';
+	return (new_str);
 }

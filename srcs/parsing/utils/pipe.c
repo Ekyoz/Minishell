@@ -1,14 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   echo.c                                             :+:      :+:    :+:   */
+/*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/26 16:30:51 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/22 14:12:35 by bpoyet           ###   ########.fr       */
+/*   Created: 2024/05/17 13:38:06 by atresall          #+#    #+#             */
+/*   Updated: 2024/05/17 13:38:06 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	pipe_counter(const char *command)
+{
+	int	i;
+	int	pipe;
+
+	i = -1;
+	pipe = 1;
+	while (command[++i])
+	{
+		if (command[i] == '|')
+			pipe++;
+	}
+	return (pipe);
+}
