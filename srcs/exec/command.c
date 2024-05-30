@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:17:58 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 14:47:08 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/23 16:39:09 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,12 @@ void	get_env_args(char *envp[], t_tree *tree)
 		{
 			tree->envp = ft_split(*envp + 5, ':');
 			if(!tree->envp)
-				malloc_err(tree);
+				err_free_all(tree);
 			while (tree->envp[j])
 			{
 				temp = ft_strjoin(tree->envp[j], "/");
 				if(!temp)
-					malloc_err(tree);
+					err_free_all(tree);
 				free(tree->envp[j]);
 				tree->envp[j] = temp;
 				j++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_tree1.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 11:32:00 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/29 12:12:43 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,11 @@ void free_pipe(t_tree *tree)
         i--;
     }
     free(tree->fdpipe);
+}
+
+void ft_exit(t_tree *tree)
+{
+    ft_putstr_fd("exit\n", 2);
+    free_tree(&tree, 1);
+    exit(signal_status);
 }

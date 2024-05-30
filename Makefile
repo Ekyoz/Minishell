@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
+#    By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/05/22 14:43:46 by bpoyet           ###   ########.fr        #
+#    Updated: 2024/05/28 15:40:45 by bastpoy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,16 +21,19 @@ SRC_FILES		    	= main utils
 TEST_FILES  			= test
 
 FILE_BUILTINS_DIR 		= builtins/
-FILE_BUILTINS 			= cd echo env exit export pwd unset builtin
+FILE_BUILTINS 			= cd echo env exit pwd unset builtin
 
 FILE_EXEC_DIR			= exec/
 FILE_EXEC				= command exec heredoc pipe fork utils_pipe
+
+FILE_EXPORT_DIR			= builtins/export/
+FILE_EXPORT 			= export_check export
 
 FILE_AST_DIR			= ast/
 FILE_AST				= create_ast nodes token_type tree
 
 FILE_GARBAGE_DIR		= garbage_collector/
-FILE_GARBAGE			= error status_code free_tree free_tree1
+FILE_GARBAGE			= error status_code free_tree free_tree1 free_twodim_array
 
 FILE_PARSING_DIR		= parsing/
 FILE_PARSING			= parsing checker token pipe redir quote splitter expand
@@ -44,15 +47,18 @@ FILE_REDIRECTION		= testopenredir redirec
 FILE_SIGNAL_DIR			= signal/
 FILE_SIGNAL 			= signal_cmd signal_heredoc signal
 
-DIR_LIST				= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR) $(FILE_AST_DIR) $(FILE_GARBAGE_DIR) $(FILE_REDIRECTION_DIR) $(FILE_PARS_UTILS_DIR) $(FILE_SIGNAL_DIR)
-SRC_FILES				+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
-SRC_FILES				+= $(addprefix $(FILE_PARSING_DIR), $(FILE_PARSING))
-SRC_FILES				+= $(addprefix $(FILE_PARS_UTILS_DIR), $(FILE_PARS_UTILS))
-SRC_FILES				+= $(addprefix $(FILE_EXEC_DIR), $(FILE_EXEC))
-SRC_FILES				+= $(addprefix $(FILE_AST_DIR), $(FILE_AST))
-SRC_FILES				+= $(addprefix $(FILE_GARBAGE_DIR), $(FILE_GARBAGE))
-SRC_FILES				+= $(addprefix $(FILE_REDIRECTION_DIR), $(FILE_REDIRECTION))
-SRC_FILES				+= $(addprefix $(FILE_SIGNAL_DIR), $(FILE_SIGNAL))
+DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR)\
+					 $(FILE_AST_DIR) $(FILE_GARBAGE_DIR) $(FILE_REDIRECTION_DIR)\
+					 $(FILE_PARS_UTILS_DIR) $(FILE_SIGNAL_DIR) $(FILE_EXPORT_DIR)
+SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
+SRC_FILES			+= $(addprefix $(FILE_PARSING_DIR), $(FILE_PARSING))
+SRC_FILES			+= $(addprefix $(FILE_PARS_UTILS_DIR), $(FILE_PARS_UTILS))
+SRC_FILES			+= $(addprefix $(FILE_EXEC_DIR), $(FILE_EXEC))
+SRC_FILES			+= $(addprefix $(FILE_EXPORT_DIR), $(FILE_EXPORT))
+SRC_FILES			+= $(addprefix $(FILE_AST_DIR), $(FILE_AST))
+SRC_FILES			+= $(addprefix $(FILE_GARBAGE_DIR), $(FILE_GARBAGE))
+SRC_FILES			+= $(addprefix $(FILE_REDIRECTION_DIR), $(FILE_REDIRECTION))
+SRC_FILES			+= $(addprefix $(FILE_SIGNAL_DIR), $(FILE_SIGNAL))
 
 
 #-------- LIBS --------#
@@ -72,8 +78,8 @@ CFLAGS_DEBUG		= -Wall -Wextra -g3
 CFLAGS_EXEC			= -Wall -Wextra -g3 #-Werror
 CFLAGS_PARSING		= -Wall -Wextra -g3 #-Werror
 CFLAGS_TEST			= -g3
-INCLUDES			= -I/opt/homebrew/opt/readline/include
-LIBFLAGS			= -L/opt/homebrew/opt/readline/lib -lreadline -lncurses
+INCLUDES			=
+LIBFLAGS			= -lreadline
 VFALGS				= -s --suppressions=supp.supp --leak-check=full
 
 #------------------------------------------------------------------------------#

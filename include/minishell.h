@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/16 14:10:55 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/30 16:21:15 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ t_tree *init_tree(char *envp[], t_env *env);
 void print_tree(t_node *node);
 
 //EXECUT
-void ast_exec(t_tree *tree, char *envp[]);
+void ast_exec(t_tree *tree);
 void *ft_execve(t_tree *tree, t_node *nodes);
 void parent_process(int status, pid_t pid);
 pid_t do_fork(t_tree *tree, pid_t pid);
@@ -145,26 +145,45 @@ bool is_heredoc(t_node *nodes);
 //FONCTIONS DU GARBAGE COLLECTOR
 void print_error(int errorcode, t_tree *tree, t_node *node);
 void read_status(t_tree *tree);
-void free_tree(t_tree **tree);
+void free_tree(t_tree **tree, int env);
 void free_env(t_env *env);
 void free_pipe(t_tree *tree);
-void malloc_err(t_tree *tree);
+void err_free_all(t_tree *tree);
 void malloc_tree_err(t_env *env);
+int command_not_found(t_tree *tree, char *cmd);
+void ft_free_array(void **ptr);
+void ft_exit(t_tree *tree);
 
 //ENVIRONNEMENT
 t_env	*init_env(char **env_array);
+char *get_env(t_env *env, char *envvar);
+int set_env(t_tree *tree, t_env *env, char *var, char *value);
 int displayenv(t_env *env);
+ssize_t get_index_env(t_env *env, char *word);
+void	env_add_back(t_env **env, t_env *new);
+int env_length(t_env *env);
 
 //BUILTIN
 int choose_builtin(t_tree *tree, t_node *nodes, t_env *env);
 //PWD
-int getpwd_env(t_env *env);
+int do_pwd(t_tree *tree, t_env *env);
 //UNSET
-int unset_export(t_node *nodes, t_env *env);
+int do_unset(t_node *node, t_env *env);
+//EXPORT
+int do_export(t_tree *tree, t_node *node);
+char **env_to_string(t_tree *tree, t_env *env);
+void		sort_env(char **envstr);
+int check_export_var(char *var, int *ret);
+int print_err_export(char *err);
+size_t	get_char_by_index(char *str, char c);
 //ENV
 int displayenv(t_env *env);
 //EXIT
-void exit_function(t_tree *tree, t_node *node);
+int do_exit(t_tree *tree, t_node *node);
+//CD
+int do_cd(t_tree *tree, t_node *node);
+//ECHO
+int do_echo(t_node *node);
 
 //SIGNAUX
 void set_signal(void);

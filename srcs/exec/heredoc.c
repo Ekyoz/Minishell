@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/23 15:22:26 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/30 16:10:37 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ static void init_eofword(t_tree *tree, t_node *nodes, char ***eofword) // foncti
     if(i > 0)
     {
         *eofword = (char **)malloc(sizeof(char *) * (i + 1));
-        if(!*eofword)
-            malloc_err(tree);
+        if(!(*eofword))
+            err_free_all(tree);
     }
     else
         *eofword = NULL;
@@ -48,30 +48,29 @@ static char **find_heredoc(t_tree *tree, t_node *nodes)
         {
             if(nodes->right->type != TOKEN_WORD) // si mon token dapres est different d'un word
             {
-                if(nodes->right->left->type == TOKEN_WORD)
+                printf("le node de droite %d\n", nodes->right->type);
+                if(nodes->right->left && nodes->right->left->type == TOKEN_WORD)
                 {
                     eofword[i] = ft_strdup(nodes->right->left->args[0]);
                     if(!eofword[i])
-                        malloc_err(tree);
+                        err_free_all(tree);
                     fprintf(stderr, "eof %s\n", eofword[i]);
                     i++;
                 }
                 else
                 {
-                    printf("error errdoc\n");
+                    ft_putstr_fd("error errdoc\n", 2);
                     return(NULL);
                 }
             }
-            else if(nodes->right->type == TOKEN_WORD) // si mon token dapres est un word
+            else // si mon token dapres est un word
             {
                 eofword[i] = ft_strdup(nodes->right->args[0]);
                 if(!eofword[i])
-                    malloc_err(tree);
+                    err_free_all(tree);
                 fprintf(stderr, "eof %s\n", eofword[i]);
                 i++;
             }
-            else // sinon je n'ai pas d'eof donc erreur
-                exit(2);
         }
         nodes = nodes->right;
     }
@@ -98,29 +97,44 @@ void heredoc(t_tree *tree, t_node *nodes)
 {
     char *input;
     char **eofword;
+    int i;
 
+    i = 0;
     eofword = find_heredoc(tree, nodes);
     if(eofword)
     {
         tree->fdin = open(".here_doc",  O_WRONLY | O_CREAT | O_TRUNC, 0777);
         if(tree->fdin < 0)
-            perror("error opening");
-        while(*eofword)
+            err_free_all(tree);
+        while(eofword[i])
         {
+            set_signal_heredoc();
+            if(signal_status ==  130)
+            {
+                ft_putstr_fd("rentre la dedans\n", 2);
+                return;
+            }
             input = readline("> ");
             if(!input)
             {
-                printf("minishell: warning: here-document at line 1 delimited by end-of-file (wanted `%s')\n", *eofword);
-                exit(0);
+                ft_putstr_fd("minishell: warning: here-document at line 1 delimited by end-of-file (wanted `", 2);
+                ft_putstr_fd(eofword[i], 2);
+                ft_putstr_fd("')\n", 2);
+                ft_free_array((void*)eofword);
+                err_free_all(tree);
             }
-            write(tree->fdin, input, ft_strlen(input));
-            write(tree->fdin, "\n", 1);
-            if(!ft_strcmp(*eofword, input))
-                eofword++;
+            ft_putstr_fd(input, tree->fdin);
+            ft_putstr_fd("\n", tree->fdin);
+            if(!ft_strcmp(eofword[i], input))
+                i++;
         }
+        ft_free_array((void*)eofword);
         close(tree->fdin);
         tree->fdin = open(".here_doc", O_RDONLY);
-        dup2(tree->fdin, STDIN_FILENO);
+        if(dup2(tree->fdin, STDIN_FILENO) == -1)
+            err_free_all(tree);
         close(tree->fdin);
+        if(!nodes->left) // si je n 'ai pas de commande a gauche
+            err_free_all(tree);
     }
 }

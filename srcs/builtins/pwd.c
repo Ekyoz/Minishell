@@ -3,72 +3,105 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/16 16:11:39 by atresall         ###   ########.fr       */
+/*   Updated: 2024/05/29 12:02:29 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	env_add_back(t_env **env, t_env *new)
+static int error_pwd(t_tree *tree)
 {
-	t_env	*tmp;
-
-	if (*env == NULL)
-		*env = new;
-	else
-	{
-		tmp = *env;
-		while (tmp->next != NULL)
-			tmp = tmp->next;
-		tmp->next = new;
-	}
+	perror("pwd: ");
+	err_free_all(tree);
+	return(1);
 }
 
-t_env	*init_env(char **env_array)
+char *get_env(t_env *env, char *envvar)
 {
-	t_env	*env;
-	t_env	*new;
-	int		i;
+	char *envvalue;
 
-	if (!env_array)
-		return (NULL);
+	while(env)
+	{
+		if(!ft_strncmp(env->value, envvar, ft_strlen(envvar)))
+		{
+			envvalue = ft_substr(env->value, ft_strlen(envvar),
+				ft_strlen(env->value) - ft_strlen(envvar));
+			return (envvalue);
+		}
+		env = env->next;
+	}
+	return(NULL);
+}
+
+ssize_t get_index_env(t_env *env, char *word)
+{
+	int i;
+
 	i = 0;
-	env = NULL;
-	new = NULL;
-	while (env_array[i] != NULL)
+	while(env)
 	{
-		new = malloc(sizeof(t_env));
-		new->value = ft_strndup(env_array[i], ft_strlen(env_array[i])+1);
-		new->next = NULL;
-		new->secret = 0;
-		env_add_back(&env, new);
+		if(!ft_strncmp(env->value, word, ft_strlen(word)))
+		{
+			return(i);
+		}
 		i++;
+		env = env->next;
 	}
-	return (env);
+	return(-1);
 }
 
-int getpwd_env(t_env *env)
+// changer la valeur d'une variable d'environnement
+int set_env(t_tree *tree, t_env *env, char *var, char *value)
+{
+	int length;
+
+	length  = ft_strlen(var) + ft_strlen(value);
+	while(env)
+	{
+		if(!ft_strncmp(env->value, var, ft_strlen(var)))
+		{
+			free(env->value);
+			env->value = NULL;
+			env->value = (char *)malloc(sizeof(char) * (length + 1));
+			if(!env->value)
+			{
+				err_free_all(tree);
+			}
+			env->value = ft_strjoin(var, value);
+			return(1);
+		}
+		env = env->next;
+	}
+	return(0);
+}
+
+int do_pwd(t_tree *tree, t_env *env)
 {
     char pwd[1024];
+	char *path;
+
     while(env)
     {
         if(!ft_strncmp(env->value, "PWD=", 4))
         {
-            if (getcwd(pwd, sizeof(pwd)) != NULL)
-            {
-                printf("%s\n", pwd);
-                return(0);
-            }
-            else
-            {
-                perror("");
-                exit(errno);
-            }
+			path = ft_substr(env->value, 4, strlen(env->value) - 4);
+			ft_putstr_fd(path , 2);
+			ft_putchar_fd('\n',1);
+			free(path);
+			return(1);
         }
         env = env->next;
     }
+	if (getcwd(pwd, sizeof(pwd)) != NULL)
+	{
+		ft_putstr_fd(pwd, 1);
+		ft_putchar_fd('\n',1);
+		return(1);
+	}
+	else
+		error_pwd(tree);
     return(1);
 }

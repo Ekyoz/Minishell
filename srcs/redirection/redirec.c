@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:52:24 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/10 13:11:12 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/23 16:42:17 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ int check_redir_out(t_tree *tree, t_node *nodes)
     if(isredir == 1)
     {
         tree->fdoutcp = dup(STDOUT_FILENO); // je recopie le stdout
-        dup2(tree->fdout, STDOUT_FILENO);
+        if(dup2(tree->fdout, STDOUT_FILENO) == -1)
+            err_free_all(tree);
         // close(tree->fdout);
     }
-    // fprintf(stderr, "is redir vaut %d\n", isredir);
     return (isredir);
 }
 
@@ -114,7 +114,8 @@ int check_redir_in(t_tree *tree, t_node *nodes)
     }
     if(isredir == 1)
     {
-        dup2(tree->fdin, STDIN_FILENO);
+        if(dup2(tree->fdin, STDIN_FILENO) == -1)
+            err_free_all(tree);
         close(tree->fdin);
     }
     return (isredir);

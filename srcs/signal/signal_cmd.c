@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:32:58 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 11:57:50 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/30 15:18:14 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void sig_handler_cmd(int sig)
 {
     if(sig == SIGINT) // ctrl + c
     {
+        ft_putstr_fd("je suis la\n", 2);
         write(1,"\n", 1);
         signal_status = 130;
         // exit(128 + sig);

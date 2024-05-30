@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 10:42:56 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/30 14:45:33 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void parent_process(int status, pid_t pid)
         unlink(".here_doc");
     if(WIFEXITED(status))
     {
-        // fprintf(stderr, "le status vaut %d\n", status);
         signal_status = WEXITSTATUS(status);
     }
 
@@ -28,38 +27,33 @@ void parent_process(int status, pid_t pid)
 void *ft_execve(t_tree *tree, t_node *nodes)
 {
     tree->path = check_access1(tree, nodes);
-    if(execve(tree->path, nodes->args, NULL) == -1)
+    if(execve(tree->path, nodes->args, env_to_string(tree, tree->env)) == -1)
     {
-        fprintf(stderr, "error execve\n");
-        perror("error");
+        perror("");
         return((void*)1);
     }
     return((void*)0);
 }
 
-int exec_cmd(t_tree *tree, t_node *nodes, char *envp[])
+int exec_cmd(t_tree *tree, t_node *nodes)
 {
     pid_t pid;
     int status;
 
     status = 0;
-    if(choose_builtin(tree, nodes, tree->env) ||
-        unset_export(nodes, tree->env))
+    if(choose_builtin(tree, nodes, tree->env))
         return(0);
     pid = fork();
     set_signal_cmd();
     if(pid == -1 )
-        return(1);
+        err_free_all(tree);
     if(pid == 0)
     {
         if(!check_cmd1(tree, nodes))
             print_error(2, tree, nodes);
         tree->path = check_access1(tree, nodes);
-        if(execve(tree->path, nodes->args, envp) == -1)
-        {
-            perror("error");
-            exit(EXIT_FAILURE);
-        }
+        if(execve(tree->path, nodes->args, env_to_string(tree, tree->env)) == -1)
+            err_free_all(tree);
     }
     get_signal_cmd(status, pid);
     return(0);
@@ -73,11 +67,13 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
     pid = 0;
     status = 0;
     if(nodes->left)
-        unset_export(nodes->left, tree->env);
-    hdoc_or_cmd(nodes);
+        do_unset(nodes->left, tree->env);
+    ft_putstr_fd("avant le fork\n", 2);
     pid = do_fork(tree, pid);
     if(pid == 0)
     {
+        hdoc_or_cmd(nodes);
+        ft_putstr_fd("je suis la\n", 2);
         heredoc(tree, nodes);
         check_redir_out(tree, nodes);
         check_redir_in(tree, nodes);
@@ -88,10 +84,11 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
         ft_execve(tree, nodes->left);
     }
     parent_process(status, pid);
+    printf("apres le parent\n");
     return((void*)0);
 }
 
-void ast_exec(t_tree *tree, char *envp[])
+void ast_exec(t_tree *tree)
 {
     t_node *nodes;
 
@@ -107,8 +104,6 @@ void ast_exec(t_tree *tree, char *envp[])
     }
     else if(nodes->type == TOKEN_WORD)
     {
-        exec_cmd(tree, nodes, envp);
+        exec_cmd(tree, nodes);
     }
-    else
-        printf("dans aucun\n");
 }

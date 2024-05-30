@@ -24,11 +24,31 @@ Executor :
 
 cd : <direcoryname> || - || ....... || /../<direcoryname> || ~
 
+- getcwd => obtenir le repertoir actuelle
+- chdir => permet de changer le nouveau repertoire en specifiant en parametre le chemin
 
---------------------FONCTIONS--------------------
+- Commande speciale
+    cd - et cd -- => pas oblige    
+    cd ~ => meme commande que cd mais marche quand meme sans l'env HOME 
+    cd / => revient a la racine
+    cd => retourne au home avec l'env. Si pas d'env HOME erreur "bash: cd: HOME not set"
+- Erreur
+    - No such file or directory
+    - Permission Denied => Dossier ou j'ai pas les permissions
+    - not a directory => rentrer dans un fichier
 
-- getcwd : permet de recuperer le chemin actuelle : char *getcwd(char *buf, size_t size) => buf : chemin || size : taille du buff
--
+EXPORT
+
+- ajouter une variable:
+    - export salut=hello
+    - export salut= hello => ceci ajoute seulement salut=
+- modifier une variable existante
+- afficher toutes les variables
+- gerer le "export=" => qui ne fait rien
+
+Le nom de la variable export ne doit pas:
+    - debuter par un chiffre 
+    - Ne doit pas comporter de caracteres speciaux a par '_'
 
 ---------------------CODE------------------------
 
@@ -176,3 +196,4 @@ ls -l | catttttttt > output => je retourne 127 command not found
 - t_tree => Allocation de mon tree
 - init_nodes => nouveau noeud 
 - envp => qui correspond aux path de mes commandes
+

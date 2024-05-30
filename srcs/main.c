@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/23 13:57:20 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/30 17:04:34 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,27 @@ int main(int argc, char *argv[], char *envp[])
 	t_tree *tree;
 	t_env *env;
 
+	env = init_env(envp);
 	while (true)
 	{
 		set_signal();
 		add_file_to_history();
-		input = readline("\n\033[0;94mMinishell\033[0m\033[0;0m $ \033[0m");
+		input = readline("\033[0;94mMinishell\033[0m\033[0;0m $ \033[0m");
 		if(input == NULL) // handle ctrl + d
 		{
-			free_tree(&tree);
+			free_env(env);
 			exit(0);
 		}
 		// mettre env dans tree
-		env = init_env(envp);
 		// displayenv(env);
 		tree = init_tree(envp, env);
 		// add_history(input);
 		if(parsing(&tokens, input, env))
 		{
-			print_list(tokens);
-			printf("\033[1;90m=========\033[1;0m[ COMMANDE ]\033[1;90m=========\033[0m\n\n");
+			// printList(tokens);
 			create_node(tokens, &tree);
-			ast_exec(tree, envp);
-			free_tree(&tree);
+			ast_exec(tree);
+			free_tree(&tree, 0);
 			clear_token(&tokens);
 		}
 	}
