@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/31 16:49:25 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/31 18:23:05 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void parent_process(int status, pid_t pid)
 
 void *ft_execve(t_tree *tree, t_node *nodes)
 {
-    fprintf(stderr, "je suis dans lexec\n");
     tree->path = check_access1(tree, nodes);
     if(execve(tree->path, nodes->args, env_to_string(tree, tree->env)) == -1)
     {
@@ -67,12 +66,12 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
 
     pid = 0;
     status = 0;
+    hdoc_or_cmd(nodes);
     if(nodes->left)
         do_unset(nodes->left, tree->env);
     pid = do_fork(tree, pid);
     if(pid == 0)
     {
-        hdoc_or_cmd(nodes);
         heredoc(tree, nodes);
         check_redir_out(tree, nodes);
         check_redir_in(tree, nodes);

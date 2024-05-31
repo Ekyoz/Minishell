@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/31 16:06:38 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/31 19:17:09 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,22 +126,19 @@ void heredoc(t_tree *tree, t_node *nodes)
             err_free_all(tree);
         while(eofword[i])
         {
-            set_signal_heredoc();
             ft_putstr_fd("heredoc> ", 0);
             input = get_next_line(0);
             if(signal_status ==  130)
-            {
-                fprintf(stderr, "salut je rentre la dedans\n");
                 break;
-            }
             if(!input)
                 err_null_heredoc(tree, eofword, i);
-            ft_putstr_fd(input, tree->fdin);
             if(ft_str_equals(eofword[i], input))
                 i++;
-            free(input);
+            else
+                input = expand_string(input, tree->env);
+            ft_putstr_fd(input, tree->fdin);
+            free(input);    
         }
-        fprintf(stderr, "je sors de la boucle\n");
         ft_free_array((void*)eofword);
         close(tree->fdin);
         tree->fdin = open(".here_doc", O_RDONLY);

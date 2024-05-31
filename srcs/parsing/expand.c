@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:11:44 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/29 12:20:09 by alexandre        ###   ########.fr       */
+/*   Updated: 2024/05/31 19:51:00 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 			}
 		}
 	}
+	printf("cmd = %s\n", cmd[1]);
 	return (cmd);
 }
 
