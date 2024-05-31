@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/30 18:06:35 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/31 16:49:25 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void parent_process(int status, pid_t pid)
 
 void *ft_execve(t_tree *tree, t_node *nodes)
 {
+    fprintf(stderr, "je suis dans lexec\n");
     tree->path = check_access1(tree, nodes);
     if(execve(tree->path, nodes->args, env_to_string(tree, tree->env)) == -1)
     {
@@ -41,7 +42,7 @@ int exec_cmd(t_tree *tree, t_node *nodes)
     int status;
 
     status = 0;
-    if(choose_builtin(tree, nodes, tree->env))
+    if(choose_builtin(tree, nodes))
         return(0);
     pid = fork();
     set_signal_cmd();
@@ -75,7 +76,7 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
         heredoc(tree, nodes);
         check_redir_out(tree, nodes);
         check_redir_in(tree, nodes);
-        if(choose_builtin(tree, nodes->left, tree->env))
+        if(choose_builtin(tree, nodes->left))
             exit(0);
         if(!check_cmd1(tree, nodes->left))
             print_error(2, tree, nodes->left);

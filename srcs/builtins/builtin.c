@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:02:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/30 18:29:15 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/31 11:44:18 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,16 @@
 // retourne 1 si un builtin a bien ete trouve
 // je me mets pas les builtin de unset et export car il modifie ma structure
 // ils ne peuvent donc pas etre dans un fork() je les execute a part
-int choose_builtin(t_tree *tree, t_node *nodes, t_env *env)
+int choose_builtin(t_tree *tree, t_node *nodes)
 {
     if(!ft_strncmp(nodes->args[0], "pwd", 4))
-        return (do_pwd(tree, env));
+        return (do_pwd(tree, tree->env));
     else if(!ft_strncmp(nodes->args[0], "unset", 6))
         return(do_unset(nodes, tree->env));
     else if(!ft_strncmp(nodes->args[0], "export", 6))
         return(do_export(tree, nodes));
     else if(!ft_strncmp(nodes->args[0], "env", 4))
-        return(displayenv(env));
+        return(displayenv(tree, tree->env));
     else if(!ft_strncmp(nodes->args[0], "cd", 3))
         return (do_cd(tree, nodes));
     else if(!ft_strncmp(nodes->args[0], "echo", 5))

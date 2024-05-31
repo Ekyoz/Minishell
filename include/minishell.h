@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/30 18:28:53 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:50:15 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define MINISHELL_H
 
 # include "libft.h"
+#include "get_next_line.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -139,6 +140,7 @@ int testopening(t_tree *tree, t_node *nodes);
 int testredir(t_node *nodes);
 
 //HEREDOC
+void err_null_heredoc(t_tree *tree, char **eofword, int i);
 void heredoc(t_tree *tree, t_node *nodes);
 bool is_heredoc(t_node *nodes);
 
@@ -147,6 +149,7 @@ void print_error(int errorcode, t_tree *tree, t_node *node);
 void read_status(t_tree *tree);
 void free_tree(t_tree **tree, int env);
 void free_env(t_env *env);
+void free_envp(t_tree *tree);
 void free_pipe(t_tree *tree);
 void err_free_all(t_tree *tree);
 void malloc_tree_err(t_env *env);
@@ -163,7 +166,7 @@ void	env_add_back(t_env **env, t_env *new);
 int env_length(t_env *env);
 
 //BUILTIN
-int choose_builtin(t_tree *tree, t_node *nodes, t_env *env);
+int choose_builtin(t_tree *tree, t_node *nodes);
 //PWD
 int do_pwd(t_tree *tree, t_env *env);
 //UNSET
@@ -176,7 +179,7 @@ int check_export_var(char *var, int *ret);
 int print_err_export(char *err);
 size_t	get_char_by_index(char *str, char c);
 //ENV
-int displayenv(t_env *env);
+int displayenv(t_tree *tree, t_env *env);
 //EXIT
 int do_exit(t_tree *tree, t_node *node);
 //CD

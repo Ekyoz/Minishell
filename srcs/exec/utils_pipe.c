@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_pipe.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:00:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 16:48:40 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/31 12:04:16 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void first_pipe(t_tree *tree, t_node *node)
     if(!check_redir_out(tree, node) && 
         !testopening(tree, node)) //si jai pas de redir out et une in
     {
-        if(check_cmd1(tree, node)) //si j'ai un builtin ou une commande bonne
-        {
-            if(dup2(tree->fdpipe[0][1], STDOUT_FILENO) == -1)
-                err_free_all(tree);
-        }
+        // if(check_cmd1(tree, node)) //si j'ai un builtin ou une commande bonne
+        // {
+        if(dup2(tree->fdpipe[0][1], STDOUT_FILENO) == -1)
+            err_free_all(tree);
+        // }
     }
     check_redir_in(tree, node);    
 }

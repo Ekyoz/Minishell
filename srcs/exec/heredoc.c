@@ -3,14 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/30 16:10:37 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/31 16:06:38 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static int	ft_str_equals(const char *str1, const char *str2)
+{
+	size_t	index;
+
+	if (!str1 || !str2)
+		return (0);
+	index = 0;
+	while (str1[index] && str2[index])
+	{
+		if (str1[index] != str2[index])
+			return (0);
+		index++;
+	}
+	if (str1[index] != str2[index] && str2[index] != '\n')
+		return (0);
+	return (1);
+}
 
 static void init_eofword(t_tree *tree, t_node *nodes, char ***eofword) // fonction qui init tous les eof
 {
@@ -109,25 +127,21 @@ void heredoc(t_tree *tree, t_node *nodes)
         while(eofword[i])
         {
             set_signal_heredoc();
+            ft_putstr_fd("heredoc> ", 0);
+            input = get_next_line(0);
             if(signal_status ==  130)
             {
-                ft_putstr_fd("rentre la dedans\n", 2);
-                return;
+                fprintf(stderr, "salut je rentre la dedans\n");
+                break;
             }
-            input = readline("> ");
             if(!input)
-            {
-                ft_putstr_fd("minishell: warning: here-document at line 1 delimited by end-of-file (wanted `", 2);
-                ft_putstr_fd(eofword[i], 2);
-                ft_putstr_fd("')\n", 2);
-                ft_free_array((void*)eofword);
-                err_free_all(tree);
-            }
+                err_null_heredoc(tree, eofword, i);
             ft_putstr_fd(input, tree->fdin);
-            ft_putstr_fd("\n", tree->fdin);
-            if(!ft_strcmp(eofword[i], input))
+            if(ft_str_equals(eofword[i], input))
                 i++;
+            free(input);
         }
+        fprintf(stderr, "je sors de la boucle\n");
         ft_free_array((void*)eofword);
         close(tree->fdin);
         tree->fdin = open(".here_doc", O_RDONLY);
