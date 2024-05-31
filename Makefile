@@ -39,7 +39,7 @@ FILE_PARSING_DIR		= parsing/
 FILE_PARSING			= parsing checker token pipe redir quote splitter expand
 
 FILE_PARS_UTILS_DIR		= parsing/utils/
-FILE_PARS_UTILS			= parser token quote quote_2 pipe
+FILE_PARS_UTILS			= parser token quote quote_2 pipe expand
 
 FILE_REDIRECTION_DIR 	= redirection/
 FILE_REDIRECTION		= testopenredir redirec
@@ -78,9 +78,9 @@ CFLAGS_DEBUG		= -Wall -Wextra -g3
 CFLAGS_EXEC			= -Wall -Wextra -g3 #-Werror
 CFLAGS_PARSING		= -Wall -Wextra -g3 #-Werror
 CFLAGS_TEST			= -g3
-INCLUDES			=
-LIBFLAGS			= -lreadline
-VFALGS				= -s --suppressions=supp.supp --leak-check=full
+INCLUDES			= -I/opt/homebrew/opt/readline/include
+LIBFLAGS			= -L/opt/homebrew/opt/readline/lib -lreadline
+VFALGS				= -s --suppressions=supp.supp --leak-check=full --track-origins=yes
 
 #------------------------------------------------------------------------------#
 #----------------------------- DON'T TOUCH BELOW -----------------------------#

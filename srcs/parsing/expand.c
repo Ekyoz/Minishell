@@ -16,18 +16,25 @@ static char	*get_env_key(char *line);
 static char	*get_env_value(char *key, t_env *env);
 static char	*replace_env(char *env, char *cmd, char *key);
 
-char	**expand_array(char **cmd, t_env *env)
+char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 {
 	int		i_cmd;
 	int		j_cmd;
+	int		i_exp;
 	int		j;
 	char	*var;
 
 	i_cmd = -1;
+	i_exp = 0;
 	var = NULL;
 	while (cmd[++i_cmd])
 	{
 		j_cmd = -1;
+		if (i_cmd == no_expandable[i_exp])
+		{
+			i_exp++;
+			continue;
+		}
 		while (cmd[i_cmd][++j_cmd])
 		{
 			j = j_cmd;
@@ -69,21 +76,10 @@ char	*expand_string(char *cmd, t_env *env)
 
 static char	*get_env_value(char *key, t_env *env)
 {
-	int	len;
-	int	len_space;
-	int	len_quote;
-
-	len_space = ft_strchar(key, ' ');
-	len_quote = ft_strchar(key, '\'');
-	if (len_space != -1 && len_space < len_quote)
-		len = len_space;
-	else if (len_quote != -1 && len_quote < len_space)
-		len = len_quote;
 	while (env)
 	{
 		if (ft_strcmp(get_env_key(env->value), key) == 0)
-			return (ft_substr(env->value, ft_strchar(env->value, '=') + 1,
-					len));
+			return (ft_substr(env->value, ft_strchar(env->value, '=') + 1,ft_strlen(env->value)));
 		env = env->next;
 	}
 	return ("");
