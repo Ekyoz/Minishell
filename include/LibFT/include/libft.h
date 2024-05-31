@@ -34,7 +34,7 @@ typedef struct s_list
 	struct s_list	*next;
 }					t_list;
 
-/**
+/*
  *
  *     $$$$$$\  $$$$$$$\  $$$$$$$\   $$$$$$\ $$\     $$\  $$$$$$\
  *    $$  __$$\ $$  __$$\ $$  __$$\ $$  __$$\\$$\   $$  |$$  __$$\
@@ -81,7 +81,7 @@ char				**ft_arrdup(char **array);
  */
 char				**ft_arrdel(char **array, int position);
 
-/***
+/*
  *     $$$$$$\  $$$$$$$$\ $$$$$$$$\ $$$$$$$$\ $$$$$$$$\ $$$$$$$\
  *    $$  __$$\ $$  _____|\__$$  __|\__$$  __|$$  _____|$$  __$$\
  *    $$ /  \__|$$ |         $$ |      $$ |   $$ |      $$ |  $$ |
@@ -101,7 +101,7 @@ char				**ft_arrdel(char **array, int position);
  */
 int					ft_getdigits(long long NUM);
 
-/***
+/*
  *    $$$$$$\  $$$$$$\
  *    \_$$  _|$$  __$$\
  *      $$ |  $$ /  \__|
@@ -161,7 +161,8 @@ int					ft_isprint(int C);
  */
 int					ft_isspace(char c);
 
-/***
+
+/*
  *    $$\      $$\ $$$$$$$$\ $$\      $$\  $$$$$$\  $$$$$$$\ $$\     $$\
  *    $$$\    $$$ |$$  _____|$$$\    $$$ |$$  __$$\ $$  __$$\\$$\   $$  |
  *    $$$$\  $$$$ |$$ |      $$$$\  $$$$ |$$ /  $$ |$$ |  $$ |\$$\ $$  /
@@ -172,6 +173,7 @@ int					ft_isspace(char c);
  *    \__|     \__|\________|\__|     \__| \______/ \__|  \__|   \__|
  *
  */
+
 
 /**
  * @brief Met les premiers 'N' octets de la zone commençant à 'S' à zéro.
@@ -259,7 +261,7 @@ void				*ft_calloc(size_t ELEMENTCOUNT, size_t ELEMENTSIZE);
  */
 void				*ft_realloc(void *ptr, size_t old_size, size_t new_size);
 
-/***
+/*
  *     $$$$$$\ $$$$$$$$\ $$$$$$$\  $$$$$$\ $$\   $$\  $$$$$$\   $$$$$$\
  *    $$  __$$\\__$$  __|$$  __$$\ \_$$  _|$$$\  $$ |$$  __$$\ $$  __$$\
  *    $$ /  \__|  $$ |   $$ |  $$ |  $$ |  $$$$\ $$ |$$ /  \__|$$ /  \__|
@@ -500,7 +502,7 @@ void				ft_striteri(char *s, void (*f)(unsigned int, char *));
  */
 char				*ft_strrev(char *str);
 
-/***
+/*
  *    $$$$$$$$\  $$$$$$\
  *    \__$$  __|$$  __$$\
  *       $$ |   $$ /  $$ |
@@ -553,7 +555,7 @@ char				*ft_itoa(int n);
  */
 char				*ft_ltoh(size_t num);
 
-/***
+/*
  *    $$$$$$$\  $$\   $$\ $$$$$$$$\
  *    $$  __$$\ $$ |  $$ |\__$$  __|
  *    $$ |  $$ |$$ |  $$ |   $$ |
@@ -623,7 +625,7 @@ int					ft_putptr_fd(uintptr_t num, const char *base, int fd);
  */
 int					ft_puthex_fd(unsigned int num, const char *base, int fd);
 
-/***
+/*
  *    $$\       $$$$$$\  $$$$$$\ $$$$$$$$\ $$$$$$$$\
  *    $$ |      \_$$  _|$$  __$$\\__$$  __|$$  _____|
  *    $$ |        $$ |  $$ /  \__|  $$ |   $$ |

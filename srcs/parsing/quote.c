@@ -13,33 +13,32 @@
 #include "minishell.h"
 
 static char	*get_quoted(char **cmd, int first_quote[2], int last_quote[2]);
-static char	**set_quote(char **cmd, t_env *env, int last_line[2]);
+static char	**set_quote(char **cmd, t_env *env, int last_line[2], int *no_expandable);
 static int	quote_strings(char **tableau);
 
-char	**quote(char **cmd, t_env *env)
+char **quote(char **cmd, t_env *env, int *no_expandable)
 {
 	char	**temp_cmd;
 	int		i;
 	int		last_line[2];
 
 	if (quoted(cmd) == false)
-		return (expand_array(cmd, env));
+		return (expand_array(cmd, env, no_expandable));
 	i = -1;
 	temp_cmd = ft_arrdup(cmd);
 	last_line[0] = -1;
 	last_line[1] = -1;
-	printf("Quote strings: %d\n", quote_strings(temp_cmd));
 	while (cmd[++i])
 		if (ft_strchar(cmd[i], '"') == -1 &&
 			ft_strchar(cmd[i], '\'') == -1)
 			cmd[i] = expand_string(cmd[i], env);
 	i = -1;
 	while (++i < quote_strings(temp_cmd))
-		cmd = set_quote(cmd, env, last_line);
+		cmd = set_quote(cmd, env, last_line, no_expandable);
 	return (cmd);
 }
 
-static char	**set_quote(char **cmd, t_env *env, int last_line[2])
+static char	**set_quote(char **cmd, t_env *env, int last_line[2], int *no_expandable)
 {
 	int		i;
 	int		first_quote[2] = {0, 0};
@@ -56,7 +55,7 @@ static char	**set_quote(char **cmd, t_env *env, int last_line[2])
 	get_last_quote(cmd, last_quote, &c_quote, last_line);
 
 	c_quoted = get_quoted(cmd, first_quote, last_quote);
-	if (c_quote != '\'')
+	if (c_quote != '\'' && is_expandable(no_expandable, first_quote[0]))
 		c_quoted = expand_string(c_quoted, env);
 
 	if (first_quote[1] > 0)
@@ -74,7 +73,6 @@ static char	**set_quote(char **cmd, t_env *env, int last_line[2])
 	if (after != NULL)
 		c_quoted = ft_strjoin(c_quoted, expand_string(after, env));
 	cmd[first_quote[0]] = ft_strdup(c_quoted);
-	printf("Before: %s\nAfter: %s\n", before, after);
 
 	last_line[0] = first_quote[0]-1;
 	last_line[1] = last_quote[1]-1;

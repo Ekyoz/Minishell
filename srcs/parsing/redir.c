@@ -16,9 +16,10 @@ char **redir(char **cmd)
 {
 	int i_cmd = -1;
 	int i_split = 0;
-	char **l_final;
+	char **l_final = NULL;
 
-	l_final = (char **) malloc( sizeof(char *) * ft_arrlen(cmd)+1);
+	l_final = (char **) malloc( sizeof(char *) * (ft_arrlen(cmd)+1));
+	ft_bzero(l_final, sizeof (char *)*(ft_arrlen(cmd)+1));
 
 	while (cmd[++i_cmd])
 	{

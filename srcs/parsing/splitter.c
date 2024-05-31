@@ -14,6 +14,7 @@
 
 static char **split_token(char *command);
 static int split_count(char *command);
+static char *check_space(char *cmd);
 
 char **splitter(char *command, t_env *env) //splitter par les espace et par les tokens
 {
@@ -27,6 +28,7 @@ char **splitter(char *command, t_env *env) //splitter par les espace et par les 
 	i_space = -1;
 	i_final = 0;
 	c_token = NULL;
+	command = check_space(command);
 	c_space = ft_split_sep(command, ' ');
 	c_final = (char **) malloc(sizeof(char *) * (ft_arrlen(c_space)+1));
 
@@ -44,9 +46,7 @@ char **splitter(char *command, t_env *env) //splitter par les espace et par les 
 		}
 	}
 	c_final[i_final] = NULL;
-
-	 return quote(c_final, env);
-//    return c_final;
+	return quote(c_final, env, get_no_expandable(c_final));
 }
 
 static int split_count(char *command) {
@@ -163,3 +163,28 @@ static char **split_token(char *command)
 	return c_final;
 }
 
+static char *check_space(char *cmd)
+{
+	int i = -1;
+
+	while (cmd[++i])
+	{
+		if (is_token(cmd, i) == TOKEN_REDIR_APPEND || is_token(cmd, i) == TOKEN_REDIR_HEREDOC)
+		{
+			if (cmd[i+2] != ' ')
+				cmd = ft_strjoin(ft_substr(cmd, 0, i+2), ft_strjoin(" ", ft_substr(cmd, i+2, ft_strlen(cmd)-i-2)));
+			if (cmd[i-1] != ' ')
+				cmd = ft_strjoin(ft_substr(cmd, 0, i), ft_strjoin(" ", ft_substr(cmd, i, ft_strlen(cmd)-i)));
+			i+=2;
+		}
+		else if (is_token(cmd, i) == TOKEN_REDIR_OUT || is_token(cmd, i) == TOKEN_REDIR_IN)
+		{
+			if (cmd[i+1] != ' ')
+				cmd = ft_strjoin(ft_substr(cmd, 0, i+1), ft_strjoin(" ", ft_substr(cmd, i+1, ft_strlen(cmd)-i-1)));
+			if (cmd[i-1] != ' ')
+				cmd = ft_strjoin(ft_substr(cmd, 0, i), ft_strjoin(" ", ft_substr(cmd, i, ft_strlen(cmd)-i)));
+			i+=1;
+		}
+	}
+	return cmd;
+}

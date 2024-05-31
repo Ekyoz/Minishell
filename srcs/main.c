@@ -37,10 +37,9 @@ int main(int argc, char *argv[], char *envp[])
 		// mettre env dans tree
 		// displayenv(env);
 		tree = init_tree(envp, env);
-		// add_history(input);
 		if(parsing(&tokens, input, env))
 		{
-			// printList(tokens);
+		 	print_list(tokens);
 			create_node(tokens, &tree);
 			ast_exec(tree);
 			free_tree(&tree, 0);

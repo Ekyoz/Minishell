@@ -45,7 +45,7 @@ static void	parsing_redir(t_token **head, char ***c_pipe, char ***c_splitted,
 		int *i_pipe)
 {
 	char	**c_cmd;
-	char	**c_redirs;
+	char	**c_redirs = NULL;
 	int		i_redirs;
 
 	i_redirs = -1;

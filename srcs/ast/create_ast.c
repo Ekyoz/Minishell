@@ -92,7 +92,6 @@ void create_node(t_token *tokens, t_tree **tree)
         add_branches(tokens, &nodes, &nodescp, *tree);
         is_redirec = 1;
     }
-    printf("\n\n");
     return((void) 0);
 }
 
