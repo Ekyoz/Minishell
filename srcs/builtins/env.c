@@ -6,20 +6,17 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/29 13:10:39 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/31 11:43:39 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int displayenv(t_env *env)
+int displayenv(t_tree *tree, t_env *env)
 {
-    if(!env)
-        return(1);
     while(env)
     {
-        ft_putstr_fd(env->value, 1);
-        ft_putchar_fd('\n', 1);
+		printf("%s\n", env->value);
         env = env->next;
     }
     return(1);

@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:14:56 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/29 12:02:00 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/31 15:30:45 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void free_nodes(t_node *nodes)
     free(nodebegin);
 }
 
-static void free_envp(t_tree *tree)
+void free_envp(t_tree *tree)
 {
     int i;
 

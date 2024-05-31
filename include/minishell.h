@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/30 16:21:15 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:50:15 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define MINISHELL_H
 
 # include "libft.h"
+#include "get_next_line.h"
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
@@ -108,7 +109,7 @@ void create_node(t_token *tokens, t_tree **tree);
 void add_branches(t_token *tokens, t_node **node, t_node **nodecp, t_tree *tree);
 
 //FONCTIONS MANIPULATION DE MON ARBRE
-t_tree *init_tree(char *envp[], t_env *env);
+t_tree *init_tree(t_env *env);
 void print_tree(t_node *node);
 
 //EXECUT
@@ -126,7 +127,7 @@ void close_all_pipes(int **fdpipe, int i);
 
 //CHECKING COMMAND
 char *check_access1(t_tree *tree, t_node *nodes);
-void	get_env_args(char *envp[], t_tree *tree);
+void	get_env_args(char **envp, t_tree *tree);
 int	check_cmd1(t_tree *tree, t_node *node);
 
 //REDIREC
@@ -139,6 +140,7 @@ int testopening(t_tree *tree, t_node *nodes);
 int testredir(t_node *nodes);
 
 //HEREDOC
+void err_null_heredoc(t_tree *tree, char **eofword, int i);
 void heredoc(t_tree *tree, t_node *nodes);
 bool is_heredoc(t_node *nodes);
 
@@ -147,6 +149,7 @@ void print_error(int errorcode, t_tree *tree, t_node *node);
 void read_status(t_tree *tree);
 void free_tree(t_tree **tree, int env);
 void free_env(t_env *env);
+void free_envp(t_tree *tree);
 void free_pipe(t_tree *tree);
 void err_free_all(t_tree *tree);
 void malloc_tree_err(t_env *env);
@@ -158,13 +161,12 @@ void ft_exit(t_tree *tree);
 t_env	*init_env(char **env_array);
 char *get_env(t_env *env, char *envvar);
 int set_env(t_tree *tree, t_env *env, char *var, char *value);
-int displayenv(t_env *env);
 ssize_t get_index_env(t_env *env, char *word);
 void	env_add_back(t_env **env, t_env *new);
 int env_length(t_env *env);
 
 //BUILTIN
-int choose_builtin(t_tree *tree, t_node *nodes, t_env *env);
+int choose_builtin(t_tree *tree, t_node *nodes);
 //PWD
 int do_pwd(t_tree *tree, t_env *env);
 //UNSET
@@ -177,7 +179,7 @@ int check_export_var(char *var, int *ret);
 int print_err_export(char *err);
 size_t	get_char_by_index(char *str, char c);
 //ENV
-int displayenv(t_env *env);
+int displayenv(t_tree *tree, t_env *env);
 //EXIT
 int do_exit(t_tree *tree, t_node *node);
 //CD

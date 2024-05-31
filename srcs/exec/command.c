@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:17:58 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 16:39:09 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/31 15:40:32 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,33 +36,32 @@ char	*check_access1(t_tree *tree, t_node *nodes)
 }
 
 // je recuere les path de mon envp
-void	get_env_args(char *envp[], t_tree *tree)
+void	get_env_args(char **envp, t_tree *tree)
 {
 	int		j;
+	int 	i;
 	char	*temp;
 
+	i = 0;
 	j = 0;
 	tree->envp = NULL;
-	while (*envp)
+	while (envp[i])
 	{
-		if (ft_strncmp(*envp, "PATH=", 5) == 0)
+		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
 		{
-			tree->envp = ft_split(*envp + 5, ':');
-			if(!tree->envp)
-				err_free_all(tree);
+			tree->envp = ft_split(envp[i] + 5, ':');
 			while (tree->envp[j])
 			{
 				temp = ft_strjoin(tree->envp[j], "/");
-				if(!temp)
-					err_free_all(tree);
 				free(tree->envp[j]);
 				tree->envp[j] = temp;
 				j++;
 			}
 			tree->envp[j] = NULL;
 		}
-		envp++;
+		i++;
 	}
+	free_array(envp);
 }
 
 int	check_cmd1(t_tree *tree, t_node *node)

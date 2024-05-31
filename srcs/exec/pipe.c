@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 17:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/23 16:50:21 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/05/31 11:50:08 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,10 @@ static void dup_pipe(t_tree *tree, t_node *nodes, int j, int i)
 
 static void execute_pipe(t_tree *tree, t_node *node)
 {
-    if(choose_builtin(tree, node, tree->env))
+    if(choose_builtin(tree, node))
+    {
         exit(0);
+    }
     if(!check_cmd1(tree, node))
         print_error(2, tree, node);
     ft_execve(tree, node);
@@ -73,7 +75,6 @@ static void parent_process_pipe(int i, int *j, t_tree *tree, t_node **node)
         close(tree->fdpipe[*j - 1][0]);
     if(*j < i)
         close(tree->fdpipe[*j][1]);
-    // parent_process(tree->status, tree->pid[*j]);
     *j = *j + 1;
     if((*node)->right)
         (*node) = (*node)->right;
@@ -98,7 +99,9 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
             if(testredir(nodes->left)) // Si redirections  
                 execute_pipe(tree, nodes->left->left);
             else if(nodes->left) // pas de redir et une commande a gauche
+            {
                 execute_pipe(tree, nodes->left);
+            }
             else // pas de redir et pas de pipe
                 execute_pipe(tree, nodes);
         }
