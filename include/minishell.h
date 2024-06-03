@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/31 15:50:15 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/01 12:02:11 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,10 @@ int testredir(t_node *nodes);
 //HEREDOC
 void err_null_heredoc(t_tree *tree, char **eofword, int i);
 void heredoc(t_tree *tree, t_node *nodes);
+void init_eofword(t_tree *tree, t_node *nodes, char ***eofword);
+void get_eofword(t_tree *tree, char **eofword, t_node *node, int *i);
 bool is_heredoc(t_node *nodes);
+int	ft_str_equals(const char *str1, const char *str2);
 
 //FONCTIONS DU GARBAGE COLLECTOR
 void print_error(int errorcode, t_tree *tree, t_node *node);
@@ -179,7 +182,7 @@ int check_export_var(char *var, int *ret);
 int print_err_export(char *err);
 size_t	get_char_by_index(char *str, char c);
 //ENV
-int displayenv(t_tree *tree, t_env *env);
+int displayenv(t_env *env);
 //EXIT
 int do_exit(t_tree *tree, t_node *node);
 //CD

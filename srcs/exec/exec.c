@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/31 18:23:05 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/01 16:23:57 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
         heredoc(tree, nodes);
         check_redir_out(tree, nodes);
         check_redir_in(tree, nodes);
-        if(choose_builtin(tree, nodes->left))
+        if(!nodes->left || choose_builtin(tree, nodes->left))
             exit(0);
         if(!check_cmd1(tree, nodes->left))
             print_error(2, tree, nodes->left);

@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:33:55 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/31 17:52:40 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/31 23:55:05 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void sig_handler_heredoc(int sig)
 {
     if(sig == SIGINT) // ctrl + c
     {
-        ft_putchar_fd('\n', 1);
+        ft_putchar_fd('\n', 0);
         signal_status = 130;
     }
 }

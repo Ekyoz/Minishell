@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:02:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/31 11:44:18 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/31 20:01:46 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int choose_builtin(t_tree *tree, t_node *nodes)
     else if(!ft_strncmp(nodes->args[0], "export", 6))
         return(do_export(tree, nodes));
     else if(!ft_strncmp(nodes->args[0], "env", 4))
-        return(displayenv(tree, tree->env));
+        return(displayenv(tree->env));
     else if(!ft_strncmp(nodes->args[0], "cd", 3))
         return (do_cd(tree, nodes));
     else if(!ft_strncmp(nodes->args[0], "echo", 5))

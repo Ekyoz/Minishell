@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:11:44 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/31 19:51:00 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/31 20:11:42 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 			}
 		}
 	}
-	printf("cmd = %s\n", cmd[1]);
 	return (cmd);
 }
 
