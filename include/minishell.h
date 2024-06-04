@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/01 12:02:11 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/04 15:11:44 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ typedef struct s_tree // structure qui va iterer dans mes nodes et executer les 
 	int fdoutcp;
 	int error[4];
 	int repeatstatus;
+	int expandheredoc;
 	int status;
 	pid_t pid[3];
 } t_tree;
@@ -153,6 +154,7 @@ void err_null_heredoc(t_tree *tree, char **eofword, int i);
 void heredoc(t_tree *tree, t_node *nodes);
 void init_eofword(t_tree *tree, t_node *nodes, char ***eofword);
 void get_eofword(t_tree *tree, char **eofword, t_node *node, int *i);
+void expand_heredoc(t_tree *tree, t_node *node);
 bool is_heredoc(t_node *nodes);
 int	ft_str_equals(const char *str1, const char *str2);
 

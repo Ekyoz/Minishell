@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/04 11:17:44 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/04 14:22:56 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ static char **find_heredoc(t_tree *tree, t_node *nodes)
     {
         if(nodes->type == TOKEN_REDIR_HEREDOC) // si jai un heredoc
         {
+            expand_heredoc(tree, nodes);
             if(nodes->right->type != TOKEN_WORD) // si mon token dapres est different d'un word
             {
                 if(nodes->right->left && nodes->right->left->type == TOKEN_WORD)
@@ -56,8 +57,9 @@ static void text_heredoc(t_tree *tree, char **eofword, char *input, int *i)
         *i = *i + 1;
     else
     {
-        input = ft_strtrim(input, "\n"); 
-        input = expand_string(input, tree->env);
+        input = ft_strtrim(input, "\n");
+        if(tree->expandheredoc == 1)
+            input = expand_string(input, tree->env);
         if(!eofword[*i + 1])
         {
             ft_putstr_fd(input, tree->fdin);
