@@ -28,7 +28,7 @@ void	get_first_quote(char **cmd, int pos[2], char *c_quote, int last_line[2])
 			{
 				pos[0] = i;
 				pos[1] = j;
-                *c_quote = cmd[i][j];
+				*c_quote = cmd[i][j];
 				return ;
 			}
 		}

@@ -197,3 +197,8 @@ ls -l | catttttttt > output => je retourne 127 command not found
 - init_nodes => nouveau noeud 
 - envp => qui correspond aux path de mes commandes
 
+
+
+A FAIRE !!!
+
+"cat lol.c | cat > lol.c"

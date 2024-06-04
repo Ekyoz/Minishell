@@ -13,6 +13,7 @@
 #include "minishell.h"
 
 static char	*pipe_end(char *command);
+static char **split_quote_pipe(char *cmd);
 
 char	**pipe_splitter(char *command)
 {
@@ -62,4 +63,36 @@ static char	*pipe_end(char *command)
 		command = pipe_end(command);
 	}
 	return (command);
+}
+
+static char **split_quote_pipe(char *cmd)
+{
+	int first_quote[2] = { 0, 0 };
+	int last_quote[2] = {0 , 0};
+	int last_line[2] = {-1, -1};
+	char quote = '\0';
+	char **arrays;
+
+	arrays = string_to_array(cmd);
+
+	if (ft_strchar(cmd, '|') == -1)
+		return arrays;
+	if (ft_strchar(cmd, '"') == -1 && ft_strchar(cmd, '\'') == -1)
+		return ft_split(cmd, '|');
+	else
+	{
+		get_first_quote(arrays, first_quote, &quote, last_line);
+		get_last_quote(arrays, last_quote, &quote, last_line);
+		if (quote == '\0')
+		{
+			return ft_split(cmd, '|');
+		}
+		else
+		{
+			if (first_quote[1] < ft_strchar(cmd, '|') && last_quote[1] > ft_strchar(cmd, '|'))
+				return arrays;
+			else
+				return ft_split(cmd, '|');
+		}
+	}
 }
