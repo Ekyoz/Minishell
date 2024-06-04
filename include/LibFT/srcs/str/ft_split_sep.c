@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_sep.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:49:24 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/03 14:05:11 by atresall         ###   ########.fr       */
+/*   Updated: 2024/06/04 19:44:06 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	split_loop(char *str, char sep, char **result)
 	{
 		if (str[i] == sep)
 		{
-			result[j] = (char *)malloc(sizeof(char) * 2);
+			result[j] = (char *)malloc(sizeof(char) * 2 + 1);
 			result[j][0] = sep;
 			result[j++][1] = '\0';
 		}
@@ -72,7 +72,7 @@ char	**ft_split_sep(char *str, char sep)
 {
 	char	**result;
 
-	result = (char **)malloc((count_words(str, sep) * 2) * sizeof(char *));
+	result = (char **)malloc((count_words(str, sep) * 2) * sizeof(char *) + 1);
 	if (!result)
 		return (NULL);
 	if (split_loop(str, sep, result) == -1)
