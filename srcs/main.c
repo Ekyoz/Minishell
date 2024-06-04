@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/02 12:24:01 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/04 13:31:20 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int main(int argc, char *argv[], char *envp[])
     // add_history(input);
 		if(parsing(&tokens, input, env))
 		{
-		 	// print_list(tokens);
+		 	print_list(tokens);
 			create_node(tokens, &tree);
 			// print_tree(tree->nodes);
 			ast_exec(tree);

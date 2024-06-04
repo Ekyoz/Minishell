@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/01 16:23:57 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/04 15:13:44 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void parent_process(int status, pid_t pid)
 {
     waitpid(pid, &status, 0);
-    if(access(".here_doc", F_OK) != -1)
-        unlink(".here_doc");
+    if(access("./.here_doc", F_OK) != -1)
+        unlink("./.here_doc");
     if(WIFEXITED(status))
     {
         signal_status = WEXITSTATUS(status);

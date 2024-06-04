@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandre <atresall@student.42lyon.fr>     +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/29 11:56:53 by alexandre         #+#    #+#             */
-/*   Updated: 2024/05/29 11:56:53 by alexandre        ###   ########.fr       */
+/*   Updated: 2024/06/04 13:30:37 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	get_first_quote(char **cmd, int pos[2], char *c_quote, int last_line[2])
 
 	while (cmd[++i])
 	{
-		while (cmd[i][j])
+		while (cmd[i][++j])
 		{
 			if (cmd[i][j] == '\'' || cmd[i][j] == '"')
 			{
@@ -31,9 +31,8 @@ void	get_first_quote(char **cmd, int pos[2], char *c_quote, int last_line[2])
                 *c_quote = cmd[i][j];
 				return ;
 			}
-            j++;
 		}
-		j = 0;
+		j = -1;
 	}
 }
 

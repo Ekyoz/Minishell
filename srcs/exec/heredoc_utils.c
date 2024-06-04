@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 11:58:33 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/01 12:02:04 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/04 14:44:38 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,14 @@ void init_eofword(t_tree *tree, t_node *nodes, char ***eofword)
     }
     else
         *eofword = NULL;
+}
+
+void expand_heredoc(t_tree *tree, t_node *node)
+{
+    if(node->args)
+        tree->expandheredoc = 1;
+    else
+        tree->expandheredoc = 0;
 }
 
 void get_eofword(t_tree *tree, char **eofword, t_node *node, int *i)
