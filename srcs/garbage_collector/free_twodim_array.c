@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void ft_free_array(void **ptr)
+void free_array(void **ptr)
 {
     int i;
     

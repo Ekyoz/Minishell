@@ -51,7 +51,7 @@ int exec_cmd(t_tree *tree, t_node *nodes)
     if(pid == 0)
     {
         if(!check_cmd1(tree, nodes))
-            print_error(2, tree, nodes);
+            print_error(CMD_NOT_FOUND, tree, nodes);
         tree->path = check_access1(tree, nodes);
         if(execve(tree->path, nodes->args, env_to_string(tree, tree->env)) == -1)
             err_free_all(tree);
@@ -79,7 +79,7 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
         if(choose_builtin(tree, nodes->left))
             exit(0);
         if(!check_cmd1(tree, nodes->left))
-            print_error(2, tree, nodes->left);
+            print_error(CMD_NOT_FOUND, tree, nodes->left);
         ft_execve(tree, nodes->left);
     }
     parent_process(status, pid);

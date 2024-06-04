@@ -17,7 +17,7 @@ void err_null_heredoc(t_tree *tree, char **eofword, int i)
     ft_putstr_fd("minishell: warning: here-document at line 1 delimited by end-of-file (wanted `", 2);
     ft_putstr_fd(eofword[i], 2);
     ft_putstr_fd("')\n", 2);
-    ft_free_array((void*)eofword);
+    free_array((void*)eofword);
     err_free_all(tree);
 }
 

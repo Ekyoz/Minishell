@@ -6,13 +6,18 @@
 /*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:49:24 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/30 14:49:24 by atresall         ###   ########.fr       */
+/*   Updated: 2024/06/03 14:05:11 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	count_words(const char *str, char sep)
+static int	is_separator(char c, char sep)
+{
+	return (c == sep);
+}
+
+static int	count_words(char *str, char sep)
 {
 	int	count;
 	int	in_word;
@@ -21,61 +26,45 @@ static int	count_words(const char *str, char sep)
 	in_word = 0;
 	while (*str)
 	{
-		if (*str != sep && !in_word)
-		{
-			in_word = 1;
-			count++;
-		}
-		else if (*str == sep)
+		if (is_separator(*str, sep))
 		{
 			in_word = 0;
+		}
+		else if (!in_word)
+		{
+			count++;
+			in_word = 1;
 		}
 		str++;
 	}
 	return (count);
 }
 
-static char	*word_dup(char *start, size_t len)
-{
-	char	*word;
-
-	word = (char *)malloc(len + 1);
-	if (!word)
-		return (NULL);
-	ft_strlcpy(word, start, len + 1);
-	return (word);
-}
-
-static int	add_word(char **result, char *start, int len, int index)
-{
-	result[index] = word_dup(start, len);
-	return (1);
-}
-
 static int	split_loop(char *str, char sep, char **result)
 {
-	int		i;
-	char	*start;
+	int	i;
+	int	j;
+	int	start;
 
 	i = 0;
-	while (*str)
+	j = 0;
+	while (str[i])
 	{
-		if (*str != sep)
+		if (str[i] == sep)
 		{
-			start = str;
-			while (*str && *str != sep)
-				str++;
-			if (!add_word(result, start, str - start, i++))
-				return (-1);
+			result[j] = (char *)malloc(sizeof(char) * 2);
+			result[j][0] = sep;
+			result[j++][1] = '\0';
 		}
 		else
 		{
-			if (!add_word(result, str, 1, i++))
-				return (-1);
-			str++;
+			start = i;
+			result[j] = ft_substr(str, start, ft_strchar(&str[i], sep));
+			i += ft_strlen(result[j++]) - 1;
 		}
+		i++;
 	}
-	result[i] = NULL;
+	result[j] = NULL;
 	return (0);
 }
 
@@ -83,7 +72,7 @@ char	**ft_split_sep(char *str, char sep)
 {
 	char	**result;
 
-	result = (char **)malloc((count_words(str, sep) * 2 + 1) * sizeof(char *));
+	result = (char **)malloc((count_words(str, sep) * 2) * sizeof(char *));
 	if (!result)
 		return (NULL);
 	if (split_loop(str, sep, result) == -1)

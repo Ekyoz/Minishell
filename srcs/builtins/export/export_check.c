@@ -84,7 +84,7 @@ void		sort_env(char **envstr)
 		i++;
 	}
 	print_envstr(envstr);
-    ft_free_array((void **)envstr);
+    free_array((void **)envstr);
 }
 
 int check_export_var(char *var, int *ret)

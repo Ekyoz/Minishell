@@ -18,23 +18,22 @@ void	get_first_quote(char **cmd, int pos[2], char *c_quote, int last_line[2])
 	int	j;
 
 	i = last_line[0];
-	j = last_line[1]-1;
+	j = last_line[1];
+
 	while (cmd[++i])
 	{
-		while (cmd[i][++j])
+		while (cmd[i][j])
 		{
 			if (cmd[i][j] == '\'' || cmd[i][j] == '"')
 			{
 				pos[0] = i;
 				pos[1] = j;
-				if (cmd[i][j] == '\'')
-					*c_quote = '\'';
-				else if (cmd[i][j] == '"')
-					*c_quote = '"';
+                *c_quote = cmd[i][j];
 				return ;
 			}
+            j++;
 		}
-		j = -1;
+		j = 0;
 	}
 }
 

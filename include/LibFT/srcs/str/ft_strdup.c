@@ -19,7 +19,7 @@ char	*ft_strdup(const char *source)
 
 	i = 0;
 	dst = malloc(sizeof(char) * (ft_strlen(source) + 1));
-	if (dst == NULL)
+	if (dst == NULL || source == NULL)
 		return (NULL);
 	while (source[i])
 	{

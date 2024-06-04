@@ -142,7 +142,7 @@ void heredoc(t_tree *tree, t_node *nodes)
             free(input);
         }
         fprintf(stderr, "je sors de la boucle\n");
-        ft_free_array((void*)eofword);
+        free_array((void*)eofword);
         close(tree->fdin);
         tree->fdin = open(".here_doc", O_RDONLY);
         if(dup2(tree->fdin, STDIN_FILENO) == -1)

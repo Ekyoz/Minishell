@@ -61,18 +61,8 @@ static t_token *create_token(t_token_type type, char **value, t_token *prev)
 		return NULL;
 	token->type = type;
     token->value = NULL;
-	if (value != NULL)
-	{
-		if (prev != NULL)
-		{
-			if (prev->type == TOKEN_REDIR_HEREDOC)
-				token->value = clean_space(value);
-			else
-				token->value = clean_space(value);
-		}
-		else
-			token->value = clean_space(value);
-	}
+	if (value != NULL && (type == TOKEN_WORD || type == TOKEN_REDIR_HEREDOC))
+		token->value = clean_space(value);
 	token->next = NULL;
 	return token;
 }

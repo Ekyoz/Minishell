@@ -12,18 +12,6 @@
 
 #include "minishell.h"
 
-void	free_array(char **array)
-{
-	int	i;
-
-	if (array == NULL)
-		return ;
-	i = -1;
-	while (array[++i])
-		free(array[i]);
-	free(array);
-}
-
 void	print_token_type(t_token_type type)
 {
 	if (type == TOKEN_PIPE)
@@ -64,6 +52,9 @@ void	print_list(t_token *node)
 				printf("\033[0;33m\033[1mARGS[%d]\033[0m: %s\n", j,
 					   node->value[j]);
 		}
+		if (node->type == TOKEN_REDIR_HEREDOC)
+			if (node->value)
+				printf("\033[0;31m\033[1mEXPANDABLE\033[0m: %s\n", node->value[0]);
 		printf("\033[1;90m===============================\033[0m\n");
 		printf("\n");
 		node = node->next;

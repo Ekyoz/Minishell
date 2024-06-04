@@ -20,36 +20,48 @@ HEADER_FILES			= minishell
 SRC_FILES		    	= main utils
 TEST_FILES  			= test
 
+#-------- BUILTINS --------#
 FILE_BUILTINS_DIR 		= builtins/
 FILE_BUILTINS 			= cd echo env exit pwd unset builtin
-
-FILE_EXEC_DIR			= exec/
-FILE_EXEC				= command exec heredoc pipe fork utils_pipe
 
 FILE_EXPORT_DIR			= builtins/export/
 FILE_EXPORT 			= export_check export
 
+#-------- EXEC --------#
+FILE_EXEC_DIR			= exec/
+FILE_EXEC				= command exec heredoc pipe fork utils_pipe
+
+#-------- AST --------#
 FILE_AST_DIR			= ast/
 FILE_AST				= create_ast nodes token_type tree
 
+#-------- GARBAGE --------#
 FILE_GARBAGE_DIR		= garbage_collector/
 FILE_GARBAGE			= error status_code free_tree free_tree1 free_twodim_array
 
+#-------- REDIRECTION --------#
+FILE_REDIRECTION_DIR 	= redirection/
+FILE_REDIRECTION		= testopenredir redirec
+
+#-------- SIGNALS --------#
+FILE_SIGNAL_DIR			= signal/
+FILE_SIGNAL 			= signal_cmd signal_heredoc signal
+
+#-------- PARSING --------#
 FILE_PARSING_DIR		= parsing/
-FILE_PARSING			= parsing checker token pipe redir quote splitter expand
+FILE_PARSING			= parsing token pipe redir quote splitter expand
 
 FILE_PARS_UTILS_DIR		= parsing/utils/
 FILE_PARS_UTILS			= parser token quote quote_2 pipe expand
 
-FILE_REDIRECTION_DIR 	= redirection/
-FILE_REDIRECTION		= testopenredir redirec
-
-FILE_SIGNAL_DIR			= signal/
-FILE_SIGNAL 			= signal_cmd signal_heredoc signal
+FILE_PARS_CHECKER_DIR	= parsing/checker/
+FILE_PARS_CHECKER		= checker
 
 DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR)\
 					 $(FILE_AST_DIR) $(FILE_GARBAGE_DIR) $(FILE_REDIRECTION_DIR)\
-					 $(FILE_PARS_UTILS_DIR) $(FILE_SIGNAL_DIR) $(FILE_EXPORT_DIR)
+					 $(FILE_PARS_UTILS_DIR) $(FILE_SIGNAL_DIR) $(FILE_EXPORT_DIR)\
+					 $(FILE_PARS_CHECKER_DIR)
+
 SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
 SRC_FILES			+= $(addprefix $(FILE_PARSING_DIR), $(FILE_PARSING))
 SRC_FILES			+= $(addprefix $(FILE_PARS_UTILS_DIR), $(FILE_PARS_UTILS))
@@ -59,6 +71,7 @@ SRC_FILES			+= $(addprefix $(FILE_AST_DIR), $(FILE_AST))
 SRC_FILES			+= $(addprefix $(FILE_GARBAGE_DIR), $(FILE_GARBAGE))
 SRC_FILES			+= $(addprefix $(FILE_REDIRECTION_DIR), $(FILE_REDIRECTION))
 SRC_FILES			+= $(addprefix $(FILE_SIGNAL_DIR), $(FILE_SIGNAL))
+SRC_FILES			+= $(addprefix $(FILE_PARS_CHECKER_DIR), $(FILE_PARS_CHECKER))
 
 
 #-------- LIBS --------#
