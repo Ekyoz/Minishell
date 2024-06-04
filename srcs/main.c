@@ -41,7 +41,7 @@ int main(int argc, char *argv[], char *envp[])
     // add_history(input);
 		if(parsing(&tokens, input, env))
 		{
-		 	// print_list(tokens);
+		 	 print_list(tokens);
 			create_node(tokens, &tree);
 			// print_tree(tree->nodes);
 			ast_exec(tree);

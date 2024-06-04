@@ -61,6 +61,7 @@ void print_error(int errorcode, t_tree *tree, t_node *node)
 			close(tree->fdoutcp);
 		free_tree(&tree, 1);
 	}
+	exit(errorcode);
 }
 
 void err_free_all(t_tree *tree)

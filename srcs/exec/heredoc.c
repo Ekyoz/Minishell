@@ -42,7 +42,7 @@ static char **find_heredoc(t_tree *tree, t_node *nodes)
 
 static void close_heredoc(t_tree *tree, char **eofword)
 {
-    free_array((void*)eofword);
+    free_array(eofword);
     close(tree->fdin);
     tree->fdin = open(".here_doc", O_RDONLY);
     if(dup2(tree->fdin, STDIN_FILENO) == -1)

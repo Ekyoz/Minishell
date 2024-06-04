@@ -22,7 +22,7 @@ void	get_first_quote(char **cmd, int pos[2], char *c_quote, int last_line[2])
 
 	while (cmd[++i])
 	{
-		while (cmd[i][j])
+		while (cmd[i][++j])
 		{
 			if (cmd[i][j] == '\'' || cmd[i][j] == '"')
 			{
@@ -31,9 +31,8 @@ void	get_first_quote(char **cmd, int pos[2], char *c_quote, int last_line[2])
                 *c_quote = cmd[i][j];
 				return ;
 			}
-            j++;
 		}
-		j = 0;
+		j = -1;
 	}
 }
 

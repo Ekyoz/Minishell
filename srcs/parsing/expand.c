@@ -23,6 +23,7 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 	int		i_exp;
 	int		j;
 	char	*var;
+	char *sub;
 
 	i_cmd = -1;
 	i_exp = 0;
@@ -42,10 +43,13 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 			{
 				while (cmd[i_cmd][j] && cmd[i_cmd][j] != ' '
 					&& cmd[i_cmd][j] != '\'')
-					var = ft_strcat(var, ft_substr(cmd[i_cmd], j++, 1));
+				{
+					sub = ft_substr(cmd[i_cmd], j++, 1);
+					var = ft_strcat(var, sub);
+				}
 				cmd[i_cmd] = replace_env(get_env_value(ft_strtrim(var, "$"),
 							env), cmd[i_cmd], var);
-				var = NULL;
+				free(sub);
 			}
 		}
 	}

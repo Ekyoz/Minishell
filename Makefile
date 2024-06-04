@@ -24,15 +24,12 @@ TEST_FILES  			= test
 FILE_BUILTINS_DIR 		= builtins/
 FILE_BUILTINS 			= cd echo env exit pwd unset builtin
 
-FILE_EXEC_DIR			= exec/
-FILE_EXEC				= command exec heredoc heredoc_utils pipe fork utils_pipe
-
 FILE_EXPORT_DIR			= builtins/export/
 FILE_EXPORT 			= export_check export
 
 #-------- EXEC --------#
 FILE_EXEC_DIR			= exec/
-FILE_EXEC				= command exec heredoc pipe fork utils_pipe
+FILE_EXEC				= command exec heredoc heredoc_utils pipe fork utils_pipe
 
 #-------- AST --------#
 FILE_AST_DIR			= ast/

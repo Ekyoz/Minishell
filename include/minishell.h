@@ -32,8 +32,13 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-#define OPEN_FILE_ERR 127.1 //1
+#define SUCCESS 0
+#define ERROR 1
 #define CMD_NOT_FOUND 127 // 2
+#define OPEN_FILE_ERR 127.1 //1
+#define CTRL_C 130
+#define CTRL_BACKSLASH 131
+#define CTRL_D
 #define QUOTE_OPEN 2
 
 extern int signal_status;
@@ -162,7 +167,7 @@ void free_pipe(t_tree *tree);
 void err_free_all(t_tree *tree);
 void malloc_tree_err(t_env *env);
 int command_not_found(t_tree *tree, char *cmd);
-void free_array(void **ptr);
+void free_array(char **ptr);
 void ft_exit(t_tree *tree);
 
 //ENVIRONNEMENT
@@ -241,6 +246,7 @@ int *get_no_expandable(char **cmd);
 bool is_expandable(int *no_expandable, int pos);
 int get_len_no_expand(char **cmd);
 bool do_expand(char *cmd, int pos);
+void free_int(int *ptr, int size);
 
 int add_file(const char *line);
 void add_file_to_history();

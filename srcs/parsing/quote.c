@@ -37,6 +37,8 @@ char **quote(char **cmd, t_env *env, int *no_expandable)
 	i = -1;
 	while (++i < quote_strings(temp_cmd))
 		cmd = set_quote(cmd, env, last_line, no_expandable);
+	free_array(temp_cmd);
+	free_int(no_expandable, get_len_no_expand(cmd));
 	return (cmd);
 }
 
@@ -49,6 +51,7 @@ static char	**set_quote(char **cmd, t_env *env, int last_line[2], int *no_expand
 	char	*c_quoted;
 	char	*after;
 	char	*before;
+	char *temp;
 
 	after = NULL;
 	before = NULL;
@@ -58,7 +61,11 @@ static char	**set_quote(char **cmd, t_env *env, int last_line[2], int *no_expand
 
 	c_quoted = get_quoted(cmd, first_quote, last_quote);
 	if (c_quote != '\'' && is_expandable(no_expandable, first_quote[0]))
-		c_quoted = expand_string(c_quoted, env);
+	{
+		temp = c_quoted;
+		c_quoted = ft_strdup(expand_string(c_quoted, env));
+		free(temp);
+	}
 
 	if (first_quote[1] > 0)
 		before = ft_substr(cmd[first_quote[0]], 0, first_quote[1]);
@@ -78,6 +85,9 @@ static char	**set_quote(char **cmd, t_env *env, int last_line[2], int *no_expand
 
 	last_line[0] = first_quote[0]-1;
 	last_line[1] = last_quote[1]-1;
+	free(after);
+	free(before);
+	free(c_quoted);
 
 	return (cmd);
 }
@@ -88,6 +98,7 @@ static char	*get_quoted(char **cmd, int first_quote[2], int last_quote[2])
 	char	quote;
 	int		i_cmd;
 	int		len;
+	char *temp;
 
 	i_cmd = -1;
 	quoted = (char *)malloc(sizeof(char) * quote_len(cmd, first_quote,
@@ -101,10 +112,18 @@ static char	*get_quoted(char **cmd, int first_quote[2], int last_quote[2])
 			quoted = ft_substr(cmd[i_cmd], first_quote[1] + 1, len);
 		}
 		else if (i_cmd > first_quote[0] && i_cmd < last_quote[0])
+		{
+			temp = quoted;
 			quoted = ft_strjoin(quoted, cmd[i_cmd]);
+			free(temp);
+		}
 		else if (i_cmd == last_quote[0])
+		{
+			temp = quoted;
 			quoted = ft_strjoin(quoted, ft_substr(cmd[i_cmd], 0,
 						last_quote[1]));
+			free(temp);
+		}
 	}
 	return (quoted);
 }
