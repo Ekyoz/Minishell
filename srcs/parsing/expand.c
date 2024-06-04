@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:11:44 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/31 20:11:42 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/04 19:10:41 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 	while (cmd[++i_cmd])
 	{
 		j_cmd = -1;
-		if (i_cmd == no_expandable[i_exp])
+		if (no_expandable[i_exp] && i_cmd == no_expandable[i_exp])
 		{
 			i_exp++;
 			continue;
