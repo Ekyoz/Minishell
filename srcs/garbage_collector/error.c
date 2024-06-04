@@ -12,16 +12,31 @@
 
 #include "minishell.h"
 
+void error(int code, t_token *token, t_tree *tree, t_node *node)
+{
+	if (code == OPEN_FILE_ERR)
+	{
+
+	}
+	if (code == CMD_NOT_FOUND)
+	{
+
+	}
+	if (code == QUOTE_OPEN)
+	{
+
+	}
+}
 
 void print_error(int errorcode, t_tree *tree, t_node *node)
 {
-    if(errorcode == 1) // Erreur ouverture de fichiers et de permission
+    if(errorcode == OPEN_FILE_ERR) // Erreur ouverture de fichiers et de permission
     {
         tree->error[0] = 1;
         perror(node->args[0]);
         exit(1);
     }
-    if(errorcode == 2) // command not found
+    if(errorcode == CMD_NOT_FOUND) // command not found
     {
         if(tree->fdin != -1)
             close(tree->fdin);
@@ -34,16 +49,18 @@ void print_error(int errorcode, t_tree *tree, t_node *node)
         ft_putstr_fd(node->args[0], 2);
         ft_putstr_fd(": command not found\n", 2);
     }
-	if(errorcode == 3)
+	if(errorcode == QUOTE_OPEN) // quote not close
 	{
-		printf("Quote not close\n");
+		ft_putstr_fd("minishell: syntax error near token `newline'\n", 2);
 	}
-    if(tree->fdout != -1)
-        close(tree->fdout);
-    if(tree->fdoutcp != -1)
-        close(tree->fdoutcp);
-    free_tree(&tree, 1);
-    exit(127);
+	if (tree != NULL)
+	{
+		if(tree->fdout != -1)
+			close(tree->fdout);
+		if(tree->fdoutcp != -1)
+			close(tree->fdoutcp);
+		free_tree(&tree, 1);
+	}
 }
 
 void err_free_all(t_tree *tree)

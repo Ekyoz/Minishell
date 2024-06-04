@@ -17,7 +17,7 @@ static void	check_quotes_in_string(char *str, int *single_quote,
 static void	check_single_quote(char *in_quote, int *single_quote);
 static void	check_double_quote(char *in_quote, int *double_quote);
 
-bool	quoted(char **cmd)
+int	quoted(char **cmd)
 {
 	int	i;
 	int	single_quote;
@@ -34,10 +34,13 @@ bool	quoted(char **cmd)
 		i++;
 	}
 	if (single_quote == 0 && double_quote == 0)
-		return (false);
+		return (0);
 	if (single_quote % 2 != 0 || double_quote % 2 != 0)
-		print_error(3, NULL, NULL);
-	return (true);
+	{
+		print_error(QUOTE_OPEN, NULL, NULL);
+		return -1;
+	}
+	return (1);
 }
 
 int	quote_len(char **cmd, int first_quote[2], int last_quote[2])

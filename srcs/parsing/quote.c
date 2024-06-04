@@ -22,7 +22,9 @@ char **quote(char **cmd, t_env *env, int *no_expandable)
 	int		i;
 	int		last_line[2];
 
-	if (quoted(cmd) == false)
+	if (quoted(cmd) == -1)
+		return NULL;
+	if (quoted(cmd) == 0)
 		return (expand_array(cmd, env, no_expandable));
 	i = -1;
 	temp_cmd = ft_arrdup(cmd);

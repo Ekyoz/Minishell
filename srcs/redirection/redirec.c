@@ -21,14 +21,14 @@ void find_redir_out(t_tree *tree, t_node *nodes, int *isredir)
         {
             tree->fdout = open(nodes->right->left->args[0], O_TRUNC | O_CREAT | O_WRONLY, 0644);
             if(tree->fdout < 0 && tree->error[0] == 0)
-                print_error(1, tree, nodes->right->left); 
+                print_error(OPEN_FILE_ERR, tree, nodes->right->left);
         }
         else
         {
             tree->fdout = open(nodes->right->args[0], O_TRUNC | O_CREAT | O_WRONLY, 0644);
             if(tree->fdout < 0 && tree->error[0] == 0)
             {
-                print_error(1, tree, nodes->right);               
+                print_error(OPEN_FILE_ERR, tree, nodes->right);
             }
         }
         *isredir = 1;
@@ -44,14 +44,14 @@ void find_redir_in(t_tree *tree, t_node *nodes, int *isredir)
         {
             tree->fdin = open(nodes->right->left->args[0], O_RDONLY, 0644);
             if(tree->fdin < 0 && tree->error[0] == 0)
-                print_error(1, tree, nodes->right->left);
+                print_error(OPEN_FILE_ERR, tree, nodes->right->left);
         }
         else
         {
             tree->fdin = open(nodes->right->args[0], O_RDONLY, 0644);
             if(tree->fdin < 0 && tree->error[0] == 0)
             {
-                print_error(1, tree, nodes->right);
+                print_error(OPEN_FILE_ERR, tree, nodes->right);
             }
         }
         *isredir = 1;
@@ -67,13 +67,13 @@ void find_redir_append(t_tree *tree, t_node *nodes, int *isredir)
         {
             tree->fdout = open(nodes->right->left->args[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
             if(tree->fdout < 0 && tree->error[0] == 0)
-                print_error(1, tree, nodes->right->left);
+                print_error(OPEN_FILE_ERR, tree, nodes->right->left);
         }
         else
         {
             tree->fdout = open(nodes->right->args[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
             if(tree->fdout < 0 && tree->error[0] == 0)
-                print_error(1, tree, nodes->right);                
+                print_error(OPEN_FILE_ERR, tree, nodes->right);
         }
         *isredir = 1;
     }

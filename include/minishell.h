@@ -32,6 +32,10 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
+#define OPEN_FILE_ERR 127.1 //1
+#define CMD_NOT_FOUND 127 // 2
+#define QUOTE_OPEN 2
+
 extern int signal_status;
 
 typedef enum e_token_type
@@ -145,6 +149,7 @@ void heredoc(t_tree *tree, t_node *nodes);
 bool is_heredoc(t_node *nodes);
 
 //FONCTIONS DU GARBAGE COLLECTOR
+void error(int code, t_token *token, t_tree *tree, t_node *node);
 void print_error(int errorcode, t_tree *tree, t_node *node);
 void read_status(t_tree *tree);
 void free_tree(t_tree **tree, int env);
@@ -154,7 +159,7 @@ void free_pipe(t_tree *tree);
 void err_free_all(t_tree *tree);
 void malloc_tree_err(t_env *env);
 int command_not_found(t_tree *tree, char *cmd);
-void ft_free_array(void **ptr);
+void free_array(void **ptr);
 void ft_exit(t_tree *tree);
 
 //ENVIRONNEMENT
@@ -221,7 +226,7 @@ char **string_to_array(char *string);
 char **redir(char **cmd);
 char **quote(char **cmd, t_env *env, int *no_expandable);
 char **clean_space(char **cmd);
-bool quoted(char **cmd);
+int quoted(char **cmd);
 void get_first_quote(char **cmd, int pos[2], char *c_quote, int last_line[2]);
 void get_last_quote(char **cmd, int pos[2], char *c_quote, int last_line[2]);
 bool is_open(char **cmd, int last_line);
@@ -229,10 +234,10 @@ char **expand_array(char **cmd, t_env *env, int *no_expandable);
 char *expand_string(char *cmd, t_env *env);
 void checker(t_token **head);
 int quote_len(char **cmd, int first_quote[2], int last_quote[2]);
-void	free_array(char **array);
 int *get_no_expandable(char **cmd);
 bool is_expandable(int *no_expandable, int pos);
 int get_len_no_expand(char **cmd);
+bool do_expand(char *cmd, int pos);
 
 int add_file(const char *line);
 void add_file_to_history();

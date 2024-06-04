@@ -24,6 +24,7 @@ int *get_no_expandable(char **cmd)
 	while (cmd[++i])
 		if (is_token(cmd[i], 0) == TOKEN_REDIR_HEREDOC)
 			no_expandable[h++] = i+2;
+	no_expandable[h] = '\0';
 	return no_expandable;
 }
 
@@ -36,6 +37,19 @@ bool is_expandable(int *no_expandable, int pos)
 			return false;
 	}
 	return true;
+}
+
+bool do_expand(char *cmd, int pos)
+{
+	char **split;
+
+	split = ft_split_sep(cmd, ' ');
+
+	if (pos+2 > (int)ft_arrlen(split))
+		return false;
+	if (split[pos+2][0] != '\'' && split[pos+2][0] != '"')
+		return true;
+	return false;
 }
 
 int get_len_no_expand(char **cmd)

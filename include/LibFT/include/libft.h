@@ -161,7 +161,6 @@ int					ft_isprint(int C);
  */
 int					ft_isspace(char c);
 
-
 /*
  *    $$\      $$\ $$$$$$$$\ $$\      $$\  $$$$$$\  $$$$$$$\ $$\     $$\
  *    $$$\    $$$ |$$  _____|$$$\    $$$ |$$  __$$\ $$  __$$\\$$\   $$  |
@@ -173,7 +172,6 @@ int					ft_isspace(char c);
  *    \__|     \__|\________|\__|     \__| \______/ \__|  \__|   \__|
  *
  */
-
 
 /**
  * @brief Met les premiers 'N' octets de la zone commençant à 'S' à zéro.
@@ -334,7 +332,6 @@ char				*ft_strcat(char *destination, const char *source);
  */
 size_t				ft_strlcpy(char *dest, char *src, size_t size);
 
-
 /**
  * @brief Duplique une chaine de caractere jusqu'a n caractere.
  *
@@ -342,7 +339,7 @@ size_t				ft_strlcpy(char *dest, char *src, size_t size);
  * @param SIZE: Le nombre maximal de caractères à dupliquer.
  * @return La chaine dupliquer.
  */
-char *ft_strndup(char *str, size_t size);
+char				*ft_strndup(char *str, size_t size);
 
 /**
  * @brief Duplique une chaine de caractere jusqu'a n caractere.
