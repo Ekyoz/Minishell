@@ -1,39 +1,14 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_twodim_array.c                                :+:      :+:    :+:   */
+/*   token_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: atresall <atresall@student.1337.ma>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/27 16:40:03 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/27 16:46:45 by bastpoy          ###   ########.fr       */
+/*   Created: 2024/06/04 09:46:15 by atresall          #+#    #+#             */
+/*   Updated: 2024/06/04 09:46:18 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_array(char **ptr)
-{
-    int i;
-    
-    i = 0;
-	if (ptr)
-	{
-		while(ptr[i])
-		{
-			free(ptr[i]);
-			i++;
-		}
-		free(ptr);
-	}
-    ptr = NULL;
-}
-
-void free_int(int *ptr, int size)
-{
-    if (ptr)
-    {
-        free(ptr);
-    	ptr = NULL;
-    }
-}

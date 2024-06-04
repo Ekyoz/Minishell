@@ -37,7 +37,7 @@ int	quoted(char **cmd)
 		return (0);
 	if (single_quote % 2 != 0 || double_quote % 2 != 0)
 	{
-		print_error(QUOTE_OPEN, NULL, NULL);
+//		print_error(QUOTE_OPEN, NULL, NULL);
 		return -1;
 	}
 	return (1);

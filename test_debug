@@ -1,0 +1,2 @@
+"cat lol.c | cat > lol.c" => segfault parsing
+cd existing file => error editing .minishell_history

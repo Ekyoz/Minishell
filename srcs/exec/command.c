@@ -61,7 +61,7 @@ void	get_env_args(char **envp, t_tree *tree)
 		}
 		i++;
 	}
-	free_array((void **)envp);
+	free_array(envp);
 }
 
 int	check_cmd1(t_tree *tree, t_node *node)

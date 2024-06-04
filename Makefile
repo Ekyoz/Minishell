@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+         #
+#    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/05/28 15:40:45 by bastpoy          ###   ########.fr        #
+#    Updated: 2024/06/04 14:11:16 by bpoyet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ FILE_EXPORT 			= export_check export
 
 #-------- EXEC --------#
 FILE_EXEC_DIR			= exec/
-FILE_EXEC				= command exec heredoc pipe fork utils_pipe
+FILE_EXEC				= command exec heredoc heredoc_utils pipe fork utils_pipe
 
 #-------- AST --------#
 FILE_AST_DIR			= ast/

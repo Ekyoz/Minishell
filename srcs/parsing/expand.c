@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:11:44 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/29 12:20:09 by alexandre        ###   ########.fr       */
+/*   Updated: 2024/05/31 20:11:42 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 	int		i_exp;
 	int		j;
 	char	*var;
+	char *sub;
 
 	i_cmd = -1;
 	i_exp = 0;
@@ -38,14 +39,24 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 		while (cmd[i_cmd][++j_cmd])
 		{
 			j = j_cmd;
+			if (ft_strcmp(cmd[i_cmd], "$") == 0)
+				return cmd;
+			if (ft_strcmp(cmd[i_cmd], "$?") == 0)
+			{
+				cmd[i_cmd] = replace_env(ft_itoa(signal_status), cmd[i_cmd], "$?");
+				return cmd;
+			}
 			if (cmd[i_cmd][j_cmd] == '$')
 			{
 				while (cmd[i_cmd][j] && cmd[i_cmd][j] != ' '
 					&& cmd[i_cmd][j] != '\'')
-					var = ft_strcat(var, ft_substr(cmd[i_cmd], j++, 1));
+				{
+					sub = ft_substr(cmd[i_cmd], j++, 1);
+					var = ft_strcat(var, sub);
+				}
 				cmd[i_cmd] = replace_env(get_env_value(ft_strtrim(var, "$"),
 							env), cmd[i_cmd], var);
-				var = NULL;
+				free(sub);
 			}
 		}
 	}
@@ -60,6 +71,10 @@ char	*expand_string(char *cmd, t_env *env)
 
 	i_cmd = -1;
 	var = NULL;
+	if (ft_strcmp(cmd, "$") == 0)
+		return cmd;
+	if (ft_strcmp(cmd, "$?") == 0)
+		return replace_env(ft_itoa(signal_status), cmd, "$?");
 	while (cmd[++i_cmd])
 	{
 		j = i_cmd;
