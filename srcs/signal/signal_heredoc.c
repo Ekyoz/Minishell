@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:33:55 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/31 16:41:38 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/31 23:55:05 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,7 @@ static void sig_handler_heredoc(int sig)
 {
     if(sig == SIGINT) // ctrl + c
     {
-        fprintf(stderr, "mec faut signal quit la\n");
-        ft_putchar_fd('\n', 1);
+        ft_putchar_fd('\n', 0);
         signal_status = 130;
     }
 }

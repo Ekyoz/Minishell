@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+         #
+#    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/05/28 15:40:45 by bastpoy          ###   ########.fr        #
+#    Updated: 2024/06/04 11:16:25 by bpoyet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,9 @@ TEST_FILES  			= test
 #-------- BUILTINS --------#
 FILE_BUILTINS_DIR 		= builtins/
 FILE_BUILTINS 			= cd echo env exit pwd unset builtin
+
+FILE_EXEC_DIR			= exec/
+FILE_EXEC				= command exec heredoc heredoc_utils pipe fork utils_pipe
 
 FILE_EXPORT_DIR			= builtins/export/
 FILE_EXPORT 			= export_check export

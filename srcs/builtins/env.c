@@ -6,13 +6,13 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/31 11:43:39 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/05/31 20:01:05 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int displayenv(t_tree *tree, t_env *env)
+int displayenv(t_env *env)
 {
     while(env)
     {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:52:24 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/23 16:42:17 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/01 16:18:58 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ void find_redir_out(t_tree *tree, t_node *nodes, int *isredir)
     if(nodes->type == TOKEN_REDIR_OUT)
     {
         if(nodes->right->type == TOKEN_REDIR_OUT || nodes->right->type == TOKEN_REDIR_OUT
-            || nodes->right->type == TOKEN_REDIR_APPEND)
+            || nodes->right->type == TOKEN_REDIR_APPEND || 
+                nodes->right->type == TOKEN_REDIR_HEREDOC)
         {
             tree->fdout = open(nodes->right->left->args[0], O_TRUNC | O_CREAT | O_WRONLY, 0644);
             if(tree->fdout < 0 && tree->error[0] == 0)
