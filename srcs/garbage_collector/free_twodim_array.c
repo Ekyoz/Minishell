@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_twodim_array.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:40:03 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/27 16:46:45 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/04 18:38:51 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void free_array(char **ptr)
 	{
 		while(ptr[i])
 		{
+			// printf("free %s et adresse %p\n", ptr[i], ptr[i]);
 			free(ptr[i]);
 			i++;
 		}
@@ -36,4 +37,13 @@ void free_int(int *ptr, int size)
         free(ptr);
     	ptr = NULL;
     }
+}
+
+bool free_token(char **array1, char **array2, char **array3, char **array4)
+{
+	free_array(array1);
+	free_array(array2);
+	free_array(array3);
+	free_array(array4);
+	return(false);
 }

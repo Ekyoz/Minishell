@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 14:52:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/17 13:25:37 by atresall         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:40:26 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ bool	parsing(t_token **head, char *commands, t_env *env)
 	{
 		c_pipe = pipe_splitter(commands);
 		if (!c_pipe)
-			return (false);
+			return (free_token(c_pipe, NULL, NULL, NULL));
 		while (c_pipe[++i_pipe])
 		{
 			c_splitted = splitter(c_pipe[i_pipe], env);
 			if (!c_splitted)
-				return (false);
+				return (free_token(c_pipe, c_splitted, NULL, NULL));
 			parsing_redir(head, c_pipe, c_splitted, &i_pipe);
 			if (i_pipe < pipe_counter(commands) - 1)
 				append_token(head, TOKEN_PIPE, NULL);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 15:28:56 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/24 12:58:47 by atresall         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:52:19 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char **quote(char **cmd, t_env *env, int *no_expandable)
 	int		last_line[2];
 
 	if (quoted(cmd) == -1)
-		return NULL;
+		return (free(no_expandable), NULL);
 	if (quoted(cmd) == 0)
 		return (expand_array(cmd, env, no_expandable));
 	i = -1;
@@ -33,13 +33,12 @@ char **quote(char **cmd, t_env *env, int *no_expandable)
 	while (cmd[++i])
 		if (ft_strchar(cmd[i], '"') == -1 &&
 			ft_strchar(cmd[i], '\'') == -1)
-			cmd[i] = expand_string(cmd[i], env);
+				cmd[i] = expand_string(cmd[i], env);
 	i = -1;
 	while (++i < quote_strings(temp_cmd))
 		cmd = set_quote(cmd, env, last_line, no_expandable);
 	free_array(temp_cmd);
-	free_int(no_expandable, get_len_no_expand(cmd));
-	return (cmd);
+	return (free(no_expandable), cmd);
 }
 
 static char	**set_quote(char **cmd, t_env *env, int last_line[2], int *no_expandable)
@@ -76,11 +75,23 @@ static char	**set_quote(char **cmd, t_env *env, int last_line[2], int *no_expand
 	i = last_quote[0];
 	while ((i-1) >= first_quote[0])
 		cmd = ft_arrdel(cmd, i--);
-
+	temp = c_quoted;
 	if (before != NULL)
-		c_quoted = ft_strjoin(expand_string(before, env), c_quoted);
+	{
+		temp = c_quoted;
+		c_quoted = ft_strjoin(expand_string(before, env), temp);
+		free(temp);
+		temp = NULL;
+	}
+	temp = c_quoted;
 	if (after != NULL)
+	{
+		temp = c_quoted;
 		c_quoted = ft_strjoin(c_quoted, expand_string(after, env));
+		free(temp);
+		temp = NULL;
+	}
+	free(cmd[first_quote[0]]);
 	cmd[first_quote[0]] = ft_strdup(c_quoted);
 
 	last_line[0] = first_quote[0]-1;
@@ -101,8 +112,7 @@ static char	*get_quoted(char **cmd, int first_quote[2], int last_quote[2])
 	char *temp;
 
 	i_cmd = -1;
-	quoted = (char *)malloc(sizeof(char) * quote_len(cmd, first_quote,
-				last_quote));
+	quoted = NULL;
 	quote = cmd[first_quote[0]][first_quote[1]];
 	while (++i_cmd <= last_quote[0])
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 14:17:56 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/22 16:00:42 by atresall         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:47:27 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	quoted(char **cmd)
 		return (0);
 	if (single_quote % 2 != 0 || double_quote % 2 != 0)
 	{
-		print_error(QUOTE_OPEN, NULL, NULL);
+		ft_putstr_fd("Minishell: quote error\n", 2);
 		return -1;
 	}
 	return (1);

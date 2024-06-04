@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:16:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/04/29 14:16:39 by atresall         ###   ########.fr       */
+/*   Updated: 2024/06/04 18:26:43 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**pipe_splitter(char *command)
 	if (command == NULL)
 		return NULL;
 	add_history(command);
-	add_file(command);
+	// add_file(command);
 	pipe_splited = ft_split(command, '|');
 	while (pipe_splited[++i])
 	{

@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/04 15:11:44 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/04 18:39:04 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,7 @@ bool is_expandable(int *no_expandable, int pos);
 int get_len_no_expand(char **cmd);
 bool do_expand(char *cmd, int pos);
 void free_int(int *ptr, int size);
+bool free_token(char **array1, char **array2, char **array3, char **array4);
 
 int add_file(const char *line);
 void add_file_to_history();
