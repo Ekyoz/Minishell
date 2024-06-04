@@ -23,7 +23,7 @@ char **quote(char **cmd, t_env *env, int *no_expandable)
 	int		last_line[2];
 
 	if (quoted(cmd) == -1)
-		return (free(no_expandable), NULL);
+		return (free_array(cmd), free(no_expandable), NULL);
 	if (quoted(cmd) == 0)
 		return (expand_array(cmd, env, no_expandable));
 	i = -1;

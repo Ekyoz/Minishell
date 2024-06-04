@@ -26,8 +26,8 @@ void free_array(char **ptr)
 			i++;
 		}
 		free(ptr);
+		ptr = NULL;
 	}
-    ptr = NULL;
 }
 
 void free_int(int *ptr, int size)
