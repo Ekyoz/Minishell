@@ -18,6 +18,8 @@ char **redir(char **cmd)
 	int i_split = 0;
 	char **l_final = NULL;
 
+	cmd = clean_space(cmd);
+
 	l_final = (char **) malloc( sizeof(char *) * (ft_arrlen(cmd)+1));
 	ft_bzero(l_final, sizeof (char *)*(ft_arrlen(cmd)+1));
 
@@ -27,15 +29,17 @@ char **redir(char **cmd)
 				is_token(cmd[i_cmd], 0) == TOKEN_REDIR_IN)
 		{
 			l_final[i_split] = ft_strdup(cmd[i_cmd]);
-			l_final[i_split+1] = ft_strdup(cmd[i_cmd+2]);
-			i_split+=2;
+			l_final[i_split+1] = ft_strdup(" ");
+			l_final[i_split+2] = ft_strdup(cmd[i_cmd+1]);
+			i_split+=3;
 		}
 		if (is_token(cmd[i_cmd], 0) == TOKEN_REDIR_APPEND ||
 			is_token(cmd[i_cmd], 0) == TOKEN_REDIR_HEREDOC)
 		{
 			l_final[i_split] = ft_strdup(cmd[i_cmd]);
-			l_final[i_split+1] = ft_strdup(cmd[i_cmd+2]);
-			i_split+=2;
+			l_final[i_split+1] = ft_strdup(" ");
+			l_final[i_split+2] = ft_strdup(cmd[i_cmd+1]);
+			i_split+=3;
 		}
 	}
 
