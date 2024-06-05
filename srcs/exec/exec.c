@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/05 15:18:39 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/05 16:58:12 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void parent_process(int status, pid_t pid)
     {
         signal_status = WEXITSTATUS(status);
     }
-
 }
 
 void *ft_execve(t_tree *tree, t_node *nodes)
@@ -35,13 +34,13 @@ void *ft_execve(t_tree *tree, t_node *nodes)
     return((void*)0);
 }
 
-int exec_cmd(t_tree *tree, t_node *nodes)
+int exec_cmd(t_token *tokens, t_tree *tree, t_node *nodes)
 {
     pid_t pid;
     int status;
 
     status = 0;
-    if(choose_builtin(tree, nodes))
+    if(choose_builtin(tokens, tree, nodes))
         return(0);
     pid = fork();
     set_signal_cmd();
@@ -72,10 +71,10 @@ void *exec_cmd_out(t_token *tokens, t_tree *tree, t_node *nodes)
     pid = do_fork(tree, pid);
     if(pid == 0)
     {
-        heredoc(tree, nodes);
+        heredoc(tokens, tree, nodes);
         check_redir_out(tree, nodes);
         check_redir_in(tree, nodes);
-        if(!nodes->left || choose_builtin(tree, nodes->left))
+        if(!nodes->left || choose_builtin(tokens, tree, nodes->left))
         {
             free_tree(&tree, 1);
             clear_token(&tokens);
@@ -105,6 +104,6 @@ void ast_exec(t_token *tokens, t_tree *tree)
     }
     else if(nodes->type == TOKEN_WORD)
     {
-        exec_cmd(tree, nodes);
+        exec_cmd(tokens, tree, nodes);
     }
 }

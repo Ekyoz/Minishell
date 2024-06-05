@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 16:02:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/31 20:01:46 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/05 16:56:30 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // retourne 1 si un builtin a bien ete trouve
 // je me mets pas les builtin de unset et export car il modifie ma structure
 // ils ne peuvent donc pas etre dans un fork() je les execute a part
-int choose_builtin(t_tree *tree, t_node *nodes)
+int choose_builtin(t_token *tokens, t_tree *tree, t_node *nodes)
 {
     if(!ft_strncmp(nodes->args[0], "pwd", 4))
         return (do_pwd(tree, tree->env));
@@ -30,7 +30,7 @@ int choose_builtin(t_tree *tree, t_node *nodes)
     else if(!ft_strncmp(nodes->args[0], "echo", 5))
         return(do_echo(nodes));
     else if(!ft_strncmp(nodes->args[0], "exit", 5))
-        return(do_exit(tree, nodes));
+        return(do_exit(tokens, tree, nodes));
     else
         return (0);
 }
