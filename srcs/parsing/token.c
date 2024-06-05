@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:09:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/16 16:17:18 by atresall         ###   ########.fr       */
+/*   Updated: 2024/06/05 12:45:51 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void clear_token(t_token **head)
 
     while (current != NULL)
     {
+		printf("current->value = %d\n", current->type);
         next = current->next;
         free(current);
         current = next;
