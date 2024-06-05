@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:30:51 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/30 16:16:28 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/05 14:46:35 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,6 @@ int do_echo(t_node *node)
 	}
 	if (n)
 		ft_putchar_fd('\n', 1);
+	signal_status = 0;
 	return (1);
 }

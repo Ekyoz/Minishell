@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 17:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/05 12:18:43 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/05 13:32:12 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,11 +58,12 @@ static void dup_pipe(t_tree *tree, t_node *nodes, int j, int i)
     }
 }
 
-static void execute_pipe(t_tree *tree, t_node *node)
+static void execute_pipe(t_token *tokens, t_tree *tree, t_node *node)
 {
     if(choose_builtin(tree, node))
     {
         free_tree(&tree, 1);
+        clear_token(&tokens);
         exit(0);
     }
     if(!check_cmd1(tree, node))
@@ -81,7 +82,7 @@ static void parent_process_pipe(int i, int *j, t_tree *tree, t_node **node)
         (*node) = (*node)->right;
 }
 
-void *exec_pipe(t_tree *tree, t_node *nodes)
+void *exec_pipe(t_token *tokens, t_tree *tree, t_node *nodes)
 {
     int i;
     int j;
@@ -98,13 +99,13 @@ void *exec_pipe(t_tree *tree, t_node *nodes)
         {
             dup_pipe(tree, nodes, j, i); // je fais mes redirections si necessaires
             if(testredir(nodes->left)) // Si redirections  
-                execute_pipe(tree, nodes->left->left);
+                execute_pipe(tokens, tree, nodes->left->left);
             else if(nodes->left) // pas de redir et une commande a gauche
             {
-                execute_pipe(tree, nodes->left);
+                execute_pipe(tokens, tree, nodes->left);
             }
             else // pas de redir et pas de pipe
-                execute_pipe(tree, nodes);
+                execute_pipe(tokens, tree, nodes);
         }
         parent_process_pipe(i, &j, tree, &nodes);
     }

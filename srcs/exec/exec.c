@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/04 15:13:44 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/05 13:30:16 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,14 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
     return((void*)0);
 }
 
-void ast_exec(t_tree *tree)
+void ast_exec(t_token *tokens, t_tree *tree)
 {
     t_node *nodes;
 
     nodes = tree->nodes;
     if(nodes->type == TOKEN_PIPE)
     {
-        exec_pipe(tree, nodes);
+        exec_pipe(tokens, tree, nodes);
     }
     else if(nodes->type == TOKEN_REDIR_IN || nodes->type == TOKEN_REDIR_OUT ||
     nodes->type == TOKEN_REDIR_APPEND || nodes->type == TOKEN_REDIR_HEREDOC)

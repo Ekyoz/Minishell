@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:16:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/04 19:16:47 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/05 14:07:50 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,21 +78,19 @@ static char **split_quote_pipe(char *cmd)
 	if (ft_strchar(cmd, '|') == -1)
 		return arrays;
 	if (ft_strchar(cmd, '"') == -1 && ft_strchar(cmd, '\'') == -1)
-		return ft_split(cmd, '|');
+		return (free_array(arrays), ft_split(cmd, '|'));
 	else
 	{
 		get_first_quote(arrays, first_quote, &quote, last_line);
 		get_last_quote(arrays, last_quote, &quote, last_line);
 		if (quote == '\0')
-		{
-			return ft_split(cmd, '|');
-		}
+			return (free_array(arrays), ft_split(cmd, '|'));
 		else
 		{
 			if (first_quote[1] < ft_strchar(cmd, '|') && last_quote[1] > ft_strchar(cmd, '|'))
 				return arrays;
 			else
-				return ft_split(cmd, '|');
+				return (free_array(arrays), ft_split(cmd, '|'));
 		}
 	}
 }

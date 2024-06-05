@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/04 18:39:04 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/05 13:29:57 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,13 +123,13 @@ t_tree *init_tree(t_env *env);
 void print_tree(t_node *node);
 
 //EXECUT
-void ast_exec(t_tree *tree);
+void ast_exec(t_token *tokens, t_tree *tree);
 void *ft_execve(t_tree *tree, t_node *nodes);
 void parent_process(int status, pid_t pid);
 pid_t do_fork(t_tree *tree, pid_t pid);
 
 //PIPE
-void *exec_pipe(t_tree *tree, t_node *nodes);
+void *exec_pipe(t_token *tokens, t_tree *tree, t_node *nodes);
 void first_pipe(t_tree *tree, t_node *node);
 void last_pipe(t_tree *tree, t_node *node, int j);
 void mid_pipe(t_tree *tree, t_node *node, int j);

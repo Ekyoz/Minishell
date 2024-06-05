@@ -6,12 +6,12 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 14:49:24 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/04 19:44:06 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/05 14:47:01 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
+#include <stdio.h>
 static int	is_separator(char c, char sep)
 {
 	return (c == sep);
