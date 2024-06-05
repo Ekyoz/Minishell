@@ -247,7 +247,7 @@ int quote_len(char **cmd, int first_quote[2], int last_quote[2]);
 int *get_no_expandable(char **cmd);
 bool is_expandable(int *no_expandable, int pos);
 int get_len_no_expand(char **cmd);
-bool do_expand(char *cmd, int pos);
+bool do_expand(char *cmd, char **split, int pos);
 void free_int(int *ptr, int size);
 bool free_token(char **array1, char **array2, char **array3, char **array4);
 

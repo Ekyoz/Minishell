@@ -39,12 +39,8 @@ bool is_expandable(int *no_expandable, int pos)
 	return true;
 }
 
-bool do_expand(char *cmd, int pos)
+bool do_expand(char *cmd, char **split, int pos)
 {
-	char **split;
-
-	split = ft_split_sep(cmd, ' ');
-
 	if (pos+2 > (int)ft_arrlen(split))
 		return false;
 	if (split[pos+2][0] != '\'' && split[pos+2][0] != '"')

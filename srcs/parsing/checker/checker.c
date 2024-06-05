@@ -24,6 +24,6 @@ void	checker(t_token **head)
 			if (token->value[0] == NULL)
 				delete_token(head, token);
 		}
-		token = token->next;
+        token = token->next;
 	}
 }
