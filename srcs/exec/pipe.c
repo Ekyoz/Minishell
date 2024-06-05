@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 17:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/31 11:50:08 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/05 12:18:43 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ static void execute_pipe(t_tree *tree, t_node *node)
 {
     if(choose_builtin(tree, node))
     {
+        free_tree(&tree, 1);
         exit(0);
     }
     if(!check_cmd1(tree, node))
