@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/05 13:29:57 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/05 17:01:08 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,11 +129,12 @@ void parent_process(int status, pid_t pid);
 pid_t do_fork(t_tree *tree, pid_t pid);
 
 //PIPE
-void *exec_pipe(t_token *tokens, t_tree *tree, t_node *nodes);
-void first_pipe(t_tree *tree, t_node *node);
-void last_pipe(t_tree *tree, t_node *node, int j);
-void mid_pipe(t_tree *tree, t_node *node, int j);
+void exec_pipe(t_token *tokens, t_tree *tree, t_node *nodes);
+void first_pipe(t_token *tokens, t_tree *tree, t_node *node);
+void last_pipe(t_token *tokens, t_tree *tree, t_node *node, int j);
+void mid_pipe(t_token *tokens, t_tree *tree, t_node *node, int j);
 void close_all_pipes(int **fdpipe, int i);
+void wait_all_parent(t_tree *tree, int i);
 
 //CHECKING COMMAND
 char *check_access1(t_tree *tree, t_node *nodes);
@@ -151,7 +152,7 @@ int testredir(t_node *nodes);
 
 //HEREDOC
 void err_null_heredoc(t_tree *tree, char **eofword, int i);
-void heredoc(t_tree *tree, t_node *nodes);
+void heredoc(t_token *tokens, t_tree *tree, t_node *nodes);
 void init_eofword(t_tree *tree, t_node *nodes, char ***eofword);
 void get_eofword(t_tree *tree, char **eofword, t_node *node, int *i);
 void expand_heredoc(t_tree *tree, t_node *node);
@@ -159,7 +160,6 @@ bool is_heredoc(t_node *nodes);
 int	ft_str_equals(const char *str1, const char *str2);
 
 //FONCTIONS DU GARBAGE COLLECTOR
-void error(int code, t_token *token, t_tree *tree, t_node *node);
 void print_error(int errorcode, t_tree *tree, t_node *node);
 void read_status(t_tree *tree);
 void free_tree(t_tree **tree, int env);
@@ -171,6 +171,7 @@ void malloc_tree_err(t_env *env);
 int command_not_found(t_tree *tree, char *cmd);
 void free_array(char **ptr);
 void ft_exit(t_tree *tree);
+void free_tree_tokens(t_tree *tree, t_token *tokens);
 
 //ENVIRONNEMENT
 t_env	*init_env(char **env_array);
@@ -181,7 +182,7 @@ void	env_add_back(t_env **env, t_env *new);
 int env_length(t_env *env);
 
 //BUILTIN
-int choose_builtin(t_tree *tree, t_node *nodes);
+int choose_builtin(t_token *tokens, t_tree *tree, t_node *nodes);
 //PWD
 int do_pwd(t_tree *tree, t_env *env);
 //UNSET
@@ -196,7 +197,7 @@ size_t	get_char_by_index(char *str, char c);
 //ENV
 int displayenv(t_env *env);
 //EXIT
-int do_exit(t_tree *tree, t_node *node);
+int do_exit(t_token *tokens, t_tree *tree, t_node *node);
 //CD
 int do_cd(t_tree *tree, t_node *node);
 //ECHO

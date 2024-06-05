@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 17:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/05 13:32:12 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/05 16:58:29 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,28 +39,28 @@ static int init_fdpipe(t_tree *tree,t_node *nodes)
     return (i);
 }
 
-static void dup_pipe(t_tree *tree, t_node *nodes, int j, int i)
+static void dup_pipe(t_token *tokens, t_tree *tree, t_node *nodes, int j, int i)
 {
     if(j == 0) // premier pipe
     {
-        first_pipe(tree, nodes->left);
+        first_pipe(tokens, tree, nodes->left);
         close_all_pipes(tree->fdpipe, i);
     }
     else if(j == i) // dernier pipe
     {
-        last_pipe(tree, nodes, j);
+        last_pipe(tokens, tree, nodes, j);
         close_all_pipes(tree->fdpipe, i);
     }
     else // pipe(s) du milieu 
     {
-        mid_pipe(tree, nodes->left, j);
+        mid_pipe(tokens, tree, nodes->left, j);
         close_all_pipes(tree->fdpipe, i);
     }
 }
 
 static void execute_pipe(t_token *tokens, t_tree *tree, t_node *node)
 {
-    if(choose_builtin(tree, node))
+    if(choose_builtin(tokens, tree, node))
     {
         free_tree(&tree, 1);
         clear_token(&tokens);
@@ -82,7 +82,7 @@ static void parent_process_pipe(int i, int *j, t_tree *tree, t_node **node)
         (*node) = (*node)->right;
 }
 
-void *exec_pipe(t_token *tokens, t_tree *tree, t_node *nodes)
+void exec_pipe(t_token *tokens, t_tree *tree, t_node *nodes)
 {
     int i;
     int j;
@@ -97,23 +97,15 @@ void *exec_pipe(t_token *tokens, t_tree *tree, t_node *nodes)
         tree->pid[j] = do_fork(tree, tree->pid[j]);
         if(tree->pid[j] == 0)
         {
-            dup_pipe(tree, nodes, j, i); // je fais mes redirections si necessaires
+            dup_pipe(tokens, tree, nodes, j, i); // je fais mes redirections si necessaires
             if(testredir(nodes->left)) // Si redirections  
                 execute_pipe(tokens, tree, nodes->left->left);
             else if(nodes->left) // pas de redir et une commande a gauche
-            {
                 execute_pipe(tokens, tree, nodes->left);
-            }
             else // pas de redir et pas de pipe
                 execute_pipe(tokens, tree, nodes);
         }
         parent_process_pipe(i, &j, tree, &nodes);
     }
-    j = 0;
-    while(j <= i)
-    {
-        parent_process(tree->status, tree->pid[j]);
-        j++;
-    }
-    return ((void*)0);
+    wait_all_parent(tree, i);
 }

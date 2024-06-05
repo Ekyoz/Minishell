@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/04 14:22:56 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/05 17:46:19 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,16 @@ static char **find_heredoc(t_tree *tree, t_node *nodes)
     return (eofword);
 }
 
-static void close_heredoc(t_tree *tree, char **eofword)
+static void close_heredoc(t_token *tokens, t_tree *tree, char **eofword)
 {
     free_array(eofword);
     close(tree->fdin);
+    if(signal_status == 130)
+    {
+        free_tree(&tree, 1);
+        clear_token(&tokens);
+        exit(signal_status);        
+    }
     tree->fdin = open(".here_doc", O_RDONLY);
     if(dup2(tree->fdin, STDIN_FILENO) == -1)
         err_free_all(tree);
@@ -69,7 +75,7 @@ static void text_heredoc(t_tree *tree, char **eofword, char *input, int *i)
     free(input);       
 }
 
-void heredoc(t_tree *tree, t_node *nodes)
+void heredoc(t_token *tokens, t_tree *tree, t_node *nodes)
 {
     char *input;
     char **eofword;
@@ -84,14 +90,18 @@ void heredoc(t_tree *tree, t_node *nodes)
             err_free_all(tree);
         while(eofword[i])
         {
+            signal_status = 0;
             ft_putstr_fd("heredoc> ", 0);
             input = get_next_line(0);
+            // input = readline("heredoc> ");
+            if(!ft_strncmp(input, "^\\", 2))
+                ft_putstr_fd("je suis la\n\n", 2);
             if(signal_status ==  130)
                 break;
             if(!input)
                 err_null_heredoc(tree, eofword, i);
             text_heredoc(tree, eofword, input, &i);
         }
-        close_heredoc(tree, eofword);
+        close_heredoc(tokens, tree, eofword);
     }
 }
