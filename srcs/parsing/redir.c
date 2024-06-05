@@ -20,7 +20,7 @@ char **redir(char **cmd)
 
 	cmd = clean_space(cmd);
 
-	l_final = (char **) malloc( sizeof(char *) * (ft_arrlen(cmd)+1));
+	l_final = (char **) malloc( sizeof(char *) * (ft_arrlen(cmd)+2));
 	ft_bzero(l_final, sizeof (char *)*(ft_arrlen(cmd)+1));
 
 	while (cmd[++i_cmd])
@@ -42,6 +42,6 @@ char **redir(char **cmd)
 			i_split+=3;
 		}
 	}
-
+    l_final[i_split] = NULL;
 	return l_final;
 }

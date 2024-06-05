@@ -52,7 +52,7 @@ static int	split_loop(char *str, char sep, char **result)
 	{
 		if (str[i] == sep)
 		{
-			result[j] = (char *)malloc(sizeof(char) * 2 + 1);
+			result[j] = (char *)malloc(sizeof(char) * 3);
 			result[j][0] = sep;
 			result[j++][1] = '\0';
 		}
@@ -72,7 +72,7 @@ char	**ft_split_sep(char *str, char sep)
 {
 	char	**result;
 
-	result = (char **)malloc((count_words(str, sep) * 2) * sizeof(char *) + 1);
+	result = (char **)malloc((count_words(str, sep) * 2 +1) * sizeof(char *));
 	if (!result)
 		return (NULL);
 	if (split_loop(str, sep, result) == -1)

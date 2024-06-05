@@ -174,7 +174,7 @@ static char *check_space(char *cmd)
 		{
 			if (cmd[i+2] != ' ')
 				cmd = ft_strjoin(ft_substr(cmd, 0, i+2), ft_strjoin(" ", ft_substr(cmd, i+2, ft_strlen(cmd)-i-2)));
-			if (cmd[i-1] != ' ')
+			if (i > 0 && cmd[i-1] != ' ')
 				cmd = ft_strjoin(ft_substr(cmd, 0, i), ft_strjoin(" ", ft_substr(cmd, i, ft_strlen(cmd)-i)));
 			i+=2;
 		}
@@ -182,7 +182,7 @@ static char *check_space(char *cmd)
 		{
 			if (cmd[i+1] != ' ')
 				cmd = ft_strjoin(ft_substr(cmd, 0, i+1), ft_strjoin(" ", ft_substr(cmd, i+1, ft_strlen(cmd)-i-1)));
-			if (cmd[i-1] != ' ')
+			if (i > 0 && cmd[i-1] != ' ')
 				cmd = ft_strjoin(ft_substr(cmd, 0, i), ft_strjoin(" ", ft_substr(cmd, i, ft_strlen(cmd)-i)));
 			i+=1;
 		}
