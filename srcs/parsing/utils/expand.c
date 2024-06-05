@@ -39,7 +39,7 @@ bool is_expandable(int *no_expandable, int pos)
 	return true;
 }
 
-bool do_expand(char *cmd, char **split, int pos)
+bool do_expand(char **split, int pos)
 {
 	if (pos+2 > (int)ft_arrlen(split))
 		return false;

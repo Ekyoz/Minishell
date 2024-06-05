@@ -12,18 +12,16 @@
 
 #include "minishell.h"
 
-void	checker(t_token **head)
+void checker(t_token **head)
 {
-	t_token	*token;
+    t_token *token = *head;
+    t_token *next_token;
 
-	token = *head;
-	while (token)
-	{
-		if (token->type == TOKEN_WORD)
-		{
-			if (token->value[0] == NULL)
-				delete_token(head, token);
-		}
-        token = token->next;
-	}
+    while (token)
+    {
+        next_token = token->next;
+        if (token->type == TOKEN_WORD && token->value[0] == NULL)
+            delete_token(head, token);
+        token = next_token;
+    }
 }

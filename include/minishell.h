@@ -35,7 +35,7 @@
 #define SUCCESS 0
 #define ERROR 1
 #define CMD_NOT_FOUND 127 // 2
-#define OPEN_FILE_ERR 127.1 //1
+#define OPEN_FILE_ERR 128 //1
 #define CTRL_C 130
 #define CTRL_BACKSLASH 131
 #define CTRL_D
@@ -247,8 +247,8 @@ int quote_len(char **cmd, int first_quote[2], int last_quote[2]);
 int *get_no_expandable(char **cmd);
 bool is_expandable(int *no_expandable, int pos);
 int get_len_no_expand(char **cmd);
-bool do_expand(char *cmd, char **split, int pos);
-void free_int(int *ptr, int size);
+bool do_expand(char **split, int pos);
+void free_int(int *ptr);
 bool free_token(char **array1, char **array2, char **array3, char **array4);
 
 int add_file(const char *line);
