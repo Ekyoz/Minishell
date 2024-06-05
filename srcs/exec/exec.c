@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/05 13:30:16 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/05 15:18:39 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ int exec_cmd(t_tree *tree, t_node *nodes)
     return(0);
 }
 
-void *exec_cmd_out(t_tree *tree, t_node *nodes)
+void *exec_cmd_out(t_token *tokens, t_tree *tree, t_node *nodes)
 {
     pid_t pid;
     int status;
@@ -76,7 +76,11 @@ void *exec_cmd_out(t_tree *tree, t_node *nodes)
         check_redir_out(tree, nodes);
         check_redir_in(tree, nodes);
         if(!nodes->left || choose_builtin(tree, nodes->left))
+        {
+            free_tree(&tree, 1);
+            clear_token(&tokens);
             exit(0);
+        }
         if(!check_cmd1(tree, nodes->left))
             print_error(CMD_NOT_FOUND, tree, nodes->left);
         ft_execve(tree, nodes->left);
@@ -97,7 +101,7 @@ void ast_exec(t_token *tokens, t_tree *tree)
     else if(nodes->type == TOKEN_REDIR_IN || nodes->type == TOKEN_REDIR_OUT ||
     nodes->type == TOKEN_REDIR_APPEND || nodes->type == TOKEN_REDIR_HEREDOC)
     {
-        exec_cmd_out(tree, nodes);
+        exec_cmd_out(tokens, tree, nodes);
     }
     else if(nodes->type == TOKEN_WORD)
     {
