@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/04 11:36:52 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/05 12:26:54 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ int do_exit(t_tree *tree, t_node *node)
             no_numeric_msg(tree, node->args[1]);
         signal_status = code % 256;
         ft_putstr_fd("exit\n", 2);
-		free_env(tree->env);
+		free_tree(&tree, 1);
         exit(signal_status);
     }
 	return(1);

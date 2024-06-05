@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/04 20:03:13 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/05 12:45:06 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,15 @@ int main(int argc, char *argv[], char *envp[])
 		// mettre env dans tree
 		// displayenv(env);
     	// add_history(input);
-		if(parsing(&tokens, input, env))
+		if(parsing(&tokens, input, env) && tokens != NULL)
 		{
     		tree = init_tree(env);
 		 	print_list(tokens);
 			create_node(tokens, &tree);
-			print_tree(tree->nodes);
+			// print_tree(tree->nodes);
 			ast_exec(tree);
 			free_tree(&tree, 0);
+			printf("par la\n\n\n");
 			clear_token(&tokens);
 		}
 		free(input);
