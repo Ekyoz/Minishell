@@ -12,22 +12,6 @@
 
 #include "minishell.h"
 
-void error(int code, t_token *token, t_tree *tree, t_node *node)
-{
-	if (code == OPEN_FILE_ERR)
-	{
-
-	}
-	if (code == CMD_NOT_FOUND)
-	{
-
-	}
-	if (code == QUOTE_OPEN)
-	{
-
-	}
-}
-
 void print_error(int errorcode, t_tree *tree, t_node *node)
 {
     if(errorcode == OPEN_FILE_ERR) // Erreur ouverture de fichiers et de permission

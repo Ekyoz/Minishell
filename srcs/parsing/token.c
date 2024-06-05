@@ -12,19 +12,19 @@
 
 #include "minishell.h"
 
-static t_token *create_token(t_token_type type, char **value, t_token *prev);
+static t_token *create_token(t_token_type type, char **value);
 
 void append_token(t_token **head, t_token_type type, char **value)
 {
 	t_token *last_token = *head;
 	if (*head == NULL)
 	{
-		*head = create_token(type, ft_arrdup(value), last_token);
+		*head = create_token(type, ft_arrdup(value));
 		return ;
 	}
 	while (last_token->next != NULL)
 		last_token = last_token->next;
-	last_token->next = create_token(type, ft_arrdup(value), last_token);
+	last_token->next = create_token(type, ft_arrdup(value));
 }
 
 void delete_token(t_token **head, t_token *node_to_delete)
@@ -54,7 +54,7 @@ void delete_token(t_token **head, t_token *node_to_delete)
 	free(temp);
 }
 
-static t_token *create_token(t_token_type type, char **value, t_token *prev)
+static t_token *create_token(t_token_type type, char **value)
 {
 	t_token *token = (t_token *) malloc(sizeof(t_token)*1);
 	if (!token)

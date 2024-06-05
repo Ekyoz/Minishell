@@ -30,7 +30,7 @@ void free_array(char **ptr)
 	}
 }
 
-void free_int(int *ptr, int size)
+void free_int(int *ptr)
 {
     if (ptr)
     {
