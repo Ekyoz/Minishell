@@ -2,7 +2,5 @@
 cd existing file => error editing .minishell_history
 
 
-echo " => leak
-ls -l | head -n  => 4 invalid read - 1 invalid write
 "cat Makefile | cat Makefile" => leaks
 "cat adwafsegf" => leaks

@@ -250,6 +250,7 @@ int get_len_no_expand(char **cmd);
 bool do_expand(char **split, int pos);
 void free_int(int *ptr);
 bool free_token(char **array1, char **array2, char **array3, char **array4);
+bool check_input(char *input);
 
 int add_file(const char *line);
 void add_file_to_history();

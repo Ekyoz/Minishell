@@ -22,7 +22,7 @@ bool	parsing(t_token **head, char *commands, t_env *env)
 	int		i_pipe;
 
 	i_pipe = -1;
-	if (commands && *commands)
+	if (commands && *commands && check_input(commands))
 	{
 		c_pipe = pipe_splitter(commands);
 		if (!c_pipe)

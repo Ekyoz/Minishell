@@ -25,3 +25,22 @@ void checker(t_token **head)
         token = next_token;
     }
 }
+
+bool check_input(char *input)
+{
+    int i;
+    int space;
+
+    space = 0;
+    i = 0;
+    while (input[++i])
+    {
+        if (ft_isprint(input[i]) == 0)
+            exit(128);
+        if (ft_isspace(input[i]))
+            space++;
+    }
+    if (space == (int)ft_strlen(input)-1)
+        return false;
+    return true;
+}

@@ -93,7 +93,7 @@ CFLAGS_PARSING		= -Wall -Wextra -g3 #-Werror
 CFLAGS_TEST			= -g3
 INCLUDES			= -I/opt/homebrew/opt/readline/include
 LIBFLAGS			= -L/opt/homebrew/opt/readline/lib -lreadline
-VFALGS				= -s --suppressions=supp.supp --leak-check=full --track-origins=yes
+VFALGS				= -s --leak-check=full --track-origins=yes --suppressions=supp.supp
 
 #------------------------------------------------------------------------------#
 #----------------------------- DON'T TOUCH BELOW -----------------------------#
