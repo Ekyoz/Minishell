@@ -3,4 +3,8 @@ cd existing file => error editing .minishell_history
 
 
 "cat Makefile | cat Makefile" => leaks
-"cat adwafsegf" => leaks
+"cat adwafsegf" => leaks / invalid read
+echo "salut test$USER" => invaild read
+echo " test'salut'     " => invalid read
+echo '        ' => invalid read
+afygaf => invalid read
