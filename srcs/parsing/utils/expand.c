@@ -58,3 +58,4 @@ int get_len_no_expand(char **cmd)
 			heredoc++;
 	return heredoc;
 }
+
