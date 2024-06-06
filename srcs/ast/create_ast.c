@@ -6,93 +6,89 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:02:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/05 12:02:25 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/06 18:44:15 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void get_print_branch(t_node *node)
+void	get_print_branch(t_node *node)
 {
-    printf("Actuelle gauche %d\n", node->type);
-    if(node->args)
-        printf("l'args vaut %s\n", node->args[0]);
-    if(node->left)
-    {
-        printf("left %d\n", node->left->type);
-        if(node->right)
-        {
-            printf("right %d\n", node->right->type);
-            get_print_branch(node->right);
-        }
-    }
+	printf("Actuelle gauche %d\n", node->type);
+	if (node->args)
+		printf("l'args vaut %s\n", node->args[0]);
+	if (node->left)
+	{
+		printf("left %d\n", node->left->type);
+		if (node->right)
+		{
+			printf("right %d\n", node->right->type);
+			get_print_branch(node->right);
+		}
+	}
 }
 
-void print_tree(t_node *node)
+void	print_tree(t_node *node)
 {
-    while(node != NULL)
-    {
-        printf("premier ou droite %d\n", node->type);
-        if(node->args)
-            printf("l'args vaut %s\n", node->args[0]);
-        if(node->left)
-            get_print_branch(node->left);
-        node = node->right;
-    }
-    printf("\n\n");
+	while (node != NULL)
+	{
+		printf("premier ou droite %d\n", node->type);
+		if (node->args)
+			printf("l'args vaut %s\n", node->args[0]);
+		if (node->left)
+			get_print_branch(node->left);
+		node = node->right;
+	}
+	printf("\n\n");
 }
 
-static void check_left_redirec(t_node **nodes, t_token **token, bool *is_redirec, t_tree *tree)
+static void	check_left_redirec(t_node **nodes, t_token **token,
+		bool *is_redirec, t_tree *tree)
 {
-    *nodes = (*nodes)->left;// je suis sur la redirection
-    while(*is_redirec == 1)
-    { 
-        add_node_left(*nodes, token, tree);
-        if(get_redirection_right(*token, *nodes, tree)) // je regarde a droite si j'ai une redirection
-            *nodes = (*nodes)->right; // decalle branche de droite    
-        else // pas d'autres redirections donc c'est une commande, il faut que j'arrive a recuperer la bonne commande
-            add_node_right(*nodes, token, is_redirec, tree);
-    }
+	*nodes = (*nodes)->left;
+	while (*is_redirec == 1)
+	{
+		add_node_left(*nodes, token, tree);
+		if (get_redirection_right(*token, *nodes, tree))
+			*nodes = (*nodes)->right;
+		else
+			add_node_right(*nodes, token, is_redirec, tree);
+	}
 }
 
-void create_node(t_token *tokens, t_tree **tree)
+void	create_node(t_token *tokens, t_tree **tree)
 {
-    t_node *nodes;
-    t_node *nodescp; // copie de node qui va contenir l'addresse de la branche right du potentiel prochain pipe
-	bool is_redirec; // boolean a 1 si une redirec est sur ma branche
+	t_node	*nodes;
+	t_node	*nodescp;
+	bool	is_redirec;
 
-    is_redirec = 1;
-    nodes = init_nodes(*tree);
-    if(!nodes)
-        return((void) 1);
-    nodescp = nodes; // une recopie pour stocker le premier node
-    (*tree)->nodes = nodescp;
-    (*tree)->nodebegin = nodescp; // creer une autre copie pour pouvoir free
-    if(tokens->next == NULL)
-    {
-        add_node(nodes, &tokens);
-        return((void) 1);
-    }
-    while(tokens != NULL)
-    {
-        if(get_pipe(tokens, nodes))// Je stocke dans ma liste les pipe en premier
-        {
-            if(get_redirection_left(tokens, nodes, *tree)) // tant que j'ai des redirections sur la branche de gauche ma premiere redirection passe a gauche
-                check_left_redirec(&nodes, &tokens, &is_redirec, *tree);
-            else // je fais une commande a gauche
-                add_node_left(nodes, &tokens, *tree);
-        }
-        else
-        {
-            if(get_redirection_main(tokens, nodes, *tree)) // CONDITION pas de pipe je verifie si j'ai une redirection
-                add_node_left(nodes, &tokens, *tree);
-            else // si j'en ai pas j'effectue une commande
-                add_node(nodes, &tokens);
-        }
-        add_branches(tokens, &nodes, &nodescp, *tree);
-        is_redirec = 1;
-    }
-    return((void) 0);
+	is_redirec = 1;
+	nodes = init_nodes(*tree);
+	if (!nodes)
+		return ((void)1);
+	nodescp = nodes;
+	(*tree)->nodes = nodescp;
+	(*tree)->nodebegin = nodescp;
+	if (tokens->next == NULL)
+		return (add_node(nodes, &tokens), (void)0);
+	while (tokens != NULL)
+	{
+		if (get_pipe(tokens, nodes))
+		{
+			if (get_redirection_left(tokens, nodes, *tree))
+				check_left_redirec(&nodes, &tokens, &is_redirec, *tree);
+			else
+				add_node_left(nodes, &tokens, *tree);
+		}
+		else
+		{
+			if (get_redirection_main(tokens, nodes, *tree))
+				add_node_left(nodes, &tokens, *tree);
+			else
+				add_node(nodes, &tokens);
+		}
+		add_branches(tokens, &nodes, &nodescp, *tree);
+		is_redirec = 1;
+	}
+	return ((void)0);
 }
-
-

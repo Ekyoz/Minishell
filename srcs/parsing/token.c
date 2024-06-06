@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:09:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/05 13:33:42 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/06 19:58:03 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,14 @@ static t_token *create_token(t_token_type type, char **value)
 	token->type = type;
     token->value = NULL;
 	if (value != NULL && (type == TOKEN_WORD || type == TOKEN_REDIR_HEREDOC))
+	{
+		printf("je rentre dans le clean space\n");
 		token->value = clean_space(value);
+	}
+	else
+		free_array(value);
+	// if(token->value)
+	// 	printf("value = %p %s\n", token->value[0], token->value[0]);
 	token->next = NULL;
 	return token;
 }

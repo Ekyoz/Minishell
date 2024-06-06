@@ -6,23 +6,23 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:07:32 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/10 13:07:57 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/06 16:08:31 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 //je teste si les fichiers s'ouvrent avant de vraiment les ouvrir
-int testopening(t_tree *tree, t_node *nodes)
+int testopening(t_token *tokens, t_tree *tree, t_node *nodes)
 {
     int isredir;
 
     isredir = 0;
     while(nodes)
     {
-        find_redir_in(tree, nodes, &isredir);
-        find_redir_out(tree, nodes, &isredir);
-        find_redir_append(tree, nodes, &isredir);
+        find_redir_in(tokens, tree, nodes, &isredir);
+        find_redir_out(tokens, tree, nodes, &isredir);
+        find_redir_append(tokens, tree, nodes, &isredir);
         if(tree->fdout != -1)
         {
             close(tree->fdout);

@@ -1,0 +1,19 @@
+total 324
+drwxr-xr-x 9 bpoyet 2023_lyon   4096 Jun  6 19:58 .
+drwxr-xr-x 4 bpoyet 2023_lyon     42 Mar 26 15:09 ..
+drwxr-xr-x 8 bpoyet 2023_lyon    220 Jun  5 17:47 .git
+-rw-r--r-- 1 bpoyet 2023_lyon    113 Jun  5 15:23 .gitignore
+drwxr-xr-x 2 bpoyet 2023_lyon     76 Mar 28 15:59 .idea
+drwxr-xr-x 4 bpoyet 2023_lyon     49 Jun  5 15:23 include
+-rw-r--r-- 1 bpoyet 2023_lyon   8426 Jun  6 19:25 Makefile
+-rwxr-xr-x 1 bpoyet 2023_lyon 280040 Jun  6 19:58 minishell
+-rw-r--r-- 1 bpoyet 2023_lyon   3599 Jun  6 19:58 .minishell_history
+drwxr-xr-x 2 bpoyet 2023_lyon    180 Jun  5 13:23 others
+drwxr-xr-x 5 bpoyet 2023_lyon     64 Jun  6 19:58 out
+-rw-r--r-- 1 bpoyet 2023_lyon      0 Jun  6 19:58 output
+-rw-r--r-- 1 bpoyet 2023_lyon    646 Jun  6 18:52 output1
+-rw-r--r-- 1 bpoyet 2023_lyon   6621 Jun  5 13:23 readme
+drwxr-xr-x 9 bpoyet 2023_lyon    147 Jun  5 15:38 srcs
+-rw-r--r-- 1 bpoyet 2023_lyon     86 Jun  4 11:12 supp.supp
+-rw-r--r-- 1 bpoyet 2023_lyon    232 Jun  5 13:23 test_debug
+drwxr-xr-x 2 bpoyet 2023_lyon     93 Jun  4 14:18 .vscode

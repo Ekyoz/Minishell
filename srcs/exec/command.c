@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:17:58 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/31 15:40:32 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/06 17:54:11 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// je check ma commande avec le chemin de ma variable d'environnement
 char	*check_access1(t_tree *tree, t_node *nodes)
 {
 	char	*path;
@@ -35,11 +34,10 @@ char	*check_access1(t_tree *tree, t_node *nodes)
 	return (NULL);
 }
 
-// je recuere les path de mon envp
 void	get_env_args(char **envp, t_tree *tree)
 {
 	int		j;
-	int 	i;
+	int		i;
 	char	*temp;
 
 	i = 0;
@@ -73,8 +71,8 @@ int	check_cmd1(t_tree *tree, t_node *node)
 	if (!tree->envp && ft_strchr(node->args[0], '/') == 0)
 		return (0);
 	if (node->args[0] && (ft_strchr(node->args[0], '/') != 0
-			|| ft_strncmp(node->args[0], ".", 1) == 0)
-		&& !access(node->args[0], F_OK))
+			|| ft_strncmp(node->args[0], ".", 1) == 0) && !access(node->args[0],
+			F_OK))
 		return (1);
 	while (tree->envp[i] && node->args[0][0])
 	{
@@ -87,5 +85,5 @@ int	check_cmd1(t_tree *tree, t_node *node)
 		free(path);
 		i++;
 	}
-	return(0);
+	return (0);
 }
