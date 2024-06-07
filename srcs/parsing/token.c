@@ -14,25 +14,6 @@
 
 static t_token *create_token(t_token_type type, char **value);
 
-static void free_array1(char **ptr)
-{
-    int i;
-    
-    i = 0;
-	if (ptr)
-	{
-		while(ptr[i])
-		{
-			// printf("freeing %p et %s\n", ptr[i], ptr[i]);
-			free(ptr[i]);
-			i++;
-		}
-		// printf("freeing %p\n", ptr);
-		free(ptr);
-		ptr = NULL;
-	}
-}
-
 void append_token(t_token **head, t_token_type type, char **value)
 {
 	t_token *last_token = *head;
