@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   redirec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:52:24 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/01 16:18:58 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/06 16:05:42 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void find_redir_out(t_tree *tree, t_node *nodes, int *isredir)
+void find_redir_out(t_token *tokens, t_tree *tree, t_node *nodes, int *isredir)
 {
     if(nodes->type == TOKEN_REDIR_OUT)
     {
@@ -22,21 +22,21 @@ void find_redir_out(t_tree *tree, t_node *nodes, int *isredir)
         {
             tree->fdout = open(nodes->right->left->args[0], O_TRUNC | O_CREAT | O_WRONLY, 0644);
             if(tree->fdout < 0 && tree->error[0] == 0)
-                print_error(OPEN_FILE_ERR, tree, nodes->right->left);
+                print_error(tokens, OPEN_FILE_ERR, tree, nodes->right->left);
         }
         else
         {
             tree->fdout = open(nodes->right->args[0], O_TRUNC | O_CREAT | O_WRONLY, 0644);
             if(tree->fdout < 0 && tree->error[0] == 0)
             {
-                print_error(OPEN_FILE_ERR, tree, nodes->right);
+                print_error(tokens, OPEN_FILE_ERR, tree, nodes->right);
             }
         }
         *isredir = 1;
     }
 }
 
-void find_redir_in(t_tree *tree, t_node *nodes, int *isredir)
+void find_redir_in(t_token *tokens, t_tree *tree, t_node *nodes, int *isredir)
 {
     if(nodes->type == TOKEN_REDIR_IN)
     {
@@ -45,21 +45,21 @@ void find_redir_in(t_tree *tree, t_node *nodes, int *isredir)
         {
             tree->fdin = open(nodes->right->left->args[0], O_RDONLY, 0644);
             if(tree->fdin < 0 && tree->error[0] == 0)
-                print_error(OPEN_FILE_ERR, tree, nodes->right->left);
+                print_error(tokens, OPEN_FILE_ERR, tree, nodes->right->left);
         }
         else
         {
             tree->fdin = open(nodes->right->args[0], O_RDONLY, 0644);
             if(tree->fdin < 0 && tree->error[0] == 0)
             {
-                print_error(OPEN_FILE_ERR, tree, nodes->right);
+                print_error(tokens, OPEN_FILE_ERR, tree, nodes->right);
             }
         }
         *isredir = 1;
     }
 }
 
-void find_redir_append(t_tree *tree, t_node *nodes, int *isredir)
+void find_redir_append(t_token *tokens, t_tree *tree, t_node *nodes, int *isredir)
 {
     if(nodes->type == TOKEN_REDIR_APPEND)
     {
@@ -68,19 +68,19 @@ void find_redir_append(t_tree *tree, t_node *nodes, int *isredir)
         {
             tree->fdout = open(nodes->right->left->args[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
             if(tree->fdout < 0 && tree->error[0] == 0)
-                print_error(OPEN_FILE_ERR, tree, nodes->right->left);
+                print_error(tokens, OPEN_FILE_ERR, tree, nodes->right->left);
         }
         else
         {
             tree->fdout = open(nodes->right->args[0], O_WRONLY | O_CREAT | O_APPEND, 0644);
             if(tree->fdout < 0 && tree->error[0] == 0)
-                print_error(OPEN_FILE_ERR, tree, nodes->right);
+                print_error(tokens, OPEN_FILE_ERR, tree, nodes->right);
         }
         *isredir = 1;
     }
 }
 
-int check_redir_out(t_tree *tree, t_node *nodes)
+int check_redir_out(t_token *tokens, t_tree *tree, t_node *nodes)
 {
     int isredir;
 
@@ -88,8 +88,8 @@ int check_redir_out(t_tree *tree, t_node *nodes)
     // javance tant que j'ai des redirections out et j'ouvre les fichiers
     while(nodes)
     {
-        find_redir_out(tree, nodes, &isredir);
-        find_redir_append(tree, nodes, &isredir);
+        find_redir_out(tokens, tree, nodes, &isredir);
+        find_redir_append(tokens, tree, nodes, &isredir);
         nodes = nodes->right;
     }
     if(isredir == 1)
@@ -102,7 +102,7 @@ int check_redir_out(t_tree *tree, t_node *nodes)
     return (isredir);
 }
 
-int check_redir_in(t_tree *tree, t_node *nodes)
+int check_redir_in(t_token *tokens, t_tree *tree, t_node *nodes)
 {
     int isredir;
 
@@ -110,7 +110,7 @@ int check_redir_in(t_tree *tree, t_node *nodes)
     // javance tant que j'ai des redirections out et j'ouvre les fichiers
     while(nodes)
     {
-        find_redir_in(tree, nodes, &isredir);
+        find_redir_in(tokens, tree, nodes, &isredir);
         nodes = nodes->right;
     }
     if(isredir == 1)

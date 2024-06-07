@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:40:03 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/04 18:38:51 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/06 18:49:47 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ void free_array(char **ptr)
 	{
 		while(ptr[i])
 		{
-			// printf("free %s et adresse %p\n", ptr[i], ptr[i]);
 			free(ptr[i]);
 			i++;
 		}

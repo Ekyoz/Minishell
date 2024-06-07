@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:09:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/05 13:33:42 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/07 12:40:21 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void delete_token(t_token **head, t_token *node_to_delete)
 
 	prev->next = temp->next;
 
+	free_array(node_to_delete->value);
 	free(temp);
 }
 
@@ -62,7 +63,16 @@ static t_token *create_token(t_token_type type, char **value)
 	token->type = type;
     token->value = NULL;
 	if (value != NULL && (type == TOKEN_WORD || type == TOKEN_REDIR_HEREDOC))
+	{
 		token->value = clean_space(value);
+		printf("clean space  %p %s type %d\n", token->value[0], token->value[0], token->type);
+	}
+	else
+	{
+		free_array(value);
+	}
+	// if(token->value)
+	// 	printf("value = %p %s\n", token->value[0], token->value[0]);
 	token->next = NULL;
 	return token;
 }

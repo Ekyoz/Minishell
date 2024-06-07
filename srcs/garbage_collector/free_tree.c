@@ -6,67 +6,49 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:14:56 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/31 15:30:45 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/07 12:37:51 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void free_nodes_args(t_node *node)
+static void free_pipe(t_tree *tree)
 {
     int i;
 
     i = 0;
-    if(node->args)
+    while(tree->nodes->type == TOKEN_PIPE)
     {
-        while(node->args[i])
-        {
-            if(node->args[i])
-            free(node->args[i]);
-            i++;
-        }
-        free(node->args);
-        node->args = NULL;
+        i++;
+        tree->nodes = tree->nodes->right;
     }
-}
-
-static void free_r_l(t_node *node, t_node *nodecp)
-{
-    while(node)
+    while(i > 0)
     {
-        nodecp = node;
-        free_nodes_args(node); // je free les elements de la structure 
-        if(node->left) // je free si il y a un element a gauche
-        {
-            free_nodes_args(node->left);
-            free(node->left);
-        }
-        node = node->right; // je passe sur l'element de droite
-        free(nodecp); // je free le node actuelle
+        free(tree->fdpipe[i - 1]);
+        i--;
     }
+    free(tree->fdpipe);
 }
 
 static void free_nodes(t_node *nodes)
 {
-    t_node *nodecp;
-    t_node *nodecp1;
-    t_node *nodebegin;
+    int i;
 
-    nodecp = NULL;
-    nodecp1 = nodes;
-    nodebegin = nodes;
-    if(nodes->right)
+    i = 0;
+    if (nodes == NULL)
+        return;
+    free_nodes(nodes->left);
+    free_nodes(nodes->right);
+    if (nodes->args != NULL)
     {
-        // nodecp = nodes->right;
-        free_r_l(nodes->right, nodecp);
+        while(nodes->args[i])
+        {
+            free(nodes->args[i]);
+            i++;
+        }
+        free(nodes->args);
     }
-    if(nodecp1->left)
-    {
-        // nodecp1 = nodecp1->left;
-        free_r_l(nodecp1->left, nodecp1);
-    }
-    free_nodes_args(nodebegin);
-    free(nodebegin);
+    free(nodes);
 }
 
 void free_envp(t_tree *tree)

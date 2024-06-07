@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/05 17:01:08 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/07 12:35:34 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ typedef struct s_tree // structure qui va iterer dans mes nodes et executer les 
 	int repeatstatus;
 	int expandheredoc;
 	int status;
-	pid_t pid[3];
+	pid_t pid[1000];
 } t_tree;
 
 //***********************************//
@@ -142,16 +142,16 @@ void	get_env_args(char **envp, t_tree *tree);
 int	check_cmd1(t_tree *tree, t_node *node);
 
 //REDIREC
-void find_redir_out(t_tree *tree, t_node *nodes, int *isredir);
-void find_redir_in(t_tree *tree, t_node *nodes, int *isredir);
-void find_redir_append(t_tree *tree, t_node *nodes, int *isredir);
-int check_redir_out(t_tree *tree, t_node *nodes);
-int check_redir_in(t_tree *tree, t_node *nodes);
-int testopening(t_tree *tree, t_node *nodes);
+void find_redir_out(t_token *tokens, t_tree *tree, t_node *nodes, int *isredir);
+void find_redir_in(t_token *tokens, t_tree *tree, t_node *nodes, int *isredir);
+void find_redir_append(t_token *tokens, t_tree *tree, t_node *nodes, int *isredir);
+int check_redir_out(t_token *tokens, t_tree *tree, t_node *nodes);
+int check_redir_in(t_token *tokens, t_tree *tree, t_node *nodes);
+int testopening(t_token *tokens, t_tree *tree, t_node *nodes);
 int testredir(t_node *nodes);
 
 //HEREDOC
-void err_null_heredoc(t_tree *tree, char **eofword, int i);
+void err_null_heredoc(t_token *tokens, t_tree *tree, char **eofword, int *i);
 void heredoc(t_token *tokens, t_tree *tree, t_node *nodes);
 void init_eofword(t_tree *tree, t_node *nodes, char ***eofword);
 void get_eofword(t_tree *tree, char **eofword, t_node *node, int *i);
@@ -160,18 +160,17 @@ bool is_heredoc(t_node *nodes);
 int	ft_str_equals(const char *str1, const char *str2);
 
 //FONCTIONS DU GARBAGE COLLECTOR
-void print_error(int errorcode, t_tree *tree, t_node *node);
+void print_error(t_token *tokens, int errorcode, t_tree *tree, t_node *node);
 void read_status(t_tree *tree);
 void free_tree(t_tree **tree, int env);
 void free_env(t_env *env);
 void free_envp(t_tree *tree);
-void free_pipe(t_tree *tree);
 void err_free_all(t_tree *tree);
 void malloc_tree_err(t_env *env);
 int command_not_found(t_tree *tree, char *cmd);
 void free_array(char **ptr);
 void ft_exit(t_tree *tree);
-void free_tree_tokens(t_tree *tree, t_token *tokens);
+void free_tree_tokens(t_tree **tree, t_token *tokens);
 
 //ENVIRONNEMENT
 t_env	*init_env(char **env_array);

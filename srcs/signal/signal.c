@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:52:31 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/05/28 15:46:20 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/05 18:40:34 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,11 @@ static void sig_handler(int sig)
     if(sig == SIGINT) // ctrl + c
     {
         signal_status = 130;
-        write(2, "\n", 1);
+        ft_putchar_fd('\n', 2);
         rl_on_new_line();
         rl_replace_line("", 0);
         rl_redisplay();
     }
-
 }
 
 void set_signal(void)
