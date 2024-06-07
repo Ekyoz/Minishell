@@ -23,7 +23,6 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 	int		i_exp;
 	int		j;
 	char	*var;
-	char *sub;
 
 	i_cmd = -1;
 	i_exp = 0;
@@ -36,7 +35,7 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 			i_exp++;
 			continue;
 		}
-		while (cmd[i_cmd][++j_cmd])
+		while (j_cmd < (int)ft_strlen(cmd[i_cmd]) && cmd[i_cmd][++j_cmd])
 		{
 			j = j_cmd;
 			if (ft_strcmp(cmd[i_cmd], "$") == 0)
@@ -48,15 +47,22 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 			}
 			if (cmd[i_cmd][j_cmd] == '$')
 			{
+				char *substr = ft_substr(cmd[i_cmd], j++, 1);
+				var = ft_strjoin("", substr);
 				while (cmd[i_cmd][j] && cmd[i_cmd][j] != ' '
-					&& cmd[i_cmd][j] != '\'')
+					&& cmd[i_cmd][j] != '\'' && cmd[i_cmd][j] != '$')
 				{
-					sub = ft_substr(cmd[i_cmd], j++, 1);
-					var = ft_strcat(var, sub);
+					substr = ft_substr(cmd[i_cmd], j++, 1);
+					var = ft_strjoin(var, substr);
+					free(substr);
 				}
-				cmd[i_cmd] = replace_env(get_env_value(ft_strtrim(var, "$"),
-							env), cmd[i_cmd], var);
-				free(sub);
+				char *trimmed_var = ft_strtrim(var, "$");
+				char *env_value = get_env_value(trimmed_var, env);
+				if (ft_strcmp(env_value, "") == 0)
+					j_cmd--;
+  				cmd[i_cmd] = replace_env(env_value, cmd[i_cmd], var);
+				var = NULL;
+				free(trimmed_var);
 			}
 		}
 	}
@@ -76,27 +82,44 @@ char	*expand_string(char *cmd, t_env *env)
 		return cmd;
 	if (ft_strcmp(cmd, "$?") == 0)
 		return replace_env(ft_itoa(signal_status), cmd, "$?");
-	while (cmd[++i_cmd])
+
+	while (i_cmd < (int)ft_strlen(cmd) && cmd[++i_cmd])
 	{
 		j = i_cmd;
 		if (cmd[i_cmd] == '$')
 		{
-			while (cmd[j] && cmd[j] != ' ' && cmd[j] != '\'' && cmd[j] != '"')
-				var = ft_strcat(var, ft_substr(cmd, j++, 1));
-			cmd = replace_env(get_env_value(ft_strtrim(var, "$"), env), cmd,
-					var);
+			char *substr = ft_substr(cmd, j++, 1);
+			var = ft_strjoin("", substr);
+			while (cmd[j] && cmd[j] != ' ' && cmd[j] != '\'' && cmd[j] != '\"' && cmd[j] != '$')
+			{
+				substr = ft_substr(cmd, j++, 1);
+				var = ft_strjoin(var, substr);
+				free(substr);
+			}
+			char *trimmed_var = ft_strtrim(var, "$");
+			char *env_value = get_env_value(trimmed_var, env);
+			if (ft_strcmp(env_value, "") == 0)
+				i_cmd--;
+			cmd = replace_env(env_value, cmd, var);
+			var = NULL;
+			free(trimmed_var);
 		}
 	}
+	free(var);
 	return (cmd);
 }
 
 static char	*get_env_value(char *key, t_env *env)
 {
+	char *env_key;
+
 	while (env)
 	{
-		if (ft_strcmp(get_env_key(env->value), key) == 0)
-			return (ft_substr(env->value, ft_strchar(env->value, '=') + 1,ft_strlen(env->value)));
+		env_key = get_env_key(env->value);
+		if (ft_strcmp(env_key, key) == 0)
+			return (free(env_key), ft_substr(env->value, ft_strchar(env->value, '=') + 1,ft_strlen(env->value)));
 		env = env->next;
+		free(env_key);
 	}
 	return ("");
 }

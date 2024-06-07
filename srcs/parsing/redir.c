@@ -43,5 +43,5 @@ char **redir(char **cmd)
 		}
 	}
     l_final[i_split] = NULL;
-	return l_final;
+	return clean_space(l_final);
 }

@@ -6,32 +6,13 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:09:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/07 14:57:44 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/07 15:01:07 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static t_token *create_token(t_token_type type, char **value);
-
-static void free_array1(char **ptr)
-{
-    int i;
-    
-    i = 0;
-	if (ptr)
-	{
-		while(ptr[i])
-		{
-			// printf("freeing %p et %s\n", ptr[i], ptr[i]);
-			free(ptr[i]);
-			i++;
-		}
-		// printf("freeing %p\n", ptr);
-		free(ptr);
-		ptr = NULL;
-	}
-}
 
 void append_token(t_token **head, t_token_type type, char **value)
 {
@@ -44,6 +25,7 @@ void append_token(t_token **head, t_token_type type, char **value)
 	while (last_token->next != NULL)
 		last_token = last_token->next;
 	last_token->next = create_token(type, ft_arrdup(value));
+    free_array(value);
 }
 
 void delete_token(t_token **head, t_token *node_to_delete)
@@ -83,15 +65,12 @@ static t_token *create_token(t_token_type type, char **value)
 	if (value != NULL && (type == TOKEN_WORD || type == TOKEN_REDIR_HEREDOC))
 	{
 		token->value = clean_space(value);
-		printf("clean space  %p %s type %d\n", token->value[0], token->value[0], token->type);
 	}
 	else
 	{
-		printf("dans le free array\n");
-		free_array1(value);
+		free_array(value);
+        value = NULL;
 	}
-	// if(token->value)
-	// 	printf("value = %p %s\n", token->value[0], token->value[0]);
 	token->next = NULL;
 	return token;
 }

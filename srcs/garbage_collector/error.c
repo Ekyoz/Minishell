@@ -35,9 +35,9 @@ void print_error(t_token *tokens, int errorcode, t_tree *tree, t_node *node)
         exit(1);
     }
     if(errorcode == CMD_NOT_FOUND) // command not found
+    {
         command_nf(tree, node);
-	if(errorcode == QUOTE_OPEN) // quote not close
-		ft_putstr_fd("minishell: syntax error near token `newline'\n", 2);
+    }
 	if (tree != NULL)
 	{
 		if(tree->fdout != -1)

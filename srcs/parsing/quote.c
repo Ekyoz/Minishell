@@ -110,6 +110,7 @@ static char	*get_quoted(char **cmd, int first_quote[2], int last_quote[2])
 	int		i_cmd;
 	int		len;
 	char *temp;
+    char *temp2;
 
 	i_cmd = -1;
 	quoted = NULL;
@@ -130,9 +131,10 @@ static char	*get_quoted(char **cmd, int first_quote[2], int last_quote[2])
 		else if (i_cmd == last_quote[0])
 		{
 			temp = quoted;
-			quoted = ft_strjoin(quoted, ft_substr(cmd[i_cmd], 0,
-						last_quote[1]));
+            temp2 = ft_substr(cmd[i_cmd], 0, last_quote[1]);
+			quoted = ft_strjoin(quoted, temp2);
 			free(temp);
+            free(temp2);
 		}
 	}
 	return (quoted);

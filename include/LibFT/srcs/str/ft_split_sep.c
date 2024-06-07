@@ -29,6 +29,7 @@ static int	count_words(char *str, char sep)
 		if (is_separator(*str, sep))
 		{
 			in_word = 0;
+			count++;
 		}
 		else if (!in_word)
 		{

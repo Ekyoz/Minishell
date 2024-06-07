@@ -88,7 +88,7 @@ int do_pwd(t_tree *tree, t_env *env)
         if(!ft_strncmp(env->value, "PWD=", 4))
         {
 			path = ft_substr(env->value, 4, strlen(env->value) - 4);
-			ft_putstr_fd(path , 2);
+			ft_putstr_fd(path , 1);
 			ft_putchar_fd('\n',1);
 			free(path);
 			return(1);

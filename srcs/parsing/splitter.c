@@ -41,7 +41,8 @@ char **splitter(char *command, t_env *env) //splitter par les espace et par les 
 			i_token = -1;
 			c_token = split_token(c_space[i_space]);
 			while (c_token[++i_token])
-				c_final[i_final++] = c_token[i_token];
+				c_final[i_final++] = ft_strdup(c_token[i_token]);
+            free_array(c_token);
 		}
 	}
 	c_final[i_final] = NULL;
