@@ -1,13 +1,12 @@
-total 520
+total 516
 drwxrwxr-x 5 bastpoy bastpoy   4096 juin   7 09:56 include
 -rw-rw-r-- 1 bastpoy bastpoy   8426 juin   7 09:56 Makefile
--rwxrwxr-x 1 bastpoy bastpoy 478760 juin   7 12:40 minishell
+-rwxrwxr-x 1 bastpoy bastpoy 479248 juin   7 10:52 minishell
 drwxrwxr-x 2 bastpoy bastpoy   4096 juin   7 09:56 others
-drwxrwxr-x 5 bastpoy bastpoy   4096 juin   7 12:40 out
--rw-rw-r-- 1 bastpoy bastpoy      0 juin   7 12:41 output
--rw-rw-r-- 1 bastpoy bastpoy      0 juin   7 12:41 output1
--rw-r--r-- 1 bastpoy bastpoy    716 juin   7 10:52 output2
--rw-r--r-- 1 bastpoy bastpoy   1129 juin   7 11:59 output6
+drwxrwxr-x 5 bastpoy bastpoy   4096 juin   7 10:52 out
+-rw-rw-r-- 1 bastpoy bastpoy      0 juin   7 10:52 output
+-rw-rw-r-- 1 bastpoy bastpoy      0 juin   7 10:49 output1
+-rw-r--r-- 1 bastpoy bastpoy      0 juin   7 10:52 output2
 -rw-rw-r-- 1 bastpoy bastpoy   6621 juin   7 09:56 readme
 drwxrwxr-x 9 bastpoy bastpoy   4096 juin   7 09:56 srcs
 -rw-rw-r-- 1 bastpoy bastpoy     86 mai   31 16:55 supp.supp

@@ -3,16 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:09:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/06 19:58:03 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/07 12:40:21 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static t_token *create_token(t_token_type type, char **value);
+
+static void free_array1(char **ptr)
+{
+    int i;
+    
+    i = 0;
+	if (ptr)
+	{
+		while(ptr[i])
+		{
+			// printf("freeing %p et %s\n", ptr[i], ptr[i]);
+			free(ptr[i]);
+			i++;
+		}
+		// printf("freeing %p\n", ptr);
+		free(ptr);
+		ptr = NULL;
+	}
+}
 
 void append_token(t_token **head, t_token_type type, char **value)
 {
@@ -63,11 +82,13 @@ static t_token *create_token(t_token_type type, char **value)
     token->value = NULL;
 	if (value != NULL && (type == TOKEN_WORD || type == TOKEN_REDIR_HEREDOC))
 	{
-		printf("je rentre dans le clean space\n");
 		token->value = clean_space(value);
+		printf("clean space  %p %s type %d\n", token->value[0], token->value[0], token->type);
 	}
 	else
-		free_array(value);
+	{
+		free_array1(value);
+	}
 	// if(token->value)
 	// 	printf("value = %p %s\n", token->value[0], token->value[0]);
 	token->next = NULL;
