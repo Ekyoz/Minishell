@@ -59,6 +59,7 @@ static void	parsing_redir(t_token **head, char **c_pipe, char **c_splitted,
 		c_redirs = redir(c_splitted);
 		c_cmd = miss_elements(c_splitted, c_redirs);
 		append_token(head, TOKEN_WORD, c_cmd);
+        free_array(c_cmd);
 		while (c_redirs[++i_redirs])
 		{
 			if (is_token(c_redirs[i_redirs], 0) == TOKEN_REDIR_HEREDOC)
@@ -72,4 +73,5 @@ static void	parsing_redir(t_token **head, char **c_pipe, char **c_splitted,
 				append_token(head, is_token(c_redirs[i_redirs], 0),string_to_array(c_redirs[i_redirs]));
 		}
 	}
+    free_array(c_redirs);
 }

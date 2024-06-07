@@ -25,6 +25,7 @@ void append_token(t_token **head, t_token_type type, char **value)
 	while (last_token->next != NULL)
 		last_token = last_token->next;
 	last_token->next = create_token(type, ft_arrdup(value));
+    free_array(value);
 }
 
 void delete_token(t_token **head, t_token *node_to_delete)
@@ -70,6 +71,7 @@ static t_token *create_token(t_token_type type, char **value)
 	else
 	{
 		free_array(value);
+        value = NULL;
 	}
 	// if(token->value)
 	// 	printf("value = %p %s\n", token->value[0], token->value[0]);

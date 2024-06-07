@@ -1,0 +1,11 @@
+total 544
+-rw-rw-r-- 1 parallels parallels   8448 Jun  7 13:33 Makefile
+drwxrwxr-x 4 parallels parallels   4096 Jun  7 13:33 include
+-rwxrwxr-x 1 parallels parallels 509888 Jun  7 13:51 minishell
+drwxrwxr-x 2 parallels parallels   4096 Jun  5 14:02 others
+drwxrwxr-x 5 parallels parallels   4096 Jun  7 13:51 out
+-rw-r--r-- 1 parallels parallels      0 Jun  7 13:52 output
+-rw-rw-r-- 1 parallels parallels   6621 Jun  5 14:02 readme
+drwxrwxr-x 9 parallels parallels   4096 Jun  7 13:33 srcs
+-rw-rw-r-- 1 parallels parallels     86 Jun  5 14:02 supp.supp
+-rw-rw-r-- 1 parallels parallels    129 Jun  7 13:33 test_debug
