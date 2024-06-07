@@ -66,15 +66,12 @@ static t_token *create_token(t_token_type type, char **value)
 	if (value != NULL && (type == TOKEN_WORD || type == TOKEN_REDIR_HEREDOC))
 	{
 		token->value = clean_space(value);
-		printf("clean space  %p %s type %d\n", token->value[0], token->value[0], token->type);
 	}
 	else
 	{
 		free_array(value);
         value = NULL;
 	}
-	// if(token->value)
-	// 	printf("value = %p %s\n", token->value[0], token->value[0]);
 	token->next = NULL;
 	return token;
 }

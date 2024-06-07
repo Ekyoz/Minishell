@@ -21,14 +21,12 @@ char	**ft_arrdup(char **array)
 	i = -1;
 	if (array == NULL)
 		return (NULL);
-	printf("size du malloc %lu -%s- \n", sizeof(char*) *(ft_arrlen(array) + 1), array[0]);
 	dup = (char **)malloc(sizeof(char *) * (ft_arrlen(array) + 1));
 	if (dup == NULL)
 		return (NULL);
 	while (array[++i])
 	{
 		dup[i] = ft_strdup(array[i]);
-		printf("dup %p %s %d\n", dup[i], dup[i], i);
 	}
 	dup[i] = NULL;
 	return (dup);
