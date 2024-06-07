@@ -23,7 +23,6 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 	int		i_exp;
 	int		j;
 	char	*var;
-	char *sub;
 
 	i_cmd = -1;
 	i_exp = 0;
@@ -76,7 +75,6 @@ char	*expand_string(char *cmd, t_env *env)
 	int		i_cmd;
 	int		j;
 	char	*var;
-	char *temp;
 
 	i_cmd = -1;
 	var = NULL;
