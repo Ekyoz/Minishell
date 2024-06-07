@@ -6,32 +6,13 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:09:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/07 12:47:11 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/07 14:56:05 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static t_token *create_token(t_token_type type, char **value);
-
-static void free_array1(char **ptr)
-{
-    int i;
-    
-    i = 0;
-	if (ptr)
-	{
-		while(ptr[i])
-		{
-			// printf("freeing %p et %s\n", ptr[i], ptr[i]);
-			free(ptr[i]);
-			i++;
-		}
-		// printf("freeing %p\n", ptr);
-		free(ptr);
-		ptr = NULL;
-	}
-}
 
 void append_token(t_token **head, t_token_type type, char **value)
 {
@@ -70,6 +51,7 @@ void delete_token(t_token **head, t_token *node_to_delete)
 
 	prev->next = temp->next;
 
+	free_array(node_to_delete->value);
 	free(temp);
 }
 
@@ -87,8 +69,7 @@ static t_token *create_token(t_token_type type, char **value)
 	}
 	else
 	{
-		printf("dans le free array\n");
-		free_array1(value);
+		free_array(value);
 	}
 	// if(token->value)
 	// 	printf("value = %p %s\n", token->value[0], token->value[0]);
