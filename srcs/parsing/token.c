@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:09:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/07 12:40:21 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/07 12:47:11 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ static t_token *create_token(t_token_type type, char **value)
 	}
 	else
 	{
+		printf("dans le free array\n");
 		free_array1(value);
 	}
 	// if(token->value)
