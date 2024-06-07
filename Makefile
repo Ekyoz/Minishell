@@ -179,6 +179,7 @@ $(TEST_OUT_DIR)/%.o: $(TEST_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
 
 $(NAME): archive $(OBJ) $(HEADERS)
 			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME) $(LIBFLAGS)
+			@cp $(RUN_NAME) ./others
 			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR) ($(YELLOW)$(BOLD)$(COUNTER)$(DEF_COLOR) $(WHITE)fichiers$(DEF_COLOR))"
 
 all: $(NAME)
@@ -239,6 +240,7 @@ clean:
 			@$(RM) $(TEST_NAME)
 			@$(RM) *.o
 			@$(RM) __.*
+			@$(RM) ./others/$(NAME)
 			@echo "$(ORANGE)Tous les fichier objets de $(CYAN)$(BOLD)$(PROJECT_NAME)$(ORANGE) ont été supprimé!$(DEF_COLOR)"
 
 fclean:		clean
