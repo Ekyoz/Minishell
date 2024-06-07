@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:30:32 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/07 12:40:37 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/07 15:07:28 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ char	**ft_arrdup1(char **array)
 	i = -1;
 	if (array == NULL)
 		return (NULL);
-	// printf("size du malloc %lu -%s- \n", sizeof(char*) *(ft_arrlen(array) + 1), array[0]);
 	dup = (char **)malloc(sizeof(char *) * (ft_arrlen(array) + 1));
 	if (dup == NULL)
 		return (NULL);
