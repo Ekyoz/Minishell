@@ -12,14 +12,14 @@
 
 #include "minishell.h"
 
-void free_array(char **ptr)
+void	free_array(char **ptr)
 {
-    int i;
-    
-    i = 0;
+	int	i;
+
+	i = 0;
 	if (ptr)
 	{
-		while(ptr[i])
+		while (ptr[i])
 		{
 			free(ptr[i]);
 			i++;
@@ -29,20 +29,20 @@ void free_array(char **ptr)
 	}
 }
 
-void free_int(int *ptr)
+void	free_int(int *ptr)
 {
-    if (ptr)
-    {
-        free(ptr);
-    	ptr = NULL;
-    }
+	if (ptr)
+	{
+		free(ptr);
+		ptr = NULL;
+	}
 }
 
-bool free_token(char **array1, char **array2, char **array3, char **array4)
+bool	free_token(char **array1, char **array2, char **array3, char **array4)
 {
 	free_array(array1);
 	free_array(array2);
 	free_array(array3);
 	free_array(array4);
-	return(false);
+	return (false);
 }

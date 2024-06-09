@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:08:51 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/05/29 11:15:57 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/07 15:42:17 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,6 @@ int print_err_export(char *err)
     ft_putstr_fd(err, 2);
     ft_putstr_fd("'", 2);
     ft_putstr_fd(": not a valid identifier\n", 2);
-    signal_status = 1;
+    g_signal_status = 1;
     return(1);
 }

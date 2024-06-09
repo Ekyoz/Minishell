@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/06 16:18:52 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/07 15:42:17 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,38 +41,39 @@ long long	ft_atoi_exit(char *str, int i, int *pbm)
 	return (sum * neg);
 }
 
-static void no_numeric_msg(t_token *tokens, t_tree *tree, char *str)
+static void	no_numeric_msg(t_token *tokens, t_tree *tree, char *str)
 {
-    ft_putstr_fd("exit\n", 2);
+	ft_putstr_fd("exit\n", 2);
 	ft_putstr_fd("Minishell : exit: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
-    signal_status = 1;
+	g_signal_status = 1;
 	clear_token(&tokens);
 	free_tree(&tree, 1);
-    exit(1);
+	exit(1);
 }
 
-static void many_argument_msg(t_tree *tree)
+static void	many_argument_msg(t_tree *tree)
 {
 	ft_putstr_fd("exit\n", 2);
 	ft_putstr_fd("Minishell: exit: too many arguments\n", 2);
-    signal_status = 1;
+	g_signal_status = 1;
 	free_tree(&tree, 1);
-    exit(1);
+	exit(1);
 }
 
-static void check_numeric(t_token *tokens, t_tree *tree, t_node *node)
+static void	check_numeric(t_token *tokens, t_tree *tree, t_node *node)
 {
-	int		i;
+	int	i;
 
 	i = 0;
 	if (node->args[1][i] == '-' || node->args[1][i] == '+')
 		i++;
 	while (node->args[1][i])
 	{
-		if (node->args[1][i] != '\f' && node->args[1][i] != '\t' && node->args[1][i] != '\r'
-			&& node->args[1][i] != '\v' && node->args[1][i] != ' ')
+		if (node->args[1][i] != '\f' && node->args[1][i] != '\t'
+			&& node->args[1][i] != '\r' && node->args[1][i] != '\v'
+			&& node->args[1][i] != ' ')
 		{
 			if (node->args[1][i] < 48 || node->args[1][i] > 57)
 				no_numeric_msg(tokens, tree, node->args[1]);
@@ -81,31 +82,31 @@ static void check_numeric(t_token *tokens, t_tree *tree, t_node *node)
 	}
 }
 
-int do_exit(t_token *tokens, t_tree *tree, t_node *node)
+int	do_exit(t_token *tokens, t_tree *tree, t_node *node)
 {
-    int i;
-    int maxlong;
-    long long code;
+	int			i;
+	int			maxlong;
+	long long	code;
 
-    maxlong = 0;
-    i = 0;
-    if(!node->args[1]) // dans le cas ou j'ai seulement un exit
+	maxlong = 0;
+	i = 0;
+	if (!node->args[1])
 		ft_exit(tree);
-    check_numeric(tokens, tree, node); //je check si l'argument est un nombre
-    while(node->args[i])
-        i++;
-    if(i > 2) //si ++ de un argument
-        many_argument_msg(tree);
-    else
-    {
-        i = 0;
-        code = ft_atoi_exit(node->args[1], i, &maxlong);
-        if(maxlong == 1)
-            no_numeric_msg(tokens, tree, node->args[1]);
-        signal_status = code % 256;
-        ft_putstr_fd("exit\n", 2);
+	check_numeric(tokens, tree, node);
+	while (node->args[i])
+		i++;
+	if (i > 2)
+		many_argument_msg(tree);
+	else
+	{
+		i = 0;
+		code = ft_atoi_exit(node->args[1], i, &maxlong);
+		if (maxlong == 1)
+			no_numeric_msg(tokens, tree, node->args[1]);
+		g_signal_status = code % 256;
+		ft_putstr_fd("exit\n", 2);
 		free_tree_tokens(&tree, tokens);
-        exit(signal_status);
-    }
-	return(1);
+		exit(g_signal_status);
+	}
+	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/06 18:03:57 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/07 15:42:17 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	parent_process(int status, pid_t pid)
 		unlink("./.here_doc");
 	if (WIFEXITED(status))
 	{
-		signal_status = WEXITSTATUS(status);
+		g_signal_status = WEXITSTATUS(status);
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:11:44 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/04 19:19:51 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/07 15:42:17 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 				return cmd;
 			if (ft_strcmp(cmd[i_cmd], "$?") == 0)
 			{
-				cmd[i_cmd] = replace_env(ft_itoa(signal_status), cmd[i_cmd], "$?");
+				cmd[i_cmd] = replace_env(ft_itoa(g_signal_status), cmd[i_cmd], "$?");
 				return cmd;
 			}
 			if (cmd[i_cmd][j_cmd] == '$')
@@ -81,7 +81,7 @@ char	*expand_string(char *cmd, t_env *env)
 	if (ft_strcmp(cmd, "$") == 0)
 		return cmd;
 	if (ft_strcmp(cmd, "$?") == 0)
-		return replace_env(ft_itoa(signal_status), cmd, "$?");
+		return replace_env(ft_itoa(g_signal_status), cmd, "$?");
 
 	while (i_cmd < (int)ft_strlen(cmd) && cmd[++i_cmd])
 	{

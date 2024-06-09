@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/06 18:03:06 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/07 15:42:17 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,11 @@ static void	close_heredoc(t_token *tokens, t_tree *tree, char **eofword)
 {
 	free_array(eofword);
 	close(tree->fdin);
-	if (signal_status == 130)
+	if (g_signal_status == 130)
 	{
 		free_tree(&tree, 1);
 		clear_token(&tokens);
-		exit(signal_status);
+		exit(g_signal_status);
 	}
 	tree->fdin = open(".here_doc", O_RDONLY);
 	if (dup2(tree->fdin, STDIN_FILENO) == -1)
@@ -98,10 +98,10 @@ void	heredoc(t_token *tokens, t_tree *tree, t_node *nodes)
 			err_free_all(tree);
 		while (eofword[i])
 		{
-			signal_status = 0;
+			g_signal_status = 0;
 			ft_putstr_fd("heredoc> ", 0);
 			input = get_next_line(0);
-			if (signal_status == 130)
+			if (g_signal_status == 130)
 				break ;
 			if (!input)
 				err_null_heredoc(tokens, tree, eofword, &i);

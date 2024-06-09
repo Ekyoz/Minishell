@@ -1,11 +1,11 @@
-total 540
--rw-rw-r-- 1 parallels parallels   8448 Jun  7 13:53 Makefile
-drwxrwxr-x 4 parallels parallels   4096 Jun  7 13:53 include
--rwxrwxr-x 1 parallels parallels 505640 Jun  7 14:10 minishell
-drwxrwxr-x 2 parallels parallels   4096 Jun  5 14:02 others
-drwxrwxr-x 5 parallels parallels   4096 Jun  7 14:10 out
--rw-rw-r-- 1 parallels parallels      0 Jun  7 14:10 output
--rw-rw-r-- 1 parallels parallels   6621 Jun  5 14:02 readme
-drwxrwxr-x 9 parallels parallels   4096 Jun  7 13:33 srcs
--rw-rw-r-- 1 parallels parallels     86 Jun  5 14:02 supp.supp
--rw-rw-r-- 1 parallels parallels    129 Jun  7 13:53 test_debug
+total 516
+drwxrwxr-x 5 bastpoy bastpoy   4096 juin   7 15:13 include
+-rw-rw-r-- 1 bastpoy bastpoy   8503 juin   7 15:13 Makefile
+-rwxrwxr-x 1 bastpoy bastpoy 481136 juin   7 16:09 minishell
+drwxrwxr-x 2 bastpoy bastpoy   4096 juin   7 16:09 others
+drwxrwxr-x 5 bastpoy bastpoy   4096 juin   7 16:09 out
+-rw-rw-r-- 1 bastpoy bastpoy      0 juin   7 16:09 output
+-rw-rw-r-- 1 bastpoy bastpoy   6621 juin   7 14:52 readme
+drwxrwxr-x 9 bastpoy bastpoy   4096 juin   7 14:52 srcs
+-rw-rw-r-- 1 bastpoy bastpoy     86 juin   7 14:52 supp.supp
+-rw-rw-r-- 1 bastpoy bastpoy    129 juin   7 15:13 test_debug

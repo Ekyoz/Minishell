@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/06 17:39:14 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/07 15:42:17 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int put(t_tree *tree, t_env *env, char *str, int *ret)
 	char *strcp;
 
 	if(*ret == 1)
-		return(*ret = 0, signal_status = 1, 1);
+		return(*ret = 0, g_signal_status = 1, 1);
 	strcp = ft_strdup(str);
 	length = get_char_by_index(str, '=');
 	if(length == (size_t)-1)

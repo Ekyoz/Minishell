@@ -6,253 +6,275 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/07 12:35:34 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/07 15:42:17 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
-#define MINISHELL_H
+# define MINISHELL_H
 
+# include "get_next_line.h"
 # include "libft.h"
-#include "get_next_line.h"
-# include <stdlib.h>
-# include <unistd.h>
-# include <stdio.h>
-# include <string.h>
-# include <fcntl.h>
-# include <dirent.h>
-# include <sys/wait.h>
-# include <sys/stat.h>
-# include <sys/ioctl.h>
-# include <limits.h>
-# include <errno.h>
-# include <signal.h>
 # include <curses.h>
-# include <term.h>
-# include <readline/readline.h>
+# include <dirent.h>
+# include <errno.h>
+# include <fcntl.h>
+# include <limits.h>
 # include <readline/history.h>
+# include <readline/readline.h>
+# include <signal.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <sys/ioctl.h>
+# include <sys/stat.h>
+# include <sys/wait.h>
+# include <term.h>
+# include <unistd.h>
 
-#define SUCCESS 0
-#define ERROR 1
-#define CMD_NOT_FOUND 127 // 2
-#define OPEN_FILE_ERR 128 //1
-#define CTRL_C 130
-#define CTRL_BACKSLASH 131
-#define CTRL_D
-#define QUOTE_OPEN 2
+# define SUCCESS 0
+# define ERROR 1
+# define CMD_NOT_FOUND 127 
+# define OPEN_FILE_ERR 128
+# define CTRL_C 130
+# define CTRL_BACKSLASH 131
+# define CTRL_D
+# define QUOTE_OPEN 2
 
-extern int signal_status;
+extern int			g_signal_status;
 
 typedef enum e_token_type
 {
-	TOKEN_WORD, // WORD 0
-	TOKEN_PIPE, // PIPE: | 1
-	TOKEN_REDIR_IN, // REDIRECTION IN: < 2
-	TOKEN_REDIR_OUT, // REDIRECTION OUT: > 3
-	TOKEN_REDIR_APPEND, // REDIRECTION APPEND: >> 4
-	TOKEN_REDIR_HEREDOC, // REDIRECTION HEREDOC: << 5
-	TOKEN_OR, // OR: || 7
-	TOKEN_AND, // AND: && 8
-	PIPEUSED, // 9
-	REDIRUSED, // 10
-}	t_token_type;
+	TOKEN_WORD,
+	TOKEN_PIPE,
+	TOKEN_REDIR_IN,
+	TOKEN_REDIR_OUT,
+	TOKEN_REDIR_APPEND,
+	TOKEN_REDIR_HEREDOC,
+	TOKEN_OR,
+	TOKEN_AND,
+	PIPEUSED,
+	REDIRUSED,
+}					t_token_type;
 
 typedef struct s_token
 {
-	t_token_type		type;
-	char				**value;
-	struct s_token		*next;
-}	t_token;
+	t_token_type	type;
+	char			**value;
+	struct s_token	*next;
+}					t_token;
 
 typedef struct s_node
 {
-	t_token_type		type; //redirection ou pipe ou cmd
-	int					file_type;
-	int 				tree_level; // entier comptabilisant les sous branches
-	char				**args; // ce qu'il y a dans la commande
+	t_token_type	type;
+	int				file_type;
+	int				tree_level;
+	char			**args;
 	struct s_node	*left;
 	struct s_node	*right;
-}	t_node;
+}					t_node;
 
 typedef struct s_env
 {
 	char			*value;
 	bool			secret;
 	struct s_env	*next;
-}				t_env;
+}					t_env;
 
-
-typedef struct s_tree // structure qui va iterer dans mes nodes et executer les commandes
+typedef struct s_tree
 {
-	t_node *nodebegin;
-	t_node *nodes;
-	t_env *env; // mon environnement
-	char	**envp; // mes path pour les commandes
-	char	*path; //  le path retourner par le check_access
-	int **fdpipe; // fd de chaque pipe
-	int fdout; // fd du file out
-	int fdin; // fd du file in
-	int fdoutcp;
-	int error[4];
-	int repeatstatus;
-	int expandheredoc;
-	int status;
-	pid_t pid[1000];
-} t_tree;
+	t_node			*nodebegin;
+	t_node			*nodes;
+	t_env			*env;
+	char			**envp;
+	char			*path;
+	int				**fdpipe;
+	int				fdout;
+	int				fdin;
+	int				fdoutcp;
+	int				error[4];
+	int				repeatstatus;
+	int				expandheredoc;
+	int				status;
+	pid_t			pid[1000];
+}					t_tree;
 
 //***********************************//
-// 				EXEC				 //
+// 				EXEC					//
 //***********************************//
 
 // TROUVER LES REDIRECTIONS POUR LES AJOUTER A MON ARBRE AST
-int get_pipe(t_token *token, t_node *nodes);
-int get_redirection_left(t_token *token, t_node *nodes, t_tree *tree);
-int get_redirection_right(t_token *token, t_node *nodes, t_tree *tree);
-int get_redirection_main(t_token *token, t_node *nodes, t_tree *tree);
+int					get_pipe(t_token *token, t_node *nodes);
+int					get_redirection_left(t_token *token, t_node *nodes,
+						t_tree *tree);
+int					get_redirection_right(t_token *token, t_node *nodes,
+						t_tree *tree);
+int					get_redirection_main(t_token *token, t_node *nodes,
+						t_tree *tree);
 
 // FONCTIONS NODES POUR CREER DES NODES SUR MON ARBRE AST
-t_node *init_nodes(t_tree *tree);
-t_node *add_node(t_node *nodes, t_token **token);
-t_node *add_node_left(t_node *nodes, t_token **token, t_tree *tree);
-t_node *add_node_right(t_node *nodes, t_token **token, bool *is_redirec, t_tree *tree);
-void create_node(t_token *tokens, t_tree **tree);
-void add_branches(t_token *tokens, t_node **node, t_node **nodecp, t_tree *tree);
+t_node				*init_nodes(t_tree *tree);
+t_node				*add_node(t_node *nodes, t_token **token);
+t_node				*add_node_left(t_node *nodes, t_token **token,
+						t_tree *tree);
+t_node				*add_node_right(t_node *nodes, t_token **token,
+						bool *is_redirec, t_tree *tree);
+void				create_node(t_token *tokens, t_tree **tree);
+void				add_branches(t_token *tokens, t_node **node,
+						t_node **nodecp, t_tree *tree);
 
-//FONCTIONS MANIPULATION DE MON ARBRE
-t_tree *init_tree(t_env *env);
-void print_tree(t_node *node);
+// FONCTIONS MANIPULATION DE MON ARBRE
+t_tree				*init_tree(t_env *env);
+void				print_tree(t_node *node);
 
-//EXECUT
-void ast_exec(t_token *tokens, t_tree *tree);
-void *ft_execve(t_tree *tree, t_node *nodes);
-void parent_process(int status, pid_t pid);
-pid_t do_fork(t_tree *tree, pid_t pid);
+// EXECUT
+void				ast_exec(t_token *tokens, t_tree *tree);
+void				*ft_execve(t_tree *tree, t_node *nodes);
+void				parent_process(int status, pid_t pid);
+pid_t				do_fork(t_tree *tree, pid_t pid);
 
-//PIPE
-void exec_pipe(t_token *tokens, t_tree *tree, t_node *nodes);
-void first_pipe(t_token *tokens, t_tree *tree, t_node *node);
-void last_pipe(t_token *tokens, t_tree *tree, t_node *node, int j);
-void mid_pipe(t_token *tokens, t_tree *tree, t_node *node, int j);
-void close_all_pipes(int **fdpipe, int i);
-void wait_all_parent(t_tree *tree, int i);
+// PIPE
+void				exec_pipe(t_token *tokens, t_tree *tree, t_node *nodes);
+void				first_pipe(t_token *tokens, t_tree *tree, t_node *node);
+void				last_pipe(t_token *tokens, t_tree *tree, t_node *node,
+						int j);
+void				mid_pipe(t_token *tokens, t_tree *tree, t_node *node,
+						int j);
+void				close_all_pipes(int **fdpipe, int i);
+void				wait_all_parent(t_tree *tree, int i);
 
-//CHECKING COMMAND
-char *check_access1(t_tree *tree, t_node *nodes);
-void	get_env_args(char **envp, t_tree *tree);
-int	check_cmd1(t_tree *tree, t_node *node);
+// CHECKING COMMAND
+char				*check_access1(t_tree *tree, t_node *nodes);
+void				get_env_args(char **envp, t_tree *tree);
+int					check_cmd1(t_tree *tree, t_node *node);
 
-//REDIREC
-void find_redir_out(t_token *tokens, t_tree *tree, t_node *nodes, int *isredir);
-void find_redir_in(t_token *tokens, t_tree *tree, t_node *nodes, int *isredir);
-void find_redir_append(t_token *tokens, t_tree *tree, t_node *nodes, int *isredir);
-int check_redir_out(t_token *tokens, t_tree *tree, t_node *nodes);
-int check_redir_in(t_token *tokens, t_tree *tree, t_node *nodes);
-int testopening(t_token *tokens, t_tree *tree, t_node *nodes);
-int testredir(t_node *nodes);
+// REDIREC
+void				find_redir_out(t_token *tokens, t_tree *tree, t_node *nodes,
+						int *isredir);
+void				find_redir_in(t_token *tokens, t_tree *tree, t_node *nodes,
+						int *isredir);
+void				find_redir_append(t_token *tokens, t_tree *tree,
+						t_node *nodes, int *isredir);
+int					check_redir_out(t_token *tokens, t_tree *tree,
+						t_node *nodes);
+int					check_redir_in(t_token *tokens, t_tree *tree,
+						t_node *nodes);
+int					testopening(t_token *tokens, t_tree *tree, t_node *nodes);
+int					testredir(t_node *nodes);
 
-//HEREDOC
-void err_null_heredoc(t_token *tokens, t_tree *tree, char **eofword, int *i);
-void heredoc(t_token *tokens, t_tree *tree, t_node *nodes);
-void init_eofword(t_tree *tree, t_node *nodes, char ***eofword);
-void get_eofword(t_tree *tree, char **eofword, t_node *node, int *i);
-void expand_heredoc(t_tree *tree, t_node *node);
-bool is_heredoc(t_node *nodes);
-int	ft_str_equals(const char *str1, const char *str2);
+// HEREDOC
+void				err_null_heredoc(t_token *tokens, t_tree *tree,
+						char **eofword, int *i);
+void				heredoc(t_token *tokens, t_tree *tree, t_node *nodes);
+void				init_eofword(t_tree *tree, t_node *nodes, char ***eofword);
+void				get_eofword(t_tree *tree, char **eofword, t_node *node,
+						int *i);
+void				expand_heredoc(t_tree *tree, t_node *node);
+bool				is_heredoc(t_node *nodes);
+int					ft_str_equals(const char *str1, const char *str2);
 
-//FONCTIONS DU GARBAGE COLLECTOR
-void print_error(t_token *tokens, int errorcode, t_tree *tree, t_node *node);
-void read_status(t_tree *tree);
-void free_tree(t_tree **tree, int env);
-void free_env(t_env *env);
-void free_envp(t_tree *tree);
-void err_free_all(t_tree *tree);
-void malloc_tree_err(t_env *env);
-int command_not_found(t_tree *tree, char *cmd);
-void free_array(char **ptr);
-void ft_exit(t_tree *tree);
-void free_tree_tokens(t_tree **tree, t_token *tokens);
+// FONCTIONS DU GARBAGE COLLECTOR
+void				print_error(t_token *tokens, int errorcode, t_tree *tree,
+						t_node *node);
+void				read_status(t_tree *tree);
+void				free_tree(t_tree **tree, int env);
+void				free_env(t_env *env);
+void				free_envp(t_tree *tree);
+void				err_free_all(t_tree *tree);
+void				malloc_tree_err(t_env *env);
+int					command_not_found(t_tree *tree, char *cmd);
+void				free_array(char **ptr);
+void				ft_exit(t_tree *tree);
+void				free_tree_tokens(t_tree **tree, t_token *tokens);
 
-//ENVIRONNEMENT
-t_env	*init_env(char **env_array);
-char *get_env(t_env *env, char *envvar);
-int set_env(t_tree *tree, t_env *env, char *var, char *value);
-ssize_t get_index_env(t_env *env, char *word);
-void	env_add_back(t_env **env, t_env *new);
-int env_length(t_env *env);
+// ENVIRONNEMENT
+t_env				*init_env(char **env_array);
+char				*get_env(t_env *env, char *envvar);
+int					set_env(t_tree *tree, t_env *env, char *var, char *value);
+ssize_t				get_index_env(t_env *env, char *word);
+void				env_add_back(t_env **env, t_env *new);
+int					env_length(t_env *env);
 
-//BUILTIN
-int choose_builtin(t_token *tokens, t_tree *tree, t_node *nodes);
-//PWD
-int do_pwd(t_tree *tree, t_env *env);
-//UNSET
-int do_unset(t_node *node, t_env *env);
-//EXPORT
-int do_export(t_tree *tree, t_node *node);
-char **env_to_string(t_tree *tree, t_env *env);
-void		sort_env(char **envstr);
-int check_export_var(char *var, int *ret);
-int print_err_export(char *err);
-size_t	get_char_by_index(char *str, char c);
-//ENV
-int displayenv(t_env *env);
-//EXIT
-int do_exit(t_token *tokens, t_tree *tree, t_node *node);
-//CD
-int do_cd(t_tree *tree, t_node *node);
-//ECHO
-int do_echo(t_node *node);
+// BUILTIN
+int					choose_builtin(t_token *tokens, t_tree *tree,
+						t_node *nodes);
+// PWD
+int					do_pwd(t_tree *tree, t_env *env);
+// UNSET
+int					do_unset(t_node *node, t_env *env);
+// EXPORT
+int					do_export(t_tree *tree, t_node *node);
+char				**env_to_string(t_tree *tree, t_env *env);
+void				sort_env(char **envstr);
+int					check_export_var(char *var, int *ret);
+int					print_err_export(char *err);
+size_t				get_char_by_index(char *str, char c);
+// ENV
+int					displayenv(t_env *env);
+// EXIT
+int					do_exit(t_token *tokens, t_tree *tree, t_node *node);
+// CD
+int					do_cd(t_tree *tree, t_node *node);
+// ECHO
+int					do_echo(t_node *node);
 
-//SIGNAUX
-void set_signal(void);
-void set_signal_cmd(void);
-void set_signal_heredoc(void);
-void get_signal_cmd(int status, pid_t pid);
-void hdoc_or_cmd(t_node *nodes);
+// SIGNAUX
+void				set_signal(void);
+void				set_signal_cmd(void);
+void				set_signal_heredoc(void);
+void				get_signal_cmd(int status, pid_t pid);
+void				hdoc_or_cmd(t_node *nodes);
+void				sig_ctrld(t_env *env);
 
 //***********************************//
-// 				PARSING				 //
+// 				PARSING					//
 //***********************************//
 
-bool parsing(t_token **head, char *commands, t_env *env);
+bool				parsing(t_token **head, char *commands, t_env *env);
 
-//Token
-void append_token(t_token **head, t_token_type type, char **value);
-void delete_token(t_token **head, t_token *node_to_delete);
-void clear_token(t_token **head);
-t_token_type is_token(char *command, int pos);
-bool there_token(char *command);
+// Token
+void				append_token(t_token **head, t_token_type type,
+						char **value);
+void				delete_token(t_token **head, t_token *node_to_delete);
+void				clear_token(t_token **head);
+t_token_type		is_token(char *command, int pos);
+bool				there_token(char *command);
 
-//Pipe
-int pipe_counter(const char *command);
-char **pipe_splitter(char *command);
+// Pipe
+int					pipe_counter(const char *command);
+char				**pipe_splitter(char *command);
 
-//Splitter
-char **splitter(char *command, t_env *env);
+// Splitter
+char				**splitter(char *command, t_env *env);
 
-void print_list(t_token * node);
-char **extract_flags(char **command);
-char **miss_elements(char **list_base, char **list_miss);
-char **string_to_array(char *string);
-char **redir(char **cmd);
-char **quote(char **cmd, t_env *env, int *no_expandable);
-char **clean_space(char **cmd);
-int quoted(char **cmd);
-void get_first_quote(char **cmd, int pos[2], char *c_quote, int last_line[2]);
-void get_last_quote(char **cmd, int pos[2], char *c_quote, int last_line[2]);
-bool is_open(char **cmd, int last_line);
-char **expand_array(char **cmd, t_env *env, int *no_expandable);
-char *expand_string(char *cmd, t_env *env);
-void checker(t_token **head);
-int quote_len(char **cmd, int first_quote[2], int last_quote[2]);
-int *get_no_expandable(char **cmd);
-bool is_expandable(int *no_expandable, int pos);
-int get_len_no_expand(char **cmd);
-bool do_expand(char **split, int pos);
-void free_int(int *ptr);
-bool free_token(char **array1, char **array2, char **array3, char **array4);
-bool check_input(char *input);
+void				print_list(t_token *node);
+char				**extract_flags(char **command);
+char				**miss_elements(char **list_base, char **list_miss);
+char				**string_to_array(char *string);
+char				**redir(char **cmd);
+char				**quote(char **cmd, t_env *env, int *no_expandable);
+char				**clean_space(char **cmd);
+int					quoted(char **cmd);
+void				get_first_quote(char **cmd, int pos[2], char *c_quote,
+						int last_line[2]);
+void				get_last_quote(char **cmd, int pos[2], char *c_quote,
+						int last_line[2]);
+bool				is_open(char **cmd, int last_line);
+char				**expand_array(char **cmd, t_env *env, int *no_expandable);
+char				*expand_string(char *cmd, t_env *env);
+void				checker(t_token **head);
+int					quote_len(char **cmd, int first_quote[2],
+						int last_quote[2]);
+int					*get_no_expandable(char **cmd);
+bool				is_expandable(int *no_expandable, int pos);
+int					get_len_no_expand(char **cmd);
+bool				do_expand(char **split, int pos);
+void				free_int(int *ptr);
+bool				free_token(char **array1, char **array2, char **array3,
+						char **array4);
+bool				check_input(char *input);
 
-int add_file(const char *line);
-void add_file_to_history();
+int					add_file(const char *line);
+void				add_file_to_history(void);
 
 #endif
