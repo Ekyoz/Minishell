@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:33:55 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/10 10:54:20 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/10 10:58:24 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,9 @@ static void	sig_handler_heredoc(int sig)
 	}
 }
 
-static void	sigquit(void)
+static void	sigquit(int sig)
 {
+	(void)sig;
 	ft_putstr_fd("\b\033[K", 0);
 }
 
