@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:16:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/10 14:41:30 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/11 19:55:00 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,19 @@ char	**pipe_splitter(char *command)
 		while (pipe_splited[i][++j] == ' ')
 			;
 		tmp = pipe_splited[i];
-		pipe_splited[i] = ft_substr(tmp, j,
-				ft_strlen(pipe_splited[i]) - j);
+		pipe_splited[i] = ft_substr(tmp, j, ft_strlen(pipe_splited[i]) - j);
 		free(tmp);
 		j = -1;
 	}
 	if (i != pipe_counter(command))
-		return (free_array(&pipe_splited), free(command), NULL);
-	free(command);
-	return (pipe_splited);
+		return (free_array(pipe_splited), free(command), NULL);
+	return (free(command), pipe_splited);
 }
 
 static char	*pipe_end(char *command)
 {
 	char	*input;
+	char	*temp;
 	char	*temp;
 	int		i;
 
@@ -72,8 +71,8 @@ static char	*pipe_end(char *command)
 
 static char	**split_quote_pipe(char *cmd)
 {
-	int		first_quote[2] = {0, 0};
-	int		last_quote[2] = {0, 0};
+	int		first_quote[2];
+	int		last_quote[2];
 	int		last_line[2] = {-1, -1};
 	char	quote;
 	char	**arrays;
