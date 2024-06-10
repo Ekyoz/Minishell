@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/07 15:42:17 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/10 12:32:01 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	**find_heredoc(t_tree *tree, t_node *nodes)
 
 static void	close_heredoc(t_token *tokens, t_tree *tree, char **eofword)
 {
-	free_array(eofword);
+	free_array(&eofword);
 	close(tree->fdin);
 	if (g_signal_status == 130)
 	{
@@ -67,11 +67,14 @@ static void	close_heredoc(t_token *tokens, t_tree *tree, char **eofword)
 
 static void	text_heredoc(t_tree *tree, char **eofword, char *input, int *i)
 {
+	char *temp;
 	if (ft_str_equals(eofword[*i], input))
 		*i = *i + 1;
 	else
 	{
+		temp = input;
 		input = ft_strtrim(input, "\n");
+		free(temp);
 		if (tree->expandheredoc == 1)
 			input = expand_string(input, tree->env);
 		if (!eofword[*i + 1])

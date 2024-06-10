@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 14:52:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/05 12:05:27 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/10 12:32:22 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ bool	parsing(t_token **head, char *commands, t_env *env)
 			parsing_redir(head, c_pipe, c_splitted, &i_pipe);
 			if (i_pipe < pipe_counter(commands) - 1)
 				append_token(head, TOKEN_PIPE, NULL);
-			free_array(c_splitted);
+			free_array(&c_splitted);
 		}
-		free_array(c_pipe);
+		free_array(&c_pipe);
 	}
 	checker(head);
 	return (true);
@@ -60,10 +60,10 @@ static void	parsing_redir(t_token **head, char **c_pipe, char **c_splitted,
 		c_redirs = redir(c_splitted);
 		c_cmd = miss_elements(c_splitted, c_redirs);
 		append_token(head, TOKEN_WORD, c_cmd);
-		free_array(c_cmd);
+		free_array(&c_cmd);
 		append_token_redir(c_redirs, c_splitted, head);
 	}
-	free_array(c_redirs);
+	free_array(&c_redirs);
 }
 
 static void	append_token_redir(char **c_redirs, char **c_splitted,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:08:51 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/07 15:42:17 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/10 12:31:56 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void		sort_env(char **envstr)
 		i++;
 	}
 	print_envstr(envstr);
-    free_array(envstr);
+    free_array(&envstr);
 }
 
 int check_export_var(char *var, int *ret)

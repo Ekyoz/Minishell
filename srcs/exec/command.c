@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 14:17:58 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/06 17:54:11 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/10 12:31:59 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	get_env_args(char **envp, t_tree *tree)
 		}
 		i++;
 	}
-	free_array(envp);
+	free_array(&envp);
 }
 
 int	check_cmd1(t_tree *tree, t_node *node)

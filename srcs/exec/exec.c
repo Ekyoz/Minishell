@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/07 15:42:17 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/10 12:20:17 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	parent_process(int status, pid_t pid)
 void	*ft_execve(t_tree *tree, t_node *nodes)
 {
 	tree->path = check_access1(tree, nodes);
+	if(tree->fdoutcp != -1)
+		close(tree->fdoutcp);
 	if (execve(tree->path, nodes->args, env_to_string(tree, tree->env)) == -1)
 	{
 		perror("");
