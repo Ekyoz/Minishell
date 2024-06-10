@@ -79,7 +79,7 @@ static void	append_token_redir(char **c_redirs, char **c_splitted,
 			if (do_expand(c_splitted, ft_arrlen(c_splitted)
 					- ft_arrlen(c_redirs) + (i_redirs * 2) - 1))
 				append_token(head, is_token(c_redirs[i_redirs], 0),
-					string_to_array(ft_strdup("1")));
+					string_to_array("1"));
 			else
 				append_token(head, is_token(c_redirs[i_redirs], 0), NULL);
 		}

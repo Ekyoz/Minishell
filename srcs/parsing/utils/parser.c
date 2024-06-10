@@ -31,6 +31,8 @@ char	**miss_elements(char **l_base, char **l_miss)
 			missing[i_missing++] = ft_strdup(l_base[i_base]);
 		i_base++;
 	}
+	if (i_missing == 0)
+		return (free(missing), NULL);
 	missing[i_missing] = NULL;
 	return (missing);
 }

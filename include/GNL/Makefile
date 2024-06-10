@@ -41,7 +41,7 @@ CC				= gcc
 ifeq ($(FLAGS),1)
     CFLAGS = 								#Flags for tests
 else
-    CFLAGS = -Wall -Werror -Wextra			#Flags for run
+    CFLAGS = -Wall -Werror -Wextra -g3			#Flags for run
 endif
 OBJF			=	.cache_exists
 INCLUDE 		= -I$(INCLUDE_DIR) 

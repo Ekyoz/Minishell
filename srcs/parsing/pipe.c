@@ -24,24 +24,26 @@ char	**pipe_splitter(char *command)
 
 	i = -1;
 	j = -1;
-	command = pipe_end(command);
 	if (command == NULL)
 		return (NULL);
 	add_history(command);
 	add_file(command);
+	if (ft_strchar(command, '|') == -1)
+		return (string_to_array(command));
+	command = pipe_end(command);
 	pipe_splited = split_quote_pipe(command);
 	while (pipe_splited[++i])
 	{
 		while (pipe_splited[i][++j] == ' ')
 			;
 		tmp = pipe_splited[i];
-		pipe_splited[i] = ft_substr(pipe_splited[i], j,
+		pipe_splited[i] = ft_substr(tmp, j,
 				ft_strlen(pipe_splited[i]) - j);
 		free(tmp);
 		j = -1;
 	}
 	if (i != pipe_counter(command))
-		return (NULL);
+		return (free_array(pipe_splited), free(command), NULL);
 	free(command);
 	return (pipe_splited);
 }
@@ -49,6 +51,7 @@ char	**pipe_splitter(char *command)
 static char	*pipe_end(char *command)
 {
 	char	*input;
+	char *temp;
 	int		i;
 
 	if (ft_strcmp(command, "|") == 0)
@@ -56,11 +59,12 @@ static char	*pipe_end(char *command)
 	i = (int)ft_strlen(command);
 	while (command[--i] == ' ')
 		;
-	command = ft_substr(command, 0, i + 1);
+	temp = command;
+	command = ft_substr(temp, 0, i + 1);
 	if (command[ft_strlen(command) - 1] == '|')
 	{
 		input = readline("> ");
-		command = ft_strjoin(command, input);
+		command = ft_strjoin(temp, input);
 		command = pipe_end(command);
 	}
 	return (command);

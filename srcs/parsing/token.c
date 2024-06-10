@@ -19,6 +19,8 @@ void	append_token(t_token **head, t_token_type type, char **value)
 	t_token	*last_token;
 
 	last_token = *head;
+	if (!value && type == TOKEN_WORD)
+		return ;
 	if (*head == NULL)
 	{
 		*head = create_token(type, ft_arrdup(value));
