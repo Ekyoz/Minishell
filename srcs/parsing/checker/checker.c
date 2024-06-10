@@ -31,8 +31,8 @@ void	checker(t_token **head)
 
 bool	check_input(char *input)
 {
-	int i;
-	int space;
+	int	i;
+	int	space;
 
 	space = 0;
 	i = 0;
