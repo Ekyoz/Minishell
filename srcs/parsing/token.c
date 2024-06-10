@@ -24,6 +24,7 @@ void	append_token(t_token **head, t_token_type type, char **value)
 	if (*head == NULL)
 	{
 		*head = create_token(type, ft_arrdup(value));
+		free_array(value);
 		return ;
 	}
 	while (last_token->next != NULL)
