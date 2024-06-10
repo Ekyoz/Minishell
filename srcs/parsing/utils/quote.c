@@ -43,28 +43,6 @@ int	quoted(char **cmd)
 	return (1);
 }
 
-int	quote_len(char **cmd, int first_quote[2], int last_quote[2])
-{
-	int	len;
-	int	i;
-	int	j;
-
-	len = 0;
-	i = first_quote[0] - 1;
-	j = first_quote[1] - 1;
-	while (cmd[++i])
-	{
-		while (cmd[i][++j])
-		{
-			if (i == last_quote[0] && j == last_quote[1])
-				return (len - 1);
-			len++;
-		}
-		j = -1;
-	}
-	return (-1);
-}
-
 static void	check_quotes_in_string(char *str, int *single_quote,
 		int *double_quote, char *in_quote)
 {

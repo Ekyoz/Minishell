@@ -44,59 +44,28 @@ char	**quote(char **cmd, t_env *env, int *no_expandable)
 static char	**set_quote(char **cmd, t_env *env, int last_line[2],
 		int *no_expandable)
 {
-	int		i;
-	int		first_quote[2] = {0, 0};
-	int		last_quote[2] = {0, 0};
+	int		first_quote[2];
+	int		last_quote[2];
 	char	c_quote;
 	char	*c_quoted;
 	char	*after;
-	char	*before;
-	char	*temp;
 
 	after = NULL;
-	before = NULL;
-	i = -1;
 	get_first_quote(cmd, first_quote, &c_quote, last_line);
 	get_last_quote(cmd, last_quote, &c_quote, last_line);
 	c_quoted = get_quoted(cmd, first_quote, last_quote);
 	if (c_quote != '\'' && is_expandable(no_expandable, first_quote[0]))
-	{
-		temp = c_quoted;
-		c_quoted = ft_strdup(expand_string(c_quoted, env));
-		free(temp);
-	}
-	if (first_quote[1] > 0)
-		before = ft_substr(cmd[first_quote[0]], 0, first_quote[1]);
+		c_quoted = get_c_quoted(c_quoted, env);
 	if (last_quote[1] < (int)ft_strlen(cmd[last_quote[0]]))
 		after = ft_substr(cmd[last_quote[0]], last_quote[1] + 1,
 				ft_strlen(cmd[last_quote[0]]) - 1);
-	i = last_quote[0];
-	while ((i - 1) >= first_quote[0])
-		cmd = ft_arrdel(cmd, i--);
-	temp = c_quoted;
-	if (before != NULL)
-	{
-		temp = c_quoted;
-		c_quoted = ft_strjoin(expand_string(before, env), temp);
-		free(temp);
-		temp = NULL;
-	}
-	temp = c_quoted;
-	if (after != NULL)
-	{
-		temp = c_quoted;
-		c_quoted = ft_strjoin(c_quoted, expand_string(after, env));
-		free(temp);
-		temp = NULL;
-	}
+	cmd = del_cmd(first_quote, last_quote, cmd);
+	c_quoted = join_quote(c_quoted, get_before(first_quote, cmd), after, env);
 	free(cmd[first_quote[0]]);
 	cmd[first_quote[0]] = ft_strdup(c_quoted);
 	last_line[0] = first_quote[0] - 1;
 	last_line[1] = last_quote[1] - 1;
-	free(after);
-	free(before);
-	free(c_quoted);
-	return (cmd);
+	return (free(c_quoted), cmd);
 }
 
 static char	*get_quoted(char **cmd, int first_quote[2], int last_quote[2])
