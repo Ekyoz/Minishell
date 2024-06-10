@@ -51,7 +51,7 @@ char	**pipe_splitter(char *command)
 static char	*pipe_end(char *command)
 {
 	char	*input;
-	char *temp;
+	char	*temp;
 	int		i;
 
 	if (ft_strcmp(command, "|") == 0)
