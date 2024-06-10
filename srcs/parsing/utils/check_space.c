@@ -50,8 +50,9 @@ static char	*handle_redir_append_heredoc(char *cmd, int i)
 		sub = ft_substr(cmd, 0, i + 2);
 		sub2 = ft_substr(cmd, i + 2, ft_strlen(cmd) - i - 2);
 		join = ft_strjoin(" ", sub2);
+		temp = cmd;
 		cmd = ft_strjoin(sub, join);
-		free_chars(sub, sub2, join, NULL);
+		free_chars(sub, sub2, join, temp);
 	}
 	if (i > 0 && cmd[i - 1] != ' ')
 	{

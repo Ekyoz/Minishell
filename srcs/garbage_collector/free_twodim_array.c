@@ -30,15 +30,6 @@ void	free_array(char ***ptr)
 	}
 }
 
-void	free_int(int *ptr)
-{
-	if (ptr)
-	{
-		free(ptr);
-		ptr = NULL;
-	}
-}
-
 bool	free_token(char **array1, char **array2, char **array3, char **array4)
 {
 	free_array(&array1);
