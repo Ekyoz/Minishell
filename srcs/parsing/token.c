@@ -24,13 +24,11 @@ void	append_token(t_token **head, t_token_type type, char **value)
 	if (*head == NULL)
 	{
 		*head = create_token(type, ft_arrdup(value));
-		free_array(&value);
 		return ;
 	}
 	while (last_token->next != NULL)
 		last_token = last_token->next;
 	last_token->next = create_token(type, ft_arrdup(value));
-	free_array(&value);
 }
 
 void	delete_token(t_token **head, t_token *node_to_delete)
@@ -81,9 +79,10 @@ static t_token	*create_token(t_token_type type, char **value)
 
 void	clear_token(t_token **head)
 {
-	t_token *current = *head;
-	t_token *next;
+	t_token	*current;
+	t_token	*next;
 
+	current = *head;
 	while (current != NULL)
 	{
 		next = current->next;

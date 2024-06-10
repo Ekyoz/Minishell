@@ -35,7 +35,7 @@
 
 # define SUCCESS 0
 # define ERROR 1
-# define CMD_NOT_FOUND 127 
+# define CMD_NOT_FOUND 127
 # define OPEN_FILE_ERR 128
 # define CTRL_C 130
 # define CTRL_BACKSLASH 131
@@ -104,7 +104,7 @@ typedef struct s_tree
 // 				EXEC					//
 //***********************************//
 
-void print_array(char **array);
+void				print_array(char **array);
 
 // TROUVER LES REDIRECTIONS POUR LES AJOUTER A MON ARBRE AST
 int					get_pipe(t_token *token, t_node *nodes);
@@ -276,10 +276,13 @@ void				free_int(int *ptr);
 bool				free_token(char **array1, char **array2, char **array3,
 						char **array4);
 bool				check_input(char *input);
-char	*check_space(char *cmd);
-void	free_chars(char *c1, char *c2, char *c3, char *c4);
+char				*check_space(char *cmd);
+void				free_chars(char *c1, char *c2, char *c3, char *c4);
 
 int					add_file(const char *line);
 void				add_file_to_history(void);
-
+char				*join_quote(char *c_quoted, char *before, char *after, t_env *env);
+char				*get_before(int first_quote[2], char **cmd);
+char				*get_c_quoted(char *c_quoted, t_env *env);
+char	**del_cmd(int first_quote[2], int last_quote[2], char **cmd);
 #endif
