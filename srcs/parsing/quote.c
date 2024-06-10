@@ -13,8 +13,7 @@
 #include "minishell.h"
 
 static char	*get_quoted(char **cmd, int first_quote[2], int last_quote[2]);
-static char	**set_quote(char **cmd, t_env *env, int last_line[2],
-				int *no_expandable);
+static char	**set_quote(char **cmd, t_env *env, int last_line[2], int *no_expandable);
 static int	quote_strings(char **tableau);
 
 char	**quote(char **cmd, t_env *env, int *no_expandable)
@@ -41,8 +40,7 @@ char	**quote(char **cmd, t_env *env, int *no_expandable)
 	return (free(no_expandable), cmd);
 }
 
-static char	**set_quote(char **cmd, t_env *env, int last_line[2],
-		int *no_expandable)
+static char	**set_quote(char **cmd, t_env *env, int last_line[2], int *no_expandable)
 {
 	int		first_quote[2];
 	int		last_quote[2];
@@ -57,8 +55,7 @@ static char	**set_quote(char **cmd, t_env *env, int last_line[2],
 	if (c_quote != '\'' && is_expandable(no_expandable, first_quote[0]))
 		c_quoted = get_c_quoted(c_quoted, env);
 	if (last_quote[1] < (int)ft_strlen(cmd[last_quote[0]]))
-		after = ft_substr(cmd[last_quote[0]], last_quote[1] + 1,
-				ft_strlen(cmd[last_quote[0]]) - 1);
+		after = ft_substr(cmd[last_quote[0]], last_quote[1] + 1, ft_strlen(cmd[last_quote[0]]) - 1);
 	cmd = del_cmd(first_quote, last_quote, cmd);
 	c_quoted = join_quote(c_quoted, get_before(first_quote, cmd), after, env);
 	free(cmd[first_quote[0]]);
@@ -71,36 +68,27 @@ static char	**set_quote(char **cmd, t_env *env, int last_line[2],
 static char	*get_quoted(char **cmd, int first_quote[2], int last_quote[2])
 {
 	char	*quoted;
-	char	quote;
 	int		i_cmd;
-	int		len;
 	char	*temp;
-	char	*temp2;
+	int		len;
 
 	i_cmd = -1;
 	quoted = NULL;
-	quote = cmd[first_quote[0]][first_quote[1]];
 	while (++i_cmd <= last_quote[0])
 	{
 		if (i_cmd == first_quote[0])
 		{
-			len = ft_strchar(&cmd[first_quote[0]][first_quote[1] + 1], quote);
+			len = ft_strchar(&cmd[first_quote[0]][first_quote[1] + 1], cmd[first_quote[0]][first_quote[1]]);
 			quoted = ft_substr(cmd[i_cmd], first_quote[1] + 1, len);
 		}
-		else if (i_cmd > first_quote[0] && i_cmd < last_quote[0])
+		if (i_cmd > first_quote[0] && i_cmd < last_quote[0])
 		{
 			temp = quoted;
 			quoted = ft_strjoin(quoted, cmd[i_cmd]);
 			free(temp);
 		}
 		else if (i_cmd == last_quote[0])
-		{
-			temp = quoted;
-			temp2 = ft_substr(cmd[i_cmd], 0, last_quote[1]);
-			quoted = ft_strjoin(quoted, temp2);
-			free(temp);
-			free(temp2);
-		}
+			get_quoted_join(cmd, &quoted, last_quote, i_cmd);
 	}
 	return (quoted);
 }

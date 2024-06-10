@@ -285,4 +285,6 @@ char				*join_quote(char *c_quoted, char *before, char *after, t_env *env);
 char				*get_before(int first_quote[2], char **cmd);
 char				*get_c_quoted(char *c_quoted, t_env *env);
 char	**del_cmd(int first_quote[2], int last_quote[2], char **cmd);
+void	get_quoted_join(char **cmd, char **quoted, int last_quote[2], int i_cmd);
+
 #endif

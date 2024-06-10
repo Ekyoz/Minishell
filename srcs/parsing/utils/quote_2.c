@@ -101,13 +101,3 @@ char	*get_c_quoted(char *c_quoted, t_env *env)
 	free(temp);
 	return (c_quoted);
 }
-
-char	**del_cmd(int first_quote[2], int last_quote[2], char **cmd)
-{
-	int	i;
-
-	i = last_quote[0];
-	while ((i - 1) >= first_quote[0])
-		cmd = ft_arrdel(cmd, i--);
-	return (cmd);
-}
