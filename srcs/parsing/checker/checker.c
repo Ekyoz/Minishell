@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   checker.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:17:19 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/07 10:40:51 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/10 11:41:35 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void	checker(t_token **head)
 	{
 		next_token = token->next;
 		if (token->type == TOKEN_WORD && token->value[0] == NULL)
+		{
 			delete_token(head, token);
+		}
 		token = next_token;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:09:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/07 15:01:07 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/10 11:39:49 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,9 @@ void	delete_token(t_token **head, t_token *node_to_delete)
 		temp = temp->next;
 	}
 	if (temp == NULL)
+	{
 		return ;
+	}
 	prev->next = temp->next;
 	free(temp);
 }

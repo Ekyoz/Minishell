@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:52:24 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/07 15:21:19 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/10 11:38:42 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int	check_redir_out(t_token *tokens, t_tree *tree, t_node *nodes)
 		tree->fdoutcp = dup(STDOUT_FILENO);
 		if (dup2(tree->fdout, STDOUT_FILENO) == -1)
 			err_free_all(tree);
+		close(tree->fdout);
+		close(tree->fdoutcp);
 	}
 	return (isredir);
 }
