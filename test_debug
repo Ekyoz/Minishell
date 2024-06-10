@@ -2,4 +2,4 @@
 cd existing file => error editing .minishell_history
 
 
-echo salut > output => leaks
+ls -l | head -n 1 => invalid read \ free
