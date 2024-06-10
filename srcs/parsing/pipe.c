@@ -37,21 +37,19 @@ char	**pipe_splitter(char *command)
 		while (pipe_splited[i][++j] == ' ')
 			;
 		tmp = pipe_splited[i];
-		pipe_splited[i] = ft_substr(tmp, j,
-				ft_strlen(pipe_splited[i]) - j);
+		pipe_splited[i] = ft_substr(tmp, j, ft_strlen(pipe_splited[i]) - j);
 		free(tmp);
 		j = -1;
 	}
 	if (i != pipe_counter(command))
 		return (free_array(pipe_splited), free(command), NULL);
-	free(command);
-	return (pipe_splited);
+	return (free(command), pipe_splited);
 }
 
 static char	*pipe_end(char *command)
 {
 	char	*input;
-	char *temp;
+	char	*temp;
 	int		i;
 
 	if (ft_strcmp(command, "|") == 0)
@@ -72,8 +70,8 @@ static char	*pipe_end(char *command)
 
 static char	**split_quote_pipe(char *cmd)
 {
-	int		first_quote[2] = {0, 0};
-	int		last_quote[2] = {0, 0};
+	int		first_quote[2];
+	int		last_quote[2];
 	int		last_line[2] = {-1, -1};
 	char	quote;
 	char	**arrays;
