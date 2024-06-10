@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:09:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/10 14:14:12 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/10 16:46:45 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ static t_token	*create_token(t_token_type type, char **value)
 	else
 	{
 		free_array(&value);
-		value = NULL;
 	}
 	token->next = NULL;
 	return (token);
