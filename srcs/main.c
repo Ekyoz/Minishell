@@ -3,52 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/07 12:01:36 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/10 10:52:24 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int g_signal_status = 0;
+int			g_signal_status = 0;
 
-int main(int argc, char *argv[], char *envp[])
+static void	argc_argv(int argc, char *argv[])
 {
 	(void)argc;
 	(void)argv;
-	char *input;
-	t_token *tokens = NULL;
-	t_tree *tree;
-	t_env *env;
+}
 
+int	main(int argc, char *argv[], char *envp[])
+{
+	char	*input;
+	t_token	*tokens;
+	t_tree	*tree;
+	t_env	*env;
+
+	argc_argv(argc, argv);
+	tokens = NULL;
 	env = init_env(envp);
 	while (true)
 	{
 		set_signal();
 		add_file_to_history();
 		input = readline("\033[0;94mMinishell\033[0m\033[0;0m $ \033[0m");
-		if(input == NULL) // handle ctrl + d
+		if (input == NULL)
+			sig_ctrld(env);
+		if (parsing(&tokens, input, env) && tokens != NULL)
 		{
-			ft_putstr_fd("exit\n", 1);
-			free_env(env);
-			exit(0);
-		}
-		// mettre env dans tree
-		// displayenv(env);
-    	// add_history(input);
-		if(parsing(&tokens, input, env) && tokens != NULL)
-		{
-    		tree = init_tree(env);
-		 	// print_list(tokens);
+			tree = init_tree(env);
+			// print_list(tokens);
 			create_node(tokens, &tree);
-			// print_tree(tree->nodes);
 			ast_exec(tokens, tree);
 			clear_token(&tokens);
 			free_tree(&tree, 0);
 		}
 		free(input);
 	}
-	return 0;
+	return (0);
 }

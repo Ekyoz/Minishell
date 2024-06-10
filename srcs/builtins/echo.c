@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:30:51 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/05 14:46:35 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/07 15:42:17 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,24 +34,23 @@ static size_t	check_n(char **args)
 	return (i);
 }
 
-
-int do_echo(t_node *node)
+int	do_echo(t_node *node)
 {
-    size_t i;
-    int n;
+	size_t	i;
+	int		n;
 
-    n = 1;
-    if(!node->args[1])
-    {
-        ft_putchar_fd('\n', 1);
-        return(1);
-    }
-    i = check_n(node->args);
-    if(i > 1)
-        n = 0;
-    else
-        n = 1;
-    while (node->args[i])
+	n = 1;
+	if (!node->args[1])
+	{
+		ft_putchar_fd('\n', 1);
+		return (1);
+	}
+	i = check_n(node->args);
+	if (i > 1)
+		n = 0;
+	else
+		n = 1;
+	while (node->args[i])
 	{
 		ft_putstr_fd(node->args[i], 1);
 		i++;

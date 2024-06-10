@@ -6,31 +6,11 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:30:32 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/07 15:07:28 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/07 15:16:15 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**ft_arrdup1(char **array)
-{
-	int		i;
-	char	**dup;
-
-	i = -1;
-	if (array == NULL)
-		return (NULL);
-	dup = (char **)malloc(sizeof(char *) * (ft_arrlen(array) + 1));
-	if (dup == NULL)
-		return (NULL);
-	while (array[++i])
-	{
-		dup[i] = ft_strdup(array[i]);
-		// printf("dup %p %s %d\n", dup[i], dup[i], i);
-	}
-	dup[i] = NULL;
-	return (dup);
-}
 
 t_node	*add_node_left(t_node *nodes, t_token **token, t_tree *tree)
 {
@@ -38,8 +18,7 @@ t_node	*add_node_left(t_node *nodes, t_token **token, t_tree *tree)
 	{
 		nodes->left = init_nodes(tree);
 		nodes->left->type = (*token)->type;
-		// nodes->args = (*token)->value;
-		nodes->left->args = ft_arrdup1((*token)->value);
+		nodes->left->args = ft_arrdup((*token)->value);
 		free_array((*token)->value);
 	}
 	*token = (*token)->next;
@@ -54,8 +33,7 @@ t_node	*add_node_right(t_node *nodes, t_token **token, bool *is_redirec,
 {
 	nodes->right = init_nodes(tree);
 	nodes->right->type = (*token)->type;
-	// nodes->args = (*token)->value;
-	nodes->right->args = ft_arrdup1((*token)->value);
+	nodes->right->args = ft_arrdup((*token)->value);
 	free_array((*token)->value);
 	*token = (*token)->next;
 	if ((*token) != NULL && ((*token)->type == PIPEUSED
@@ -68,8 +46,7 @@ t_node	*add_node_right(t_node *nodes, t_token **token, bool *is_redirec,
 t_node	*add_node(t_node *nodes, t_token **token)
 {
 	nodes->type = (*token)->type;
-	// nodes->args = (*token)->value;
-	nodes->args = ft_arrdup1((*token)->value);
+	nodes->args = ft_arrdup((*token)->value);
 	free_array((*token)->value);
 	*token = (*token)->next;
 	if ((*token) != NULL && ((*token)->type == PIPEUSED

@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/07 12:35:34 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/10 10:52:14 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
+# define MINISHELL_H
 # define MINISHELL_H
 
 # include "get_next_line.h"
@@ -32,8 +33,14 @@
 # include <term.h>
 # include <unistd.h>
 
-# define CMD_NOT_FOUND 127 // 2
-# define OPEN_FILE_ERR 128 // 1
+# define SUCCESS 0
+# define ERROR 1
+# define CMD_NOT_FOUND 127 
+# define OPEN_FILE_ERR 128
+# define CTRL_C 130
+# define CTRL_BACKSLASH 131
+# define CTRL_D
+# define QUOTE_OPEN 2
 
 extern int			g_signal_status;
 
@@ -94,7 +101,7 @@ typedef struct s_tree
 }					t_tree;
 
 //***********************************//
-// 				EXEC				//
+// 				EXEC					//
 //***********************************//
 
 // TROUVER LES REDIRECTIONS POUR LES AJOUTER A MON ARBRE AST
@@ -218,6 +225,7 @@ void				set_signal_cmd(void);
 void				set_signal_heredoc(void);
 void				get_signal_cmd(int status, pid_t pid);
 void				hdoc_or_cmd(t_node *nodes);
+void				sig_ctrld(t_env *env);
 
 //***********************************//
 // 				PARSING					//
@@ -262,11 +270,10 @@ int					*get_no_expandable(char **cmd);
 bool				is_expandable(int *no_expandable, int pos);
 int					get_len_no_expand(char **cmd);
 bool				do_expand(char **split, int pos);
+void				free_int(int *ptr);
 bool				free_token(char **array1, char **array2, char **array3,
 						char **array4);
 bool				check_input(char *input);
-void	free_chars(char *c1, char *c2, char *c3, char *c4);
-char	*check_space(char *cmd);
 
 int					add_file(const char *line);
 void				add_file_to_history(void);

@@ -12,96 +12,96 @@
 
 #include "minishell.h"
 
-static int error_pwd(t_tree *tree)
+static int	error_pwd(t_tree *tree)
 {
 	perror("pwd: ");
 	err_free_all(tree);
-	return(1);
+	return (1);
 }
 
-char *get_env(t_env *env, char *envvar)
+char	*get_env(t_env *env, char *envvar)
 {
-	char *envvalue;
+	char	*envvalue;
 
-	while(env)
+	while (env)
 	{
-		if(!ft_strncmp(env->value, envvar, ft_strlen(envvar)))
+		if (!ft_strncmp(env->value, envvar, ft_strlen(envvar)))
 		{
 			envvalue = ft_substr(env->value, ft_strlen(envvar),
-				ft_strlen(env->value) - ft_strlen(envvar));
+					ft_strlen(env->value) - ft_strlen(envvar));
 			return (envvalue);
 		}
 		env = env->next;
 	}
-	return(NULL);
+	return (NULL);
 }
 
-ssize_t get_index_env(t_env *env, char *word)
+ssize_t	get_index_env(t_env *env, char *word)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(env)
+	while (env)
 	{
-		if(!ft_strncmp(env->value, word, ft_strlen(word)))
+		if (!ft_strncmp(env->value, word, ft_strlen(word)))
 		{
-			return(i);
+			return (i);
 		}
 		i++;
 		env = env->next;
 	}
-	return(-1);
+	return (-1);
 }
 
 // changer la valeur d'une variable d'environnement
-int set_env(t_tree *tree, t_env *env, char *var, char *value)
+int	set_env(t_tree *tree, t_env *env, char *var, char *value)
 {
-	int length;
+	int	length;
 
-	length  = ft_strlen(var) + ft_strlen(value);
-	while(env)
+	length = ft_strlen(var) + ft_strlen(value);
+	while (env)
 	{
-		if(!ft_strncmp(env->value, var, ft_strlen(var)))
+		if (!ft_strncmp(env->value, var, ft_strlen(var)))
 		{
 			free(env->value);
 			env->value = NULL;
 			env->value = (char *)malloc(sizeof(char) * (length + 1));
-			if(!env->value)
+			if (!env->value)
 			{
 				err_free_all(tree);
 			}
 			env->value = ft_strjoin(var, value);
-			return(1);
+			return (1);
 		}
 		env = env->next;
 	}
-	return(0);
+	return (0);
 }
 
-int do_pwd(t_tree *tree, t_env *env)
+int	do_pwd(t_tree *tree, t_env *env)
 {
-    char pwd[1024];
-	char *path;
+	char	pwd[1024];
+	char	*path;
 
-    while(env)
-    {
-        if(!ft_strncmp(env->value, "PWD=", 4))
-        {
+	while (env)
+	{
+		if (!ft_strncmp(env->value, "PWD=", 4))
+		{
 			path = ft_substr(env->value, 4, strlen(env->value) - 4);
-			ft_putstr_fd(path , 1);
-			ft_putchar_fd('\n',1);
+			ft_putstr_fd(path, 1);
+			ft_putchar_fd('\n', 1);
 			free(path);
-			return(1);
-        }
-        env = env->next;
-    }
+			return (1);
+		}
+		env = env->next;
+	}
 	if (getcwd(pwd, sizeof(pwd)) != NULL)
 	{
 		ft_putstr_fd(pwd, 1);
-		ft_putchar_fd('\n',1);
-		return(1);
+		ft_putchar_fd('\n', 1);
+		return (1);
 	}
 	else
 		error_pwd(tree);
-    return(1);
+	return (1);
 }
