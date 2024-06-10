@@ -12,9 +12,7 @@
 
 #include "minishell.h"
 
-static bool	is_missing(char *element, char **l_miss);
-
-char	**miss_elements(char **l_base, char **l_miss)
+char	**miss_elements(char **l_base)
 {
 	int		i_base;
 	int		i_missing;
@@ -25,10 +23,9 @@ char	**miss_elements(char **l_base, char **l_miss)
 	missing = (char **)malloc((ft_arrlen(l_base) + 1) * sizeof(char *));
 	if (!missing)
 		return (NULL);
-	while (l_base[i_base])
+	while (l_base[i_base] && is_token(l_base[i_base], 0) == TOKEN_WORD)
 	{
-		if (is_missing(l_base[i_base], l_miss))
-			missing[i_missing++] = ft_strdup(l_base[i_base]);
+		missing[i_missing++] = ft_strdup(l_base[i_base]);
 		i_base++;
 	}
 	if (i_missing == 0)
@@ -63,18 +60,4 @@ char	**clean_space(char **cmd)
 	}
 	cmd[j] = NULL;
 	return (cmd);
-}
-
-static bool	is_missing(char *element, char **l_miss)
-{
-	int	i;
-
-	i = 0;
-	while (l_miss[i])
-	{
-		if (ft_strcmp(element, l_miss[i]) == 0)
-			return (false);
-		i++;
-	}
-	return (true);
 }
