@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 15:28:56 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/04 18:52:19 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/10 12:32:43 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**quote(char **cmd, t_env *env, int *no_expandable)
 	int		last_line[2];
 
 	if (quoted(cmd) == -1)
-		return (free_array(cmd), free(no_expandable), NULL);
+		return (free_array(&cmd), free(no_expandable), NULL);
 	if (quoted(cmd) == 0)
 		return (expand_array(cmd, env, no_expandable));
 	i = -1;
@@ -37,7 +37,7 @@ char	**quote(char **cmd, t_env *env, int *no_expandable)
 	i = -1;
 	while (++i < quote_strings(temp_cmd))
 		cmd = set_quote(cmd, env, last_line, no_expandable);
-	free_array(temp_cmd);
+	free_array(&temp_cmd);
 	return (free(no_expandable), cmd);
 }
 

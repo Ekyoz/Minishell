@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/10 12:22:09 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/10 12:32:01 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static char	**find_heredoc(t_tree *tree, t_node *nodes)
 
 static void	close_heredoc(t_token *tokens, t_tree *tree, char **eofword)
 {
-	free_array(eofword);
+	free_array(&eofword);
 	close(tree->fdin);
 	if (g_signal_status == 130)
 	{
