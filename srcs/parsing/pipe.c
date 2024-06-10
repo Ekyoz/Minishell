@@ -42,7 +42,7 @@ char	**pipe_splitter(char *command)
 		j = -1;
 	}
 	if (i != pipe_counter(command))
-		return (free_array(pipe_splited), free(command), NULL);
+		return (free_array(&pipe_splited), free(command), NULL);
 	return (free(command), pipe_splited);
 }
 
