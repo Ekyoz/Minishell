@@ -16,26 +16,24 @@ static char	**split_token(char *command);
 static int	split_count(char *command);
 
 char	**splitter(char *command, t_env *env)
-// splitter par les espace et par les tokens
 {
-	int i_space;
-	int i_final;
-	int i_token;
-	char **c_space;
-	char **c_token;
-	char **c_final;
+	int		i_space;
+	int		i_final;
+	int		i_token;
+	char	**c_space;
+	char	**c_token;
+	char	**c_final;
 
 	i_space = -1;
 	i_final = 0;
 	c_token = NULL;
 	c_space = ft_split_sep(command, ' ');
 	c_final = (char **)malloc(sizeof(char *) * (ft_arrlen(c_space) + 1));
-
 	while (c_space[++i_space])
 	{
-		if (!there_token(c_space[i_space])) // si il n'y a pas de token
+		if (!there_token(c_space[i_space]))
 			c_final[i_final++] = ft_strdup(c_space[i_space]);
-		if (there_token(c_space[i_space])) // si il y a un token
+		if (there_token(c_space[i_space]))
 		{
 			i_token = -1;
 			c_token = split_token(c_space[i_space]);

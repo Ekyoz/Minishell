@@ -49,10 +49,13 @@ FILE_SIGNAL 			= signal_cmd signal_heredoc signal
 
 #-------- PARSING --------#
 FILE_PARSING_DIR		= parsing/
-FILE_PARSING			= parsing token pipe redir quote splitter expand
+FILE_PARSING			= parsing token pipe redir splitter expand
 
 FILE_PARS_UTILS_DIR		= parsing/utils/
-FILE_PARS_UTILS			= parser token quote quote_2 quote_3 pipe expand check_space free_chars
+FILE_PARS_UTILS			= parser token pipe expand check_space free_chars
+
+FILE_PARS_QUOTE_DIR		= parsing/quote/
+FILE_PARS_QUOTE			= quote quote_1 quote_2 quote_3 quote_string
 
 FILE_PARS_CHECKER_DIR	= parsing/checker/
 FILE_PARS_CHECKER		= checker
@@ -60,18 +63,19 @@ FILE_PARS_CHECKER		= checker
 DIR_LIST			= $(FILE_BUILTINS_DIR) $(FILE_PARSING_DIR) $(FILE_EXEC_DIR)\
 					 $(FILE_AST_DIR) $(FILE_GARBAGE_DIR) $(FILE_REDIRECTION_DIR)\
 					 $(FILE_PARS_UTILS_DIR) $(FILE_SIGNAL_DIR) $(FILE_EXPORT_DIR)\
-					 $(FILE_PARS_CHECKER_DIR)
+					 $(FILE_PARS_QUOTE_DIR) $(FILE_PARS_CHECKER_DIR)
 
 SRC_FILES			+= $(addprefix $(FILE_BUILTINS_DIR), $(FILE_BUILTINS))
 SRC_FILES			+= $(addprefix $(FILE_PARSING_DIR), $(FILE_PARSING))
 SRC_FILES			+= $(addprefix $(FILE_PARS_UTILS_DIR), $(FILE_PARS_UTILS))
+SRC_FILES			+= $(addprefix $(FILE_PARS_QUOTE_DIR), $(FILE_PARS_QUOTE))
+SRC_FILES			+= $(addprefix $(FILE_PARS_CHECKER_DIR), $(FILE_PARS_CHECKER))
 SRC_FILES			+= $(addprefix $(FILE_EXEC_DIR), $(FILE_EXEC))
 SRC_FILES			+= $(addprefix $(FILE_EXPORT_DIR), $(FILE_EXPORT))
 SRC_FILES			+= $(addprefix $(FILE_AST_DIR), $(FILE_AST))
 SRC_FILES			+= $(addprefix $(FILE_GARBAGE_DIR), $(FILE_GARBAGE))
 SRC_FILES			+= $(addprefix $(FILE_REDIRECTION_DIR), $(FILE_REDIRECTION))
 SRC_FILES			+= $(addprefix $(FILE_SIGNAL_DIR), $(FILE_SIGNAL))
-SRC_FILES			+= $(addprefix $(FILE_PARS_CHECKER_DIR), $(FILE_PARS_CHECKER))
 
 
 #-------- LIBS --------#

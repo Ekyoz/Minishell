@@ -45,8 +45,9 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 				return (cmd);
 			if (ft_strcmp(cmd[i_cmd], "$?") == 0)
 			{
-				cmd[i_cmd] = replace_env(ft_itoa(g_signal_status), cmd[i_cmd], "$?");
-				return cmd;
+				cmd[i_cmd] = replace_env(ft_itoa(g_signal_status), cmd[i_cmd],
+						"$?");
+				return (cmd);
 			}
 			if (cmd[i_cmd][j_cmd] == '$')
 			{
@@ -87,8 +88,7 @@ char	*expand_string(char *cmd, t_env *env)
 	if (ft_strcmp(cmd, "$") == 0)
 		return (cmd);
 	if (ft_strcmp(cmd, "$?") == 0)
-		return replace_env(ft_itoa(g_signal_status), cmd, "$?");
-
+		return (replace_env(ft_itoa(g_signal_status), cmd, "$?"));
 	while (i_cmd < (int)ft_strlen(cmd) && cmd[++i_cmd])
 	{
 		j = i_cmd;
