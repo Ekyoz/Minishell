@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 11:54:35 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/05 14:43:13 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/10 12:32:48 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ char	**splitter(char *command, t_env *env)
 			c_token = split_token(c_space[i_space]);
 			while (c_token[++i_token])
 				c_final[i_final++] = ft_strdup(c_token[i_token]);
-			free_array(c_token);
+			free_array(&c_token);
 		}
 	}
 	c_final[i_final] = NULL;
-	free_array(c_space);
+	free_array(&c_space);
 	return (quote(c_final, env, get_no_expandable(c_final)));
 }
 

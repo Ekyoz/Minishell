@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/10 10:52:14 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/10 12:45:34 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,8 @@ typedef struct s_tree
 // 				EXEC					//
 //***********************************//
 
+void print_array(char **array);
+
 // TROUVER LES REDIRECTIONS POUR LES AJOUTER A MON ARBRE AST
 int					get_pipe(t_token *token, t_node *nodes);
 int					get_redirection_left(t_token *token, t_node *nodes,
@@ -184,7 +186,7 @@ void				free_envp(t_tree *tree);
 void				err_free_all(t_tree *tree);
 void				malloc_tree_err(t_env *env);
 int					command_not_found(t_tree *tree, char *cmd);
-void				free_array(char **ptr);
+void				free_array(char ***ptr);
 void				ft_exit(t_tree *tree);
 void				free_tree_tokens(t_tree **tree, t_token *tokens);
 

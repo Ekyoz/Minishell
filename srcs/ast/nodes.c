@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   nodes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:30:32 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/07 15:16:15 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/10 12:31:53 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_node	*add_node_left(t_node *nodes, t_token **token, t_tree *tree)
 		nodes->left = init_nodes(tree);
 		nodes->left->type = (*token)->type;
 		nodes->left->args = ft_arrdup((*token)->value);
-		free_array((*token)->value);
+		free_array(&(*token)->value);
 	}
 	*token = (*token)->next;
 	if ((*token) != NULL && ((*token)->type == PIPEUSED
@@ -34,7 +34,7 @@ t_node	*add_node_right(t_node *nodes, t_token **token, bool *is_redirec,
 	nodes->right = init_nodes(tree);
 	nodes->right->type = (*token)->type;
 	nodes->right->args = ft_arrdup((*token)->value);
-	free_array((*token)->value);
+	free_array(&(*token)->value);
 	*token = (*token)->next;
 	if ((*token) != NULL && ((*token)->type == PIPEUSED
 			|| (*token)->type == REDIRUSED))
@@ -47,7 +47,7 @@ t_node	*add_node(t_node *nodes, t_token **token)
 {
 	nodes->type = (*token)->type;
 	nodes->args = ft_arrdup((*token)->value);
-	free_array((*token)->value);
+	free_array(&(*token)->value);
 	*token = (*token)->next;
 	if ((*token) != NULL && ((*token)->type == PIPEUSED
 			|| (*token)->type == REDIRUSED))

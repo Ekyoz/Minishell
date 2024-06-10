@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:16:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/05 14:07:50 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/10 12:44:49 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	**pipe_splitter(char *command)
 		j = -1;
 	}
 	if (i != pipe_counter(command))
-		return (free_array(pipe_splited), free(command), NULL);
+		return (free_array(&pipe_splited), free(command), NULL);
 	free(command);
 	return (pipe_splited);
 }
@@ -80,23 +80,24 @@ static char	**split_quote_pipe(char *cmd)
 
 	quote = '\0';
 	arrays = string_to_array(cmd);
+	print_array(arrays);
 	if (ft_strchar(cmd, '|') == -1)
 		return (arrays);
 	if (ft_strchar(cmd, '"') == -1 && ft_strchar(cmd, '\'') == -1)
-		return (free_array(arrays), ft_split(cmd, '|'));
+		return (free_array(&arrays), ft_split(cmd, '|'));
 	else
 	{
 		get_first_quote(arrays, first_quote, &quote, last_line);
 		get_last_quote(arrays, last_quote, &quote, last_line);
 		if (quote == '\0')
-			return (free_array(arrays), ft_split(cmd, '|'));
+			return (free_array(&arrays), ft_split(cmd, '|'));
 		else
 		{
 			if (first_quote[1] < ft_strchar(cmd, '|')
 				&& last_quote[1] > ft_strchar(cmd, '|'))
 				return (arrays);
 			else
-				return (free_array(arrays), ft_split(cmd, '|'));
+				return (free_array(&arrays), ft_split(cmd, '|'));
 		}
 	}
 }
