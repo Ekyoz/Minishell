@@ -60,6 +60,6 @@ int do_echo(t_node *node)
 	}
 	if (n)
 		ft_putchar_fd('\n', 1);
-	signal_status = 0;
+	g_signal_status = 0;
 	return (1);
 }

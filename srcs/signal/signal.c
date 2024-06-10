@@ -16,7 +16,7 @@ static void sig_handler(int sig)
 {
     if(sig == SIGINT) // ctrl + c
     {
-        signal_status = 130;
+        g_signal_status = 130;
         ft_putchar_fd('\n', 2);
         rl_on_new_line();
         rl_replace_line("", 0);
@@ -45,12 +45,12 @@ void get_signal_cmd(int status, pid_t pid)
     waitpid(pid, &status, 0);
     // if(WIFSIGNALED(status))
     // {
-    //     signal_status = WTERMSIG(status);
+    //     g_signal_status = WTERMSIG(status);
     // }
 
     if(WIFEXITED(status))
     {
-        signal_status = WEXITSTATUS(status);
+        g_signal_status = WEXITSTATUS(status);
     }
 }
 void hdoc_or_cmd(t_node *nodes)

@@ -63,7 +63,7 @@ static int put(t_tree *tree, t_env *env, char *str, int *ret)
 	char *strcp;
 
 	if(*ret == 1)
-		return(*ret = 0, signal_status = 1, 1);
+		return(*ret = 0, g_signal_status = 1, 1);
 	strcp = ft_strdup(str);
 	length = get_char_by_index(str, '=');
 	if(length == (size_t)-1)

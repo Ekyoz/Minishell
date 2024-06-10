@@ -17,13 +17,13 @@ static void sig_handler_cmd(int sig)
     if(sig == SIGINT) // ctrl + c
     {
         write(1,"\n", 1);
-        signal_status = 130;
+        g_signal_status = 130;
         // exit(128 + sig);
     }
     if(sig == SIGQUIT)
     {
         write(2, "Quit (core dumped)\n", 19);
-        signal_status = 131 ;
+        g_signal_status = 131 ;
     }
     // else
     //     exit(128 + sig);

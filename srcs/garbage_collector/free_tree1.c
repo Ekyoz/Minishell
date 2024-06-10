@@ -30,7 +30,7 @@ void ft_exit(t_tree *tree)
 {
     ft_putstr_fd("exit\n", 2);
     free_tree(&tree, 1);
-    exit(signal_status);
+    exit(g_signal_status);
 }
 void free_tree_tokens(t_tree **tree, t_token *tokens)
 {

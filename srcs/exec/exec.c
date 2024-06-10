@@ -20,7 +20,7 @@ void	parent_process(int status, pid_t pid)
 		unlink("./.here_doc");
 	if (WIFEXITED(status))
 	{
-		signal_status = WEXITSTATUS(status);
+		g_signal_status = WEXITSTATUS(status);
 	}
 }
 

@@ -121,6 +121,6 @@ int print_err_export(char *err)
     ft_putstr_fd(err, 2);
     ft_putstr_fd("'", 2);
     ft_putstr_fd(": not a valid identifier\n", 2);
-    signal_status = 1;
+    g_signal_status = 1;
     return(1);
 }

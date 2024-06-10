@@ -13,27 +13,27 @@
 #include "minishell.h"
 
 static char	*pipe_end(char *command);
-static char **split_quote_pipe(char *cmd);
+static char	**split_quote_pipe(char *cmd);
 
 char	**pipe_splitter(char *command)
 {
 	int		i;
 	int		j;
 	char	**pipe_splited;
-	char *tmp;
+	char	*tmp;
 
 	i = -1;
 	j = -1;
-
 	command = pipe_end(command);
 	if (command == NULL)
-		return NULL;
+		return (NULL);
 	add_history(command);
 	add_file(command);
 	pipe_splited = split_quote_pipe(command);
 	while (pipe_splited[++i])
 	{
-		while (pipe_splited[i][++j] == ' ');
+		while (pipe_splited[i][++j] == ' ')
+			;
 		tmp = pipe_splited[i];
 		pipe_splited[i] = ft_substr(pipe_splited[i], j,
 				ft_strlen(pipe_splited[i]) - j);
@@ -49,34 +49,35 @@ char	**pipe_splitter(char *command)
 static char	*pipe_end(char *command)
 {
 	char	*input;
-	int	i;
+	int		i;
 
 	if (ft_strcmp(command, "|") == 0)
-		return NULL;
-    i = (int)ft_strlen(command);
-    while (command[--i] == ' ');
-    command = ft_substr(command, 0, i + 1);
-    if (command[ft_strlen(command) - 1] == '|')
-    {
-        input = readline("> ");
-        command = ft_strjoin(command, input);
-        command = pipe_end(command);
-    }
+		return (NULL);
+	i = (int)ft_strlen(command);
+	while (command[--i] == ' ')
+		;
+	command = ft_substr(command, 0, i + 1);
+	if (command[ft_strlen(command) - 1] == '|')
+	{
+		input = readline("> ");
+		command = ft_strjoin(command, input);
+		command = pipe_end(command);
+	}
 	return (command);
 }
 
-static char **split_quote_pipe(char *cmd)
+static char	**split_quote_pipe(char *cmd)
 {
-	int first_quote[2] = { 0, 0 };
-	int last_quote[2] = {0 , 0};
-	int last_line[2] = {-1, -1};
-	char quote = '\0';
-	char **arrays;
+	int		first_quote[2] = {0, 0};
+	int		last_quote[2] = {0, 0};
+	int		last_line[2] = {-1, -1};
+	char	quote;
+	char	**arrays;
 
+	quote = '\0';
 	arrays = string_to_array(cmd);
-
 	if (ft_strchar(cmd, '|') == -1)
-		return arrays;
+		return (arrays);
 	if (ft_strchar(cmd, '"') == -1 && ft_strchar(cmd, '\'') == -1)
 		return (free_array(arrays), ft_split(cmd, '|'));
 	else
@@ -87,8 +88,9 @@ static char **split_quote_pipe(char *cmd)
 			return (free_array(arrays), ft_split(cmd, '|'));
 		else
 		{
-			if (first_quote[1] < ft_strchar(cmd, '|') && last_quote[1] > ft_strchar(cmd, '|'))
-				return arrays;
+			if (first_quote[1] < ft_strchar(cmd, '|')
+				&& last_quote[1] > ft_strchar(cmd, '|'))
+				return (arrays);
 			else
 				return (free_array(arrays), ft_split(cmd, '|'));
 		}

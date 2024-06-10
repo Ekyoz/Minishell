@@ -47,7 +47,7 @@ static void no_numeric_msg(t_token *tokens, t_tree *tree, char *str)
 	ft_putstr_fd("Minishell : exit: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
-    signal_status = 1;
+    g_signal_status = 1;
 	clear_token(&tokens);
 	free_tree(&tree, 1);
     exit(1);
@@ -57,7 +57,7 @@ static void many_argument_msg(t_tree *tree)
 {
 	ft_putstr_fd("exit\n", 2);
 	ft_putstr_fd("Minishell: exit: too many arguments\n", 2);
-    signal_status = 1;
+    g_signal_status = 1;
 	free_tree(&tree, 1);
     exit(1);
 }
@@ -102,10 +102,10 @@ int do_exit(t_token *tokens, t_tree *tree, t_node *node)
         code = ft_atoi_exit(node->args[1], i, &maxlong);
         if(maxlong == 1)
             no_numeric_msg(tokens, tree, node->args[1]);
-        signal_status = code % 256;
+        g_signal_status = code % 256;
         ft_putstr_fd("exit\n", 2);
 		free_tree_tokens(&tree, tokens);
-        exit(signal_status);
+        exit(g_signal_status);
     }
 	return(1);
 }

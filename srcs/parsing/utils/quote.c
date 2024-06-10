@@ -19,10 +19,10 @@ static void	check_double_quote(char *in_quote, int *double_quote);
 
 int	quoted(char **cmd)
 {
-	int	i;
-	int	single_quote;
-	int	double_quote;
-	char in_quote;
+	int		i;
+	int		single_quote;
+	int		double_quote;
+	char	in_quote;
 
 	i = 0;
 	in_quote = 0;
@@ -38,7 +38,7 @@ int	quoted(char **cmd)
 	if (single_quote % 2 != 0 || double_quote % 2 != 0)
 	{
 		ft_putstr_fd("Minishell: quote error\n", 2);
-		return -1;
+		return (-1);
 	}
 	return (1);
 }
@@ -68,7 +68,7 @@ int	quote_len(char **cmd, int first_quote[2], int last_quote[2])
 static void	check_quotes_in_string(char *str, int *single_quote,
 		int *double_quote, char *in_quote)
 {
-	int		j;
+	int	j;
 
 	j = 0;
 	while (str[j])

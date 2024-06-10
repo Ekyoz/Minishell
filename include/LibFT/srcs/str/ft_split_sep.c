@@ -12,6 +12,7 @@
 
 #include "libft.h"
 #include <stdio.h>
+
 static int	is_separator(char c, char sep)
 {
 	return (c == sep);
@@ -73,7 +74,7 @@ char	**ft_split_sep(char *str, char sep)
 {
 	char	**result;
 
-	result = (char **)malloc((count_words(str, sep) * 2 +1) * sizeof(char *));
+	result = (char **)malloc((count_words(str, sep) * 2 + 1) * sizeof(char *));
 	if (!result)
 		return (NULL);
 	if (split_loop(str, sep, result) == -1)

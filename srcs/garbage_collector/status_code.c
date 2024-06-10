@@ -15,6 +15,6 @@
 void read_status(t_tree *tree)
 {
     (void)tree;
-    printf("%d\n", signal_status);
+    printf("%d\n", g_signal_status);
     // je sais pas quoi exit apres avoir fait cette commande 
 }

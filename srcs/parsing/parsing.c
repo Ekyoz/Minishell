@@ -14,7 +14,8 @@
 
 static void	parsing_redir(t_token **head, char **c_pipe, char **c_splitted,
 				int *i_pipe);
-static char *check_space(char *cmd);
+static void	append_token_redir(char **c_redirs, char **c_splitted,
+				t_token **head);
 
 bool	parsing(t_token **head, char *commands, t_env *env)
 {
@@ -30,7 +31,7 @@ bool	parsing(t_token **head, char *commands, t_env *env)
 			return (free_token(c_pipe, NULL, NULL, NULL));
 		while (c_pipe[++i_pipe])
 		{
-            c_pipe[i_pipe] = check_space(c_pipe[i_pipe]);
+			c_pipe[i_pipe] = check_space(c_pipe[i_pipe]);
 			c_splitted = splitter(c_pipe[i_pipe], env);
 			if (!c_splitted)
 				return (free_token(c_pipe, c_splitted, NULL, NULL));
@@ -49,11 +50,9 @@ static void	parsing_redir(t_token **head, char **c_pipe, char **c_splitted,
 		int *i_pipe)
 {
 	char	**c_cmd;
-	char	**c_redirs = NULL;
-	int		i_redirs;
+	char	**c_redirs;
 
-	i_redirs = -1;
-
+	c_redirs = NULL;
 	if (!there_token(c_pipe[*i_pipe]))
 		append_token(head, TOKEN_WORD, c_splitted);
 	else if (there_token(c_pipe[*i_pipe]))
@@ -61,86 +60,31 @@ static void	parsing_redir(t_token **head, char **c_pipe, char **c_splitted,
 		c_redirs = redir(c_splitted);
 		c_cmd = miss_elements(c_splitted, c_redirs);
 		append_token(head, TOKEN_WORD, c_cmd);
-        free_array(c_cmd);
-		while (c_redirs[++i_redirs])
-		{
-			if (is_token(c_redirs[i_redirs], 0) == TOKEN_REDIR_HEREDOC)
-			{
-				if (do_expand(c_splitted ,ft_arrlen(c_splitted)-ft_arrlen(c_redirs)+(i_redirs*2)-1))
-					append_token(head, is_token(c_redirs[i_redirs], 0),string_to_array(ft_strdup("1")));
-				else
-					append_token(head, is_token(c_redirs[i_redirs], 0),NULL);
-			}
-			else
-				append_token(head, is_token(c_redirs[i_redirs], 0),string_to_array(c_redirs[i_redirs]));
-		}
+		free_array(c_cmd);
+		append_token_redir(c_redirs, c_splitted, head);
 	}
-    free_array(c_redirs);
+	free_array(c_redirs);
 }
 
-
-static char *check_space(char *cmd)
+static void	append_token_redir(char **c_redirs, char **c_splitted,
+		t_token **head)
 {
-    int i = -1;
-    char *sub;
-    char *sub2;
-    char *join;
-    char *temp;
+	int	i_redirs;
 
-    while (cmd[++i])
-    {
-        if (is_token(cmd, i) == TOKEN_REDIR_APPEND || is_token(cmd, i) == TOKEN_REDIR_HEREDOC)
-        {
-            if (cmd[i+2] != ' ')
-            {
-                sub = ft_substr(cmd, 0, i+2);
-                sub2 = ft_substr(cmd, i+2, ft_strlen(cmd)-i-2);
-                join = ft_strjoin(" ", sub2);
-                cmd = ft_strjoin(sub, join);
-                free(sub);
-                free(sub2);
-                free(join);
-            }
-            if (i > 0 && cmd[i-1] != ' ')
-            {
-                sub = ft_substr(cmd, 0, i);
-                sub2 = ft_substr(cmd, i, ft_strlen(cmd)-i);
-                join = ft_strjoin(" ", sub2);
-                temp = cmd;
-                cmd = ft_strjoin(sub, join);
-                free(temp);
-                free(sub);
-                free(sub2);
-                free(join);
-            }
-            i+=2;
-        }
-        else if (is_token(cmd, i) == TOKEN_REDIR_OUT || is_token(cmd, i) == TOKEN_REDIR_IN)
-        {
-            if (cmd[i+1] != ' ')
-            {
-                sub = ft_substr(cmd, 0, i+1);
-                sub2 = ft_substr(cmd, i+1, ft_strlen(cmd)-i-1);
-                join = ft_strjoin(" ", sub2);
-                cmd = ft_strjoin(sub, join);
-                free(sub);
-                free(sub2);
-                free(join);
-            }
-            if (i > 0 && cmd[i-1] != ' ')
-            {
-                sub = ft_substr(cmd, 0, i);
-                sub2 = ft_substr(cmd, i, ft_strlen(cmd)-i);
-                join = ft_strjoin(" ", sub2);
-                temp = cmd;
-                cmd = ft_strjoin(sub, join);
-                free(temp);
-                free(sub);
-                free(sub2);
-                free(join);
-            }
-            i+=1;
-        }
-    }
-    return cmd;
+	i_redirs = -1;
+	while (c_redirs[++i_redirs])
+	{
+		if (is_token(c_redirs[i_redirs], 0) == TOKEN_REDIR_HEREDOC)
+		{
+			if (do_expand(c_splitted, ft_arrlen(c_splitted)
+					- ft_arrlen(c_redirs) + (i_redirs * 2) - 1))
+				append_token(head, is_token(c_redirs[i_redirs], 0),
+					string_to_array(ft_strdup("1")));
+			else
+				append_token(head, is_token(c_redirs[i_redirs], 0), NULL);
+		}
+		else
+			append_token(head, is_token(c_redirs[i_redirs], 0),
+				string_to_array(c_redirs[i_redirs]));
+	}
 }

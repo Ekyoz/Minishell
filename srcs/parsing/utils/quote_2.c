@@ -19,7 +19,6 @@ void	get_first_quote(char **cmd, int pos[2], char *c_quote, int last_line[2])
 
 	i = last_line[0];
 	j = last_line[1];
-
 	while (cmd[++i])
 	{
 		while (cmd[i][++j])

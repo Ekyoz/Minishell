@@ -23,6 +23,9 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 	int		i_exp;
 	int		j;
 	char	*var;
+	char	*substr;
+	char	*trimmed_var;
+	char	*env_value;
 
 	i_cmd = -1;
 	i_exp = 0;
@@ -33,21 +36,22 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 		if (no_expandable[i_exp] && i_cmd == no_expandable[i_exp])
 		{
 			i_exp++;
-			continue;
+			continue ;
 		}
 		while (j_cmd < (int)ft_strlen(cmd[i_cmd]) && cmd[i_cmd][++j_cmd])
 		{
 			j = j_cmd;
 			if (ft_strcmp(cmd[i_cmd], "$") == 0)
-				return cmd;
+				return (cmd);
 			if (ft_strcmp(cmd[i_cmd], "$?") == 0)
 			{
-				cmd[i_cmd] = replace_env(ft_itoa(signal_status), cmd[i_cmd], "$?");
-				return cmd;
+				cmd[i_cmd] = replace_env(ft_itoa(g_signal_status), cmd[i_cmd],
+						"$?");
+				return (cmd);
 			}
 			if (cmd[i_cmd][j_cmd] == '$')
 			{
-				char *substr = ft_substr(cmd[i_cmd], j++, 1);
+				substr = ft_substr(cmd[i_cmd], j++, 1);
 				var = ft_strjoin("", substr);
 				while (cmd[i_cmd][j] && cmd[i_cmd][j] != ' '
 					&& cmd[i_cmd][j] != '\'' && cmd[i_cmd][j] != '$')
@@ -56,11 +60,11 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 					var = ft_strjoin(var, substr);
 					free(substr);
 				}
-				char *trimmed_var = ft_strtrim(var, "$");
-				char *env_value = get_env_value(trimmed_var, env);
+				trimmed_var = ft_strtrim(var, "$");
+				env_value = get_env_value(trimmed_var, env);
 				if (ft_strcmp(env_value, "") == 0)
 					j_cmd--;
-  				cmd[i_cmd] = replace_env(env_value, cmd[i_cmd], var);
+				cmd[i_cmd] = replace_env(env_value, cmd[i_cmd], var);
 				var = NULL;
 				free(trimmed_var);
 			}
@@ -75,29 +79,32 @@ char	*expand_string(char *cmd, t_env *env)
 	int		i_cmd;
 	int		j;
 	char	*var;
+	char	*substr;
+	char	*trimmed_var;
+	char	*env_value;
 
 	i_cmd = -1;
 	var = NULL;
 	if (ft_strcmp(cmd, "$") == 0)
-		return cmd;
+		return (cmd);
 	if (ft_strcmp(cmd, "$?") == 0)
-		return replace_env(ft_itoa(signal_status), cmd, "$?");
-
+		return (replace_env(ft_itoa(g_signal_status), cmd, "$?"));
 	while (i_cmd < (int)ft_strlen(cmd) && cmd[++i_cmd])
 	{
 		j = i_cmd;
 		if (cmd[i_cmd] == '$')
 		{
-			char *substr = ft_substr(cmd, j++, 1);
+			substr = ft_substr(cmd, j++, 1);
 			var = ft_strjoin("", substr);
-			while (cmd[j] && cmd[j] != ' ' && cmd[j] != '\'' && cmd[j] != '\"' && cmd[j] != '$')
+			while (cmd[j] && cmd[j] != ' ' && cmd[j] != '\'' && cmd[j] != '\"'
+				&& cmd[j] != '$')
 			{
 				substr = ft_substr(cmd, j++, 1);
 				var = ft_strjoin(var, substr);
 				free(substr);
 			}
-			char *trimmed_var = ft_strtrim(var, "$");
-			char *env_value = get_env_value(trimmed_var, env);
+			trimmed_var = ft_strtrim(var, "$");
+			env_value = get_env_value(trimmed_var, env);
 			if (ft_strcmp(env_value, "") == 0)
 				i_cmd--;
 			cmd = replace_env(env_value, cmd, var);
@@ -111,13 +118,14 @@ char	*expand_string(char *cmd, t_env *env)
 
 static char	*get_env_value(char *key, t_env *env)
 {
-	char *env_key;
+	char	*env_key;
 
 	while (env)
 	{
 		env_key = get_env_key(env->value);
 		if (ft_strcmp(env_key, key) == 0)
-			return (free(env_key), ft_substr(env->value, ft_strchar(env->value, '=') + 1,ft_strlen(env->value)));
+			return (free(env_key), ft_substr(env->value, ft_strchar(env->value,
+						'=') + 1, ft_strlen(env->value)));
 		env = env->next;
 		free(env_key);
 	}

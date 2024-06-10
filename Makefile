@@ -52,7 +52,7 @@ FILE_PARSING_DIR		= parsing/
 FILE_PARSING			= parsing token pipe redir quote splitter expand
 
 FILE_PARS_UTILS_DIR		= parsing/utils/
-FILE_PARS_UTILS			= parser token quote quote_2 pipe expand
+FILE_PARS_UTILS			= parser token quote quote_2 pipe expand check_space free_chars
 
 FILE_PARS_CHECKER_DIR	= parsing/checker/
 FILE_PARS_CHECKER		= checker

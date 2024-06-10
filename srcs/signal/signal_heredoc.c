@@ -32,7 +32,7 @@ static void sig_handler_heredoc(int sig)
     if(sig == SIGINT) // ctrl + c
     {
         ft_putchar_fd('\n', 0);
-        signal_status = 130;
+        g_signal_status = 130;
     }
 
 }

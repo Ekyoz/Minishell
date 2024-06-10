@@ -1,32 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   free_chars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: alexandre <atresall@student.42lyon.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 13:38:06 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/17 13:38:06 by atresall         ###   ########.fr       */
+/*   Created: 2024/06/07 15:50:56 by alexandre         #+#    #+#             */
+/*   Updated: 2024/06/07 15:50:56 by alexandre        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pipe_counter(const char *command)
+void	free_chars(char *c1, char *c2, char *c3, char *c4)
 {
-	int		i;
-	int		pipe;
-	bool	quote;
-
-	quote = false;
-	i = -1;
-	pipe = 1;
-	while (command[++i])
-	{
-		if (command[i] == '"' || command[i] == '\'')
-			quote = !quote;
-		if (command[i] == '|' && !quote)
-			pipe++;
-	}
-	return (pipe);
+	if (c1)
+		free(c1);
+	if (c2)
+		free(c2);
+	if (c3)
+		free(c3);
+	if (c4)
+		free(c4);
 }

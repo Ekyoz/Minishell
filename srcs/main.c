@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int signal_status = 0;
+int g_signal_status = 0;
 
 int main(int argc, char *argv[], char *envp[])
 {

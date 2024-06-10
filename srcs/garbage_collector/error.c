@@ -52,14 +52,14 @@ void print_error(t_token *tokens, int errorcode, t_tree *tree, t_node *node)
 void err_free_all(t_tree *tree)
 {
     free_tree(&tree, 1);
-    signal_status = 1;
+    g_signal_status = 1;
     exit(1);
 }
 
 void malloc_tree_err(t_env *env)
 {
     free_env(env);
-    signal_status = 1;
+    g_signal_status = 1;
     exit(1);
 }
 
@@ -70,7 +70,7 @@ int command_not_found(t_tree *tree, char *cmd)
     ft_putstr_fd(": ", 2);
     ft_putstr_fd("command not found\n", 2);
     // free_tree(&tree);
-    signal_status = 1;
+    g_signal_status = 1;
     return(1);
 }
 

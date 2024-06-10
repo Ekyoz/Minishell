@@ -18,11 +18,11 @@ static int test_directory(char * path)
 
     ft_putstr_fd("minishell: cd: ", 2);
     ft_putstr_fd(path, 2);
-    signal_status = 1;
+    g_signal_status = 1;
     if (stat(path, &st) == -1)
     {
         ft_putstr_fd(": No such file or directory", 2);
-        signal_status = 127;
+        g_signal_status = 127;
     }
     else if (!(st.st_mode & S_IXUSR))
         ft_putstr_fd(": Permission denied", 2);
@@ -55,7 +55,7 @@ static void tild(t_tree *tree, t_node *node, char* homepath)
     if(!homepath)
     {
         ft_putstr_fd("cd: HOME not set\n", 2);
-        signal_status = 1;
+        g_signal_status = 1;
         return;
     }
     path = ft_substr(node->args[1], 1, ft_strlen(node->args[1]) - 1); // je decalle de un pour enlever le tild
@@ -72,7 +72,7 @@ static int cd_alone(t_tree *tree, t_node *node)
     if(!homepath) // je vais dans le path de HOME
     {
         ft_putstr_fd("cd: HOME not set\n", 2);
-        signal_status = 1;
+        g_signal_status = 1;
     }
     change_dir(tree, node, homepath);
     free(homepath);
@@ -94,7 +94,7 @@ int do_cd(t_tree *tree, t_node *node)
     else if(node->args && !ft_strncmp(node->args[1], "-", 1)) // tiret
     {
         ft_putstr_fd("argument not supported\n", 2);
-        signal_status = 1;
+        g_signal_status = 1;
     }
     else if(node->args && !ft_strncmp(node->args[1], "~", 1)) // tild
         tild(tree, node, homepath);
