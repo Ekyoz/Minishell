@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/11 14:09:22 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/11 19:45:00 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,13 @@ static void	close_heredoc(t_token *tokens, t_tree *tree, char **eofword)
 		exit(g_signal_status);
 	}
 	tree->fdin = open(".here_doc", O_RDONLY);
+	if (tree->fdin < 0)
+		perror("open 2");	
 	if (dup2(tree->fdin, STDIN_FILENO) == -1)
+	{
+		perror("dup2");
 		err_free_all(tree);
+	}
 	close(tree->fdin);
 }
 
@@ -100,6 +105,9 @@ void	heredoc(t_token *tokens, t_tree *tree, t_node *nodes)
 	if (eofword)
 	{
 		tree->fdin = open(".here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0777);
+		if(tree->fdin < 0)
+			perror("open");
+		fprintf(stderr, "eofword[0] = %s\n", eofword[0]);
 		if (tree->fdin < 0)
 			err_free_all(tree);
 		while (eofword[i])
