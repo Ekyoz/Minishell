@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/11 17:32:15 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/11 19:31:20 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,28 @@ static void	argc_argv(int argc, char *argv[])
 {
 	(void)argc;
 	(void)argv;
+}
+
+void print_node(t_node *node) {
+    if (node == NULL) {
+        return;
+    }
+
+    // Print the current node
+    printf("Type: %d\n", node->type);
+    printf("File Type: %d\n", node->file_type);
+    printf("Tree Level: %d\n", node->tree_level);
+    if (node->args != NULL) {
+        for (int i = 0; node->args[i] != NULL; i++) {
+            printf("Arg[%d]: %s\n", i, node->args[i]);
+        }
+    }
+
+    // Recursively print the left and right nodes
+	printf("\n\n----Left Node----\n\n");
+    print_node(node->left);
+	printf("\n\n----Right Node----\n\n");
+    print_node(node->right);
 }
 
 int	main(int argc, char *argv[], char *envp[])
@@ -38,9 +60,10 @@ int	main(int argc, char *argv[], char *envp[])
 			sig_ctrld(env);
 		if (parsing(&tokens, input, env) && tokens != NULL)
 		{
-			print_list(tokens);
+			// print_list(tokens);
 			tree = init_tree(env);
 			create_node(tokens, &tree);
+			// print_node(tree->nodes);
 			ast_exec(tokens, tree);
 			free_tree(&tree, 0);
 			clear_token(&tokens);

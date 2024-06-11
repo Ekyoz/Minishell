@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/10 12:45:34 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/11 18:42:12 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ void				add_branches(t_token *tokens, t_node **node,
 
 // FONCTIONS MANIPULATION DE MON ARBRE
 t_tree				*init_tree(t_env *env);
-void				print_tree(t_node *node);
 
 // EXECUT
 void				ast_exec(t_token *tokens, t_tree *tree);
@@ -187,7 +186,7 @@ void				err_free_all(t_tree *tree);
 void				malloc_tree_err(t_env *env);
 int					command_not_found(t_tree *tree, char *cmd);
 void				free_array(char ***ptr);
-void				ft_exit(t_tree *tree);
+void				ft_exit(t_tree *tree, t_token *tokens);
 void				free_tree_tokens(t_tree **tree, t_token *tokens);
 
 // ENVIRONNEMENT
