@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/10 10:53:18 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/11 18:42:43 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	do_exit(t_token *tokens, t_tree *tree, t_node *node)
 	maxlong = 0;
 	i = 0;
 	if (!node->args[1])
-		ft_exit(tree);
+		ft_exit(tree, tokens);
 	check_numeric(tokens, tree, node);
 	while (node->args[i])
 		i++;

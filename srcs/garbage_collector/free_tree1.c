@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/10 10:53:37 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/11 18:41:31 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ void	free_env(t_env *env)
 	}
 }
 
-void	ft_exit(t_tree *tree)
+void	ft_exit(t_tree *tree, t_token *tokens)
 {
+	free_tree_tokens(&tree, tokens);
 	ft_putstr_fd("exit\n", 2);
-	free_tree(&tree, 1);
 	exit(g_signal_status);
 }
 
