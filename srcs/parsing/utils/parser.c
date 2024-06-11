@@ -53,6 +53,11 @@ char	**clean_space(char **cmd)
 
 	i = -1;
 	j = 0;
+	if (ft_arrlen(cmd) == 1)
+		while (cmd[0][++i])
+			if (ft_isspace(cmd[0][i]))
+				return (cmd);
+	i = -1;
 	while (cmd[++i])
 	{
 		if (ft_strcmp(cmd[i], " ") != 0)

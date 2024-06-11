@@ -290,5 +290,11 @@ char				**del_cmd(int first_quote[2], int last_quote[2],
 void				get_quoted_join(char **cmd, char **quoted,
 						int last_quote[2], int i_cmd);
 int					quote_strings(char **tableau);
+char	**split_token(char *command);
+int	split_count(char *command);
+void	split_count_add(bool *in_word, int *count, char *command, int *i);
+char	*replace_env(char *env, char *cmd, char *key);
+char	*get_env_value(char *key, t_env *env);
+
 
 #endif
