@@ -62,3 +62,42 @@ void	get_last_quote(char **cmd, int pos[2], char *c_quote, int last_line[2])
 		j = -1;
 	}
 }
+
+char	*join_quote(char *c_quoted, char *before, char *after, t_env *env)
+{
+	char	*temp;
+
+	if (before != NULL)
+	{
+		temp = c_quoted;
+		c_quoted = ft_strjoin(expand_string(before, env), temp);
+		free(temp);
+		temp = NULL;
+	}
+	if (after != NULL)
+	{
+		temp = c_quoted;
+		c_quoted = ft_strjoin(c_quoted, expand_string(after, env));
+		free(temp);
+		temp = NULL;
+	}
+	free_chars(after, before, NULL, NULL);
+	return (c_quoted);
+}
+
+char	*get_before(int first_quote[2], char **cmd)
+{
+	if (first_quote[1] > 0)
+		return (ft_substr(cmd[first_quote[0]], 0, first_quote[1]));
+	return (NULL);
+}
+
+char	*get_c_quoted(char *c_quoted, t_env *env)
+{
+	char	*temp;
+
+	temp = expand_string(c_quoted, env);
+	c_quoted = ft_strdup(temp);
+	free(temp);
+	return (c_quoted);
+}
