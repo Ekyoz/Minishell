@@ -38,7 +38,7 @@ bool	parsing(t_token **head, char *commands, t_env *env)
 			parsing_redir(head, c_pipe, c_splitted, &i_pipe);
 			if (i_pipe < pipe_counter(commands) - 1)
 				append_token(head, TOKEN_PIPE, NULL);
-			free_array(&c_splitted);
+//			free_array(&c_splitted);
 		}
 		free_array(&c_pipe);
 	}
