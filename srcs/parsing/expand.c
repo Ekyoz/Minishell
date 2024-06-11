@@ -26,6 +26,8 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 	char	*substr;
 	char	*trimmed_var;
 	char	*env_value;
+	char	*temp;
+	char	*temp2;
 
 	i_cmd = -1;
 	i_exp = 0;
@@ -53,20 +55,22 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 			{
 				substr = ft_substr(cmd[i_cmd], j++, 1);
 				var = ft_strjoin("", substr);
+				free(substr);
 				while (cmd[i_cmd][j] && cmd[i_cmd][j] != ' '
 					&& cmd[i_cmd][j] != '\'' && cmd[i_cmd][j] != '$')
 				{
 					substr = ft_substr(cmd[i_cmd], j++, 1);
+					temp = var;
 					var = ft_strjoin(var, substr);
-					free(substr);
+					free_chars(substr, temp, NULL, NULL);
 				}
 				trimmed_var = ft_strtrim(var, "$");
 				env_value = get_env_value(trimmed_var, env);
 				if (ft_strcmp(env_value, "") == 0)
 					j_cmd--;
+				temp2 = cmd[i_cmd];
 				cmd[i_cmd] = replace_env(env_value, cmd[i_cmd], var);
-				var = NULL;
-				free(trimmed_var);
+				free_chars(trimmed_var, var, env_value, temp2);
 			}
 		}
 	}
@@ -82,6 +86,7 @@ char	*expand_string(char *cmd, t_env *env)
 	char	*substr;
 	char	*trimmed_var;
 	char	*env_value;
+	char	*temp;
 
 	i_cmd = -1;
 	var = NULL;
@@ -96,23 +101,24 @@ char	*expand_string(char *cmd, t_env *env)
 		{
 			substr = ft_substr(cmd, j++, 1);
 			var = ft_strjoin("", substr);
+			free(substr);
 			while (cmd[j] && cmd[j] != ' ' && cmd[j] != '\'' && cmd[j] != '\"'
 				&& cmd[j] != '$')
 			{
 				substr = ft_substr(cmd, j++, 1);
+				temp = var;
 				var = ft_strjoin(var, substr);
-				free(substr);
+				free_chars(substr, temp, NULL, NULL);
 			}
 			trimmed_var = ft_strtrim(var, "$");
 			env_value = get_env_value(trimmed_var, env);
 			if (ft_strcmp(env_value, "") == 0)
 				i_cmd--;
+			temp = cmd;
 			cmd = replace_env(env_value, cmd, var);
-			var = NULL;
-			free(trimmed_var);
+			free_chars(trimmed_var, var, env_value, temp);
 		}
 	}
-	free(var);
 	return (cmd);
 }
 
@@ -147,17 +153,21 @@ static char	*replace_env(char *env, char *cmd, char *key)
 {
 	char	*replaced;
 	char	*after;
+	char	*temp;
 	long	pos;
 
 	if (ft_strnstr(cmd, key, ft_strlen(cmd)) != NULL)
 	{
 		pos = ft_strnstr(cmd, key, ft_strlen(cmd)) - cmd;
 		replaced = ft_substr(cmd, 0, pos);
+		temp = replaced;
 		replaced = ft_strjoin(replaced, env);
 		after = ft_substr(cmd, pos + ft_strlen(key), ft_strlen(cmd) - (pos
 					+ ft_strlen(key)));
+		free(temp);
+		temp = replaced;
 		replaced = ft_strjoin(replaced, after);
-		free(after);
+		free_chars(after, temp, NULL, NULL);
 		return (replaced);
 	}
 	return (NULL);
