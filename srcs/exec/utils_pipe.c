@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:00:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/06 17:56:48 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/11 17:38:19 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	close_all_pipes(int **fdpipe, int i)
 
 void	first_pipe(t_token *tokens, t_tree *tree, t_node *node)
 {
-	heredoc(tokens, tree, node);
 	if (!check_redir_out(tokens, tree, node) && !testopening(tokens, tree,
 			node))
 	{
@@ -35,22 +34,22 @@ void	first_pipe(t_token *tokens, t_tree *tree, t_node *node)
 			err_free_all(tree);
 	}
 	check_redir_in(tokens, tree, node);
+	heredoc(tokens, tree, node);
 }
 
 void	last_pipe(t_token *tokens, t_tree *tree, t_node *node, int j)
 {
-	heredoc(tokens, tree, node);
 	check_redir_out(tokens, tree, node);
 	if (!check_redir_in(tokens, tree, node))
 	{
 		if (dup2(tree->fdpipe[j - 1][0], STDIN_FILENO) == -1)
 			err_free_all(tree);
 	}
+	heredoc(tokens, tree, node);
 }
 
 void	mid_pipe(t_token *tokens, t_tree *tree, t_node *node, int j)
 {
-	heredoc(tokens, tree, node);
 	if (!check_redir_in(tokens, tree, node))
 	{
 		if (dup2(tree->fdpipe[j - 1][0], STDIN_FILENO) == -1)
@@ -61,6 +60,7 @@ void	mid_pipe(t_token *tokens, t_tree *tree, t_node *node, int j)
 		if (dup2(tree->fdpipe[j][1], STDOUT_FILENO) == -1)
 			err_free_all(tree);
 	}
+	heredoc(tokens, tree, node);
 }
 
 void	wait_all_parent(t_tree *tree, int i)
