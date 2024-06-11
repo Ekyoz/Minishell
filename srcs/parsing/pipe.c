@@ -51,7 +51,6 @@ static char	*pipe_end(char *command)
 	int		i;
 
 	add_history(command);
-	add_file(command);
 	if (ft_strchar(command, '|') == -1)
 		return (command);
 	if (ft_strcmp(command, "|") == 0)

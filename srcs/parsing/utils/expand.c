@@ -21,6 +21,8 @@ int	*get_no_expandable(char **cmd)
 	i = -1;
 	h = 0;
 	no_expandable = (int *)malloc(sizeof(int) * (get_len_no_expand(cmd) + 1));
+	if (!no_expandable)
+		return (NULL);
 	no_expandable = ft_memset(no_expandable, -1, sizeof(int)
 			* (get_len_no_expand(cmd) + 1));
 	while (cmd[++i])

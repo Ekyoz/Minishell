@@ -39,6 +39,8 @@ char	**string_to_array(char *string)
 	char	**array;
 
 	array = (char **)malloc(2 * sizeof(char *));
+	if (!array)
+		return (NULL);
 	array[0] = ft_strdup(string);
 	array[1] = NULL;
 	return (array);
@@ -51,20 +53,12 @@ char	**clean_space(char **cmd)
 
 	i = -1;
 	j = 0;
-	printf("je rentre dans clean_space %p\n", cmd);
 	while (cmd[++i])
 	{
 		if (ft_strcmp(cmd[i], " ") != 0)
-		{
 			cmd[j++] = cmd[i];
-		}
 		else
-		{
-			// printf("je rentre la cmd -%s %p-\n", cmd[i], cmd[i]);
-			// printf("je rentre la cmd -%s-\n", cmd[i]);
 			free(cmd[i]);
-			// cmd[i] = NULL;
-		}
 	}
 	cmd[j] = NULL;
 	return (cmd);
