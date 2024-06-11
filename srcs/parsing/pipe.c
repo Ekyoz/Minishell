@@ -27,6 +27,8 @@ char	**pipe_splitter(char *command)
 	if (command == NULL)
 		return (NULL);
 	command = pipe_end(command);
+	if (command == NULL)
+		return (NULL);
 	if (ft_strchar(command, '|') == -1)
 		return (string_to_array(command));
 	pipe_splited = split_quote_pipe(command);
@@ -62,9 +64,9 @@ static char	*pipe_end(char *command)
 	command = ft_substr(temp, 0, i + 1);
 	if (command[ft_strlen(command) - 1] == '|')
 	{
-		input = readline("pipe> ");
-		command = ft_strjoin(temp, input);
-		command = pipe_end(command);
+		ft_putstr_fd("Minihell: Pipe error\n", 2);
+		free(command);
+		return (NULL);
 	}
 	return (command);
 }

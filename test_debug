@@ -1,6 +1,0 @@
-"cat lol.c | cat > lol.c" => segfault parsing
-cd existing file => error editing .minishell_history
-
-
-ls -l | head -n 1 => invalid read \ free
-echo $USER => leaks

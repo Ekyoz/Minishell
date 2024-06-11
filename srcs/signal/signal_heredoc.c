@@ -15,7 +15,7 @@
 void	err_null_heredoc(t_token *tokens, t_tree *tree, char **eofword, int *i)
 {
 	ft_putstr_fd("\n", 2);
-	ft_putstr_fd("minishell: warning:", 2);
+	ft_putstr_fd("minihell: warning:", 2);
 	ft_putstr_fd(" here-document at line 1 delimited by end-of-file (wanted `",
 		2);
 	ft_putstr_fd(eofword[*i], 2);
