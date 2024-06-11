@@ -38,7 +38,6 @@ bool	parsing(t_token **head, char *commands, t_env *env)
 			parsing_redir(head, c_pipe, c_splitted, &i_pipe);
 			if (i_pipe < pipe_counter(commands) - 1)
 				append_token(head, TOKEN_PIPE, NULL);
-			// free_array(&c_splitted);
 		}
 		free_array(&c_pipe);
 	}
@@ -78,21 +77,17 @@ static void	append_token_redir(char **c_redirs, char **c_splitted,
 		{
 			if (do_expand(c_splitted, ft_arrlen(c_splitted)
 					- ft_arrlen(c_redirs) + (i_redirs * 2) - 1))
-					{
-						// printf("je rentre dans le else %s et %p \n", string_to_array("1")[0], string_to_array("1"));
-					append_token(head, is_token(c_redirs[i_redirs], 0),
-						string_to_array("1"));
-
-					}
+			{
+				append_token(head, is_token(c_redirs[i_redirs], 0),
+					string_to_array("1"));
+			}
 			else
 			{
-				// printf("je rentre dans le else\n");
 				append_token(head, is_token(c_redirs[i_redirs], 0), NULL);
 			}
 		}
 		else
 		{
-			// printf("je rentre dans lautre else\n");
 			append_token(head, is_token(c_redirs[i_redirs], 0),
 				string_to_array(c_redirs[i_redirs]));
 		}

@@ -71,10 +71,7 @@ static t_token	*create_token(t_token_type type, char **value)
 		token->value = clean_space(value);
 	}
 	else
-	{
 		free_array(&value);
-		printf("error value %p\n", value);
-	}
 	token->next = NULL;
 	return (token);
 }

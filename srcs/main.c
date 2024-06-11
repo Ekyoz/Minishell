@@ -20,16 +20,6 @@ static void	argc_argv(int argc, char *argv[])
 	(void)argv;
 }
 
-void print_array(char **array)
-{
-	int i = 0;
-	while (array[i])
-	{
-		printf("value -%s-\n", array[i]);
-		i++;
-	}
-}
-
 int	main(int argc, char *argv[], char *envp[])
 {
 	char	*input;
@@ -43,20 +33,17 @@ int	main(int argc, char *argv[], char *envp[])
 	while (true)
 	{
 		set_signal();
-		add_file_to_history();
 		input = readline("\033[0;94mMinishell\033[0m\033[0;0m $ \033[0m");
 		if (input == NULL)
 			sig_ctrld(env);
 		if (parsing(&tokens, input, env) && tokens != NULL)
 		{
 			tree = init_tree(env);
-			 print_list(tokens);
 			create_node(tokens, &tree);
 			ast_exec(tokens, tree);
-			clear_token(&tokens);
 			free_tree(&tree, 0);
+			clear_token(&tokens);
 		}
 		free(input);
 	}
-	return (0);
 }

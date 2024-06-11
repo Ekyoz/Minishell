@@ -14,23 +14,23 @@
 
 static char	**split_token(char *command);
 static int	split_count(char *command);
-static char **there_token_splitter(char **c_final, char **c_space, int i_space, int i_final);
-
+static char	**there_token_splitter(char **c_final, char **c_space, int i_space,
+				int i_final);
+static void split_count_add(bool *in_word, int *count, char *command, int *i);
 
 char	**splitter(char *command, t_env *env)
 {
 	int		i_space;
 	int		i_final;
-	int		i_token;
 	char	**c_space;
-	char	**c_token;
 	char	**c_final;
 
 	i_space = -1;
 	i_final = 0;
-	c_token = NULL;
 	c_space = ft_split_sep(command, ' ');
 	c_final = (char **)malloc(sizeof(char *) * (ft_arrlen(c_space) + 1));
+	if (!c_space)
+		return (NULL);
 	while (c_space[++i_space])
 	{
 		if (!there_token(c_space[i_space]))
@@ -44,17 +44,18 @@ char	**splitter(char *command, t_env *env)
 	return (quote(c_final, env, get_no_expandable(c_final)));
 }
 
-static char **there_token_splitter(char **c_final, char **c_space, int i_space, int i_final)
+static char	**there_token_splitter(char **c_final, char **c_space, int i_space,
+		int i_final)
 {
-	char **c_token;
-	int	i_token;
+	char	**c_token;
+	int		i_token;
 
 	i_token = -1;
 	c_token = split_token(c_space[i_space]);
 	while (c_token[++i_token])
 		c_final[i_final] = ft_strdup(c_token[i_token]);
 	free_array(&c_token);
-	return c_final;
+	return (c_final);
 }
 
 static int	split_count(char *command)
@@ -71,23 +72,7 @@ static int	split_count(char *command)
 	while (command[i])
 	{
 		if (is_token(command, i) || command[i] == ' ')
-		{
-			if (in_word)
-			{
-				count++;
-				in_word = false;
-			}
-			if (is_token(command, i))
-			{
-				count++;
-				if (is_token(command, i) == TOKEN_REDIR_APPEND
-					|| is_token(command, i) == TOKEN_REDIR_HEREDOC)
-					i += 2;
-				else if (is_token(command, i) == TOKEN_REDIR_OUT
-					|| is_token(command, i) == TOKEN_REDIR_IN)
-					i++;
-			}
-		}
+			split_count_add(&in_word, &count, command, &i);
 		else if (!in_word)
 			in_word = true;
 		i++;
@@ -95,6 +80,25 @@ static int	split_count(char *command)
 	if (in_word)
 		count++;
 	return (count);
+}
+
+static void	split_count_add(bool *in_word, int *count, char *command, int *i)
+{
+	if (*in_word)
+	{
+		*count++;
+		in_word = false;
+	}
+	if (is_token(command, *i))
+	{
+		*count++;
+		if (is_token(command, *i) == TOKEN_REDIR_APPEND
+			|| is_token(command, *i) == TOKEN_REDIR_HEREDOC)
+			*i += 2;
+		else if (is_token(command, *i) == TOKEN_REDIR_OUT
+			|| is_token(command, *i) == TOKEN_REDIR_IN)
+			*i++;
+	}
 }
 
 static char	**split_token(char *command)
@@ -110,6 +114,8 @@ static char	**split_token(char *command)
 	s_last_word = 0;
 	e_last_word = 0;
 	c_final = (char **)malloc(sizeof(char *) * (split_count(command) + 1));
+	if (!c_final)
+		return (NULL);
 	if (!there_token(command))
 	{
 		c_final[0] = command;
