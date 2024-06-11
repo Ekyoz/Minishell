@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/10 12:32:01 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/11 14:09:22 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,12 @@ static void	text_heredoc(t_tree *tree, char **eofword, char *input, int *i)
 		*i = *i + 1;
 	else
 	{
-		temp = input;
-		input = ft_strtrim(input, "\n");
-		free(temp);
+		if(ft_strncmp(input, "\n", 2))
+		{
+			temp = input;
+			input = ft_strtrim(input, "\n");
+			free(temp);
+		}
 		if (tree->expandheredoc == 1)
 			input = expand_string(input, tree->env);
 		if (!eofword[*i + 1])

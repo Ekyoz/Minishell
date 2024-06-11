@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:16:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/10 12:44:49 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/10 14:41:30 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ static char	**split_quote_pipe(char *cmd)
 
 	quote = '\0';
 	arrays = string_to_array(cmd);
-	print_array(arrays);
 	if (ft_strchar(cmd, '|') == -1)
 		return (arrays);
 	if (ft_strchar(cmd, '"') == -1 && ft_strchar(cmd, '\'') == -1)

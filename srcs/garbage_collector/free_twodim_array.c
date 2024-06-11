@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 16:40:03 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/10 14:10:46 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/10 16:20:00 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ void	free_array(char ***ptr)
 	int	i;
 
 	i = 0;
-	printf("%p *ptr\n", *ptr);
 	if (*ptr)
 	{
 		while ((*ptr)[i])

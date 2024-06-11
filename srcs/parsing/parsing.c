@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 14:52:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/10 12:32:22 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/11 14:25:29 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,23 @@ static void	append_token_redir(char **c_redirs, char **c_splitted,
 		{
 			if (do_expand(c_splitted, ft_arrlen(c_splitted)
 					- ft_arrlen(c_redirs) + (i_redirs * 2) - 1))
-				append_token(head, is_token(c_redirs[i_redirs], 0),
-					string_to_array("1"));
+					{
+						printf("je rentre dans le else %s et %p \n", string_to_array("1")[0], string_to_array("1"));
+					append_token(head, is_token(c_redirs[i_redirs], 0),
+						string_to_array("1"));
+
+					}
 			else
+			{
+				printf("je rentre dans le else\n");
 				append_token(head, is_token(c_redirs[i_redirs], 0), NULL);
+			}
 		}
 		else
+		{
+			printf("je rentre dans lautre else\n");
 			append_token(head, is_token(c_redirs[i_redirs], 0),
 				string_to_array(c_redirs[i_redirs]));
+		}
 	}
 }
