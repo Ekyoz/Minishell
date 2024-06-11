@@ -24,8 +24,6 @@ char	**pipe_splitter(char *command)
 
 	i = -1;
 	j = -1;
-	if (command == NULL)
-		return (NULL);
 	command = pipe_end(command);
 	if (command == NULL)
 		return (NULL);
@@ -48,15 +46,14 @@ char	**pipe_splitter(char *command)
 
 static char	*pipe_end(char *command)
 {
-	char	*input;
 	char	*temp;
 	int		i;
 
+	if (command == NULL || ft_strcmp(command, "|") == 0)
+		return (NULL);
 	add_history(command);
 	if (ft_strchar(command, '|') == -1)
 		return (command);
-	if (ft_strcmp(command, "|") == 0)
-		return (NULL);
 	i = (int)ft_strlen(command);
 	while (command[--i] == ' ')
 		;
