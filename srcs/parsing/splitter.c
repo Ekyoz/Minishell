@@ -14,7 +14,7 @@
 
 static char	**split_token(char *command);
 static int	split_count(char *command);
-static void there_token_splitter(char ***c_final, char **c_space, int i_space, int i_final);
+static char **there_token_splitter(char **c_final, char **c_space, int i_space, int i_final);
 
 
 char	**splitter(char *command, t_env *env)
@@ -34,16 +34,17 @@ char	**splitter(char *command, t_env *env)
 	while (c_space[++i_space])
 	{
 		if (!there_token(c_space[i_space]))
-			c_final[i_final++] = ft_strdup(c_space[i_space]);
+			c_final[i_final] = ft_strdup(c_space[i_space]);
 		if (there_token(c_space[i_space]))
-			there_token_splitter(&c_final, c_space, i_space, i_final++);
+			c_final = there_token_splitter(c_final, c_space, i_space, i_final);
+		i_final++;
 	}
 	c_final[i_final] = NULL;
 	free_array(&c_space);
 	return (quote(c_final, env, get_no_expandable(c_final)));
 }
 
-static void there_token_splitter(char ***c_final, char **c_space, int i_space, int i_final)
+static char **there_token_splitter(char **c_final, char **c_space, int i_space, int i_final)
 {
 	char **c_token;
 	int	i_token;
@@ -51,8 +52,9 @@ static void there_token_splitter(char ***c_final, char **c_space, int i_space, i
 	i_token = -1;
 	c_token = split_token(c_space[i_space]);
 	while (c_token[++i_token])
-		*c_final[i_final] = ft_strdup(c_token[i_token]);
+		c_final[i_final] = ft_strdup(c_token[i_token]);
 	free_array(&c_token);
+	return c_final;
 }
 
 static int	split_count(char *command)
