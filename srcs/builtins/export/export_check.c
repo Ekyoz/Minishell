@@ -116,7 +116,7 @@ int check_export_var(char *var, int *ret)
 
 int print_err_export(char *err)
 {
-    ft_putstr_fd("Minishell: export:", 2);
+    ft_putstr_fd("Minihell: export:", 2);
     ft_putstr_fd("'", 2);
     ft_putstr_fd(err, 2);
     ft_putstr_fd("'", 2);

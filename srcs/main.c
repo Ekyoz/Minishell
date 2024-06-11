@@ -33,7 +33,7 @@ int	main(int argc, char *argv[], char *envp[])
 	while (true)
 	{
 		set_signal();
-		input = readline("\033[0;94mMinishell\033[0m\033[0;0m $ \033[0m");
+		input = readline("Minihell $ ");
 		if (input == NULL)
 			sig_ctrld(env);
 		if (parsing(&tokens, input, env) && tokens != NULL)

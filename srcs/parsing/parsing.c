@@ -28,7 +28,7 @@ bool	parsing(t_token **head, char *commands, t_env *env)
 	{
 		c_pipe = pipe_splitter(commands);
 		if (!c_pipe)
-			return (free_token(c_pipe, NULL, NULL, NULL));
+			return (free_token(c_pipe, NULL, NULL, NULL), false);
 		while (c_pipe[++i_pipe])
 		{
 			c_pipe[i_pipe] = check_space(c_pipe[i_pipe]);

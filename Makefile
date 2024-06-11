@@ -118,7 +118,7 @@ TEST_NAME			= $(OUT)/test.out
 SRC_DIR				= srcs
 TEST_DIR 			= test
 INCLUDE_DIR			= include
-OUT					= out
+OUT					= .objs
 
 #----RULES DIRS----#
 SRC_OUT_DIR			= $(OUT)/run

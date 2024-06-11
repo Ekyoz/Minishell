@@ -37,7 +37,7 @@ int	quoted(char **cmd)
 		return (0);
 	if (single_quote % 2 != 0 || double_quote % 2 != 0)
 	{
-		ft_putstr_fd("Minishell: quote error\n", 2);
+		ft_putstr_fd("Minihell: quote error\n", 2);
 		return (-1);
 	}
 	return (1);

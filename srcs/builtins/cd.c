@@ -16,7 +16,7 @@ static int	test_directory(char *path)
 {
 	struct stat	st;
 
-	ft_putstr_fd("minishell: cd: ", 2);
+	ft_putstr_fd("minihell: cd: ", 2);
 	ft_putstr_fd(path, 2);
 	g_signal_status = 1;
 	if (stat(path, &st) == -1)
