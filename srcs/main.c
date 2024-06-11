@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/10 16:54:10 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/11 13:16:15 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (parsing(&tokens, input, env) && tokens != NULL)
 		{
 			tree = init_tree(env);
-			print_list(tokens);
+			// print_list(tokens);
 			create_node(tokens, &tree);
 			ast_exec(tokens, tree);
 			clear_token(&tokens);

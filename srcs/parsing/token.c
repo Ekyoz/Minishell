@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:09:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/10 16:46:45 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/11 14:16:35 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	append_token(t_token **head, t_token_type type, char **value)
 	if (*head == NULL)
 	{
 		*head = create_token(type, ft_arrdup(value));
+		printf("la value %p\n", value);
 		free_array(&value);
 		return ;
 	}
@@ -73,6 +74,7 @@ static t_token	*create_token(t_token_type type, char **value)
 	else
 	{
 		free_array(&value);
+		printf("error value %p\n", value);
 	}
 	token->next = NULL;
 	return (token);

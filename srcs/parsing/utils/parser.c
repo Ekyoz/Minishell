@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utile_parser.c                                     :+:      :+:    :+:   */
+/*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:52:07 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/15 13:03:46 by atresall         ###   ########.fr       */
+/*   Updated: 2024/06/11 14:17:33 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,20 @@ char	**clean_space(char **cmd)
 
 	i = -1;
 	j = 0;
+	printf("je rentre dans clean_space %p\n", cmd);
 	while (cmd[++i])
 	{
 		if (ft_strcmp(cmd[i], " ") != 0)
+		{
 			cmd[j++] = cmd[i];
+		}
 		else
+		{
+			// printf("je rentre la cmd -%s %p-\n", cmd[i], cmd[i]);
+			// printf("je rentre la cmd -%s-\n", cmd[i]);
 			free(cmd[i]);
+			// cmd[i] = NULL;
+		}
 	}
 	cmd[j] = NULL;
 	return (cmd);
