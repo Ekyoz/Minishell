@@ -60,7 +60,7 @@ static void	parsing_redir(t_token **head, char **c_pipe, char **c_splitted,
 		c_redirs = redir(c_splitted);
 		c_cmd = miss_elements(c_splitted);
 		append_token(head, TOKEN_WORD, c_cmd);
-		free_array(&c_cmd);
+//		free_array(&c_cmd);
 		append_token_redir(c_redirs, c_splitted, head);
 	}
 	free_array(&c_redirs);
