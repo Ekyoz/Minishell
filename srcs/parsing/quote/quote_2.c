@@ -96,8 +96,8 @@ char	*get_c_quoted(char *c_quoted, t_env *env)
 {
 	char	*temp;
 
-	temp = c_quoted;
-	c_quoted = ft_strdup(expand_string(c_quoted, env));
+	temp = expand_string(c_quoted, env);
+	c_quoted = ft_strdup(temp);
 	free(temp);
 	return (c_quoted);
 }

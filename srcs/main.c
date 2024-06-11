@@ -50,7 +50,7 @@ int	main(int argc, char *argv[], char *envp[])
 		if (parsing(&tokens, input, env) && tokens != NULL)
 		{
 			tree = init_tree(env);
-			// print_list(tokens);
+			 print_list(tokens);
 			create_node(tokens, &tree);
 			ast_exec(tokens, tree);
 			clear_token(&tokens);
