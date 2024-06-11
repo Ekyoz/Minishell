@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 14:16:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/11 19:55:00 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/11 20:03:42 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ static char	*pipe_end(char *command)
 {
 	char	*input;
 	char	*temp;
-	char	*temp;
 	int		i;
 
 	add_history(command);
+	add_file(command);
 	if (ft_strchar(command, '|') == -1)
 		return (command);
 	if (ft_strcmp(command, "|") == 0)
