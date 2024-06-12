@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:11:51 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/06 16:49:38 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/12 16:57:39 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_tree	*init_tree(t_env *env)
 	tree->fdin = -1;
 	tree->fdout = -1;
 	tree->fdoutcp = -1;
+	tree->fdincp = -1;
 	tree->fdpipe = NULL;
 	tree->error[0] = 0;
 	tree->error[1] = 0;

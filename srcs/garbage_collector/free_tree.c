@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:14:56 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/07 12:37:51 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/12 19:14:18 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	free_tree(t_tree **tree, int env)
 	treecp = *tree;
 	if ((treecp))
 	{
+		printf("free_tree\n");
 		if (treecp->fdpipe)
 			free_pipe(treecp);
 		if (treecp->nodebegin)

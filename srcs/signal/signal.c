@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:52:31 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/10 10:54:33 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/12 14:18:26 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ void	get_signal_cmd(int status, pid_t pid)
 void	hdoc_or_cmd(t_node *nodes)
 {
 	if (is_heredoc(nodes))
+	{
 		set_signal_heredoc();
+	}
 	else
 		set_signal_cmd();
 }

@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/11 20:04:08 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/12 16:03:49 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	main(int argc, char *argv[], char *envp[])
 	while (true)
 	{
 		set_signal();
-		input = readline("Minihell $ ");
+		input = readline("Minishell $ ");
 		if (input == NULL)
 			sig_ctrld(env);
 		if (parsing(&tokens, input, env) && tokens != NULL)

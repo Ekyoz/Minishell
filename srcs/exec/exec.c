@@ -6,18 +6,23 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/10 12:20:17 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/12 18:42:41 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parent_process(int status, pid_t pid)
+void	parent_process(t_tree *tree, int status, pid_t pid)
 {
+	(void)tree;
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	if (access("./.here_doc", F_OK) != -1)
+	{
 		unlink("./.here_doc");
+		dup2(tree->fdincp, STDIN_FILENO);
+		close(tree->fdincp);
+	}
 	if (WIFEXITED(status))
 	{
 		g_signal_status = WEXITSTATUS(status);
@@ -75,7 +80,7 @@ void	*exec_cmd_out(t_token *tokens, t_tree *tree, t_node *nodes)
 	pid = do_fork(tree, pid);
 	if (pid == 0)
 	{
-		heredoc(tokens, tree, nodes);
+		heredoc(tree, nodes);
 		check_redir_out(tokens, tree, nodes);
 		check_redir_in(tokens, tree, nodes);
 		if (!nodes->left || choose_builtin(tokens, tree, nodes->left))
@@ -87,7 +92,7 @@ void	*exec_cmd_out(t_token *tokens, t_tree *tree, t_node *nodes)
 			print_error(tokens, CMD_NOT_FOUND, tree, nodes->left);
 		ft_execve(tree, nodes->left);
 	}
-	parent_process(status, pid);
+	parent_process(tree, status, pid);
 	return ((void *)0);
 }
 

@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   testopenredir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 13:07:32 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/07 15:21:28 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/12 16:58:33 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// je teste si les fichiers s'ouvrent avant de vraiment les ouvrir
 int	testopening(t_token *tokens, t_tree *tree, t_node *nodes)
 {
 	int	isredir;
@@ -38,13 +37,12 @@ int	testopening(t_token *tokens, t_tree *tree, t_node *nodes)
 	return (isredir);
 }
 
-// je teste si j'ai une redirection sur ma branche
 int	testredir(t_node *nodes)
 {
 	while (nodes)
 	{
 		if (nodes->type == TOKEN_REDIR_APPEND || nodes->type == TOKEN_REDIR_IN
-			|| nodes->type == TOKEN_REDIR_OUT)
+			|| nodes->type == TOKEN_REDIR_OUT || nodes->type == TOKEN_REDIR_HEREDOC)
 		{
 			return (1);
 		}
