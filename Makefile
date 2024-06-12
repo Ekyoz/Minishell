@@ -165,30 +165,34 @@ $(OBJF):
                 done
 
 
-$(SRC_OUT_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
+define compile_object
 			@echo "$(YELLOW)$(BOLD)Compiling: $(WHITE)$< $(DEF_COLOR)"
-			@$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
+			@$(CC) $(1) $(INCLUDE) -c $< -o $@
 			@printf "\033[A\033[K"
+			@touch $@.updated
 			$(eval COUNTER=$(shell expr $(COUNTER) + 1))
+endef
+
+$(SRC_OUT_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
+			$(call compile_object,$(CFLAGS))
 
 $(DEBUG_OUT_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
-			@echo "$(YELLOW)$(BOLD)Compiling: $(WHITE)$< $(DEF_COLOR)"
-			@$(CC) $(CFLAGS_DEBUG) $(INCLUDE) -c $< -o $@
-			@printf "\033[A\033[K"
-			$(eval COUNTER=$(shell expr $(COUNTER) + 1))
+			$(call compile_object,$(CFLAGS_DEBUG))
 
 $(TEST_OUT_DIR)/%.o: $(TEST_DIR)/%.c $(HEADERS) Makefile | $(OBJF)
-			@echo "$(YELLOW)$(BOLD)Compiling: $(WHITE)$< $(DEF_COLOR)"
-			@$(CC) $(CFLAGS_TEST) $(INCLUDE) -c $< -o $@
-			@printf "\033[A\033[K"
-			$(eval COUNTER=$(shell expr $(COUNTER) + 1))
+			$(call compile_object,$(CFLAGS_TEST))
 
 #-------- COMMANDS --------#
 
 $(NAME): archive $(OBJ) $(HEADERS)
-			@$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME) $(LIBFLAGS)
-			@cp $(RUN_NAME) ./others
-			@echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR) ($(YELLOW)$(BOLD)$(COUNTER)$(DEF_COLOR) $(WHITE)fichiers$(DEF_COLOR))"
+			@files=$$(find $(OUT) -name '*.updated'); \
+			if [ -n "$$files" ]; then \
+				$(CC) $(CFLAGS) $(OBJ) $(INCLUDE_RUN) -o $(RUN_NAME) $(LIBFLAGS); \
+				echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) a été compilé avec succès!$(DEF_COLOR) ($(YELLOW)$(BOLD)$(COUNTER)$(DEF_COLOR) $(WHITE)fichiers$(DEF_COLOR))"; \
+				rm -f $$files; \
+			else \
+				echo "$(CYAN)$(BOLD)$(PROJECT_NAME)$(GREEN) est déjà à jour!$(DEF_COLOR)"; \
+			fi
 
 all: $(NAME)
 
@@ -249,7 +253,6 @@ clean:
 			@$(RM) $(TEST_NAME)
 			@$(RM) *.o
 			@$(RM) __.*
-			@$(RM) ./others/$(NAME)
 			@echo "$(ORANGE)Tous les fichier objets de $(CYAN)$(BOLD)$(PROJECT_NAME)$(ORANGE) ont été supprimé!$(DEF_COLOR)"
 
 fclean:		clean
