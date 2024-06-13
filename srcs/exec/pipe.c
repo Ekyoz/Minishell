@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 17:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/13 13:58:37 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/13 18:13:01 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,20 +98,20 @@ void	exec_pipe(t_token *tokens, t_tree *tree, t_node *nodes)
 	while (j <= i)
 	{
 		tree->nodebegin = nodes;
-		if (access("./.here_doc", F_OK) != -1)
-		{
-			unlink("./.here_doc");
-			dup2(tree->fdincp, STDIN_FILENO);
-			close(tree->fdincp);
-		}
+		// if (access("./.here_doc", F_OK) != -1)
+		// {
+		// 	unlink("./.here_doc");
+			// dup2(tree->fdincp, STDIN_FILENO);
+			// close(tree->fdincp);
+		// }
 		if(j == 0) // first pipe
 		{
 			hdoc_or_cmd(tree->nodebegin->left);
 			if(!heredoc(tree, tree->nodebegin->left))
 			{
 				unlink("./.here_doc");
-				dup2(tree->fdincp, STDIN_FILENO);
-				close(tree->fdincp);
+				// dup2(tree->fdincp, STDIN_FILENO);
+				// close(tree->fdincp);
 				return;
 			}
 		}
@@ -121,8 +121,8 @@ void	exec_pipe(t_token *tokens, t_tree *tree, t_node *nodes)
 			if(!heredoc(tree, tree->nodebegin))
 			{
 				unlink("./.here_doc");
-				dup2(tree->fdincp, STDIN_FILENO);
-				close(tree->fdincp);
+				// dup2(tree->fdincp, STDIN_FILENO);
+				// close(tree->fdincp);
 				return;
 			}
 		}
@@ -132,8 +132,8 @@ void	exec_pipe(t_token *tokens, t_tree *tree, t_node *nodes)
 			if(!heredoc(tree, tree->nodebegin->left))
 			{
 				unlink("./.here_doc");
-				dup2(tree->fdincp, STDIN_FILENO);
-				close(tree->fdincp);
+				// dup2(tree->fdincp, STDIN_FILENO);
+				// close(tree->fdincp);
 				return;
 			}
 		}

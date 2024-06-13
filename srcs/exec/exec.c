@@ -6,21 +6,21 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/13 12:27:27 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/13 18:18:59 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parent_process(t_tree *tree, int status, pid_t pid, int j)
+void	parent_process(t_tree *tree, int status, pid_t pid)
 {
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
 	if (access("./.here_doc", F_OK) != -1)
 	{
 		unlink("./.here_doc");
-		dup2(tree->fdincp, STDIN_FILENO);
-		close(tree->fdincp);
+		// dup2(tree->fdincp, STDIN_FILENO);
+		// close(tree->fdincp);
 	}
 	if (WIFEXITED(status))
 	{
@@ -93,7 +93,7 @@ void	*exec_cmd_out(t_token *tokens, t_tree *tree, t_node *nodes)
 			print_error(tokens, CMD_NOT_FOUND, tree, nodes->left);
 		ft_execve(tree, nodes->left);
 	}
-	parent_process(tree, status, pid, -1);
+	parent_process(tree, status, pid);
 	return ((void *)0);
 }
 
