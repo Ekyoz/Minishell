@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:00:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/12 18:02:49 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/13 11:24:41 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	wait_all_parent(t_tree *tree, int i)
 	j = 0;
 	while (j <= i)
 	{
-		parent_process(tree, tree->status, tree->pid[j]);
+		parent_process(tree, tree->status, tree->pid[j], j);
 		j++;
 	}
 }

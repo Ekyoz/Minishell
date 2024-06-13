@@ -201,12 +201,17 @@ ls -l | catttttttt > output => je retourne 127 command not found
 
 ls -l
 cat << eof
+<< eof
 ls -l << eof
 cat << eof | ls -l
+cag << eof << eof1
 ls -l | cat << eof 
 ls -l | head -n2
 ls -l | cat << eof | << aller
+ls -l > output | cat << eof
 cat << eof | cat << re
 cat << eof | ls -l | cat << rien | cat << salut
 
-ls -l | head -n 2 => erreur
+TESTER AVEC SIGNAUX CTRL + C / CTRL + D / CTRL + \
+
+CTRL + \ dans le heredoc ne marche pas 

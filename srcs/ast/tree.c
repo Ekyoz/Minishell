@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:11:51 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/12 16:57:39 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/13 10:05:24 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ t_tree	*init_tree(t_env *env)
 	tree->pid[2] = 0;
 	tree->repeatstatus = 0;
 	tree->nodebegin = NULL;
+	tree->head = NULL;
 	tree->expandheredoc = 0;
 	get_env_args(env_to_string(tree, tree->env), tree);
 	return (tree);

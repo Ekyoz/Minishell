@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/12 18:41:54 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/13 11:24:54 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_env
 
 typedef struct s_tree
 {
+	t_node			*head;
 	t_node			*nodebegin;
 	t_node			*nodes;
 	t_env			*env;
@@ -133,7 +134,7 @@ t_tree				*init_tree(t_env *env);
 // EXECUT
 void				ast_exec(t_token *tokens, t_tree *tree);
 void				*ft_execve(t_tree *tree, t_node *nodes);
-void				parent_process(t_tree *tree, int status, pid_t pid);
+void				parent_process(t_tree *tree, int status, pid_t pid, int j);
 pid_t				do_fork(t_tree *tree, pid_t pid);
 
 // PIPE
