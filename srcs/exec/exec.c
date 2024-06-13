@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/13 18:18:59 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/13 19:29:15 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,6 @@ void	parent_process(t_tree *tree, int status, pid_t pid)
 	if (access("./.here_doc", F_OK) != -1)
 	{
 		unlink("./.here_doc");
-		// dup2(tree->fdincp, STDIN_FILENO);
-		// close(tree->fdincp);
 	}
 	if (WIFEXITED(status))
 	{
