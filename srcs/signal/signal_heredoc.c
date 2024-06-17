@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:33:55 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/12 18:41:04 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/17 17:52:59 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static void	sig_handler_heredoc(int sig)
 static void	sigquit(int sig)
 {
 	(void)sig;
-	ft_putstr_fd("\b\033[K", 0);
+	// ft_putstr_fd("\b\033[K", 0);
+	ft_putstr_fd("\b\b\0",0);
 }
 
 void	set_signal_heredoc(void)

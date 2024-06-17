@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/17 14:52:50 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/17 16:22:12 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ void	*exec_cmd_out(t_token *tokens, t_tree *tree, t_node *nodes)
 	hdoc_or_cmd(nodes);
 	if (nodes->left)
 		do_unset(nodes->left, tree->env);
-	heredoc(tree, nodes);
+	if(!heredoc(tokens, tree, nodes))
+		return ((void *)0);
 	pid = do_fork(tree, pid);
 	if (pid == 0)
 	{
