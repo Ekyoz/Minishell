@@ -48,7 +48,6 @@ char	**pipe_splitter(char *command)
 
 static char	*pipe_end(char *command)
 {
-	char	*input;
 	char	*temp;
 	int		i;
 

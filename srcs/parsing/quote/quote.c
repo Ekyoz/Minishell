@@ -19,7 +19,6 @@ static char	**set_quote(char **cmd, t_env *env, int last_line[2],
 char	**quote(char **cmd, t_env *env, int *no_expandable)
 {
 	char	**temp_cmd;
-	char	**temp;
 	int		i;
 	int		last_line[2];
 
@@ -29,7 +28,6 @@ char	**quote(char **cmd, t_env *env, int *no_expandable)
 		return (expand_array(cmd, env, no_expandable));
 	i = -1;
 	temp_cmd = ft_arrdup(cmd);
-	temp = cmd;
 	last_line[0] = -1;
 	last_line[1] = -1;
 	while (cmd[++i])
