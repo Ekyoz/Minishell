@@ -68,8 +68,8 @@ static void	parsing_redir(t_token **head, char **c_pipe, char **c_splitted,
 static void	append_token_redir(char **c_redirs, char **c_splitted,
 		t_token **head)
 {
-	int	i_redirs;
-	char **value_temp;
+	int		i_redirs;
+	char	**value_temp;
 
 	i_redirs = -1;
 	while (c_redirs[++i_redirs])
@@ -80,20 +80,16 @@ static void	append_token_redir(char **c_redirs, char **c_splitted,
 					- ft_arrlen(c_redirs) + (i_redirs * 2) - 1))
 			{
 				value_temp = string_to_array("1");
-				append_token(head, is_token(c_redirs[i_redirs], 0),
-					value_temp);
+				append_token(head, is_token(c_redirs[i_redirs], 0), value_temp);
 				free_array(&value_temp);
 			}
 			else
-			{
 				append_token(head, is_token(c_redirs[i_redirs], 0), NULL);
-			}
 		}
 		else
 		{
 			value_temp = string_to_array(c_redirs[i_redirs]);
-			append_token(head, is_token(c_redirs[i_redirs], 0),
-				value_temp);
+			append_token(head, is_token(c_redirs[i_redirs], 0), value_temp);
 			free_array(&value_temp);
 		}
 	}
