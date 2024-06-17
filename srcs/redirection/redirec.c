@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:52:24 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/17 14:19:04 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/17 15:44:52 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ int	check_redir_out(t_token *tokens, t_tree *tree, t_node *nodes)
 			err_free_all(tree);
 		close(tree->fdout);
 	}
-	fprintf(stderr, "is redir %d\n", isredir);
 	return (isredir);
 }
 

@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:00:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/17 14:22:48 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/17 15:44:46 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	last_pipe(t_token *tokens, t_tree *tree, t_node *node, int j)
 
 void	mid_pipe(t_token *tokens, t_tree *tree, t_node *node, int j)
 {
-	fprintf(stderr, "je mid\n");
 	if(access("./.here_doc", F_OK) != -1)
 	{
 		tree->fdin = open(".here_doc", O_RDONLY);
@@ -82,7 +81,6 @@ void	mid_pipe(t_token *tokens, t_tree *tree, t_node *node, int j)
 	}
 	if (!check_redir_out(tokens, tree, node) && check_cmd1(tree, node->left))
 	{
-		fprintf(stderr, "je mid out\n");
 		if (dup2(tree->fdpipe[j][1], STDOUT_FILENO) == -1)
 			err_free_all(tree);
 	}
