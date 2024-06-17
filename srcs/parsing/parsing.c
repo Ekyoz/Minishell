@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 14:52:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/11 16:24:23 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/17 14:55:34 by atresall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ static void	append_token_redir(char **c_redirs, char **c_splitted,
 		t_token **head)
 {
 	int	i_redirs;
+	char **value_temp;
 
 	i_redirs = -1;
 	while (c_redirs[++i_redirs])
@@ -78,8 +79,10 @@ static void	append_token_redir(char **c_redirs, char **c_splitted,
 			if (do_expand(c_splitted, ft_arrlen(c_splitted)
 					- ft_arrlen(c_redirs) + (i_redirs * 2) - 1))
 			{
+				value_temp = string_to_array("1");
 				append_token(head, is_token(c_redirs[i_redirs], 0),
-					string_to_array("1"));
+					value_temp);
+				free_array(&value_temp);
 			}
 			else
 			{
@@ -88,8 +91,10 @@ static void	append_token_redir(char **c_redirs, char **c_splitted,
 		}
 		else
 		{
+			value_temp = string_to_array(c_redirs[i_redirs]);
 			append_token(head, is_token(c_redirs[i_redirs], 0),
-				string_to_array(c_redirs[i_redirs]));
+				value_temp);
+			free_array(&value_temp);
 		}
 	}
 }
