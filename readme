@@ -197,8 +197,21 @@ ls -l | catttttttt > output => je retourne 127 command not found
 - init_nodes => nouveau noeud 
 - envp => qui correspond aux path de mes commandes
 
+------------------- TESTS ------------------
 
+ls -l
+cat << eof
+<< eof
+ls -l << eof
+cat << eof | ls -l
+cag << eof << eof1
+ls -l | cat << eof 
+ls -l | head -n2
+ls -l | cat << eof | << aller
+ls -l > output | cat << eof
+cat << eof | cat << re
+cat << eof | ls -l | cat << rien | cat << salut
 
-A FAIRE !!!
+TESTER AVEC SIGNAUX CTRL + C / CTRL + D / CTRL + \
 
-"cat lol.c | cat > lol.c"
+CTRL + \ dans le heredoc ne marche pas 

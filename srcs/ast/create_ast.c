@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_ast.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/28 16:02:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/07 12:36:12 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/13 10:05:43 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	create_node(t_token *tokens, t_tree **tree)
 		return ((void)1);
 	nodescp = nodes;
 	(*tree)->nodes = nodescp;
-	(*tree)->nodebegin = nodescp;
+	(*tree)->head = nodescp;
 	if (tokens->next == NULL)
 		return (add_node(nodes, &tokens), (void)0);
 	while (tokens != NULL)

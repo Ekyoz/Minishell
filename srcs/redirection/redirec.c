@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:52:24 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/11 19:31:15 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/17 14:19:04 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	find_redir_out(t_token *tokens, t_tree *tree, t_node *nodes,
 	if (nodes->type == TOKEN_REDIR_OUT)
 	{
 		if (nodes->right->type == TOKEN_REDIR_OUT
-			|| nodes->right->type == TOKEN_REDIR_OUT
 			|| nodes->right->type == TOKEN_REDIR_APPEND
 			|| nodes->right->type == TOKEN_REDIR_HEREDOC)
 		{
@@ -109,6 +108,7 @@ int	check_redir_out(t_token *tokens, t_tree *tree, t_node *nodes)
 			err_free_all(tree);
 		close(tree->fdout);
 	}
+	fprintf(stderr, "is redir %d\n", isredir);
 	return (isredir);
 }
 
@@ -124,7 +124,6 @@ int	check_redir_in(t_token *tokens, t_tree *tree, t_node *nodes)
 	}
 	if (isredir == 1)
 	{
-		fprintf(stderr, "je suis dans le checkredir in\n");
 		if (dup2(tree->fdin, STDIN_FILENO) == -1)
 			err_free_all(tree);
 		close(tree->fdin);

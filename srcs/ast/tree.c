@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:11:51 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/06 16:49:38 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/13 10:05:24 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_tree	*init_tree(t_env *env)
 	tree->fdin = -1;
 	tree->fdout = -1;
 	tree->fdoutcp = -1;
+	tree->fdincp = -1;
 	tree->fdpipe = NULL;
 	tree->error[0] = 0;
 	tree->error[1] = 0;
@@ -33,6 +34,7 @@ t_tree	*init_tree(t_env *env)
 	tree->pid[2] = 0;
 	tree->repeatstatus = 0;
 	tree->nodebegin = NULL;
+	tree->head = NULL;
 	tree->expandheredoc = 0;
 	get_env_args(env_to_string(tree, tree->env), tree);
 	return (tree);

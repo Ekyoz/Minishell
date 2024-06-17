@@ -6,13 +6,13 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:33:55 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/10 12:33:01 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/12 18:41:04 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	err_null_heredoc(t_token *tokens, t_tree *tree, char **eofword, int *i)
+int	err_null_heredoc(char **eofword, int *i)
 {
 	ft_putstr_fd("\n", 2);
 	ft_putstr_fd("minihell: warning:", 2);
@@ -23,10 +23,9 @@ void	err_null_heredoc(t_token *tokens, t_tree *tree, char **eofword, int *i)
 	*i = *i + 1;
 	if (eofword[*i] == NULL)
 	{
-		free_array(&eofword);
-		free_tree_tokens(&tree, tokens);
-		exit(0);
+		return(0);
 	}
+	return(1);
 }
 
 static void	sig_handler_heredoc(int sig)

@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/11 19:31:20 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/13 10:52:34 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@ int	main(int argc, char *argv[], char *envp[])
 	argc_argv(argc, argv);
 	tokens = NULL;
 	env = init_env(envp);
+	add_file_to_history();
 	while (true)
 	{
 		set_signal();
-		input = readline("Minihell $ ");
+		input = readline("Minishell $ ");
 		if (input == NULL)
 			sig_ctrld(env);
 		if (parsing(&tokens, input, env) && tokens != NULL)

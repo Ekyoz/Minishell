@@ -6,7 +6,7 @@
 #    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/06/06 19:25:32 by bpoyet           ###   ########.fr        #
+#    Updated: 2024/06/17 13:57:39 by bpoyet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ FILE_EXPORT 			= export_check export
 
 #-------- EXEC --------#
 FILE_EXEC_DIR			= exec/
-FILE_EXEC				= command exec heredoc heredoc_utils pipe fork utils_pipe
+FILE_EXEC				= command exec exec1 heredoc heredoc_utils heredoc_utils1 pipe fork utils_pipe
 
 #-------- AST --------#
 FILE_AST_DIR			= ast/
@@ -37,7 +37,7 @@ FILE_AST				= create_ast nodes token_type tree
 
 #-------- GARBAGE --------#
 FILE_GARBAGE_DIR		= garbage_collector/
-FILE_GARBAGE			= error status_code free_tree free_tree1 free_twodim_array
+FILE_GARBAGE			= error error1 status_code free_tree free_tree1 free_twodim_array
 
 #-------- REDIRECTION --------#
 FILE_REDIRECTION_DIR 	= redirection/

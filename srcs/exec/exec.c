@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/10 12:20:17 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/17 14:52:50 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,13 @@ void	parent_process(int status, pid_t pid)
 {
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
-	if (access("./.here_doc", F_OK) != -1)
-		unlink("./.here_doc");
 	if (WIFEXITED(status))
 	{
 		g_signal_status = WEXITSTATUS(status);
 	}
 }
 
-void	*ft_execve(t_tree *tree, t_node *nodes)
+void	*ft_execve(t_token *tokens, t_tree *tree, t_node *nodes)
 {
 	tree->path = check_access1(tree, nodes);
 	if(tree->fdoutcp != -1)
@@ -32,7 +30,7 @@ void	*ft_execve(t_tree *tree, t_node *nodes)
 	if (execve(tree->path, nodes->args, env_to_string(tree, tree->env)) == -1)
 	{
 		perror("");
-		return ((void *)1);
+		err_free_all1(tree, tokens);
 	}
 	return ((void *)0);
 }
@@ -72,22 +70,22 @@ void	*exec_cmd_out(t_token *tokens, t_tree *tree, t_node *nodes)
 	hdoc_or_cmd(nodes);
 	if (nodes->left)
 		do_unset(nodes->left, tree->env);
+	heredoc(tree, nodes);
 	pid = do_fork(tree, pid);
 	if (pid == 0)
 	{
-		heredoc(tokens, tree, nodes);
+		redir_heredoc_in(tree);
 		check_redir_out(tokens, tree, nodes);
 		check_redir_in(tokens, tree, nodes);
 		if (!nodes->left || choose_builtin(tokens, tree, nodes->left))
-		{
-			free_tree_tokens(&tree, tokens);
-			exit(0);
-		}
+			err_free_all1(tree, tokens);
 		if (!check_cmd1(tree, nodes->left))
 			print_error(tokens, CMD_NOT_FOUND, tree, nodes->left);
-		ft_execve(tree, nodes->left);
+		ft_execve(tokens, tree, nodes->left);
 	}
 	parent_process(status, pid);
+	if(access("./.here_doc", F_OK) != -1)
+		unlink("./.here_doc");
 	return ((void *)0);
 }
 

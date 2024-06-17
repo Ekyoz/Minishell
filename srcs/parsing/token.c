@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 13:09:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/11 14:16:35 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/11 19:55:18 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ void	append_token(t_token **head, t_token_type type, char **value)
 	if (*head == NULL)
 	{
 		*head = create_token(type, ft_arrdup(value));
-		free_array(&value);
+//		free_array(&value);
 		return ;
 	}
 	while (last_token->next != NULL)
 		last_token = last_token->next;
 	last_token->next = create_token(type, ft_arrdup(value));
-	free_array(&value);
+//	free_array(&value);
 }
 
 void	delete_token(t_token **head, t_token *node_to_delete)
