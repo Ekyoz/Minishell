@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:00:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/13 19:43:48 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/17 14:22:48 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	first_pipe(t_token *tokens, t_tree *tree, t_node *node)
 	if (!check_redir_out(tokens, tree, node) && !testopening(tokens, tree,
 			node))
 	{
-		fprintf(stderr, "je dup out \n");
 		if (dup2(tree->fdpipe[0][1], STDOUT_FILENO) == -1)
 			err_free_all(tree);
 	}
@@ -47,20 +46,18 @@ void	first_pipe(t_token *tokens, t_tree *tree, t_node *node)
 
 void	last_pipe(t_token *tokens, t_tree *tree, t_node *node, int j)
 {
-	if(access("./.here_doc", F_OK) != -1 && !is_heredoc(node))
+	if(access("./.here_doc", F_OK) != -1)// && !is_heredoc(node)
 	{
-		fprintf(stderr,"jaccede au file\n");
 		tree->fdin = open("./.here_doc", O_RDONLY);
 		if(tree->fdin < 0)
 			perror("open");
 		if(dup2(tree->fdin, STDIN_FILENO) == -1)
-			perror("dup2 last");
+			perror("dup2");
 		close(tree->fdin);
 	}
 	check_redir_out(tokens, tree, node);
-	if (!check_redir_in(tokens, tree, node) && access("./.here_doc", F_OK) == -1)
+	if (!check_redir_in(tokens, tree, node) && !is_heredoc(node))
 	{
-		fprintf(stderr, "je dup in\n");
 		if (dup2(tree->fdpipe[j - 1][0], STDIN_FILENO) == -1)
 			err_free_all(tree);
 	}
@@ -68,23 +65,24 @@ void	last_pipe(t_token *tokens, t_tree *tree, t_node *node, int j)
 
 void	mid_pipe(t_token *tokens, t_tree *tree, t_node *node, int j)
 {
+	fprintf(stderr, "je mid\n");
 	if(access("./.here_doc", F_OK) != -1)
 	{
-		fprintf(stderr,"jaccede au file\n");
 		tree->fdin = open(".here_doc", O_RDONLY);
 		if(tree->fdin < 0)
 			perror("open");
 		if(dup2(tree->fdin, STDIN_FILENO) == -1)
-			perror("dup2 last");
+			perror("dup2");
 		close(tree->fdin);
 	}
-	if (!check_redir_in(tokens, tree, node))
+	if (!check_redir_in(tokens, tree, node) && !is_heredoc(node))
 	{
 		if (dup2(tree->fdpipe[j - 1][0], STDIN_FILENO) == -1)
 			err_free_all(tree);
 	}
-	if (!check_redir_out(tokens, tree, node) && check_cmd1(tree, node))
+	if (!check_redir_out(tokens, tree, node) && check_cmd1(tree, node->left))
 	{
+		fprintf(stderr, "je mid out\n");
 		if (dup2(tree->fdpipe[j][1], STDOUT_FILENO) == -1)
 			err_free_all(tree);
 	}
@@ -97,7 +95,11 @@ void	wait_all_parent(t_tree *tree, int i)
 	j = 0;
 	while (j <= i)
 	{
-		parent_process(tree, tree->status, tree->pid[j]);
+		parent_process(tree->status, tree->pid[j]);
 		j++;
+	}
+	if (access("./.here_doc", F_OK) != -1)
+	{
+		unlink("./.here_doc");
 	}
 }

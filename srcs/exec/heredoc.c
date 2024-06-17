@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/13 18:48:40 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/17 14:06:18 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,6 @@ static int	close_heredoc(t_tree *tree, char **eofword)
 {
 	free_array(&eofword);
 	close(tree->fdin);
-	// tree->fdin = open(".here_doc", O_RDONLY);
-	// if (tree->fdin < 0)
-	// 	perror("open 2");
-	// tree->fdincp = dup(STDIN_FILENO);
-	// if (dup2(tree->fdin, STDIN_FILENO) == -1)
-	// {
-	// 	perror("dup2");
-	// 	err_free_all(tree);
-	// }
-	// close(tree->fdin);
 	if(g_signal_status == 130)
 		return(0);
 	return(1);
@@ -71,22 +61,26 @@ static int	close_heredoc(t_tree *tree, char **eofword)
 static void	text_heredoc(t_tree *tree, char **eofword, char *input, int *i)
 {
 	char *temp;
+
 	if (ft_str_equals(eofword[*i], input))
 		*i = *i + 1;
 	else
 	{
-		if(ft_strncmp(input, "\n", 2))
+		if(input)
 		{
-			temp = input;
-			input = ft_strtrim(input, "\n");
-			free(temp);
-		}
-		if (tree->expandheredoc == 1)
-			input = expand_string(input, tree->env);
-		if (!eofword[*i + 1])
-		{
-			ft_putstr_fd(input, tree->fdin);
-			ft_putchar_fd('\n', tree->fdin);
+			if(ft_strncmp(input, "\n", 2))
+			{
+				temp = input;
+				input = ft_strtrim(input, "\n");
+				free(temp);
+			}
+			if (tree->expandheredoc == 1)
+				input = expand_string(input, tree->env);
+			if (!eofword[*i + 1])
+			{
+				ft_putstr_fd(input, tree->fdin);
+				ft_putchar_fd('\n', tree->fdin);
+			}
 		}
 	}
 	free(input);

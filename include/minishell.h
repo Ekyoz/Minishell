@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/13 17:04:25 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/17 14:46:08 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,12 @@ t_tree				*init_tree(t_env *env);
 
 // EXECUT
 void				ast_exec(t_token *tokens, t_tree *tree);
-void				*ft_execve(t_tree *tree, t_node *nodes);
-void				parent_process(t_tree *tree, int status, pid_t pid);
+void				*ft_execve(t_token *tokens, t_tree *tree, t_node *nodes);
+void				parent_process(int status, pid_t pid);
 pid_t				do_fork(t_tree *tree, pid_t pid);
 
 // PIPE
+void				exec(t_token *tokens, t_tree *tree, t_node *node);
 void				exec_pipe(t_token *tokens, t_tree *tree, t_node *nodes);
 void				first_pipe(t_token *tokens, t_tree *tree, t_node *node);
 void				last_pipe(t_token *tokens, t_tree *tree, t_node *node,
@@ -165,6 +166,7 @@ int					check_redir_in(t_token *tokens, t_tree *tree,
 						t_node *nodes);
 int					testopening(t_token *tokens, t_tree *tree, t_node *nodes);
 int					testredir(t_node *nodes);
+void 				redir_heredoc_in(t_tree *tree);
 
 // HEREDOC
 int					err_null_heredoc(char **eofword, int *i);
@@ -175,6 +177,7 @@ void				get_eofword(t_tree *tree, char **eofword, t_node *node,
 void				expand_heredoc(t_tree *tree, t_node *node);
 bool				is_heredoc(t_node *nodes);
 int					ft_str_equals(const char *str1, const char *str2);
+bool 				do_heredoc(t_tree *tree, int j, int i);
 
 // FONCTIONS DU GARBAGE COLLECTOR
 void				print_error(t_token *tokens, int errorcode, t_tree *tree,
