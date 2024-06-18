@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 17:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/18 11:24:32 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 12:08:13 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	exec_pipe(t_token *tokens, t_tree *tree, t_node *nodes)
 	while (j <= i)
 	{
 		tree->nodebegin = nodes;
-		if (!do_heredoc(tree, j, i))
+		if (!do_heredoc(tokens, tree, j, i))
 			return ;
 		tree->pid[j] = do_fork(tree, tree->pid[j]);
 		if (tree->pid[j] == 0)

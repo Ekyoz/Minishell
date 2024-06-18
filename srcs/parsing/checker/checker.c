@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:17:19 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/10 11:41:35 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 12:05:06 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ bool	check_input(char *input)
 	int	space;
 
 	space = 0;
-	i = 0;
+	i = -1;
 	while (input[++i])
 	{
 		if (ft_isprint(input[i]) == 0)
@@ -43,7 +43,7 @@ bool	check_input(char *input)
 		if (ft_isspace(input[i]))
 			space++;
 	}
-	if (space == (int)ft_strlen(input) - 1)
+	if (space == (int)ft_strlen(input))
 		return (false);
 	return (true);
 }
