@@ -204,13 +204,13 @@ cat << eof
 << eof
 ls -l << eof
 cat << eof | ls -l
-cag << eof << eof1
+cat << eof << eof1
 ls -l | cat << eof 
-ls -l | head -n2
+ls -l | head -n 2
 ls -l | cat << eof | << aller
 ls -l > output | cat << eof
 cat << eof | cat << re
-cat << eof | ls -l | cat << rien | cat << salut
+cat << eof | ls -l | cat << rien | cat << salut => leak
 
 TESTER AVEC SIGNAUX CTRL + C / CTRL + D / CTRL + \
 
