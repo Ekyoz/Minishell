@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/17 16:45:51 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 11:22:33 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static char	**find_heredoc(t_tree *tree, t_node *nodes)
 	return (eofword);
 }
 
-static int	close_heredoc(t_token *tokens, t_tree *tree, char **eofword)
+static int	close_heredoc(t_tree *tree, char **eofword)
 {
 	free_array(&eofword);
 	close(tree->fdin);
@@ -88,7 +88,7 @@ static void	text_heredoc(t_tree *tree, char **eofword, char *input, int *i)
 	free(input);
 }
 
-int	heredoc(t_token *tokens, t_tree *tree, t_node *nodes)
+int	heredoc(t_tree *tree, t_node *nodes)
 {
 	char	*input;
 	char	**eofword;
@@ -112,7 +112,7 @@ int	heredoc(t_token *tokens, t_tree *tree, t_node *nodes)
 				break ;
 			text_heredoc(tree, eofword, input, &i);
 		}
-		return (close_heredoc(tokens, tree, eofword));
+		return (close_heredoc(tree, eofword));
 	}
 	return (1);
 }
