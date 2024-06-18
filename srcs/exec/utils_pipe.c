@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:00:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/18 11:08:27 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 13:20:26 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	mid_pipe(t_token *tokens, t_tree *tree, t_node *node, int j)
 		if (dup2(tree->fdpipe[j - 1][0], STDIN_FILENO) == -1)
 			err_free_all(tree);
 	}
-	if (!check_redir_out(tokens, tree, node) && check_cmd1(tree, node->left))
+	if (!check_redir_out(tokens, tree, node))
 	{
 		if (dup2(tree->fdpipe[j][1], STDOUT_FILENO) == -1)
 			err_free_all(tree);
