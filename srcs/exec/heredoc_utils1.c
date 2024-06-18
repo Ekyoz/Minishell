@@ -6,13 +6,13 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:08:04 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/18 13:08:04 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 14:07:07 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	do_heredoc(t_token *tokens, t_tree *tree, int j, int i)
+bool	do_heredoc(t_tree *tree, int j, int i)
 {
 	if (j == 0)
 	{

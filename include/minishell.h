@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/18 13:06:51 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 14:08:06 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ int					testredir(t_node *nodes);
 void 				redir_heredoc_in(t_tree *tree);
 
 // HEREDOC
-int					err_null_heredoc(t_tree *tree, char **eofword, int *i);
+int					err_null_heredoc(char **eofword, int *i);
 int					heredoc(t_tree *tree, t_node *nodes);
 void				init_eofword(t_tree *tree, t_node *nodes, char ***eofword);
 void				get_eofword(t_tree *tree, char **eofword, t_node *node,
@@ -177,7 +177,7 @@ void				get_eofword(t_tree *tree, char **eofword, t_node *node,
 void				expand_heredoc(t_tree *tree, t_node *node);
 bool				is_heredoc(t_node *nodes);
 int					ft_str_equals(const char *str1, const char *str2);
-bool 				do_heredoc(t_token *tokens, t_tree *tree, int j, int i);
+bool 				do_heredoc(t_tree *tree, int j, int i);
 
 // FONCTIONS DU GARBAGE COLLECTOR
 void				print_error(t_token *tokens, int errorcode, t_tree *tree,
@@ -193,6 +193,7 @@ int					command_not_found(t_tree *tree, char *cmd);
 void				free_array(char ***ptr);
 void				ft_exit(t_tree *tree, t_token *tokens);
 void				free_tree_tokens(t_tree **tree, t_token *tokens);
+void				free_tree_tokens_env(t_tree **tree, t_token *tokens);
 
 // ENVIRONNEMENT
 t_env				*init_env(char **env_array);
