@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/18 11:22:33 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 13:06:32 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int	heredoc(t_tree *tree, t_node *nodes)
 			input = get_next_line(0);
 			if (g_signal_status == 130)
 				break ;
-			if (!input && !err_null_heredoc(eofword, &i))
+			if (!input && !err_null_heredoc(tree, eofword, &i))
 				break ;
 			text_heredoc(tree, eofword, input, &i);
 		}

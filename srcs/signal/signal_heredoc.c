@@ -6,13 +6,13 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:33:55 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/18 12:11:20 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 13:15:10 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	err_null_heredoc(char **eofword, int *i)
+int	err_null_heredoc(t_tree *tree, char **eofword, int *i)
 {
 	ft_putstr_fd("\n", 2);
 	ft_putstr_fd("minihell: warning:", 2);
@@ -23,7 +23,6 @@ int	err_null_heredoc(char **eofword, int *i)
 	*i = *i + 1;
 	if (eofword[*i] == NULL)
 	{
-		g_signal_status = 130;
 		return (0);
 	}
 	return (1);

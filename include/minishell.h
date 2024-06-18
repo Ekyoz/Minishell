@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/18 12:08:26 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 13:06:51 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ int					testredir(t_node *nodes);
 void 				redir_heredoc_in(t_tree *tree);
 
 // HEREDOC
-int					err_null_heredoc(char **eofword, int *i);
+int					err_null_heredoc(t_tree *tree, char **eofword, int *i);
 int					heredoc(t_tree *tree, t_node *nodes);
 void				init_eofword(t_tree *tree, t_node *nodes, char ***eofword);
 void				get_eofword(t_tree *tree, char **eofword, t_node *node,

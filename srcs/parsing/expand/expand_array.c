@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_array.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 18:41:35 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/11 18:41:35 by atresall         ###   ########.fr       */
+/*   Updated: 2024/06/18 13:11:29 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 		while (++i[2] < (int)ft_strlen(cmd[i[0]]))
 		{
 			if (handle_special_cases(cmd, i[0]))
-				return (cmd);
+				return (free(no_expandable), cmd);
 			if (cmd[i[0]][i[2]] == '$')
 			{
 				var = extract_var(cmd[i[0]], &i[2]);
