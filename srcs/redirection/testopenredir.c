@@ -42,7 +42,8 @@ int	testredir(t_node *nodes)
 	while (nodes)
 	{
 		if (nodes->type == TOKEN_REDIR_APPEND || nodes->type == TOKEN_REDIR_IN
-			|| nodes->type == TOKEN_REDIR_OUT || nodes->type == TOKEN_REDIR_HEREDOC)
+			|| nodes->type == TOKEN_REDIR_OUT
+			|| nodes->type == TOKEN_REDIR_HEREDOC)
 		{
 			return (1);
 		}

@@ -12,25 +12,25 @@
 
 #include "minishell.h"
 
-bool do_heredoc(t_token *tokens, t_tree *tree, int j, int i)
+bool	do_heredoc(t_token *tokens, t_tree *tree, int j, int i)
 {
-    if(j == 0)
-    {
-        hdoc_or_cmd(tree->nodebegin->left);
-        if(!heredoc(tokens, tree, tree->nodebegin->left))
-            return(unlink("./.here_doc"), false);
-    }
-    else if(j == i)
-    {
-        hdoc_or_cmd(tree->nodebegin);
-        if(!heredoc(tokens, tree, tree->nodebegin))
-            return(unlink("./.here_doc"), false);
-    }
-    else
-    {
-        hdoc_or_cmd(tree->nodebegin->left);
-        if(!heredoc(tokens, tree, tree->nodebegin->left))
-            return(unlink("./.here_doc"), false);
-    }
-    return (true);
+	if (j == 0)
+	{
+		hdoc_or_cmd(tree->nodebegin->left);
+		if (!heredoc(tokens, tree, tree->nodebegin->left))
+			return (unlink("./.here_doc"), false);
+	}
+	else if (j == i)
+	{
+		hdoc_or_cmd(tree->nodebegin);
+		if (!heredoc(tokens, tree, tree->nodebegin))
+			return (unlink("./.here_doc"), false);
+	}
+	else
+	{
+		hdoc_or_cmd(tree->nodebegin->left);
+		if (!heredoc(tokens, tree, tree->nodebegin->left))
+			return (unlink("./.here_doc"), false);
+	}
+	return (true);
 }
