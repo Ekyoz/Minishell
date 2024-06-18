@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:30:34 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/18 15:06:20 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 16:22:09 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	change_dir(t_tree *tree, t_node *node, char *path)
 
 	if (!chdir(path))
 	{
-		if(getcwd(cwd, sizeof(cwd)) == NULL)
+		if (getcwd(cwd, sizeof(cwd)) == NULL)
 			return (perror(""), 1);
 		set_env(tree->env, "PWD=", cwd);
 		return (1);

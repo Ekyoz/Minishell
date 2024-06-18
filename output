@@ -1,10 +1,1 @@
-total 204
-drwxr-xr-x 4 bpoyet 2023_lyon     49 Jun 18 11:33 include
--rw-r--r-- 1 bpoyet 2023_lyon   8892 Jun 17 15:58 Makefile
--rwxr-xr-x 1 bpoyet 2023_lyon 184232 Jun 18 11:39 minishell
-drwxr-xr-x 2 bpoyet 2023_lyon     23 Jun 17 15:58 others
-drwxr-xr-x 5 bpoyet 2023_lyon     64 Jun 11 19:47 out
--rw-r--r-- 1 bpoyet 2023_lyon      0 Jun 18 11:52 output
--rw-r--r-- 1 bpoyet 2023_lyon   6961 Jun 18 11:40 readme
-drwxr-xr-x 9 bpoyet 2023_lyon    147 Jun 18 11:33 srcs
--rw-r--r-- 1 bpoyet 2023_lyon     86 Jun  4 11:12 supp.supp
+salut
