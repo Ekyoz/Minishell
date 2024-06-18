@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 18:41:35 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/18 13:11:29 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 13:46:03 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 		}
 		while (++i[2] < (int)ft_strlen(cmd[i[0]]))
 		{
-			if (handle_special_cases(cmd, i[0]))
+			if (handle_special_cases(cmd, i[0]) && i[0] >= (int)ft_arrlen(cmd))
 				return (free(no_expandable), cmd);
 			if (cmd[i[0]][i[2]] == '$')
 			{
@@ -47,11 +47,14 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 
 static int	handle_special_cases(char **cmd, int i_cmd)
 {
+	char *temp;
 	if (ft_strcmp(cmd[i_cmd], "$") == 0)
 		return (1);
 	if (ft_strcmp(cmd[i_cmd], "$?") == 0)
 	{
-		cmd[i_cmd] = replace_env(ft_itoa(g_signal_status), cmd[i_cmd], "$?");
+		temp = ft_itoa(g_signal_status);
+		cmd[i_cmd] = replace_env(temp, cmd[i_cmd], "$?");
+		free(temp);
 		return (1);
 	}
 	return (0);
