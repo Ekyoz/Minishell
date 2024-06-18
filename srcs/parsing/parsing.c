@@ -52,6 +52,7 @@ static void	parsing_redir(t_token **head, char **c_pipe, char **c_splitted,
 	char	**c_redirs;
 
 	c_redirs = NULL;
+	c_cmd = NULL;
 	if (!there_token(c_pipe[*i_pipe]))
 		append_token(head, TOKEN_WORD, c_splitted);
 	else if (there_token(c_pipe[*i_pipe]))
@@ -61,8 +62,7 @@ static void	parsing_redir(t_token **head, char **c_pipe, char **c_splitted,
 		append_token(head, TOKEN_WORD, c_cmd);
 		append_token_redir(c_redirs, c_splitted, head);
 	}
-	free_array(&c_splitted);
-	free_array(&c_redirs);
+	free_token(c_splitted, c_redirs, c_cmd, NULL);
 }
 
 static void	append_token_redir(char **c_redirs, char **c_splitted,
