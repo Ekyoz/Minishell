@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/18 11:07:24 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 11:24:12 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,14 +170,14 @@ void 				redir_heredoc_in(t_tree *tree);
 
 // HEREDOC
 int					err_null_heredoc(char **eofword, int *i);
-int					heredoc(t_token *tokens, t_tree *tree, t_node *nodes);
+int					heredoc(t_tree *tree, t_node *nodes);
 void				init_eofword(t_tree *tree, t_node *nodes, char ***eofword);
 void				get_eofword(t_tree *tree, char **eofword, t_node *node,
 						int *i);
 void				expand_heredoc(t_tree *tree, t_node *node);
 bool				is_heredoc(t_node *nodes);
 int					ft_str_equals(const char *str1, const char *str2);
-bool 				do_heredoc(t_token *tokens, t_tree *tree, int j, int i);
+bool 				do_heredoc(t_tree *tree, int j, int i);
 
 // FONCTIONS DU GARBAGE COLLECTOR
 void				print_error(t_token *tokens, int errorcode, t_tree *tree,
