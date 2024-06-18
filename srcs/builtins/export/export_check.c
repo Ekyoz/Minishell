@@ -6,34 +6,33 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:08:51 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/10 12:31:56 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 11:59:37 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char **env_to_string(t_tree *tree, t_env *env) // convertir ma liste chaine en char**
+char	**env_to_string(t_tree *tree, t_env *env)
 {
-	char **strenv;
-	int i;
+	char	**strenv;
+	int		i;
 
 	i = 0;
 	strenv = (char **)malloc(sizeof(char *) * (env_length(env) + 1));
-	if(!strenv)
+	if (!strenv)
 		err_free_all(tree);
-	while(env)
+	while (env)
 	{
 		strenv[i] = ft_strdup(env->value);
 		env = env->next;
 		i++;
 	}
 	strenv[i] = NULL;
-	return(strenv);
+	return (strenv);
 }
 
-static void print_envstr(char **str) // affichage de lenv en version char**
+static void	print_envstr(char **str)
 {
-
 	size_t	i;
 	size_t	j;
 	char	equ;
@@ -61,7 +60,7 @@ static void print_envstr(char **str) // affichage de lenv en version char**
 	}
 }
 
-void		sort_env(char **envstr)
+void	sort_env(char **envstr)
 {
 	char	*tmp;
 	size_t	i;
@@ -84,22 +83,22 @@ void		sort_env(char **envstr)
 		i++;
 	}
 	print_envstr(envstr);
-    free_array(&envstr);
+	free_array(&envstr);
 }
 
-int check_export_var(char *var, int *ret)
+int	check_export_var(char *var, int *ret)
 {
-    int i;
-    int alpha_found;
+	int	i;
+	int	alpha_found;
 
-    i = 0;
-    alpha_found = 0;
-	if(var[0] == '=')
-		return(0);
-	if(ft_strchr(var, '=') == NULL)
-		return(*ret = 1, 1);
-    while(var[i] && var[i] != '=')
-    {
+	i = 0;
+	alpha_found = 0;
+	if (var[0] == '=')
+		return (0);
+	if (ft_strchr(var, '=') == NULL)
+		return (*ret = 1, 1);
+	while (var[i] && var[i] != '=')
+	{
 		if (ft_isalpha(var[i]))
 			alpha_found = 1;
 		else
@@ -109,18 +108,18 @@ int check_export_var(char *var, int *ret)
 			else if (!ft_isdigit(var[i]) && var[i] != '_')
 				return (0);
 		}
-		i++;        
-    }
-    return(1);
+		i++;
+	}
+	return (1);
 }
 
-int print_err_export(char *err)
+int	print_err_export(char *err)
 {
-    ft_putstr_fd("Minihell: export:", 2);
-    ft_putstr_fd("'", 2);
-    ft_putstr_fd(err, 2);
-    ft_putstr_fd("'", 2);
-    ft_putstr_fd(": not a valid identifier\n", 2);
-    g_signal_status = 1;
-    return(1);
+	ft_putstr_fd("Minihell: export:", 2);
+	ft_putstr_fd("'", 2);
+	ft_putstr_fd(err, 2);
+	ft_putstr_fd("'", 2);
+	ft_putstr_fd(": not a valid identifier\n", 2);
+	g_signal_status = 1;
+	return (1);
 }
