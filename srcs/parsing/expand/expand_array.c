@@ -35,7 +35,7 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 		{
 			if (handle_special_cases(cmd, i[0]) && i[0] >= (int)ft_arrlen(cmd))
 				return (free(no_expandable), cmd);
-			if (cmd[i[0]][i[2]] == '$')
+			if (cmd[i[0]][i[2]] == '$' && cmd[i[0]][i[2]+1] != '\0')
 			{
 				var = extract_var(cmd[i[0]], &i[2]);
 				replace_var_in_cmd(cmd, i[0], var, env);

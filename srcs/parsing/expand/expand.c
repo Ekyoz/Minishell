@@ -48,7 +48,7 @@ char	*replace_env(char *env, char *cmd, char *key)
 		free(temp);
 		temp = replaced;
 		replaced = ft_strjoin(replaced, after);
-		free_chars(after, temp, cmd, NULL);
+		free_chars(after, temp, NULL, NULL);
 		return (replaced);
 	}
 	return (NULL);

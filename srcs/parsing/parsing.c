@@ -77,7 +77,7 @@ static void	append_token_redir(char **c_redirs, char **c_splitted,
 	{
 		if (is_token(c_redirs[i_redirs], 0) == TOKEN_REDIR_HEREDOC)
 		{
-			if (do_expand(c_splitted, ft_arrlen(c_splitted)
+			if (do_expand(c_splitted, (int)ft_arrlen(c_splitted)
 					- ft_arrlen(c_redirs) + (i_redirs * 2) - 1))
 			{
 				value_temp = string_to_array("1");
