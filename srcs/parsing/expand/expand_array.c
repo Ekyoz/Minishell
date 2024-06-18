@@ -47,7 +47,8 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 
 static int	handle_special_cases(char **cmd, int i_cmd)
 {
-	char *temp;
+	char	*temp;
+
 	if (ft_strcmp(cmd[i_cmd], "$") == 0)
 		return (1);
 	if (ft_strcmp(cmd[i_cmd], "$?") == 0)
