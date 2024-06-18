@@ -53,24 +53,24 @@ static int	close_heredoc(t_token *tokens, t_tree *tree, char **eofword)
 {
 	free_array(&eofword);
 	close(tree->fdin);
-	if(g_signal_status == 130)
+	if (g_signal_status == 130)
 	{
-		return(0);
+		return (0);
 	}
-	return(1);
+	return (1);
 }
 
 static void	text_heredoc(t_tree *tree, char **eofword, char *input, int *i)
 {
-	char *temp;
+	char	*temp;
 
 	if (ft_str_equals(eofword[*i], input))
 		*i = *i + 1;
 	else
 	{
-		if(input)
+		if (input)
 		{
-			if(ft_strncmp(input, "\n", 2))
+			if (ft_strncmp(input, "\n", 2))
 			{
 				temp = input;
 				input = ft_strtrim(input, "\n");
@@ -99,7 +99,7 @@ int	heredoc(t_token *tokens, t_tree *tree, t_node *nodes)
 	if (eofword)
 	{
 		tree->fdin = open(".here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0777);
-		if(tree->fdin < 0)
+		if (tree->fdin < 0)
 			perror("open");
 		while (eofword[i])
 		{
@@ -109,10 +109,10 @@ int	heredoc(t_token *tokens, t_tree *tree, t_node *nodes)
 			if (g_signal_status == 130)
 				break ;
 			if (!input && !err_null_heredoc(eofword, &i))
-				break;
+				break ;
 			text_heredoc(tree, eofword, input, &i);
 		}
-		return(close_heredoc(tokens, tree, eofword));
+		return (close_heredoc(tokens, tree, eofword));
 	}
-	return(1);
+	return (1);
 }

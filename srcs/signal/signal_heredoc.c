@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:33:55 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/17 17:52:59 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 11:04:49 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ int	err_null_heredoc(char **eofword, int *i)
 	*i = *i + 1;
 	if (eofword[*i] == NULL)
 	{
-		return(0);
+		return (0);
 	}
-	return(1);
+	return (1);
 }
 
 static void	sig_handler_heredoc(int sig)
@@ -40,8 +40,7 @@ static void	sig_handler_heredoc(int sig)
 static void	sigquit(int sig)
 {
 	(void)sig;
-	// ft_putstr_fd("\b\033[K", 0);
-	ft_putstr_fd("\b\b\0",0);
+	ft_putstr_fd("\b\b\033[K", 0);
 }
 
 void	set_signal_heredoc(void)

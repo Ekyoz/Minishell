@@ -37,7 +37,6 @@ static void	free_nodes(t_node *nodes)
 	i = 0;
 	if (nodes == NULL)
 		return ;
-	
 	free_nodes(nodes->left);
 	free_nodes(nodes->right);
 	if (nodes->args != NULL)

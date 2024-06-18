@@ -6,13 +6,13 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/17 16:22:12 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 11:09:47 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parent_process(int status, pid_t pid)
+void	parent_process(int status, pid_t pid, int i)
 {
 	signal(SIGINT, SIG_IGN);
 	waitpid(pid, &status, 0);
@@ -20,12 +20,17 @@ void	parent_process(int status, pid_t pid)
 	{
 		g_signal_status = WEXITSTATUS(status);
 	}
+	if (i == 1)
+	{
+		if (access("./.here_doc", F_OK) != -1)
+			unlink("./.here_doc");
+	}
 }
 
 void	*ft_execve(t_token *tokens, t_tree *tree, t_node *nodes)
 {
 	tree->path = check_access1(tree, nodes);
-	if(tree->fdoutcp != -1)
+	if (tree->fdoutcp != -1)
 		close(tree->fdoutcp);
 	if (execve(tree->path, nodes->args, env_to_string(tree, tree->env)) == -1)
 	{
@@ -70,7 +75,7 @@ void	*exec_cmd_out(t_token *tokens, t_tree *tree, t_node *nodes)
 	hdoc_or_cmd(nodes);
 	if (nodes->left)
 		do_unset(nodes->left, tree->env);
-	if(!heredoc(tokens, tree, nodes))
+	if (!heredoc(tokens, tree, nodes))
 		return ((void *)0);
 	pid = do_fork(tree, pid);
 	if (pid == 0)
@@ -84,9 +89,7 @@ void	*exec_cmd_out(t_token *tokens, t_tree *tree, t_node *nodes)
 			print_error(tokens, CMD_NOT_FOUND, tree, nodes->left);
 		ft_execve(tokens, tree, nodes->left);
 	}
-	parent_process(status, pid);
-	if(access("./.here_doc", F_OK) != -1)
-		unlink("./.here_doc");
+	parent_process(status, pid, 1);
 	return ((void *)0);
 }
 

@@ -27,25 +27,25 @@ static void	execute_pipe(t_token *tokens, t_tree *tree, t_node *node)
 
 void	exec(t_token *tokens, t_tree *tree, t_node *node)
 {
-    if((is_heredoc(node->left) && !node->left->left) ||
-        (is_heredoc(node) && !node->left))
-        err_free_all1(tree, tokens);
-    if (testredir(node->left) && node->left->left)
-        execute_pipe(tokens, tree, node->left->left);
-    else if (node->left)
-        execute_pipe(tokens, tree, node->left);
-    else
-        execute_pipe(tokens, tree, node);
+	if ((is_heredoc(node->left) && !node->left->left) || (is_heredoc(node)
+			&& !node->left))
+		err_free_all1(tree, tokens);
+	if (testredir(node->left) && node->left->left)
+		execute_pipe(tokens, tree, node->left->left);
+	else if (node->left)
+		execute_pipe(tokens, tree, node->left);
+	else
+		execute_pipe(tokens, tree, node);
 }
 
-void redir_heredoc_in(t_tree *tree)
+void	redir_heredoc_in(t_tree *tree)
 {
-    if(access("./.here_doc", F_OK) != -1)
-    {
-        tree->fdin = open("./.here_doc", O_RDONLY);
-        if(tree->fdin < 0)
-            perror("open first");
-        if(dup2(tree->fdin, STDIN_FILENO) == -1)
-            perror("dup2 first");
-    }
+	if (access("./.here_doc", F_OK) != -1)
+	{
+		tree->fdin = open("./.here_doc", O_RDONLY);
+		if (tree->fdin < 0)
+			perror("open first");
+		if (dup2(tree->fdin, STDIN_FILENO) == -1)
+			perror("dup2 first");
+	}
 }

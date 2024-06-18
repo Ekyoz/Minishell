@@ -6,14 +6,14 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:35:12 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/13 11:03:21 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 11:11:11 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void err_free_all1(t_tree *tree, t_token *tokens)
+void	err_free_all1(t_tree *tree, t_token *tokens)
 {
-    free_tree_tokens(&tree, tokens);
-    exit(0);
+	free_tree_tokens(&tree, tokens);
+	exit(0);
 }

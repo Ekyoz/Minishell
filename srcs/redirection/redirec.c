@@ -102,7 +102,6 @@ int	check_redir_out(t_token *tokens, t_tree *tree, t_node *nodes)
 	}
 	if (isredir == 1)
 	{
-
 		tree->fdoutcp = dup(STDOUT_FILENO);
 		if (dup2(tree->fdout, STDOUT_FILENO) == -1)
 			err_free_all(tree);

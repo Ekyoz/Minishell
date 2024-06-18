@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:00:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/17 15:44:46 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 11:08:27 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,12 @@ void	close_all_pipes(int **fdpipe, int i)
 
 void	first_pipe(t_token *tokens, t_tree *tree, t_node *node)
 {
-	if(access("./.here_doc", F_OK) != -1)
+	if (access("./.here_doc", F_OK) != -1)
 	{
 		tree->fdin = open("./.here_doc", O_RDONLY);
-		if(tree->fdin < 0)
+		if (tree->fdin < 0)
 			perror("open first");
-		if(dup2(tree->fdin, STDIN_FILENO) == -1)
+		if (dup2(tree->fdin, STDIN_FILENO) == -1)
 			perror("dup2 first");
 	}
 	if (!check_redir_out(tokens, tree, node) && !testopening(tokens, tree,
@@ -46,12 +46,12 @@ void	first_pipe(t_token *tokens, t_tree *tree, t_node *node)
 
 void	last_pipe(t_token *tokens, t_tree *tree, t_node *node, int j)
 {
-	if(access("./.here_doc", F_OK) != -1)// && !is_heredoc(node)
+	if (access("./.here_doc", F_OK) != -1)
 	{
 		tree->fdin = open("./.here_doc", O_RDONLY);
-		if(tree->fdin < 0)
+		if (tree->fdin < 0)
 			perror("open");
-		if(dup2(tree->fdin, STDIN_FILENO) == -1)
+		if (dup2(tree->fdin, STDIN_FILENO) == -1)
 			perror("dup2");
 		close(tree->fdin);
 	}
@@ -61,16 +61,16 @@ void	last_pipe(t_token *tokens, t_tree *tree, t_node *node, int j)
 		if (dup2(tree->fdpipe[j - 1][0], STDIN_FILENO) == -1)
 			err_free_all(tree);
 	}
-}	
+}
 
 void	mid_pipe(t_token *tokens, t_tree *tree, t_node *node, int j)
 {
-	if(access("./.here_doc", F_OK) != -1)
+	if (access("./.here_doc", F_OK) != -1)
 	{
 		tree->fdin = open(".here_doc", O_RDONLY);
-		if(tree->fdin < 0)
+		if (tree->fdin < 0)
 			perror("open");
-		if(dup2(tree->fdin, STDIN_FILENO) == -1)
+		if (dup2(tree->fdin, STDIN_FILENO) == -1)
 			perror("dup2");
 		close(tree->fdin);
 	}
@@ -93,7 +93,7 @@ void	wait_all_parent(t_tree *tree, int i)
 	j = 0;
 	while (j <= i)
 	{
-		parent_process(tree->status, tree->pid[j]);
+		parent_process(tree->status, tree->pid[j], 0);
 		j++;
 	}
 	if (access("./.here_doc", F_OK) != -1)

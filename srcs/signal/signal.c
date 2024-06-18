@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void sig_ctrld(t_env *env)
+void	sig_ctrld(t_env *env)
 {
 	ft_putstr_fd("exit\n", 1);
 	free_env(env);
