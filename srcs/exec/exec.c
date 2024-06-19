@@ -29,7 +29,7 @@ void	parent_process(int status, pid_t pid, int i)
 
 void	*ft_execve(t_token *tokens, t_tree *tree, t_node *nodes)
 {
-	char **tmp;
+	char	**tmp;
 
 	tree->path = check_access1(tree, nodes);
 	if (tree->fdoutcp != -1)
@@ -61,9 +61,8 @@ int	exec_cmd(t_token *tokens, t_tree *tree, t_node *nodes)
 		if (!check_cmd1(tree, nodes) && !tree->path)
 			print_error(tokens, CMD_NOT_FOUND, tree, nodes);
 		tmp = env_to_string(tree, tree->env);
-		if (execve(tree->path, nodes->args,
-				tmp) == -1)
-				err_free_all3(tree, tokens, nodes, tmp);
+		if (execve(tree->path, nodes->args, tmp) == -1)
+			err_free_all3(tree, tokens, nodes, tmp);
 	}
 	get_signal_cmd(status, pid);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/19 13:43:41 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/19 14:56:20 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	main(int argc, char *argv[], char *envp[])
 	argc_argv(argc, argv);
 	tokens = NULL;
 	env = init_env(envp);
-//	add_file_to_history();
 	while (true)
 	{
 		set_signal();
@@ -39,7 +38,6 @@ int	main(int argc, char *argv[], char *envp[])
 			sig_ctrld(env);
 		if (parsing(&tokens, input, env) && tokens != NULL)
 		{
-			// print_list(tokens);
 			tree = init_tree(env);
 			create_node(tokens, &tree);
 			clear_token(&tokens);

@@ -51,7 +51,7 @@ static int	change_dir(t_tree *tree, t_node *node, char *path)
 static void	tild(t_tree *tree, t_node *node, char *homepath)
 {
 	char	*path;
-	char 	*tmp;
+	char	*tmp;
 
 	homepath = get_env(tree->env, "HOME=");
 	if (!homepath)

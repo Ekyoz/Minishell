@@ -195,8 +195,8 @@ void				ft_exit(t_tree *tree, t_token *tokens);
 void				free_tree_tokens(t_tree **tree, t_token *tokens);
 void				free_tree_tokens_env(t_tree **tree, t_token *tokens);
 void				err_free_all2(t_tree *tree, t_token *tokens);
-void				err_free_all3(t_tree *tree, t_token *tokens, t_node *node, char **tmp);
-
+void				err_free_all3(t_tree *tree, t_token *tokens, t_node *node,
+						char **tmp);
 
 // ENVIRONNEMENT
 t_env				*init_env(char **env_array);
