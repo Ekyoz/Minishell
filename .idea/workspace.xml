@@ -1,0 +1,678 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="CMakeRunConfigurationManager">
+    <generated>
+      <config projectName="Minishell" targetName="re" />
+      <config projectName="Minishell" targetName="all" />
+      <config projectName="Minishell" targetName="ar_exec" />
+      <config projectName="Minishell" targetName="valgrind" />
+      <config projectName="Minishell" targetName="lib" />
+      <config projectName="Minishell" targetName="parsing" />
+      <config projectName="Minishell" targetName="test" />
+      <config projectName="Minishell" targetName="archive" />
+      <config projectName="Minishell" targetName="ar_debug" />
+      <config projectName="Minishell" targetName="run" />
+      <config projectName="Minishell" targetName="ar_test" />
+      <config projectName="Minishell" targetName="debug" />
+      <config projectName="Minishell" targetName="exec" />
+      <config projectName="Minishell" targetName="fclean" />
+      <config projectName="Minishell" targetName="default" />
+      <config projectName="Minishell" targetName="minishell" />
+      <config projectName="Minishell" targetName="ar_parsing" />
+      <config projectName="Minishell" targetName="compile" />
+    </generated>
+  </component>
+  <component name="CMakeSettings" AUTO_RELOAD="true">
+    <configurations>
+      <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
+    </configurations>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="97678930-7f8d-4bf9-9450-0bfdc63ac3bd" name="Changes" comment="fix segfault">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/include/minishell.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/minishell.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/infile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/minishell_tester" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/outfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/srcs/main.c" beforeDir="false" afterPath="$PROJECT_DIR$/srcs/main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/supp.supp" beforeDir="false" />
+    </list>
+    <list id="877278a1-5297-493b-8c57-16aa8c5e33bd" name="Changes by bpoyet" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager">
+    <option name="groupingKeys">
+      <option value="directory" />
+      <option value="repository" />
+    </option>
+  </component>
+  <component name="ClangdSettings">
+    <option name="clangTidyViaClangd" value="false" />
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="main" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="parsing" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
+    <option name="ROOT_SYNC" value="DONT_SYNC" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Ekyoz&quot;
+  }
+}</component>
+  <component name="GitHubPullRequestState">{
+  &quot;prStates&quot;: [
+    {
+      &quot;id&quot;: {
+        &quot;id&quot;: &quot;PR_kwDOLltpHc5wVWh5&quot;,
+        &quot;number&quot;: 10
+      },
+      &quot;lastSeen&quot;: 1716471740679
+    }
+  ]
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;git@github.com:Ekyoz/Minishell.git&quot;,
+    &quot;accountId&quot;: &quot;4a040326-7937-4846-8a40-155e87a9dbca&quot;
+  },
+  &quot;recentNewPullRequestHead&quot;: {
+    &quot;server&quot;: {
+      &quot;useHttp&quot;: false,
+      &quot;host&quot;: &quot;github.com&quot;,
+      &quot;port&quot;: null,
+      &quot;suffix&quot;: null
+    },
+    &quot;owner&quot;: &quot;Ekyoz&quot;,
+    &quot;repository&quot;: &quot;Minishell&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///dummy.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/srcs/main.c" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/srcs/parsing/parsing.c" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/srcs/parsing/token.c" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="MakefileLocalSettings">
+    <option name="availableProjects">
+      <map>
+        <entry>
+          <key>
+            <ExternalProjectPojo>
+              <option name="name" value="Minishell" />
+              <option name="path" value="$PROJECT_DIR$" />
+            </ExternalProjectPojo>
+          </key>
+          <value>
+            <list>
+              <ExternalProjectPojo>
+                <option name="name" value="Minishell" />
+                <option name="path" value="$PROJECT_DIR$" />
+              </ExternalProjectPojo>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="projectSyncType">
+      <map>
+        <entry key="$PROJECT_DIR$" value="RE_IMPORT" />
+      </map>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectApplicationVersion">
+    <option name="ide" value="CLion" />
+    <option name="majorVersion" value="2023" />
+    <option name="minorVersion" value="3.4" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 4
+}</component>
+  <component name="ProjectId" id="2eE7k5MmVwSH7y1lO2RUS67WeFq" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollFromSource" value="true" />
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="openDirectoriesWithSingleClick" value="true" />
+    <option name="showExcludedFiles" value="false" />
+    <option name="showLibraryContents" value="true" />
+    <option name="showScratchesAndConsoles" value="false" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Native Application.Debug.executor": "Debug",
+    "Native Application.Run.executor": "Debug",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.RadMigrateCodeStyle": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "WebServerToolWindowPanel.toolwindow.highlight.mappings": "true",
+    "WebServerToolWindowPanel.toolwindow.highlight.symlinks": "true",
+    "WebServerToolWindowPanel.toolwindow.show.date": "false",
+    "WebServerToolWindowPanel.toolwindow.show.permissions": "false",
+    "WebServerToolWindowPanel.toolwindow.show.size": "false",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "main",
+    "last_opened_file_path": "/home/atresall/Documents/42/Minishell/Minishell",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.build.tools.auto.reload": "ALL",
+    "settings.editor.selected.configurable": "editor.preferences.tabs",
+    "structure.view.defaults.are.configured": "true",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/srcs/parsing/expand" />
+      <recent name="$PROJECT_DIR$/srcs/parsing/utils" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Native Application.Debug">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Debug" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Minishell" TARGET_NAME="debug" CONFIG_NAME="debug" version="1" RUN_PATH="$PROJECT_DIR$/.objs/debug.out">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Debug" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Minishell" TARGET_NAME="debug" CONFIG_NAME="debug" version="1" RUN_PATH="$PROJECT_DIR$/out/debug.out">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Debug" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Minishell" TARGET_NAME="debug" CONFIG_NAME="debug" version="1" RUN_PATH="$PROJECT_DIR$/out/debug.out">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Run" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Minishell" TARGET_NAME="all" CONFIG_NAME="all" version="1" RUN_PATH="$PROJECT_DIR$/minishell">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Run" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Minishell" TARGET_NAME="all" CONFIG_NAME="all" version="1" RUN_PATH="$PROJECT_DIR$/minishell">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Run" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Minishell" TARGET_NAME="all" CONFIG_NAME="all" version="1" RUN_PATH="$PROJECT_DIR$/minishell">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="valgrind" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Minishell" TARGET_NAME="valgrind" CONFIG_NAME="valgrind" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="valgrind" type="CLionNativeAppRunConfigurationType" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Minishell" TARGET_NAME="valgrind" CONFIG_NAME="valgrind" version="1">
+      <method v="2">
+        <option name="CLION.COMPOUND.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <list>
+      <item itemvalue="Native Application.Debug" />
+      <item itemvalue="Native Application.Run" />
+      <item itemvalue="Native Application.valgrind" />
+    </list>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="97678930-7f8d-4bf9-9450-0bfdc63ac3bd" name="Changes" comment="" />
+      <created>1711458025499</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1711458025499</updated>
+      <workItem from="1711458028550" duration="1378000" />
+      <workItem from="1711461072315" duration="3355000" />
+      <workItem from="1711465640614" duration="123000" />
+      <workItem from="1711465794509" duration="138000" />
+      <workItem from="1711465986050" duration="70000" />
+      <workItem from="1711466076594" duration="278000" />
+      <workItem from="1711466371551" duration="201000" />
+      <workItem from="1711466588133" duration="6144000" />
+      <workItem from="1711623223600" duration="10911000" />
+      <workItem from="1713266774084" duration="1018000" />
+      <workItem from="1713268406864" duration="5276000" />
+      <workItem from="1713440531576" duration="517000" />
+      <workItem from="1713441247985" duration="1867000" />
+      <workItem from="1713443461265" duration="5906000" />
+      <workItem from="1713864401994" duration="2976000" />
+      <workItem from="1713870239216" duration="13456000" />
+      <workItem from="1714037371276" duration="8777000" />
+      <workItem from="1714053158307" duration="30000" />
+      <workItem from="1714130173007" duration="2633000" />
+      <workItem from="1714727573056" duration="17242000" />
+      <workItem from="1715074055235" duration="15666000" />
+      <workItem from="1715592406528" duration="18289000" />
+      <workItem from="1716462226962" duration="89000" />
+      <workItem from="1716462365166" duration="13354000" />
+      <workItem from="1717062888735" duration="151000" />
+      <workItem from="1717063104301" duration="42000" />
+      <workItem from="1717063185165" duration="6305000" />
+      <workItem from="1717679386383" duration="11484000" />
+      <workItem from="1718096080557" duration="811000" />
+      <workItem from="1718104841285" duration="12450000" />
+      <workItem from="1718120701013" duration="8210000" />
+      <workItem from="1718275751213" duration="3494000" />
+      <workItem from="1718291153420" duration="598000" />
+      <workItem from="1718789177124" duration="14670000" />
+    </task>
+    <task id="LOCAL-00001" summary="add lib">
+      <option name="closed" value="true" />
+      <created>1711463372582</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1711463372582</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Changes by bpoyet">
+      <option name="closed" value="true" />
+      <created>1711623284048</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1711623284048</updated>
+    </task>
+    <task id="LOCAL-00003" summary="add lib">
+      <option name="closed" value="true" />
+      <created>1711623336476</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1711623336476</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add lib">
+      <option name="closed" value="true" />
+      <created>1711623498494</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1711623498494</updated>
+    </task>
+    <task id="LOCAL-00005" summary="add lib">
+      <option name="closed" value="true" />
+      <created>1711623533456</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1711623533456</updated>
+    </task>
+    <task id="LOCAL-00006" summary="set makefile flags">
+      <option name="closed" value="true" />
+      <created>1711626748439</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1711626748439</updated>
+    </task>
+    <task id="LOCAL-00007" summary="add pipex lib">
+      <option name="closed" value="true" />
+      <created>1711627359100</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1711627359100</updated>
+    </task>
+    <task id="LOCAL-00008" summary="test parsing">
+      <option name="closed" value="true" />
+      <created>1713266901218</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1713266901218</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Resolve merge conflict">
+      <option name="closed" value="true" />
+      <created>1713268596560</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1713268596560</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Delete unused files">
+      <option name="closed" value="true" />
+      <created>1713268736669</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1713268736669</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Add make exec rules">
+      <option name="closed" value="true" />
+      <created>1713270461555</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1713270461555</updated>
+    </task>
+    <task id="LOCAL-00012" summary="add main in parsing file add remake git branch">
+      <option name="closed" value="true" />
+      <created>1713442413238</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1713442413238</updated>
+    </task>
+    <task id="LOCAL-00013" summary="parsing modifie">
+      <option name="closed" value="true" />
+      <created>1713450316179</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1713450316179</updated>
+    </task>
+    <task id="LOCAL-00014" summary="parsing modifie">
+      <option name="closed" value="true" />
+      <created>1713450347511</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1713450347511</updated>
+    </task>
+    <task id="LOCAL-00015" summary="begin parsing for quote">
+      <option name="closed" value="true" />
+      <created>1715609984436</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1715609984436</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Resolve merge conflicts">
+      <option name="closed" value="true" />
+      <created>1715611351074</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1715611351074</updated>
+    </task>
+    <task id="LOCAL-00017" summary="correction des nom de fichier">
+      <option name="closed" value="true" />
+      <created>1715611578899</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1715611578899</updated>
+    </task>
+    <task id="LOCAL-00018" summary="correction de bug avec le parsing">
+      <option name="closed" value="true" />
+      <created>1715615116079</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1715615116079</updated>
+    </task>
+    <task id="LOCAL-00019" summary="correction de bug avec le push for merge in main">
+      <option name="closed" value="true" />
+      <created>1716470802437</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1716470802438</updated>
+    </task>
+    <task id="LOCAL-00020" summary="correction de bug avec le push for merge in main">
+      <option name="closed" value="true" />
+      <created>1716470832866</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1716470832866</updated>
+    </task>
+    <task id="LOCAL-00021" summary="merge parsing into main">
+      <option name="closed" value="true" />
+      <created>1716473654801</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1716473654801</updated>
+    </task>
+    <task id="LOCAL-00022" summary="add color to minishell">
+      <option name="closed" value="true" />
+      <created>1716474018357</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1716474018357</updated>
+    </task>
+    <task id="LOCAL-00023" summary="correction du makefile pour ajouter une info et supp des fichier inutile">
+      <option name="closed" value="true" />
+      <created>1716475547044</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1716475547044</updated>
+    </task>
+    <task id="LOCAL-00024" summary="crrection de certains bug, leak et invalid read">
+      <option name="closed" value="true" />
+      <created>1717692681244</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1717692681244</updated>
+    </task>
+    <task id="LOCAL-00025" summary="norminette fix">
+      <option name="closed" value="true" />
+      <created>1718106007891</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1718106007891</updated>
+    </task>
+    <task id="LOCAL-00026" summary="fix leaks and norm">
+      <option name="closed" value="true" />
+      <created>1718114748533</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1718114748533</updated>
+    </task>
+    <task id="LOCAL-00027" summary="segfault error fix">
+      <option name="closed" value="true" />
+      <created>1718115377791</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1718115377791</updated>
+    </task>
+    <task id="LOCAL-00028" summary="segfault error fix and norme">
+      <option name="closed" value="true" />
+      <created>1718119505125</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1718119505125</updated>
+    </task>
+    <task id="LOCAL-00029" summary="norminette fix all files">
+      <option name="closed" value="true" />
+      <created>1718125713806</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1718125713806</updated>
+    </task>
+    <task id="LOCAL-00030" summary="pipe fix and rename to minihell">
+      <option name="closed" value="true" />
+      <created>1718127047875</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1718127047875</updated>
+    </task>
+    <task id="LOCAL-00031" summary="norminette fix">
+      <option name="closed" value="true" />
+      <created>1718128756620</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1718128756620</updated>
+    </task>
+    <task id="LOCAL-00032" summary="clean tree">
+      <option name="closed" value="true" />
+      <created>1718789311940</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1718789311940</updated>
+    </task>
+    <task id="LOCAL-00033" summary="fix invalid free">
+      <option name="closed" value="true" />
+      <created>1718789433867</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1718789433867</updated>
+    </task>
+    <task id="LOCAL-00034" summary="fix problem on parsing">
+      <option name="closed" value="true" />
+      <created>1718799299787</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1718799299787</updated>
+    </task>
+    <task id="LOCAL-00035" summary="fix probleme and norm">
+      <option name="closed" value="true" />
+      <created>1718803103853</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1718803103853</updated>
+    </task>
+    <task id="LOCAL-00036" summary="fix segfault">
+      <option name="closed" value="true" />
+      <created>1718803839061</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1718803839061</updated>
+    </task>
+    <option name="localTasksCounter" value="37" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/main" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/include/Pipex/others/philo_exemple" />
+      <path value="$PROJECT_DIR$/include/Pipex/others/tester" />
+      <path value="$PROJECT_DIR$/others/minishell_exemple" />
+    </ignored-roots>
+    <MESSAGE value="Resolve merge conflict" />
+    <MESSAGE value="Delete unused files" />
+    <MESSAGE value="Add make exec rules" />
+    <MESSAGE value="add main in parsing file add remake git branch" />
+    <MESSAGE value="parsing modifie" />
+    <MESSAGE value="begin parsing for quote" />
+    <MESSAGE value="Resolve merge conflicts" />
+    <MESSAGE value="correction des nom de fichier" />
+    <MESSAGE value="correction de bug avec le parsing" />
+    <MESSAGE value="correction de bug avec le push for merge in main" />
+    <MESSAGE value="merge parsing into main" />
+    <MESSAGE value="add color to minishell" />
+    <MESSAGE value="correction du makefile pour ajouter une info et supp des fichier inutile" />
+    <MESSAGE value="crrection de certains bug, leak et invalid read" />
+    <MESSAGE value="fix leaks and norm" />
+    <MESSAGE value="segfault error fix" />
+    <MESSAGE value="segfault error fix and norme" />
+    <MESSAGE value="norminette fix all files" />
+    <MESSAGE value="pipe fix and rename to minihell" />
+    <MESSAGE value="norminette fix" />
+    <MESSAGE value="clean tree" />
+    <MESSAGE value="fix invalid free" />
+    <MESSAGE value="fix problem on parsing" />
+    <MESSAGE value="fix probleme and norm" />
+    <MESSAGE value="fix segfault" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix segfault" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="CLionNativeAppRunConfigurationType">
+        <watch expression="*c_splitted @ 5" custom="AddWatchAsArrayAction.marker:  @ 5" />
+        <watch expression="*c_final @ 5" custom="AddWatchAsArrayAction.marker:  @ 5" />
+        <watch expression="*cmd @ 4" custom="AddWatchAsArrayAction.marker:  @ 4" />
+        <watch expression="*c_token @ 4" custom="AddWatchAsArrayAction.marker:  @ 4" />
+      </configuration>
+    </watches-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
+  </component>
+</project>

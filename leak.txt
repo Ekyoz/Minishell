@@ -1,0 +1,27 @@
+==193473== 9 bytes in 1 blocks are definitely lost in loss record 4 of 70
+==193473==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==193473==    by 0x40B61C: ft_strdup (ft_strdup.c:21)
+==193473==    by 0x407AB3: put (in /goinfre/atresall/intra-uuid-a149d072-9101-45dd-92f2-1ca133eaed8f-5606854-atresall/minishell)
+==193473==    by 0x407A47: do_export (in /goinfre/atresall/intra-uuid-a149d072-9101-45dd-92f2-1ca133eaed8f-5606854-atresall/minishell)
+==193473==    by 0x4028DA: choose_builtin (in /goinfre/atresall/intra-uuid-a149d072-9101-45dd-92f2-1ca133eaed8f-5606854-atresall/minishell)
+==193473==    by 0x405E9B: exec_cmd (in /goinfre/atresall/intra-uuid-a149d072-9101-45dd-92f2-1ca133eaed8f-5606854-atresall/minishell)
+==193473==    by 0x4061A6: ast_exec (in /goinfre/atresall/intra-uuid-a149d072-9101-45dd-92f2-1ca133eaed8f-5606854-atresall/minishell)
+==193473==    by 0x4013DA: main (in /goinfre/atresall/intra-uuid-a149d072-9101-45dd-92f2-1ca133eaed8f-5606854-atresall/minishell)
+
+
+
+cat <Make > test > outfile > test2
+
+==195167== 35 bytes in 1 blocks are definitely lost in loss record 20 of 80
+==195167==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
+==195167==    by 0x40B61C: ft_strdup (ft_strdup.c:21)
+==195167==    by 0x403CCA: string_to_array (in /goinfre/atresall/intra-uuid-a149d072-9101-45dd-92f2-1ca133eaed8f-5606854-atresall/minishell)
+==195167==    by 0x4030EE: pipe_splitter (in /goinfre/atresall/intra-uuid-a149d072-9101-45dd-92f2-1ca133eaed8f-5606854-atresall/minishell)
+==195167==    by 0x402A44: parsing (in /goinfre/atresall/intra-uuid-a149d072-9101-45dd-92f2-1ca133eaed8f-5606854-atresall/minishell)
+==195167==    by 0x401392: main (in /goinfre/atresall/intra-uuid-a149d072-9101-45dd-92f2-1ca133eaed8f-5606854-atresall/minishell)
+
+
+
+cat << oui << mais << non | cat << non
+
+cat << oui << mais << non > test| cat << non

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int g_signal_status;
+int			g_signal_status;
 
 static void	argc_argv(int argc, char *argv[])
 {
