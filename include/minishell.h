@@ -166,7 +166,7 @@ int					check_redir_in(t_token *tokens, t_tree *tree,
 						t_node *nodes);
 int					testopening(t_token *tokens, t_tree *tree, t_node *nodes);
 int					testredir(t_node *nodes);
-void 				redir_heredoc_in(t_tree *tree);
+void				redir_heredoc_in(t_tree *tree);
 
 // HEREDOC
 int					err_null_heredoc(char **eofword, int *i);
@@ -177,7 +177,7 @@ void				get_eofword(t_tree *tree, char **eofword, t_node *node,
 void				expand_heredoc(t_tree *tree, t_node *node);
 bool				is_heredoc(t_node *nodes);
 int					ft_str_equals(const char *str1, const char *str2);
-bool 				do_heredoc(t_tree *tree, int j, int i);
+bool				do_heredoc(t_tree *tree, int j, int i);
 
 // FONCTIONS DU GARBAGE COLLECTOR
 void				print_error(t_token *tokens, int errorcode, t_tree *tree,
@@ -296,11 +296,11 @@ char				**del_cmd(int first_quote[2], int last_quote[2],
 void				get_quoted_join(char **cmd, char **quoted,
 						int last_quote[2], int i_cmd);
 int					quote_strings(char **tableau);
-char	**split_token(char *command);
-int	split_count(char *command);
-void	split_count_add(bool *in_word, int *count, char *command, int *i);
-char	*replace_env(char *env, char *cmd, char *key);
-char	*get_env_value(char *key, t_env *env);
-
+char				**split_token(char *command);
+int					split_count(char *command);
+void				split_count_add(bool *in_word, int *count, char *command,
+						int *i);
+char				*replace_env(char *env, char *cmd, char *key);
+char				*get_env_value(char *key, t_env *env);
 
 #endif

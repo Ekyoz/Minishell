@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:30:34 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/18 16:22:09 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/19 10:42:42 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static int	change_dir(t_tree *tree, t_node *node, char *path)
 static void	tild(t_tree *tree, t_node *node, char *homepath)
 {
 	char	*path;
+	char 	*tmp;
 
 	homepath = get_env(tree->env, "HOME=");
 	if (!homepath)
@@ -59,10 +60,13 @@ static void	tild(t_tree *tree, t_node *node, char *homepath)
 		g_signal_status = 1;
 		return ;
 	}
-	path = ft_substr(node->args[1], 1, ft_strlen(node->args[1]) - 1);
-	path = ft_strjoin(homepath, path);
+	tmp = ft_substr(node->args[1], 1, ft_strlen(node->args[1]) - 1);
+	path = ft_strjoin(homepath, tmp);
+	free(tmp);
+	free(homepath);
 	if (change_dir(tree, node, path))
 		set_env(tree->env, "PWD=", path);
+	free(path);
 }
 
 static int	cd_alone(t_tree *tree, t_node *node)

@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/18 15:23:39 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/19 10:37:36 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,7 @@ int	unset(char *str, t_env **env)
 	prev = NULL;
 	while (actual)
 	{
-		if (!ft_strncmp(str, actual->value, get_char_by_index(actual->value,
-					'=')))
+		if (!ft_strncmp(str, actual->value, ft_strlen(str)))
 		{
 			if (prev)
 				prev->next = actual->next;
