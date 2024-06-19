@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/18 11:38:39 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 16:14:36 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void	*exec_cmd_out(t_token *tokens, t_tree *tree, t_node *nodes)
 		check_redir_out(tokens, tree, nodes);
 		check_redir_in(tokens, tree, nodes);
 		if (!nodes->left || choose_builtin(tokens, tree, nodes->left))
-			err_free_all1(tree, tokens);
+			err_free_all2(tree, tokens);
 		if (!check_cmd1(tree, nodes->left))
 			print_error(tokens, CMD_NOT_FOUND, tree, nodes->left);
 		ft_execve(tokens, tree, nodes->left);

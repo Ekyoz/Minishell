@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_array.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: atresall <atresall@student.1337.ma>        +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/11 18:41:35 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/11 18:41:35 by atresall         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:46:31 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 		}
 		while (++i[2] < (int)ft_strlen(cmd[i[0]]))
 		{
-			if (handle_special_cases(cmd, i[0]))
-				return (cmd);
-			if (cmd[i[0]][i[2]] == '$')
+			if (handle_special_cases(cmd, i[0]) && i[0] >= (int)ft_arrlen(cmd))
+				return (free(no_expandable), cmd);
+			if (cmd[i[0]][i[2]] == '$' && cmd[i[0]][i[2] + 1] != '\0')
 			{
 				var = extract_var(cmd[i[0]], &i[2]);
 				replace_var_in_cmd(cmd, i[0], var, env);
@@ -47,11 +47,15 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 
 static int	handle_special_cases(char **cmd, int i_cmd)
 {
+	char	*temp;
+
 	if (ft_strcmp(cmd[i_cmd], "$") == 0)
 		return (1);
 	if (ft_strcmp(cmd[i_cmd], "$?") == 0)
 	{
-		cmd[i_cmd] = replace_env(ft_itoa(g_signal_status), cmd[i_cmd], "$?");
+		temp = ft_itoa(g_signal_status);
+		cmd[i_cmd] = replace_env(temp, cmd[i_cmd], "$?");
+		free(temp);
 		return (1);
 	}
 	return (0);
@@ -83,11 +87,9 @@ static void	replace_var_in_cmd(char **cmd, int i_cmd, char *var, t_env *env)
 {
 	char	*trimmed_var;
 	char	*env_value;
-	char	*temp2;
 
 	trimmed_var = ft_strtrim(var, "$");
 	env_value = get_env_value(trimmed_var, env);
-	temp2 = cmd[i_cmd];
 	cmd[i_cmd] = replace_env(env_value, cmd[i_cmd], var);
-	free_chars(trimmed_var, var, env_value, temp2);
+	free_chars(trimmed_var, var, env_value, NULL);
 }

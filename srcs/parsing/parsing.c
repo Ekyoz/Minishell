@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 14:52:50 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/17 14:55:34 by atresall         ###   ########.fr       */
+/*   Updated: 2024/06/18 15:49:03 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ static void	parsing_redir(t_token **head, char **c_pipe, char **c_splitted,
 	char	**c_redirs;
 
 	c_redirs = NULL;
+	c_cmd = NULL;
 	if (!there_token(c_pipe[*i_pipe]))
 		append_token(head, TOKEN_WORD, c_splitted);
 	else if (there_token(c_pipe[*i_pipe]))
@@ -62,7 +63,7 @@ static void	parsing_redir(t_token **head, char **c_pipe, char **c_splitted,
 		append_token_redir(c_redirs, c_splitted, head);
 	}
 	free_array(&c_splitted);
-	free_array(&c_redirs);
+	free_token(NULL, c_redirs, c_cmd, NULL);
 }
 
 static void	append_token_redir(char **c_redirs, char **c_splitted,
@@ -76,7 +77,7 @@ static void	append_token_redir(char **c_redirs, char **c_splitted,
 	{
 		if (is_token(c_redirs[i_redirs], 0) == TOKEN_REDIR_HEREDOC)
 		{
-			if (do_expand(c_splitted, ft_arrlen(c_splitted)
+			if (do_expand(c_splitted, (int)ft_arrlen(c_splitted)
 					- ft_arrlen(c_redirs) + (i_redirs * 2) - 1))
 			{
 				value_temp = string_to_array("1");

@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 16:33:55 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/18 12:11:20 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 14:07:59 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	err_null_heredoc(char **eofword, int *i)
 	*i = *i + 1;
 	if (eofword[*i] == NULL)
 	{
-		g_signal_status = 130;
 		return (0);
 	}
 	return (1);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/29 13:53:41 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/19 10:37:36 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@ int	unset(char *str, t_env **env)
 	prev = NULL;
 	while (actual)
 	{
-		if (!ft_strncmp(str, actual->value, get_char_by_index(actual->value,
-					'=')))
+		if (!ft_strncmp(str, actual->value, ft_strlen(str)))
 		{
 			if (prev)
 				prev->next = actual->next;
 			else
 				*env = actual->next;
+			free(actual->value);
 			free(actual);
 			return (0);
 		}
