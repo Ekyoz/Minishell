@@ -14,12 +14,11 @@
 
 static int	handle_special_cases(char **cmd, int i_cmd);
 static char	*extract_var(char *cmd, int *j_cmd);
-static void	replace_var_in_cmd(char **cmd, int i_cmd, char *var, t_env *env);
+static void	replace_var_cmd(char **cmd, int i_cmd, char *var, t_env *env);
 
 char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 {
 	int		i[3];
-	char	*var;
 
 	i[0] = -1;
 	i[1] = 0;
@@ -37,8 +36,7 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 				return (free(no_expandable), cmd);
 			if (cmd[i[0]][i[2]] == '$' && cmd[i[0]][i[2] + 1] != '\0')
 			{
-				var = extract_var(cmd[i[0]], &i[2]);
-				replace_var_in_cmd(cmd, i[0], var, env);
+				replace_var_cmd(cmd, i[0], extract_var(cmd[i[0]], &i[2]), env);
 				if (cmd[i[0]] == NULL)
 					ft_arrdel(cmd, i[0]);
 			}
@@ -85,7 +83,7 @@ static char	*extract_var(char *cmd, int *j_cmd)
 	return (var);
 }
 
-static void	replace_var_in_cmd(char **cmd, int i_cmd, char *var, t_env *env)
+static void	replace_var_cmd(char **cmd, int i_cmd, char *var, t_env *env)
 {
 	char	*trimmed_var;
 	char	*env_value;
