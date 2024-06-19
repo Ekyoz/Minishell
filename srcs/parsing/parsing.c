@@ -35,6 +35,8 @@ bool	parsing(t_token **head, char *commands, t_env *env)
 			c_splitted = splitter(c_pipe[i_pipe], env);
 			if (!c_splitted)
 				return (free_token(c_pipe, c_splitted, NULL, NULL));
+//			if (ft_strcmp(c_splitted[0], "") == 0)
+//				ft_arrdel(c_splitted, 0);
 			parsing_redir(head, c_pipe, c_splitted, &i_pipe);
 			if (i_pipe < pipe_counter(commands) - 1)
 				append_token(head, TOKEN_PIPE, NULL);
