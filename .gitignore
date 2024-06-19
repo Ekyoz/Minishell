@@ -1,0 +1,7 @@
+*.o 
+*.o.updated
+.objs
+.vscode
+.idea
+minishell
+
