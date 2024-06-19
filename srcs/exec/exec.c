@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/19 18:53:18 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/19 19:06:05 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,10 @@ void	*exec_cmd_out(t_token *tokens, t_tree *tree, t_node *nodes)
 		check_redir_out(tokens, tree, nodes);
 		check_redir_in(tokens, tree, nodes);
 		if(choose_builtin(tokens, tree, nodes->left))
+		{
+			free_tree_tokens_env(&tree, tokens);
 			exit(0);
+		}
 		if (!nodes->left)
 			err_free_all2(tree, tokens);
 		if (!check_cmd1(tree, nodes->left))

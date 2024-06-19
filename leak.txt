@@ -1,3 +1,5 @@
+modifier le path et faire un cat
+
 ==193473== 9 bytes in 1 blocks are definitely lost in loss record 4 of 70
 ==193473==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
 ==193473==    by 0x40B61C: ft_strdup (ft_strdup.c:21)
@@ -10,7 +12,7 @@
 
 
 
-cat <Make > test > outfile > test2
+cat <Make > test > outfile > test2 ==> parsing
 
 ==195167== 35 bytes in 1 blocks are definitely lost in loss record 20 of 80
 ==195167==    at 0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_memcheck-amd64-linux.so)
@@ -22,6 +24,6 @@ cat <Make > test > outfile > test2
 
 
 
-cat << oui << mais << non | cat << non
+cat << oui << mais << non | cat << non ==> parsing
 
 cat << oui << mais << non > test| cat << non
