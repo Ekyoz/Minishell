@@ -12,26 +12,38 @@
 
 #include "minishell.h"
 
-char	**miss_elements(char **l_base)
-{
-	int		i_base;
-	int		i_missing;
-	char	**missing;
+static int is_in_list(char **list, char *element);
 
-	i_base = 0;
-	i_missing = 0;
-	missing = (char **)malloc((ft_arrlen(l_base) + 1) * sizeof(char *));
-	if (!missing)
-		return (NULL);
-	while (l_base[i_base] && is_token(l_base[i_base], 0) == TOKEN_WORD)
-	{
-		missing[i_missing++] = ft_strdup(l_base[i_base]);
-		i_base++;
+char	**miss_elements(char **l_base, char **l_to_miss) {
+	int	base_length	= ft_arrlen(l_base);
+	char	**result = (char **)malloc((base_length + 1) * sizeof(char *));
+
+	if (!result) {
+		perror("malloc failed");
+		exit(EXIT_FAILURE);
 	}
-	if (i_missing == 0)
-		return (free(missing), NULL);
-	missing[i_missing] = NULL;
-	return (missing);
+
+	int result_index = 0;
+	while (*l_base) {
+		if (!is_in_list(l_to_miss, *l_base)) {
+			result[result_index++] = ft_strdup(*l_base);
+		}
+		l_base++;
+	}
+
+	result[result_index] = NULL;
+
+	return result;
+}
+
+static int is_in_list(char **list, char *element) {
+	while (*list) {
+		if (strcmp(*list, element) == 0) {
+			return 1; // Trouvé
+		}
+		list++;
+	}
+	return 0; // Pas trouvé
 }
 
 char	**string_to_array(char *string)

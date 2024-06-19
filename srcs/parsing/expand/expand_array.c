@@ -39,6 +39,8 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 			{
 				var = extract_var(cmd[i[0]], &i[2]);
 				replace_var_in_cmd(cmd, i[0], var, env);
+				if (cmd[i[0]] == NULL)
+					ft_arrdel(cmd, i[0]);
 			}
 		}
 	}

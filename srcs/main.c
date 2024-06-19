@@ -30,7 +30,7 @@ int	main(int argc, char *argv[], char *envp[])
 	argc_argv(argc, argv);
 	tokens = NULL;
 	env = init_env(envp);
-	add_file_to_history();
+//	add_file_to_history();
 	while (true)
 	{
 		set_signal();
