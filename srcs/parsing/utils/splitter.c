@@ -27,9 +27,9 @@ char	**split_token(char *command)
 	char	**c_final;
 
 	i = -1;
-	last_word[2] = 0;
 	last_word[0] = 0;
 	last_word[1] = 0;
+	last_word[2] = 0;
 	c_final = (char **)malloc(sizeof(char *) * (split_count(command) + 1));
 	if (!c_final)
 		return (NULL);

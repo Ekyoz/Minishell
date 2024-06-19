@@ -21,7 +21,8 @@ void	checker(t_token **head)
 	while (token)
 	{
 		next_token = token->next;
-		if (token->type == TOKEN_WORD && (token->value[0] == NULL || ft_strcmp(token->value[0], " ") == 0))
+		if (token->type == TOKEN_WORD && (token->value[0] == NULL
+				|| ft_strcmp(token->value[0], " ") == 0))
 			delete_token(head, token);
 		token = next_token;
 	}

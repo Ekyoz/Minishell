@@ -22,8 +22,7 @@ char	**quote(char **cmd, t_env *env, int *no_expandable)
 	int		i;
 	int		last_line[2];
 	int		first_quote[2];
-	int 	last_quote[2];
-	char	quote;
+	int		last_quote[2];
 
 	if (quoted(cmd) == -1)
 		return (free_array(&cmd), free(no_expandable), NULL);
@@ -33,8 +32,8 @@ char	**quote(char **cmd, t_env *env, int *no_expandable)
 	temp_cmd = ft_arrdup(cmd);
 	last_line[0] = -1;
 	last_line[1] = -1;
-	get_first_quote(cmd, first_quote, &quote, last_line);
-	get_last_quote(cmd, last_quote, &quote, last_line);
+	get_first_quote(cmd, first_quote, (char *) NULL, last_line);
+	get_last_quote(cmd, last_quote, (char *) NULL, last_line);
 	while (cmd[++i])
 		if (i < first_quote[0] || i > last_quote[0])
 			cmd[i] = expand_string(cmd[i], env);
