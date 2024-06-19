@@ -263,7 +263,7 @@ char				**extract_flags(char **command);
 char				**miss_elements(char **l_base, char **l_to_miss);
 char				**string_to_array(char *string);
 char				**redir(char **cmd);
-char				**quote(char **cmd, t_env *env, int *no_expandable);
+char				**quote(char **cmd, t_env *env, int *no_expandable, int last_quote[2]);
 char				**clean_space(char **cmd);
 int					quoted(char **cmd);
 void				get_first_quote(char **cmd, int pos[2], char *c_quote,

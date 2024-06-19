@@ -38,7 +38,7 @@ char	**splitter(char *command, t_env *env)
 	}
 	c_final[i_final] = NULL;
 	free_array(&c_space);
-	return (quote(c_final, env, get_no_expandable(c_final)));
+	return (quote(c_final, env, get_no_expandable(c_final), (int [2]){-1, -1}));
 }
 
 static char	**there_token_splitter(char **c_final, char **c_space, int i_space,
