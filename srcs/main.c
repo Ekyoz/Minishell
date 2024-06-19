@@ -6,11 +6,13 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/19 15:32:00 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/19 15:35:14 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int g_signal_status;
 
 static void	argc_argv(int argc, char *argv[])
 {
