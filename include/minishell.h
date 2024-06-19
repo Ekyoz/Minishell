@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/18 16:15:00 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/19 13:55:25 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,8 @@ void				ft_exit(t_tree *tree, t_token *tokens);
 void				free_tree_tokens(t_tree **tree, t_token *tokens);
 void				free_tree_tokens_env(t_tree **tree, t_token *tokens);
 void				err_free_all2(t_tree *tree, t_token *tokens);
+void				err_free_all3(t_tree *tree, t_token *tokens, t_node *node, char **tmp);
+
 
 // ENVIRONNEMENT
 t_env				*init_env(char **env_array);
@@ -216,7 +218,7 @@ int					do_export(t_tree *tree, t_node *node);
 char				**env_to_string(t_tree *tree, t_env *env);
 void				sort_env(char **envstr);
 int					check_export_var(char *var, int *ret);
-int					print_err_export(char *err);
+int					print_err_export(char *err, int *ret);
 size_t				get_char_by_index(char *str, char c);
 // ENV
 int					displayenv(t_env *env);
