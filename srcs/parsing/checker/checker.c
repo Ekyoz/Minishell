@@ -37,7 +37,7 @@ bool	check_input(char *input)
 	i = -1;
 	while (input[++i])
 	{
-		if (ft_isprint(input[i]) == 0)
+		if (ft_isprint(input[i]) == 0 && ft_isspace(input[i] == 0))
 			exit(128);
 		if (ft_isspace(input[i]))
 			space++;
@@ -46,3 +46,4 @@ bool	check_input(char *input)
 		return (false);
 	return (true);
 }
+	
