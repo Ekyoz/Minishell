@@ -35,6 +35,8 @@ bool	parsing(t_token **head, char *commands, t_env *env)
 			c_splitted = splitter(c_pipe[i_pipe], env);
 			if (!c_splitted)
 				return (free_token(c_pipe, c_splitted, NULL, NULL));
+//			if (ft_strcmp(c_splitted[0], "") == 0)
+//				ft_arrdel(c_splitted, 0);
 			parsing_redir(head, c_pipe, c_splitted, &i_pipe);
 			if (i_pipe < pipe_counter(commands) - 1)
 				append_token(head, TOKEN_PIPE, NULL);
@@ -58,12 +60,11 @@ static void	parsing_redir(t_token **head, char **c_pipe, char **c_splitted,
 	else if (there_token(c_pipe[*i_pipe]))
 	{
 		c_redirs = redir(c_splitted);
-		c_cmd = miss_elements(c_splitted);
+		c_cmd = miss_elements(c_splitted, c_redirs);
 		append_token(head, TOKEN_WORD, c_cmd);
 		append_token_redir(c_redirs, c_splitted, head);
 	}
-	free_array(&c_splitted);
-	free_token(NULL, c_redirs, c_cmd, NULL);
+	free_token(c_splitted, c_redirs, c_cmd, NULL);
 }
 
 static void	append_token_redir(char **c_redirs, char **c_splitted,

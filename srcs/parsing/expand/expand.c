@@ -27,7 +27,7 @@ char	*get_env_value(char *key, t_env *env)
 		env = env->next;
 		free(env_key);
 	}
-	return (ft_strdup(""));
+	return (ft_strdup(" "));
 }
 
 char	*replace_env(char *env, char *cmd, char *key)

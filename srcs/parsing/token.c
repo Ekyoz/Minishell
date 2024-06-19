@@ -52,6 +52,7 @@ void	delete_token(t_token **head, t_token *node_to_delete)
 		return ;
 	}
 	prev->next = temp->next;
+	free_array(&node_to_delete->value);
 	free(temp);
 }
 

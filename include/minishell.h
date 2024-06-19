@@ -258,7 +258,7 @@ char				**splitter(char *command, t_env *env);
 
 void				print_list(t_token *node);
 char				**extract_flags(char **command);
-char				**miss_elements(char **list_base);
+char				**miss_elements(char **l_base, char **l_to_miss);
 char				**string_to_array(char *string);
 char				**redir(char **cmd);
 char				**quote(char **cmd, t_env *env, int *no_expandable);
