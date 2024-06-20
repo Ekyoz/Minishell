@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:11:44 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/10 10:54:04 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/18 15:48:43 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*get_env_value(char *key, t_env *env)
 		env = env->next;
 		free(env_key);
 	}
-	return (ft_strdup(""));
+	return (ft_strdup(" "));
 }
 
 char	*replace_env(char *env, char *cmd, char *key)
@@ -48,10 +48,10 @@ char	*replace_env(char *env, char *cmd, char *key)
 		free(temp);
 		temp = replaced;
 		replaced = ft_strjoin(replaced, after);
-		free_chars(after, temp, NULL, NULL);
+		free_chars(after, temp, cmd, NULL);
 		return (replaced);
 	}
-	return (NULL);
+	return (free(cmd), NULL);
 }
 
 static char	*get_env_key(char *line)

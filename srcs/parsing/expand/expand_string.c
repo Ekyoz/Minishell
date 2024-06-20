@@ -74,13 +74,11 @@ static void	replace_var_in_cmd(char **cmd, char *var, t_env *env, int *i_cmd)
 {
 	char	*trimmed_var;
 	char	*env_value;
-	char	*temp;
 
 	trimmed_var = ft_strtrim(var, "$");
 	env_value = get_env_value(trimmed_var, env);
 	if (ft_strcmp(env_value, "") == 0)
 		(*i_cmd)--;
-	temp = *cmd;
 	*cmd = replace_env(env_value, *cmd, var);
-	free_chars(trimmed_var, var, env_value, temp);
+	free_chars(trimmed_var, var, env_value, NULL);
 }

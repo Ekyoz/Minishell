@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/11 18:42:43 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/19 14:35:17 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ static void	no_numeric_msg(t_token *tokens, t_tree *tree, char *str)
 	ft_putstr_fd("Minihell : exit: ", 2);
 	ft_putstr_fd(str, 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
-	g_signal_status = 1;
+	g_signal_status = 2;
 	clear_token(&tokens);
 	free_tree(&tree, 1);
-	exit(1);
+	exit(2);
 }
 
 static void	many_argument_msg(t_tree *tree)
@@ -105,7 +105,7 @@ int	do_exit(t_token *tokens, t_tree *tree, t_node *node)
 			no_numeric_msg(tokens, tree, node->args[1]);
 		g_signal_status = code % 256;
 		ft_putstr_fd("exit\n", 2);
-		free_tree_tokens(&tree, tokens);
+		free_tree_tokens_env(&tree, tokens);
 		exit(g_signal_status);
 	}
 	return (1);

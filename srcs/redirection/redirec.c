@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:52:24 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/17 15:44:52 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/20 13:26:01 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,11 @@ int	check_redir_out(t_token *tokens, t_tree *tree, t_node *nodes)
 	{
 		tree->fdoutcp = dup(STDOUT_FILENO);
 		if (dup2(tree->fdout, STDOUT_FILENO) == -1)
+		{
+			perror("dup2 out");
 			err_free_all(tree);
+		}
+		// fprintf(stderr, "fdout = %d\n", tree->fdout);
 		close(tree->fdout);
 	}
 	return (isredir);

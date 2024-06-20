@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 15:28:56 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/10 12:32:43 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/19 15:32:50 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,13 @@ static char	*get_quoted(char **cmd, int first_quote[2], int last_quote[2]);
 static char	**set_quote(char **cmd, t_env *env, int last_line[2],
 				int *no_expandable);
 
-char	**quote(char **cmd, t_env *env, int *no_expandable)
+char	**quote(char **cmd, t_env *env, int *no_expandable, int last_line[2])
 {
 	char	**temp_cmd;
 	int		i;
-	int		last_line[2];
+	int		first_quote[2];
+	int		last_quote[2];
+	char	cquote;
 
 	if (quoted(cmd) == -1)
 		return (free_array(&cmd), free(no_expandable), NULL);
@@ -30,8 +32,10 @@ char	**quote(char **cmd, t_env *env, int *no_expandable)
 	temp_cmd = ft_arrdup(cmd);
 	last_line[0] = -1;
 	last_line[1] = -1;
+	get_first_quote(cmd, first_quote, &cquote, last_line);
+	get_last_quote(cmd, last_quote, &cquote, last_line);
 	while (cmd[++i])
-		if (ft_strchar(cmd[i], '"') == -1 && ft_strchar(cmd[i], '\'') == -1)
+		if (i < first_quote[0] || i > last_quote[0])
 			cmd[i] = expand_string(cmd[i], env);
 	i = -1;
 	while (++i < quote_strings(temp_cmd))

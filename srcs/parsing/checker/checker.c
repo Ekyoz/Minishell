@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:17:19 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/10 11:41:35 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/19 15:32:14 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@ void	checker(t_token **head)
 	while (token)
 	{
 		next_token = token->next;
-		if (token->type == TOKEN_WORD && token->value[0] == NULL)
-		{
+		if (token->type == TOKEN_WORD && (token->value[0] == NULL
+				|| ft_strcmp(token->value[0], " ") == 0))
 			delete_token(head, token);
-		}
 		token = next_token;
 	}
 }
@@ -35,15 +34,16 @@ bool	check_input(char *input)
 	int	space;
 
 	space = 0;
-	i = 0;
+	i = -1;
 	while (input[++i])
 	{
-		if (ft_isprint(input[i]) == 0)
+		if (ft_isprint(input[i]) == 0 && ft_isspace(input[i] == 0))
 			exit(128);
 		if (ft_isspace(input[i]))
 			space++;
 	}
-	if (space == (int)ft_strlen(input) - 1)
+	if (space == (int)ft_strlen(input))
 		return (false);
 	return (true);
 }
+	

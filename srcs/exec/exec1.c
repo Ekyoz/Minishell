@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 13:31:56 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/17 14:48:50 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/20 13:39:19 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	exec(t_token *tokens, t_tree *tree, t_node *node)
 {
 	if ((is_heredoc(node->left) && !node->left->left) || (is_heredoc(node)
 			&& !node->left))
-		err_free_all1(tree, tokens);
+		err_free_all4(tree, tokens);
 	if (testredir(node->left) && node->left->left)
 		execute_pipe(tokens, tree, node->left->left);
 	else if (node->left)

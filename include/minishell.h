@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/18 11:24:12 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/20 13:38:19 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ int					check_redir_in(t_token *tokens, t_tree *tree,
 						t_node *nodes);
 int					testopening(t_token *tokens, t_tree *tree, t_node *nodes);
 int					testredir(t_node *nodes);
-void 				redir_heredoc_in(t_tree *tree);
+void				redir_heredoc_in(t_tree *tree);
 
 // HEREDOC
 int					err_null_heredoc(char **eofword, int *i);
@@ -177,7 +177,7 @@ void				get_eofword(t_tree *tree, char **eofword, t_node *node,
 void				expand_heredoc(t_tree *tree, t_node *node);
 bool				is_heredoc(t_node *nodes);
 int					ft_str_equals(const char *str1, const char *str2);
-bool 				do_heredoc(t_tree *tree, int j, int i);
+bool				do_heredoc(t_tree *tree, int j, int i);
 
 // FONCTIONS DU GARBAGE COLLECTOR
 void				print_error(t_token *tokens, int errorcode, t_tree *tree,
@@ -193,11 +193,16 @@ int					command_not_found(t_tree *tree, char *cmd);
 void				free_array(char ***ptr);
 void				ft_exit(t_tree *tree, t_token *tokens);
 void				free_tree_tokens(t_tree **tree, t_token *tokens);
+void				free_tree_tokens_env(t_tree **tree, t_token *tokens);
+void				err_free_all2(t_tree *tree, t_token *tokens);
+void				err_free_all3(t_tree *tree, t_token *tokens, t_node *node,
+						char **tmp);
+void				err_free_all4(t_tree *tree, t_token *tokens);
 
 // ENVIRONNEMENT
 t_env				*init_env(char **env_array);
 char				*get_env(t_env *env, char *envvar);
-int					set_env(t_tree *tree, t_env *env, char *var, char *value);
+int					set_env(t_env *env, char *var, char *value);
 ssize_t				get_index_env(t_env *env, char *word);
 void				env_add_back(t_env **env, t_env *new);
 int					env_length(t_env *env);
@@ -214,7 +219,7 @@ int					do_export(t_tree *tree, t_node *node);
 char				**env_to_string(t_tree *tree, t_env *env);
 void				sort_env(char **envstr);
 int					check_export_var(char *var, int *ret);
-int					print_err_export(char *err);
+int					print_err_export(char *err, int *ret);
 size_t				get_char_by_index(char *str, char c);
 // ENV
 int					displayenv(t_env *env);
@@ -256,10 +261,11 @@ char				**splitter(char *command, t_env *env);
 
 void				print_list(t_token *node);
 char				**extract_flags(char **command);
-char				**miss_elements(char **list_base);
+char				**miss_elements(char **l_base, char **l_to_miss);
 char				**string_to_array(char *string);
 char				**redir(char **cmd);
-char				**quote(char **cmd, t_env *env, int *no_expandable);
+char				**quote(char **cmd, t_env *env, int *no_expandable,
+						int last_quote[2]);
 char				**clean_space(char **cmd);
 int					quoted(char **cmd);
 void				get_first_quote(char **cmd, int pos[2], char *c_quote,
@@ -294,11 +300,11 @@ char				**del_cmd(int first_quote[2], int last_quote[2],
 void				get_quoted_join(char **cmd, char **quoted,
 						int last_quote[2], int i_cmd);
 int					quote_strings(char **tableau);
-char	**split_token(char *command);
-int	split_count(char *command);
-void	split_count_add(bool *in_word, int *count, char *command, int *i);
-char	*replace_env(char *env, char *cmd, char *key);
-char	*get_env_value(char *key, t_env *env);
-
+char				**split_token(char *command);
+int					split_count(char *command);
+void				split_count_add(bool *in_word, int *count, char *command,
+						int *i);
+char				*replace_env(char *env, char *cmd, char *key);
+char				*get_env_value(char *key, t_env *env);
 
 #endif

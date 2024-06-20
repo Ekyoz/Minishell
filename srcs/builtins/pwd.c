@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/05/29 12:02:29 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/18 15:05:52 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ ssize_t	get_index_env(t_env *env, char *word)
 }
 
 // changer la valeur d'une variable d'environnement
-int	set_env(t_tree *tree, t_env *env, char *var, char *value)
+int	set_env(t_env *env, char *var, char *value)
 {
 	int	length;
 
@@ -65,11 +65,6 @@ int	set_env(t_tree *tree, t_env *env, char *var, char *value)
 		{
 			free(env->value);
 			env->value = NULL;
-			env->value = (char *)malloc(sizeof(char) * (length + 1));
-			if (!env->value)
-			{
-				err_free_all(tree);
-			}
 			env->value = ft_strjoin(var, value);
 			return (1);
 		}

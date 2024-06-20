@@ -6,7 +6,7 @@
 #    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/06/17 13:57:39 by bpoyet           ###   ########.fr        #
+#    Updated: 2024/06/20 11:01:47 by bpoyet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ NAME				= minishell
 #-------- FILES --------#
 
 HEADER_FILES			= minishell
-SRC_FILES		    	= main utils
+SRC_FILES		    	= main
 TEST_FILES  			= test
 
 #-------- BUILTINS --------#
@@ -94,10 +94,10 @@ LIB_LIST			= $(LIBFT_DIR) $(GNL_DIR)
 LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE) $(GNL_ARCHIVE)
 
 #-------- FLAGS --------#
-CFLAGS 				= -Wall -Wextra -g3 -O0#-Werror
+CFLAGS 				= -Wall -Wextra -Werror -g3
 CFLAGS_DEBUG		= -Wall -Wextra -g3
-CFLAGS_EXEC			= -Wall -Wextra -g3 #-Werror
-CFLAGS_PARSING		= -Wall -Wextra -g3 #-Werror
+CFLAGS_EXEC			= -Wall -Wextra -g3 -Werror
+CFLAGS_PARSING		= -Wall -Wextra -g3 -Werror
 CFLAGS_TEST			= -g3
 INCLUDES			= -I/opt/homebrew/opt/readline/include
 LIBFLAGS			= -L/opt/homebrew/opt/readline/lib -lreadline

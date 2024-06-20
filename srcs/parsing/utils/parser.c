@@ -6,32 +6,48 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:52:07 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/11 14:17:33 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/19 15:33:18 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**miss_elements(char **l_base)
-{
-	int		i_base;
-	int		i_missing;
-	char	**missing;
+static int	is_in_list(char **list, char *element);
 
-	i_base = 0;
-	i_missing = 0;
-	missing = (char **)malloc((ft_arrlen(l_base) + 1) * sizeof(char *));
-	if (!missing)
-		return (NULL);
-	while (l_base[i_base] && is_token(l_base[i_base], 0) == TOKEN_WORD)
+char	**miss_elements(char **l_base, char **l_to_miss)
+{
+	int		base_length;
+	char	**result;
+	int		result_index;
+
+	base_length = ft_arrlen(l_base);
+	result = (char **)malloc((base_length + 1) * sizeof(char *));
+	if (!result)
+		return ((char **) NULL);
+	result_index = 0;
+	while (*l_base)
 	{
-		missing[i_missing++] = ft_strdup(l_base[i_base]);
-		i_base++;
+		if (!is_in_list(l_to_miss, *l_base))
+		{
+			result[result_index++] = ft_strdup(*l_base);
+		}
+		l_base++;
 	}
-	if (i_missing == 0)
-		return (free(missing), NULL);
-	missing[i_missing] = NULL;
-	return (missing);
+	result[result_index] = NULL;
+	return (result);
+}
+
+static int	is_in_list(char **list, char *element)
+{
+	while (*list)
+	{
+		if (strcmp(*list, element) == 0)
+		{
+			return (1);
+		}
+		list++;
+	}
+	return (0);
 }
 
 char	**string_to_array(char *string)
