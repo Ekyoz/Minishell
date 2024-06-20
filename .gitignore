@@ -1,5 +1,6 @@
 *.o 
 *.o.updated
+*.a
 .objs
 .vscode
 .idea
