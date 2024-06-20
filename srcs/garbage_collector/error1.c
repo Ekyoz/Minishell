@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:35:12 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/19 14:58:44 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/20 10:57:53 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,10 @@ void	err_free_all3(t_tree *tree, t_token *tokens, t_node *node, char **tmp)
 	free_array(&tmp);
 	free_tree_tokens_env(&tree, tokens);
 	exit(errno);
+}
+
+void	err_free_all4(t_tree *tree, t_token *tokens)
+{
+	free_tree_tokens_env(&tree, tokens);
+	exit(0);
 }
