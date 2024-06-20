@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/18 16:14:36 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/19 19:06:05 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,15 @@ void	parent_process(int status, pid_t pid, int i)
 
 void	*ft_execve(t_token *tokens, t_tree *tree, t_node *nodes)
 {
+	char	**tmp;
+
 	tree->path = check_access1(tree, nodes);
 	if (tree->fdoutcp != -1)
 		close(tree->fdoutcp);
-	if (execve(tree->path, nodes->args, env_to_string(tree, tree->env)) == -1)
+	tmp = env_to_string(tree, tree->env);
+	if (execve(tree->path, nodes->args, tmp) == -1)
 	{
-		perror("");
-		err_free_all1(tree, tokens);
+		err_free_all3(tree, tokens, nodes, tmp);
 	}
 	return ((void *)0);
 }
@@ -44,6 +46,7 @@ int	exec_cmd(t_token *tokens, t_tree *tree, t_node *nodes)
 {
 	pid_t	pid;
 	int		status;
+	char	**tmp;
 
 	status = 0;
 	if (choose_builtin(tokens, tree, nodes))
@@ -54,12 +57,12 @@ int	exec_cmd(t_token *tokens, t_tree *tree, t_node *nodes)
 		err_free_all(tree);
 	if (pid == 0)
 	{
-		if (!check_cmd1(tree, nodes))
-			print_error(tokens, CMD_NOT_FOUND, tree, nodes);
 		tree->path = check_access1(tree, nodes);
-		if (execve(tree->path, nodes->args,
-				env_to_string(tree, tree->env)) == -1)
-			err_free_all(tree);
+		if (!check_cmd1(tree, nodes) && !tree->path)
+			print_error(tokens, CMD_NOT_FOUND, tree, nodes);
+		tmp = env_to_string(tree, tree->env);
+		if (execve(tree->path, nodes->args, tmp) == -1)
+			err_free_all3(tree, tokens, nodes, tmp);
 	}
 	get_signal_cmd(status, pid);
 	return (0);
@@ -83,7 +86,12 @@ void	*exec_cmd_out(t_token *tokens, t_tree *tree, t_node *nodes)
 		redir_heredoc_in(tree);
 		check_redir_out(tokens, tree, nodes);
 		check_redir_in(tokens, tree, nodes);
-		if (!nodes->left || choose_builtin(tokens, tree, nodes->left))
+		if(choose_builtin(tokens, tree, nodes->left))
+		{
+			free_tree_tokens_env(&tree, tokens);
+			exit(0);
+		}
+		if (!nodes->left)
 			err_free_all2(tree, tokens);
 		if (!check_cmd1(tree, nodes->left))
 			print_error(tokens, CMD_NOT_FOUND, tree, nodes->left);

@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/18 11:58:54 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/19 13:42:47 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static int	put(t_tree *tree, t_env *env, char *str, int *ret)
 	char	*strcp;
 
 	if (*ret == 1)
-		return (*ret = 0, g_signal_status = 1, 1);
+		return (*ret = 0, 1);
 	strcp = ft_strdup(str);
 	length = get_char_by_index(str, '=');
 	if (length == (size_t)-1)
@@ -97,7 +97,7 @@ int	do_export(t_tree *tree, t_node *node)
 	while (node->args[i])
 	{
 		if (!check_export_var(node->args[i], &ret))
-			(print_err_export(node->args[i]));
+			(print_err_export(node->args[i], &ret));
 		else
 			put(tree, tree->env, node->args[i], &ret);
 		i++;

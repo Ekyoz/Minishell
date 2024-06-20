@@ -29,9 +29,10 @@ bool	parsing(t_token **head, char *commands, t_env *env)
 		c_pipe = pipe_splitter(commands);
 		if (!c_pipe)
 			return (free_token(c_pipe, NULL, NULL, NULL), false);
+		if (!check_command(c_pipe))
+			return (false);
 		while (c_pipe[++i_pipe])
 		{
-			c_pipe[i_pipe] = check_space(c_pipe[i_pipe]);
 			c_splitted = splitter(c_pipe[i_pipe], env);
 			if (!c_splitted)
 				return (free_token(c_pipe, c_splitted, NULL, NULL));
@@ -41,8 +42,7 @@ bool	parsing(t_token **head, char *commands, t_env *env)
 		}
 		free_array(&c_pipe);
 	}
-	checker(head);
-	return (true);
+	return (checker(head));
 }
 
 static void	parsing_redir(t_token **head, char **c_pipe, char **c_splitted,

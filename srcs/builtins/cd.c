@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:30:34 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/19 10:42:42 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/19 12:51:39 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	test_directory(char *path)
 	if (stat(path, &st) == -1)
 	{
 		ft_putstr_fd(": No such file or directory", 2);
-		g_signal_status = 127;
+		g_signal_status = 1;
 	}
 	else if (!(st.st_mode & S_IXUSR))
 		ft_putstr_fd(": Permission denied", 2);
@@ -51,7 +51,7 @@ static int	change_dir(t_tree *tree, t_node *node, char *path)
 static void	tild(t_tree *tree, t_node *node, char *homepath)
 {
 	char	*path;
-	char 	*tmp;
+	char	*tmp;
 
 	homepath = get_env(tree->env, "HOME=");
 	if (!homepath)

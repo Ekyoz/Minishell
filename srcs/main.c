@@ -6,13 +6,13 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/19 11:18:40 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/19 15:35:14 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int			g_signal_status = 0;
+int			g_signal_status;
 
 static void	argc_argv(int argc, char *argv[])
 {
@@ -27,10 +27,10 @@ int	main(int argc, char *argv[], char *envp[])
 	t_tree	*tree;
 	t_env	*env;
 
+	g_signal_status = 0;
 	argc_argv(argc, argv);
 	tokens = NULL;
 	env = init_env(envp);
-//	add_file_to_history();
 	while (true)
 	{
 		set_signal();
@@ -46,6 +46,7 @@ int	main(int argc, char *argv[], char *envp[])
 			ast_exec(tokens, tree);
 			free_tree(&tree, 0);
 		}
+		clear_token(&tokens);
 		free(input);
 	}
 }

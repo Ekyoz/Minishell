@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:08:51 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/18 11:59:37 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/19 12:16:06 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ int	check_export_var(char *var, int *ret)
 	alpha_found = 0;
 	if (var[0] == '=')
 		return (0);
-	if (ft_strchr(var, '=') == NULL)
-		return (*ret = 1, 1);
 	while (var[i] && var[i] != '=')
 	{
 		if (ft_isalpha(var[i]))
@@ -104,22 +102,25 @@ int	check_export_var(char *var, int *ret)
 		else
 		{
 			if (ft_isdigit(var[i]) && !alpha_found)
-				return (0);
+				return (g_signal_status = 1, 0);
 			else if (!ft_isdigit(var[i]) && var[i] != '_')
 				return (0);
 		}
 		i++;
 	}
+	if (ft_strchr(var, '=') == NULL)
+		return (*ret = 2, g_signal_status = 0, 1);
 	return (1);
 }
 
-int	print_err_export(char *err)
+int	print_err_export(char *err, int *ret)
 {
 	ft_putstr_fd("Minihell: export:", 2);
 	ft_putstr_fd("'", 2);
 	ft_putstr_fd(err, 2);
 	ft_putstr_fd("'", 2);
 	ft_putstr_fd(": not a valid identifier\n", 2);
-	g_signal_status = 1;
+	if (*ret != 2)
+		g_signal_status = 1;
 	return (1);
 }

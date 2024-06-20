@@ -22,6 +22,8 @@ t_token_type	is_token(char *c, int pos)
 		return (TOKEN_REDIR_OUT);
 	else if (c[pos] == '<')
 		return (TOKEN_REDIR_IN);
+	else if (c[pos] == '\0')
+		return -1;
 	return (TOKEN_WORD);
 }
 
@@ -42,4 +44,30 @@ bool	there_token(char *command)
 			return (true);
 	}
 	return (false);
+}
+
+int 	count_token(char *command)
+{
+	int i;
+	int cout;
+
+	i = -1;
+	cout = 0;
+
+	while (command[++i])
+	{
+		if (command[i] == '<')
+		{
+			if (command[i + 1] == '<')
+				i++;
+			cout++;
+		}
+		if (command[i] == '>')
+		{
+			if (command[i + 1] == '>')
+				i++;
+			cout++;
+		}
+	}
+	return cout;
 }

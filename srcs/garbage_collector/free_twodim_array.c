@@ -21,7 +21,8 @@ void	free_array(char ***ptr)
 	{
 		while ((*ptr)[i])
 		{
-			free((*ptr)[i]);
+			if ((*ptr)[i])
+				free((*ptr)[i]);
 			(*ptr)[i] = NULL;
 			i++;
 		}

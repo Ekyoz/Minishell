@@ -26,8 +26,8 @@ char	**splitter(char *command, t_env *env)
 	i_final = 0;
 	c_space = ft_split_sep(command, ' ');
 	c_final = (char **)malloc(sizeof(char *) * (ft_arrlen(c_space) + 1));
-	if (!c_space)
-		return (NULL);
+	if (!c_space || !command)
+		return (free(c_final), NULL);
 	while (c_space[++i_space])
 	{
 		if (!there_token(c_space[i_space]))

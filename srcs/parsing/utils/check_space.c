@@ -14,28 +14,35 @@
 
 static char	*handle_redir_append_heredoc(char *cmd, int i);
 static char	*handle_redir_out_in(char *cmd, int i);
+static bool check_token(char *cmd);
 
-char	*check_space(char *cmd)
+bool check_command(char **cmd)
 {
-	int	i;
+	int i;
+	int	j;
 
 	i = -1;
-	while (cmd[++i])
+
+	while(cmd[++i])
 	{
-		if (is_token(cmd, i) == TOKEN_REDIR_APPEND || is_token(cmd,
-				i) == TOKEN_REDIR_HEREDOC)
+		j = -1;
+		if (!check_token(cmd[i]))
+			return (free_array(&cmd), false);
+		while (cmd[i][++j])
 		{
-			cmd = handle_redir_append_heredoc(cmd, i);
-			i += 2;
-		}
-		else if (is_token(cmd, i) == TOKEN_REDIR_OUT || is_token(cmd,
-				i) == TOKEN_REDIR_IN)
-		{
-			cmd = handle_redir_out_in(cmd, i);
-			i += 1;
+			if (is_token(cmd[i], j) == 2)
+			{
+				cmd[i] = handle_redir_append_heredoc(cmd[i], j);
+				j += 2;
+			}
+			else if (is_token(cmd[i], j) == 1)
+			{
+				cmd[i] = handle_redir_out_in(cmd[i], j);
+				j += 1;
+			}
 		}
 	}
-	return (cmd);
+	return (true);
 }
 
 static char	*handle_redir_append_heredoc(char *cmd, int i)
@@ -91,4 +98,24 @@ static char	*handle_redir_out_in(char *cmd, int i)
 		free_chars(sub, sub2, join, temp);
 	}
 	return (cmd);
+}
+
+static bool check_token(char *cmd)
+{
+	if (count_token(cmd) == 1)
+	{
+		if (is_token(cmd, is_token(cmd, 0)) == (t_token_type)-1)
+		{
+			printf("Test un token");
+			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+			return (false);
+		}
+	}
+	if (is_token(cmd, ft_strlen(cmd)-1) != TOKEN_WORD && is_token(cmd, ft_strlen(cmd)) == (t_token_type )-1)
+	{
+		printf("Test manque un token apres");
+		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+		return (false);
+	}
+	return true;
 }

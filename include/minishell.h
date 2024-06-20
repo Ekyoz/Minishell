@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/18 16:15:00 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/19 13:55:25 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,8 @@
 # include <term.h>
 # include <unistd.h>
 
-# define SUCCESS 0
-# define ERROR 1
 # define CMD_NOT_FOUND 127
 # define OPEN_FILE_ERR 128
-# define CTRL_C 130
-# define CTRL_BACKSLASH 131
-# define CTRL_D
-# define QUOTE_OPEN 2
 
 extern int			g_signal_status;
 
@@ -48,10 +42,10 @@ typedef enum e_token_type
 {
 	TOKEN_WORD,
 	TOKEN_PIPE,
-	TOKEN_REDIR_IN,
-	TOKEN_REDIR_OUT,
-	TOKEN_REDIR_APPEND,
-	TOKEN_REDIR_HEREDOC,
+	TOKEN_REDIR_IN = 1,
+	TOKEN_REDIR_OUT = 1,
+	TOKEN_REDIR_APPEND = 2,
+	TOKEN_REDIR_HEREDOC = 2,
 	TOKEN_OR,
 	TOKEN_AND,
 	PIPEUSED,
@@ -195,6 +189,8 @@ void				ft_exit(t_tree *tree, t_token *tokens);
 void				free_tree_tokens(t_tree **tree, t_token *tokens);
 void				free_tree_tokens_env(t_tree **tree, t_token *tokens);
 void				err_free_all2(t_tree *tree, t_token *tokens);
+void				err_free_all3(t_tree *tree, t_token *tokens, t_node *node,
+						char **tmp);
 
 // ENVIRONNEMENT
 t_env				*init_env(char **env_array);
@@ -216,7 +212,7 @@ int					do_export(t_tree *tree, t_node *node);
 char				**env_to_string(t_tree *tree, t_env *env);
 void				sort_env(char **envstr);
 int					check_export_var(char *var, int *ret);
-int					print_err_export(char *err);
+int					print_err_export(char *err, int *ret);
 size_t				get_char_by_index(char *str, char c);
 // ENV
 int					displayenv(t_env *env);
@@ -257,32 +253,28 @@ char				**pipe_splitter(char *command);
 char				**splitter(char *command, t_env *env);
 
 void				print_list(t_token *node);
-char				**extract_flags(char **command);
 char				**miss_elements(char **l_base, char **l_to_miss);
 char				**string_to_array(char *string);
 char				**redir(char **cmd);
-char				**quote(char **cmd, t_env *env, int *no_expandable, int last_quote[2]);
+char				**quote(char **cmd, t_env *env, int *no_expandable,
+						int last_quote[2]);
 char				**clean_space(char **cmd);
 int					quoted(char **cmd);
 void				get_first_quote(char **cmd, int pos[2], char *c_quote,
 						int last_line[2]);
 void				get_last_quote(char **cmd, int pos[2], char *c_quote,
 						int last_line[2]);
-bool				is_open(char **cmd, int last_line);
 char				**expand_array(char **cmd, t_env *env, int *no_expandable);
 char				*expand_string(char *cmd, t_env *env);
-void				checker(t_token **head);
-int					quote_len(char **cmd, int first_quote[2],
-						int last_quote[2]);
+bool				checker(t_token **head);
 int					*get_no_expandable(char **cmd);
 bool				is_expandable(int *no_expandable, int pos);
 int					get_len_no_expand(char **cmd);
 bool				do_expand(char **split, int pos);
-void				free_int(int *ptr);
 bool				free_token(char **array1, char **array2, char **array3,
 						char **array4);
 bool				check_input(char *input);
-char				*check_space(char *cmd);
+bool				check_command(char **cmd);
 void				free_chars(char *c1, char *c2, char *c3, char *c4);
 
 int					add_file(const char *line);
@@ -302,5 +294,6 @@ void				split_count_add(bool *in_word, int *count, char *command,
 						int *i);
 char				*replace_env(char *env, char *cmd, char *key);
 char				*get_env_value(char *key, t_env *env);
+int 				count_token(char *command);
 
 #endif
