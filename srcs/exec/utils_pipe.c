@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:00:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/19 19:37:13 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/20 13:27:34 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	first_pipe(t_token *tokens, t_tree *tree, t_node *node)
 	if (!check_redir_out(tokens, tree, node) && !testopening(tokens, tree,
 			node))
 	{
+		fprintf(stderr, " faut pas rentre la dedans\n");
 		if (dup2(tree->fdpipe[0][1], STDOUT_FILENO) == -1)
 			err_free_all(tree);
 	}
@@ -53,6 +54,7 @@ void	last_pipe(t_token *tokens, t_tree *tree, t_node *node, int j)
 			perror("open");
 		if (dup2(tree->fdin, STDIN_FILENO) == -1)
 			perror("dup2");
+		// fprintf(stderr, "fdin = %d\n", tree->fdin);
 		close(tree->fdin);
 	}
 	check_redir_out(tokens, tree, node);
