@@ -39,7 +39,6 @@ int	main(int argc, char *argv[], char *envp[])
 			sig_ctrld(env);
 		if (parsing(&tokens, input, env) && tokens != NULL)
 		{
-			print_list(tokens);
 			tree = init_tree(env);
 			create_node(tokens, &tree);
 			clear_token(&tokens);
