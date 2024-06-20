@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 15:30:32 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/13 10:06:39 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/20 16:28:44 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_node	*add_node_left(t_node *nodes, t_token **token, t_tree *tree)
 		nodes->left = init_nodes(tree);
 		nodes->left->type = (*token)->type;
 		nodes->left->args = ft_arrdup((*token)->value);
+		// printf("taille de token value %ld et value %d\n", sizeof((*token)->value), nodes->type);
 		free_array(&(*token)->value);
 	}
 	*token = (*token)->next;
@@ -34,6 +35,7 @@ t_node	*add_node_right(t_node *nodes, t_token **token, bool *is_redirec,
 	nodes->right = init_nodes(tree);
 	nodes->right->type = (*token)->type;
 	nodes->right->args = ft_arrdup((*token)->value);
+	// printf("taille de token value %ld et value %d\n", sizeof((*token)->value), nodes->type);
 	free_array(&(*token)->value);
 	*token = (*token)->next;
 	if ((*token) != NULL && ((*token)->type == PIPEUSED
@@ -47,6 +49,7 @@ t_node	*add_node(t_node *nodes, t_token **token)
 {
 	nodes->type = (*token)->type;
 	nodes->args = ft_arrdup((*token)->value);
+	// printf("taille de token value %ld et value %d\n", sizeof((*token)->value), nodes->type);
 	free_array(&(*token)->value);
 	*token = (*token)->next;
 	if ((*token) != NULL && ((*token)->type == PIPEUSED

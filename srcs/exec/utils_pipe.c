@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/21 17:00:43 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/20 13:40:12 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/20 17:38:15 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ void	close_all_pipes(int **fdpipe, int i)
 
 void	first_pipe(t_token *tokens, t_tree *tree, t_node *node)
 {
-	if (access("./.here_doc", F_OK) != -1)
+	// fprintf(stderr, "first_pipe et %d\n", tree->pid[0]);
+	// if (access("./.here_doc", F_OK) != -1)
+	// fprintf(stderr, "last pipe apres\n");
+	if(is_heredoc(node))
 	{
 		tree->fdin = open("./.here_doc", O_RDONLY);
 		if (tree->fdin < 0)
@@ -38,7 +41,6 @@ void	first_pipe(t_token *tokens, t_tree *tree, t_node *node)
 	if (!check_redir_out(tokens, tree, node) && !testopening(tokens, tree,
 			node))
 	{
-		fprintf(stderr, " faut pas rentre la dedans\n");
 		if (dup2(tree->fdpipe[0][1], STDOUT_FILENO) == -1)
 			err_free_all(tree);
 	}
@@ -47,14 +49,15 @@ void	first_pipe(t_token *tokens, t_tree *tree, t_node *node)
 
 void	last_pipe(t_token *tokens, t_tree *tree, t_node *node, int j)
 {
-	if (access("./.here_doc", F_OK) != -1)
+	// fprintf(stderr, "last_pipe et %d\n", tree->pid[1]);
+	// if (access("./.here_doc", F_OK) != -1)
+	if(is_heredoc(node))
 	{
 		tree->fdin = open("./.here_doc", O_RDONLY);
 		if (tree->fdin < 0)
 			perror("open");
 		if (dup2(tree->fdin, STDIN_FILENO) == -1)
 			perror("dup2");
-		// fprintf(stderr, "fdin = %d\n", tree->fdin);
 		close(tree->fdin);
 	}
 	check_redir_out(tokens, tree, node);

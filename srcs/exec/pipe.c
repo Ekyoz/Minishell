@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/05 17:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/20 13:40:00 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/20 19:52:40 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,26 +77,72 @@ void	exec_pipe(t_token *tokens, t_tree *tree, t_node *nodes)
 {
 	int	i;
 	int	j;
+	int k;
+	t_node **nodecp;
+
+	nodecp= (t_node **)malloc(sizeof(t_node *) * 1000);
 
 	tree->status = 0;
 	i = 0;
 	j = 0;
+	k = 0;
 	i = init_fdpipe(tree, nodes);
 	while (j <= i)
 	{
 		tree->nodebegin = nodes;
-		if (!do_heredoc(tree, j, i))
+		if(is_heredoc(nodes) || is_heredoc(nodes->left))
 		{
-			fprintf(stderr, "heredoc error\n");
-			return ;
+			if (!do_heredoc(tree, j, i))
+			{
+				fprintf(stderr, "heredoc error\n");
+				return ;
+			}
+			tree->pid[j] = do_fork(tree, tree->pid[j]);
+			if (tree->pid[j] == 0)
+			{
+				dup_pipe(tokens, tree, j, i);
+				exec(tokens, tree, nodes);
+			}
 		}
-		tree->pid[j] = do_fork(tree, tree->pid[j]);
-		if (tree->pid[j] == 0)
+		else
 		{
-			dup_pipe(tokens, tree, j, i);
-			exec(tokens, tree, nodes);
+			
 		}
 		parent_process_pipe(i, &j, tree, &nodes);
 	}
 	wait_all_parent(tree, i);
 }
+
+
+
+
+
+// void	exec_pipe(t_token *tokens, t_tree *tree, t_node *nodes)
+// {
+// 	int	i;
+// 	int	j;
+// 	int k;
+
+// 	tree->status = 0;
+// 	i = 0;
+// 	j = 0;
+// 	k = 0;
+// 	i = init_fdpipe(tree, nodes);
+// 	while (j <= i)
+// 	{
+// 		tree->nodebegin = nodes;
+// 		if (!do_heredoc(tree, j, i))
+// 		{
+// 			fprintf(stderr, "heredoc error\n");
+// 			return ;
+// 		}
+// 		tree->pid[j] = do_fork(tree, tree->pid[j]);
+// 		if (tree->pid[j] == 0)
+// 		{
+// 			dup_pipe(tokens, tree, j, i);
+// 			exec(tokens, tree, nodes);
+// 		}
+// 		parent_process_pipe(i, &j, tree, &nodes);
+// 	}
+// 	wait_all_parent(tree, i);
+// }

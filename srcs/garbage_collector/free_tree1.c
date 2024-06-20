@@ -6,7 +6,7 @@
 /*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:43:09 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/18 14:15:32 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/20 15:40:56 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	free_tree_tokens(t_tree **tree, t_token *tokens)
 
 void	free_tree_tokens_env(t_tree **tree, t_token *tokens)
 {
-	clear_token(&tokens);
+	(void)tokens;
+	// clear_token(&tokens);
 	free_tree(tree, 1);
 }
