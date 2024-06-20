@@ -71,3 +71,12 @@ int 	count_token(char *command)
 	}
 	return cout;
 }
+
+int get_int_type(t_token_type type)
+{
+	if (type == TOKEN_REDIR_APPEND || type == TOKEN_REDIR_HEREDOC)
+		return 2;
+	if (type == TOKEN_REDIR_IN || type == TOKEN_REDIR_OUT)
+		return 1;
+	return 0;
+}

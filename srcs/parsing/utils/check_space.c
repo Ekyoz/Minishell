@@ -30,12 +30,12 @@ bool check_command(char **cmd)
 			return (free_array(&cmd), false);
 		while (cmd[i][++j])
 		{
-			if (is_token(cmd[i], j) == 2)
+			if (get_int_type(is_token(cmd[i], j)) == 2)
 			{
 				cmd[i] = handle_redir_append_heredoc(cmd[i], j);
 				j += 2;
 			}
-			else if (is_token(cmd[i], j) == 1)
+			else if (get_int_type(is_token(cmd[i], j)) == 1)
 			{
 				cmd[i] = handle_redir_out_in(cmd[i], j);
 				j += 1;
@@ -85,8 +85,9 @@ static char	*handle_redir_out_in(char *cmd, int i)
 		sub = ft_substr(cmd, 0, i + 1);
 		sub2 = ft_substr(cmd, i + 1, ft_strlen(cmd) - i - 1);
 		join = ft_strjoin(" ", sub2);
+		temp = cmd;
 		cmd = ft_strjoin(sub, join);
-		free_chars(sub, sub2, join, NULL);
+		free_chars(sub, sub2, join, temp);
 	}
 	if (i > 0 && cmd[i - 1] != ' ')
 	{
@@ -104,16 +105,14 @@ static bool check_token(char *cmd)
 {
 	if (count_token(cmd) == 1)
 	{
-		if (is_token(cmd, is_token(cmd, 0)) == (t_token_type)-1)
+		if (is_token(cmd, get_int_type(is_token(cmd, 0))) == (t_token_type)-1)
 		{
-			printf("Test un token");
 			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
 			return (false);
 		}
 	}
 	if (is_token(cmd, ft_strlen(cmd)-1) != TOKEN_WORD && is_token(cmd, ft_strlen(cmd)) == (t_token_type )-1)
 	{
-		printf("Test manque un token apres");
 		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
 		return (false);
 	}

@@ -14,8 +14,9 @@
 
 static void	parsing_redir(t_token **head, char **c_pipe, char **c_splitted,
 				int *i_pipe);
-static void	append_token_redir(char **c_redirs, char **c_splitted,
-				t_token **head);
+static void	append_token_redir(char **c_redirs,	t_token **head, int *ex_here);
+static int *expand_heredoc_parsing(char **c_pipe, int i_pipe);
+static int count_heredoc(char *cmd);
 
 bool	parsing(t_token **head, char *commands, t_env *env)
 {
@@ -60,13 +61,12 @@ static void	parsing_redir(t_token **head, char **c_pipe, char **c_splitted,
 		c_redirs = redir(c_splitted);
 		c_cmd = miss_elements(c_splitted, c_redirs);
 		append_token(head, TOKEN_WORD, c_cmd);
-		append_token_redir(c_redirs, c_splitted, head);
+		append_token_redir(c_redirs, head, expand_heredoc_parsing(c_pipe, *i_pipe));
 	}
 	free_token(c_splitted, c_redirs, c_cmd, NULL);
 }
 
-static void	append_token_redir(char **c_redirs, char **c_splitted,
-		t_token **head)
+static void	append_token_redir(char **c_redirs, t_token **head, int *ex_here)
 {
 	int		i_redirs;
 	char	**value_temp;
@@ -76,8 +76,7 @@ static void	append_token_redir(char **c_redirs, char **c_splitted,
 	{
 		if (is_token(c_redirs[i_redirs], 0) == TOKEN_REDIR_HEREDOC)
 		{
-			if (do_expand(c_splitted, (int)ft_arrlen(c_splitted)
-					- ft_arrlen(c_redirs) + (i_redirs * 2) - 1))
+			if (ex_here[i_redirs+1] == i_redirs)
 			{
 				value_temp = string_to_array("1");
 				append_token(head, is_token(c_redirs[i_redirs], 0), value_temp);
@@ -93,4 +92,56 @@ static void	append_token_redir(char **c_redirs, char **c_splitted,
 			free_array(&value_temp);
 		}
 	}
+	free(ex_here);
+}
+
+static int *expand_heredoc_parsing(char **c_pipe, int i_pipe)
+{
+	int i = -1;
+	int herdoc_pos = 0;
+	int i_pos = 1;
+	int *pos;
+
+	pos = (int *) malloc(sizeof(int) * (count_heredoc(c_pipe[i_pipe])+1));
+	ft_memset(pos, -1, sizeof(int) * (count_heredoc(c_pipe[i_pipe])+1));
+	pos[0] = count_heredoc(c_pipe[i_pipe])+1;
+	while(c_pipe[i_pipe][++i])
+	{
+		if (is_token(c_pipe[i_pipe], i) == TOKEN_REDIR_HEREDOC)
+		{
+			if (c_pipe[i_pipe][i+2] == ' ')
+			{
+				if (c_pipe[i_pipe][i+3] == '\'' || c_pipe[i_pipe][i+3] == '"')
+				{
+					pos[i_pos++] += count_heredoc(c_pipe[i_pipe]) - herdoc_pos;
+					herdoc_pos += 2;
+				}
+			}
+			else
+			{
+				if (c_pipe[i_pipe][i+2] == '\'' || c_pipe[i_pipe][i+2] == '"')
+				{
+					pos[i_pos++] += count_heredoc(c_pipe[i_pipe]) - herdoc_pos;
+					herdoc_pos += 2;
+				}
+			}
+		}
+	}
+	return pos;
+}
+
+static int count_heredoc(char *cmd)
+{
+	int i = -1;
+	int count = 0;
+
+	while(cmd[++i])
+	{
+		if (is_token(cmd, i) == TOKEN_REDIR_HEREDOC)
+		{
+			i += 2;
+			count ++;
+		}
+	}
+	return count;
 }

@@ -42,10 +42,10 @@ typedef enum e_token_type
 {
 	TOKEN_WORD,
 	TOKEN_PIPE,
-	TOKEN_REDIR_IN = 1,
-	TOKEN_REDIR_OUT = 1,
-	TOKEN_REDIR_APPEND = 2,
-	TOKEN_REDIR_HEREDOC = 2,
+	TOKEN_REDIR_IN,
+	TOKEN_REDIR_OUT,
+	TOKEN_REDIR_APPEND,
+	TOKEN_REDIR_HEREDOC,
 	TOKEN_OR,
 	TOKEN_AND,
 	PIPEUSED,
@@ -296,5 +296,6 @@ void				split_count_add(bool *in_word, int *count, char *command,
 char				*replace_env(char *env, char *cmd, char *key);
 char				*get_env_value(char *key, t_env *env);
 int 				count_token(char *command);
+int					get_int_type(t_token_type type);
 
 #endif
