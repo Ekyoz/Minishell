@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 18:35:12 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/21 15:33:45 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/21 16:14:15 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	err_free_all3(t_tree *tree, t_token *tokens, t_node *node, char **tmp)
 		perror("");
 	free_array(&tmp);
 	free_tree_tokens_env(&tree, tokens);
-	exit(errno);
+	exit(g_signal_status);
 }
 
 void	err_free_all4(t_tree *tree, t_token *tokens)
