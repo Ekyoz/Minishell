@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:52:24 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/21 13:18:05 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/21 15:33:59 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ int	check_redir_out(t_token *tokens, t_tree *tree, t_node *nodes)
 			perror("");
 			err_free_all(tree);
 		}
-		// fprintf(stderr, "je redirige dans un fichier out\n");
 		close(tree->fdout);
 	}
 	return (isredir);

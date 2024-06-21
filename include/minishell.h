@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/21 14:14:28 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/21 15:28:28 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,10 +138,11 @@ void				*ft_execve(t_token *tokens, t_tree *tree, t_node *nodes);
 void				parent_process(int status, pid_t pid, int i);
 pid_t				do_fork(t_tree *tree, pid_t pid);
 void				dup_pipe(t_token *tokens, t_tree *tree, int j, int i);
-void				parent_process_pipe(int i, int *j, t_tree *tree, t_node **node);
-int 				execute_heredoc(t_tree *tree, t_node *nodes, int i);
-
-
+void				parent_process_pipe(t_node **node);
+int 				execute_heredoc(t_tree *tree, t_token *tokens, t_node *nodes, int i);
+void				execute_cmd(t_tree *tree, t_token *tokens, t_node *nodes, int i);
+int 				checkj(int *indexj, int j);
+void 				dup_and_exec(t_token *tokens, t_tree *tree, int i, int j);
 
 // PIPE
 void				exec(t_token *tokens, t_tree *tree, t_node *node);
@@ -200,6 +201,7 @@ void				free_array(char ***ptr);
 void				ft_exit(t_tree *tree, t_token *tokens);
 void				free_tree_tokens(t_tree **tree, t_token *tokens);
 void				free_tree_tokens_env(t_tree **tree, t_token *tokens);
+void				free_tree_tokens_env1(t_tree **tree, t_token *tokens);
 void				err_free_all2(t_tree *tree, t_token *tokens);
 void				err_free_all3(t_tree *tree, t_token *tokens, t_node *node,
 						char **tmp);

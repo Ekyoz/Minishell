@@ -51,7 +51,7 @@ static void	free_nodes(t_node *nodes)
 	free(nodes);
 }
 
-static void free_int(int *array)
+static void	free_int(int *array)
 {
 	free(array);
 	array = NULL;
@@ -69,7 +69,6 @@ void	free_envp(t_tree *tree)
 	}
 	free(tree->envp);
 }
-
 
 void	free_tree(t_tree **tree, int env)
 {

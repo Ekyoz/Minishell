@@ -6,7 +6,7 @@
 #    By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/06/21 14:05:29 by bastpoy          ###   ########.fr        #
+#    Updated: 2024/06/21 14:29:35 by bastpoy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ FILE_EXPORT 			= export_check export
 
 #-------- EXEC --------#
 FILE_EXEC_DIR			= exec/
-FILE_EXEC				= command exec exec1 exec2 heredoc heredoc_utils heredoc_utils1 pipe fork utils_pipe
+FILE_EXEC				= command exec exec1 exec2 exec3 heredoc heredoc_utils heredoc_utils1 pipe fork utils_pipe
 
 #-------- AST --------#
 FILE_AST_DIR			= ast/

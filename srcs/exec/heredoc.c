@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/02 14:13:58 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/20 13:39:34 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/21 15:33:14 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,6 @@ int	heredoc(t_tree *tree, t_node *nodes)
 	if (eofword)
 	{
 		tree->fdin = open(".here_doc", O_WRONLY | O_CREAT | O_TRUNC, 0777);
-		// fprintf(stderr, "fdin = %d\n", tree->fdin);
 		if (tree->fdin < 0)
 			perror("open");
 		while (eofword[i])
@@ -117,4 +116,3 @@ int	heredoc(t_tree *tree, t_node *nodes)
 	}
 	return (1);
 }
-	

@@ -53,4 +53,3 @@ void	redir_heredoc_in(t_tree *tree)
 			perror("dup2 first");
 	}
 }
-

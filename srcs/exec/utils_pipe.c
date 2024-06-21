@@ -27,7 +27,7 @@ void	close_all_pipes(int **fdpipe, int i)
 
 void	first_pipe(t_token *tokens, t_tree *tree, t_node *node)
 {
-	if(is_heredoc(node))
+	if (is_heredoc(node))
 	{
 		tree->fdin = open("./.here_doc", O_RDONLY);
 		if (tree->fdin < 0)
@@ -45,7 +45,7 @@ void	first_pipe(t_token *tokens, t_tree *tree, t_node *node)
 
 void	last_pipe(t_token *tokens, t_tree *tree, t_node *node, int j)
 {
-	if(is_heredoc(node))
+	if (is_heredoc(node))
 	{
 		tree->fdin = open("./.here_doc", O_RDONLY);
 		if (tree->fdin < 0)

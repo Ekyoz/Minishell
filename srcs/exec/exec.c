@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/23 19:24:48 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/20 17:29:11 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/21 15:29:53 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	exec_cmd(t_token *tokens, t_tree *tree, t_node *nodes)
 	return (0);
 }
 
-void	*exec_cmd_out(t_token *tokens, t_tree *tree, t_node *nodes)
+void	exec_cmd_out(t_token *tokens, t_tree *tree, t_node *nodes)
 {
 	pid_t	pid;
 	int		status;
@@ -79,7 +79,7 @@ void	*exec_cmd_out(t_token *tokens, t_tree *tree, t_node *nodes)
 	if (nodes->left)
 		do_unset(nodes->left, tree->env);
 	if (!heredoc(tree, nodes))
-		return ((void *)0);
+		return ;
 	pid = do_fork(tree, pid);
 	if (pid == 0)
 	{
@@ -88,17 +88,13 @@ void	*exec_cmd_out(t_token *tokens, t_tree *tree, t_node *nodes)
 		check_redir_in(tokens, tree, nodes);
 		if (!nodes->left)
 			err_free_all4(tree, tokens);
-		if(choose_builtin(tokens, tree, nodes->left))
-		{
-			free_tree_tokens_env(&tree, tokens);
-			exit(0);
-		}
+		if (choose_builtin(tokens, tree, nodes->left))
+			free_tree_tokens_env1(&tree, tokens);
 		if (!check_cmd1(tree, nodes->left))
 			print_error(tokens, CMD_NOT_FOUND, tree, nodes->left);
 		ft_execve(tokens, tree, nodes->left);
 	}
 	parent_process(status, pid, 1);
-	return ((void *)0);
 }
 
 void	ast_exec(t_token *tokens, t_tree *tree)
