@@ -23,37 +23,36 @@ t_token_type	is_token(char *c, int pos)
 	else if (c[pos] == '<')
 		return (TOKEN_REDIR_IN);
 	else if (c[pos] == '\0')
-		return -1;
+		return (-1);
 	return (TOKEN_WORD);
 }
 
-bool	there_token(char *command)
+bool	there_token(char **command, int pos)
 {
 	int	i;
 
 	i = -1;
-	while (command[++i])
+	while (command[pos][++i])
 	{
-		if (ft_strnstr(command, ">>", ft_strlen(command)))
+		if (ft_strnstr(command[pos], ">>", ft_strlen(command[pos])))
 			return (true);
-		if (ft_strnstr(command, "<<", ft_strlen(command)))
+		if (ft_strnstr(command[pos], "<<", ft_strlen(command[pos])))
 			return (true);
-		if (command[i] == '>')
+		if (command[pos][i] == '>')
 			return (true);
-		if (command[i] == '<')
+		if (command[pos][i] == '<')
 			return (true);
 	}
 	return (false);
 }
 
-int 	count_token(char *command)
+int	count_token(char *command)
 {
-	int i;
-	int cout;
+	int	i;
+	int	cout;
 
 	i = -1;
 	cout = 0;
-
 	while (command[++i])
 	{
 		if (command[i] == '<')
@@ -69,14 +68,32 @@ int 	count_token(char *command)
 			cout++;
 		}
 	}
-	return cout;
+	return (cout);
 }
 
-int get_int_type(t_token_type type)
+int	get_int_type(t_token_type type)
 {
 	if (type == TOKEN_REDIR_APPEND || type == TOKEN_REDIR_HEREDOC)
-		return 2;
+		return (2);
 	if (type == TOKEN_REDIR_IN || type == TOKEN_REDIR_OUT)
-		return 1;
-	return 0;
+		return (1);
+	return (0);
+}
+
+int	count_heredoc(char *cmd)
+{
+	int	i;
+	int	count;
+
+	i = -1;
+	count = 0;
+	while (cmd[++i])
+	{
+		if (is_token(cmd, i) == TOKEN_REDIR_HEREDOC)
+		{
+			i += 2;
+			count++;
+		}
+	}
+	return (count);
 }

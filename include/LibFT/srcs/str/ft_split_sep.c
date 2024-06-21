@@ -73,9 +73,9 @@ static int	split_loop(char *str, char sep, char **result)
 char	**ft_split_sep(char *str, char sep)
 {
 	char	**result;
+
 	if (!str)
 		return (NULL);
-
 	result = (char **)malloc((count_words(str, sep) * 2 + 1) * sizeof(char *));
 	if (!result)
 		return (NULL);

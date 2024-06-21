@@ -52,7 +52,7 @@ FILE_PARSING_DIR		= parsing/
 FILE_PARSING			= parsing token pipe redir splitter
 
 FILE_PARS_UTILS_DIR		= parsing/utils/
-FILE_PARS_UTILS			= parser token pipe check_space free_chars splitter
+FILE_PARS_UTILS			= parser token pipe check_space free_chars parsing
 
 FILE_PARS_QUOTE_DIR		= parsing/quote/
 FILE_PARS_QUOTE			= quote quote_1 quote_2 quote_3 quote_string
@@ -211,8 +211,8 @@ archive:	lib $(OBJ) $(HEADERS)
 run: $(NAME)
 			./$(RUN_NAME)
 
-valgrind: $(NAME)
-			valgrind $(VFALGS) ./$(RUN_NAME)
+valgrind: debug
+			valgrind $(VFALGS) ./$(DEBUG_NAME)
 
 #------- DEBUG --------#
 
@@ -243,7 +243,6 @@ test: ar_test
 #-------- CLEAN --------#
 re:			fclean all
 			@echo "$(GREEN)Nettoyage et recompilage de $(PROJECT_NAME)!$(DEF_COLOR)"
-			./$(RUN_NAME)
 
 clean:
 			@$(RM) $(DIRS)

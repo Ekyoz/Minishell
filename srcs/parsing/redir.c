@@ -32,10 +32,11 @@ char	**redir(char **cmd)
 	while (cmd[++i_cmd])
 	{
 		if ((is_token(cmd[i_cmd], 0) == TOKEN_REDIR_OUT || is_token(cmd[i_cmd],
-				0) == TOKEN_REDIR_IN) && cmd[i_cmd +1])
+					0) == TOKEN_REDIR_IN) && cmd[i_cmd + 1])
 			handle_token_redir(l_final, cmd, &i_split, i_cmd);
 		if ((is_token(cmd[i_cmd], 0) == TOKEN_REDIR_APPEND
-			|| is_token(cmd[i_cmd], 0) == TOKEN_REDIR_HEREDOC) && cmd[i_cmd +1])
+				|| is_token(cmd[i_cmd], 0) == TOKEN_REDIR_HEREDOC)
+			&& cmd[i_cmd + 1])
 			handle_token_append(l_final, cmd, &i_split, i_cmd);
 	}
 	l_final[i_split] = NULL;

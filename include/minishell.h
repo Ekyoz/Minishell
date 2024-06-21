@@ -244,7 +244,7 @@ void				append_token(t_token **head, t_token_type type,
 void				delete_token(t_token **head, t_token *node_to_delete);
 void				clear_token(t_token **head);
 t_token_type		is_token(char *command, int pos);
-bool				there_token(char *command);
+bool				there_token(char **command, int pos);
 
 // Pipe
 int					pipe_counter(const char *command);
@@ -295,7 +295,10 @@ void				split_count_add(bool *in_word, int *count, char *command,
 						int *i);
 char				*replace_env(char *env, char *cmd, char *key);
 char				*get_env_value(char *key, t_env *env);
-int 				count_token(char *command);
+int					count_token(char *command);
 int					get_int_type(t_token_type type);
+int					count_heredoc(char *cmd);
+void				parsing_redir(t_token **head, char **c_pipe,
+						char **c_splitted, int *i_pipe);
 
 #endif

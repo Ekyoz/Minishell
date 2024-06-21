@@ -38,7 +38,7 @@ void	first_pipe(t_token *tokens, t_tree *tree, t_node *node)
 	if (!check_redir_out(tokens, tree, node) && !testopening(tokens, tree,
 			node))
 	{
-		fprintf(stderr, " faut pas rentre la dedans\n");
+//		fprintf(stderr, " faut pas rentre la dedans\n");
 		if (dup2(tree->fdpipe[0][1], STDOUT_FILENO) == -1)
 			err_free_all(tree);
 	}

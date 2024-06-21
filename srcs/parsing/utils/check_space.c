@@ -14,21 +14,23 @@
 
 static char	*handle_redir_append_heredoc(char *cmd, int i);
 static char	*handle_redir_out_in(char *cmd, int i);
-static bool check_token(char *cmd);
+static bool	check_token(char *cmd);
+static void	init_quote(int quote_list[2][2], char **cmd);
 
-bool check_command(char **cmd)
+bool	check_command(char **cmd)
 {
-	int i;
+	int	i;
 	int	j;
+	int	quote_list[2][2];
 
 	i = -1;
-
-	while(cmd[++i])
+	init_quote(quote_list, cmd);
+	while (cmd[++i] && (i <= quote_list[0][0] || i >= quote_list[1][0]))
 	{
 		j = -1;
 		if (!check_token(cmd[i]))
 			return (free_array(&cmd), false);
-		while (cmd[i][++j])
+		while (cmd[i][++j] && (j < quote_list[0][1] || j > quote_list[1][1]))
 		{
 			if (get_int_type(is_token(cmd[i], j)) == 2)
 			{
@@ -36,10 +38,7 @@ bool check_command(char **cmd)
 				j += 2;
 			}
 			else if (get_int_type(is_token(cmd[i], j)) == 1)
-			{
-				cmd[i] = handle_redir_out_in(cmd[i], j);
-				j += 1;
-			}
+				cmd[i] = handle_redir_out_in(cmd[i], j++);
 		}
 	}
 	return (true);
@@ -101,20 +100,38 @@ static char	*handle_redir_out_in(char *cmd, int i)
 	return (cmd);
 }
 
-static bool check_token(char *cmd)
+static bool	check_token(char *cmd)
 {
 	if (count_token(cmd) == 1)
 	{
-		if (is_token(cmd, get_int_type(is_token(cmd, 0))) == (t_token_type)-1)
+		if (is_token(cmd, get_int_type(is_token(cmd, 0))) == (t_token_type) - 1)
 		{
-			ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+			ft_putstr_fd(
+				"minishell: syntax error near unexpected token `newline'\n", 2);
 			return (false);
 		}
 	}
-	if (is_token(cmd, ft_strlen(cmd)-1) != TOKEN_WORD && is_token(cmd, ft_strlen(cmd)) == (t_token_type )-1)
+	if (is_token(cmd, ft_strlen(cmd) - 1) != TOKEN_WORD && is_token(cmd,
+			ft_strlen(cmd)) == (t_token_type)-1)
 	{
-		ft_putstr_fd("minishell: syntax error near unexpected token `newline'\n", 2);
+		ft_putstr_fd(
+			"minishell: syntax error near unexpected token `newline'\n", 2);
 		return (false);
 	}
-	return true;
+	return (true);
+}
+
+static void	init_quote(int quote_list[2][2], char **cmd)
+{
+	char	c_quote;
+
+	quote_list[0][0] = (int)ft_arrlen(cmd);
+	quote_list[0][1] = (int)ft_strlen(cmd[0]) * 2;
+	quote_list[1][0] = (int)ft_arrlen(cmd);
+	quote_list[1][1] = (int)ft_strlen(cmd[0]) * 2;
+	if (quoted(cmd))
+	{
+		get_first_quote(cmd, quote_list[0], &c_quote, (int [2]){-1, -1});
+		get_last_quote(cmd, quote_list[1], &c_quote, (int [2]){-1, -1});
+	}
 }

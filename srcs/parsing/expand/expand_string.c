@@ -22,11 +22,14 @@ char	*expand_string(char *cmd, t_env *env)
 	char	*var;
 
 	i_cmd = -1;
-	if (handle_special_tokens(&cmd))
-		return (cmd);
 	while (i_cmd < (int)ft_strlen(cmd) && cmd[++i_cmd])
 	{
-		if (cmd[i_cmd] == '$')
+		if (handle_special_tokens(&cmd) == 1)
+		{
+			i_cmd += ft_strchar(cmd, '$') - 1;
+			continue ;
+		}
+		if (cmd[i_cmd] == '$' && cmd[i_cmd + 1] != '\0')
 		{
 			var = extract_var(cmd, &i_cmd);
 			replace_var_in_cmd(&cmd, var, env, &i_cmd);
@@ -37,9 +40,11 @@ char	*expand_string(char *cmd, t_env *env)
 
 static int	handle_special_tokens(char **cmd)
 {
-	if (ft_strcmp(*cmd, "$") == 0)
+	if (ft_strchar(*cmd, '$') == -1)
+		return (0);
+	if (ft_strncmp(&cmd[0][ft_strchar(*cmd, '$')], "$ ", 2) == 0)
 		return (1);
-	if (ft_strcmp(*cmd, "$?") == 0)
+	if (ft_strncmp(&cmd[0][ft_strchar(*cmd, '$')], "$?", 2) == 0)
 	{
 		*cmd = replace_env(ft_itoa(g_signal_status), *cmd, "$?");
 		return (1);
