@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+         #
+#    By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/10 12:10:27 by atresall          #+#    #+#              #
-#    Updated: 2024/06/20 11:01:47 by bpoyet           ###   ########.fr        #
+#    Updated: 2024/06/21 14:05:29 by bastpoy          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ FILE_EXPORT 			= export_check export
 
 #-------- EXEC --------#
 FILE_EXEC_DIR			= exec/
-FILE_EXEC				= command exec exec1 heredoc heredoc_utils heredoc_utils1 pipe fork utils_pipe
+FILE_EXEC				= command exec exec1 exec2 heredoc heredoc_utils heredoc_utils1 pipe fork utils_pipe
 
 #-------- AST --------#
 FILE_AST_DIR			= ast/
@@ -94,7 +94,7 @@ LIB_LIST			= $(LIBFT_DIR) $(GNL_DIR)
 LIB_LIST_ARCHIVE	= $(ARCHIVE_NAME) $(LIBFT_ARCHIVE) $(GNL_ARCHIVE)
 
 #-------- FLAGS --------#
-CFLAGS 				= -Wall -Wextra -Werror -g3
+CFLAGS 				= -Wall -Wextra -g3
 CFLAGS_DEBUG		= -Wall -Wextra -g3
 CFLAGS_EXEC			= -Wall -Wextra -g3 -Werror
 CFLAGS_PARSING		= -Wall -Wextra -g3 -Werror

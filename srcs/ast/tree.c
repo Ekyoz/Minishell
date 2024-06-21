@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tree.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/24 11:11:51 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/13 10:05:24 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/21 13:56:43 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_tree	*init_tree(t_env *env)
 	tree->fdoutcp = -1;
 	tree->fdincp = -1;
 	tree->fdpipe = NULL;
+	tree->indexj = NULL;
 	tree->error[0] = 0;
 	tree->error[1] = 0;
 	tree->error[2] = 0;

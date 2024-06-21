@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 12:42:21 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/20 13:38:19 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/21 14:14:28 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_tree
 	char			**envp;
 	char			*path;
 	int				**fdpipe;
+	int				*indexj;
 	int				fdout;
 	int				fdin;
 	int				fdoutcp;
@@ -136,6 +137,11 @@ void				ast_exec(t_token *tokens, t_tree *tree);
 void				*ft_execve(t_token *tokens, t_tree *tree, t_node *nodes);
 void				parent_process(int status, pid_t pid, int i);
 pid_t				do_fork(t_tree *tree, pid_t pid);
+void				dup_pipe(t_token *tokens, t_tree *tree, int j, int i);
+void				parent_process_pipe(int i, int *j, t_tree *tree, t_node **node);
+int 				execute_heredoc(t_tree *tree, t_node *nodes, int i);
+
+
 
 // PIPE
 void				exec(t_token *tokens, t_tree *tree, t_node *node);
@@ -282,7 +288,6 @@ int					*get_no_expandable(char **cmd);
 bool				is_expandable(int *no_expandable, int pos);
 int					get_len_no_expand(char **cmd);
 bool				do_expand(char **split, int pos);
-void				free_int(int *ptr);
 bool				free_token(char **array1, char **array2, char **array3,
 						char **array4);
 bool				check_input(char *input);

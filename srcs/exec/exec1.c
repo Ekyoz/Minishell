@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec1.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/17 13:31:56 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/20 17:38:22 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/21 14:05:15 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,10 @@ void	exec(t_token *tokens, t_tree *tree, t_node *node)
 		err_free_all4(tree, tokens);
 	if (testredir(node->left) && node->left->left)
 	{
-		// fprintf(stderr,"je suis en redir mec\n");
 		execute_pipe(tokens, tree, node->left->left);
 	}
 	else if (node->left)
 	{
-		// fprintf(stderr,"je suis dans lexec du non heredoc\n");
 		execute_pipe(tokens, tree, node->left);
 	}
 	else
@@ -55,3 +53,4 @@ void	redir_heredoc_in(t_tree *tree)
 			perror("dup2 first");
 	}
 }
+

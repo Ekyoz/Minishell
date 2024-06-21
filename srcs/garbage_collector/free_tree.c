@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 14:14:56 by bpoyet            #+#    #+#             */
-/*   Updated: 2024/06/18 13:05:30 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/21 14:12:45 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,12 @@ static void	free_nodes(t_node *nodes)
 	free(nodes);
 }
 
+static void free_int(int *array)
+{
+	free(array);
+	array = NULL;
+}
+
 void	free_envp(t_tree *tree)
 {
 	int	i;
@@ -63,6 +69,7 @@ void	free_envp(t_tree *tree)
 	}
 	free(tree->envp);
 }
+
 
 void	free_tree(t_tree **tree, int env)
 {
@@ -79,6 +86,8 @@ void	free_tree(t_tree **tree, int env)
 			free_envp(treecp);
 		if (treecp->env && env == 1)
 			free_env(treecp->env);
+		if (treecp->indexj)
+			free_int(treecp->indexj);
 		treecp->env = NULL;
 		treecp->fdpipe = NULL;
 		treecp->head = NULL;
