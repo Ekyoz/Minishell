@@ -6,7 +6,7 @@
 /*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/01 18:52:24 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/21 15:33:59 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/21 16:41:00 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	find_redir_out(t_token *tokens, t_tree *tree, t_node *nodes,
 	if (nodes->type == TOKEN_REDIR_OUT)
 	{
 		if (nodes->right->type == TOKEN_REDIR_OUT
+			|| nodes->right->type == TOKEN_REDIR_IN
 			|| nodes->right->type == TOKEN_REDIR_APPEND
 			|| nodes->right->type == TOKEN_REDIR_HEREDOC)
 		{
@@ -46,7 +47,8 @@ void	find_redir_in(t_token *tokens, t_tree *tree, t_node *nodes,
 	{
 		if (nodes->right->type == TOKEN_REDIR_IN
 			|| nodes->right->type == TOKEN_REDIR_OUT
-			|| nodes->right->type == TOKEN_REDIR_APPEND)
+			|| nodes->right->type == TOKEN_REDIR_APPEND
+			|| nodes->right->type == TOKEN_REDIR_HEREDOC)
 		{
 			tree->fdin = open(nodes->right->left->args[0], O_RDONLY, 0644);
 			if (tree->fdin < 0 && tree->error[0] == 0)
