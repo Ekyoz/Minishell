@@ -33,14 +33,8 @@
 # include <term.h>
 # include <unistd.h>
 
-# define SUCCESS 0
-# define ERROR 1
 # define CMD_NOT_FOUND 127
 # define OPEN_FILE_ERR 128
-# define CTRL_C 130
-# define CTRL_BACKSLASH 131
-# define CTRL_D
-# define QUOTE_OPEN 2
 
 extern int			g_signal_status;
 
@@ -260,7 +254,7 @@ void				append_token(t_token **head, t_token_type type,
 void				delete_token(t_token **head, t_token *node_to_delete);
 void				clear_token(t_token **head);
 t_token_type		is_token(char *command, int pos);
-bool				there_token(char *command);
+bool				there_token(char **command, int pos);
 
 // Pipe
 int					pipe_counter(const char *command);
@@ -270,7 +264,6 @@ char				**pipe_splitter(char *command);
 char				**splitter(char *command, t_env *env);
 
 void				print_list(t_token *node);
-char				**extract_flags(char **command);
 char				**miss_elements(char **l_base, char **l_to_miss);
 char				**string_to_array(char *string);
 char				**redir(char **cmd);
@@ -282,12 +275,9 @@ void				get_first_quote(char **cmd, int pos[2], char *c_quote,
 						int last_line[2]);
 void				get_last_quote(char **cmd, int pos[2], char *c_quote,
 						int last_line[2]);
-bool				is_open(char **cmd, int last_line);
 char				**expand_array(char **cmd, t_env *env, int *no_expandable);
 char				*expand_string(char *cmd, t_env *env);
-void				checker(t_token **head);
-int					quote_len(char **cmd, int first_quote[2],
-						int last_quote[2]);
+bool				checker(t_token **head);
 int					*get_no_expandable(char **cmd);
 bool				is_expandable(int *no_expandable, int pos);
 int					get_len_no_expand(char **cmd);
@@ -295,7 +285,7 @@ bool				do_expand(char **split, int pos);
 bool				free_token(char **array1, char **array2, char **array3,
 						char **array4);
 bool				check_input(char *input);
-char				*check_space(char *cmd);
+bool				check_command(char **cmd);
 void				free_chars(char *c1, char *c2, char *c3, char *c4);
 
 int					add_file(const char *line);
@@ -315,5 +305,10 @@ void				split_count_add(bool *in_word, int *count, char *command,
 						int *i);
 char				*replace_env(char *env, char *cmd, char *key);
 char				*get_env_value(char *key, t_env *env);
+int					count_token(char *command);
+int					get_int_type(t_token_type type);
+int					count_heredoc(char *cmd);
+void				parsing_redir(t_token **head, char **c_pipe,
+						char **c_splitted, int *i_pipe);
 
 #endif

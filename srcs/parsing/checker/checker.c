@@ -12,7 +12,9 @@
 
 #include "minishell.h"
 
-void	checker(t_token **head)
+static bool	check_token(t_token **head);
+
+bool	checker(t_token **head)
 {
 	t_token	*token;
 	t_token	*next_token;
@@ -26,6 +28,7 @@ void	checker(t_token **head)
 			delete_token(head, token);
 		token = next_token;
 	}
+	return (check_token(head));
 }
 
 bool	check_input(char *input)
@@ -46,4 +49,20 @@ bool	check_input(char *input)
 		return (false);
 	return (true);
 }
-	
+
+static bool	check_token(t_token **head)
+{
+	int		len;
+	t_token	*token;
+
+	len = 0;
+	token = *head;
+	while (token)
+	{
+		token = token->next;
+		len++;
+	}
+	if (len == 1 && (*head)->type != TOKEN_WORD)
+		return (false);
+	return (true);
+}

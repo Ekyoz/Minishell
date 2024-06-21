@@ -45,6 +45,7 @@ int	main(int argc, char *argv[], char *envp[])
 			ast_exec(tokens, tree);
 			free_tree(&tree, 0);
 		}
+		clear_token(&tokens);
 		free(input);
 	}
 }

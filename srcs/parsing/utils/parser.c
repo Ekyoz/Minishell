@@ -28,12 +28,12 @@ char	**miss_elements(char **l_base, char **l_to_miss)
 	while (*l_base)
 	{
 		if (!is_in_list(l_to_miss, *l_base))
-		{
 			result[result_index++] = ft_strdup(*l_base);
-		}
 		l_base++;
 	}
 	result[result_index] = NULL;
+	if (result_index == 0)
+		return (free_array(&result), NULL);
 	return (result);
 }
 

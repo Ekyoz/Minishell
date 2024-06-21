@@ -56,9 +56,6 @@ ssize_t	get_index_env(t_env *env, char *word)
 // changer la valeur d'une variable d'environnement
 int	set_env(t_env *env, char *var, char *value)
 {
-	int	length;
-
-	length = ft_strlen(var) + ft_strlen(value);
 	while (env)
 	{
 		if (!ft_strncmp(env->value, var, ft_strlen(var)))

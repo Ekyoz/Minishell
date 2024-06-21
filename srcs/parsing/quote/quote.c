@@ -30,8 +30,6 @@ char	**quote(char **cmd, t_env *env, int *no_expandable, int last_line[2])
 		return (expand_array(cmd, env, no_expandable));
 	i = -1;
 	temp_cmd = ft_arrdup(cmd);
-	last_line[0] = -1;
-	last_line[1] = -1;
 	get_first_quote(cmd, first_quote, &cquote, last_line);
 	get_last_quote(cmd, last_quote, &cquote, last_line);
 	while (cmd[++i])

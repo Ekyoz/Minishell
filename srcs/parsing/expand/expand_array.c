@@ -18,7 +18,7 @@ static void	replace_var_cmd(char **cmd, int i_cmd, char *var, t_env *env);
 
 char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 {
-	int		i[3];
+	int	i[3];
 
 	i[0] = -1;
 	i[1] = 0;
@@ -32,8 +32,8 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 		}
 		while (++i[2] < (int)ft_strlen(cmd[i[0]]))
 		{
-			if (handle_special_cases(cmd, i[0]) && i[0] >= (int)ft_arrlen(cmd))
-				return (free(no_expandable), cmd);
+			if (handle_special_cases(cmd, i[0]) == 1)
+				i[2] += ft_strchar(cmd[i[0]], '$') - 1;
 			if (cmd[i[0]][i[2]] == '$' && cmd[i[0]][i[2] + 1] != '\0')
 			{
 				replace_var_cmd(cmd, i[0], extract_var(cmd[i[0]], &i[2]), env);
@@ -49,9 +49,11 @@ static int	handle_special_cases(char **cmd, int i_cmd)
 {
 	char	*temp;
 
-	if (ft_strcmp(cmd[i_cmd], "$") == 0)
-		return (1);
-	if (ft_strcmp(cmd[i_cmd], "$?") == 0)
+	if (ft_strchar(cmd[i_cmd], '$') == -1)
+		return (0);
+	if (ft_strncmp(&cmd[i_cmd][ft_strchar(cmd[i_cmd], '$')], "$", 2) == 0)
+		return (0);
+	if (ft_strncmp(&cmd[i_cmd][ft_strchar(cmd[i_cmd], '$')], "$?", 2) == 0)
 	{
 		temp = ft_itoa(g_signal_status);
 		cmd[i_cmd] = replace_env(temp, cmd[i_cmd], "$?");

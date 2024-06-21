@@ -17,6 +17,8 @@ size_t	ft_arrlen(char **array)
 	size_t	size;
 
 	size = 0;
+	if (!array)
+		return (0);
 	while (array[size])
 	{
 		size++;
