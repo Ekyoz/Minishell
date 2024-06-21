@@ -1,6 +1,7 @@
 *.o 
 *.o.updated
 *.a
+*.DS_Store
 .objs
 .vscode
 .idea
