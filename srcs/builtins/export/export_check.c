@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_check.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/28 15:08:51 by bastpoy           #+#    #+#             */
-/*   Updated: 2024/06/19 12:16:06 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/22 18:05:55 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	check_export_var(char *var, int *ret)
 		i++;
 	}
 	if (ft_strchr(var, '=') == NULL)
-		return (*ret = 2, g_signal_status = 0, 1);
+		return (*ret = 2, g_signal_status = 0, 0);
 	return (1);
 }
 

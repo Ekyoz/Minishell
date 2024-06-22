@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/19 13:42:47 by bpoyet           ###   ########.fr       */
+/*   Updated: 2024/06/22 18:06:21 by bastpoy          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	modify(char *word, t_env *env, ssize_t index)
 		if (i == index)
 		{
 			free(env->value);
-			env->value = ft_strdup(word);
+			env->value = word;
 			return (1);
 		}
 		i++;
