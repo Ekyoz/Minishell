@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:30:51 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/07 15:42:17 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/24 17:49:33 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,15 @@ static size_t	check_n(char **args)
 	while (args[++i])
 	{
 		j = 0;
-		if (args[i][j++] == '-' && args[i][j] && args[i][j] == 'n')
+		if (args[i][j] == '-' && args[i][j + 1] && args[i][j + 1] == 'n')
 		{
+			j++;
 			while (args[i][j] == 'n')
 				j++;
 			if (args[i][j] && args[i][j] != 'n')
 				return (1);
+			else
+				return (i + 1);
 		}
 		else
 			return (i);

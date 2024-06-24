@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bastpoy <bastpoy@student.42.fr>            +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 16:31:39 by atresall          #+#    #+#             */
-/*   Updated: 2024/06/22 18:06:21 by bastpoy          ###   ########.fr       */
+/*   Updated: 2024/06/24 15:32:28 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ int	do_export(t_tree *tree, t_node *node)
 
 	ret = 0;
 	i = 1;
+	if(ft_strncmp(node->args[0], "export", 7) && !node->args[1])
+		return (command_not_found(tree, node->args[0]));
 	if (!ft_strncmp(node->args[0], "export=", 7))
 		return (command_not_found(tree, node->args[0]));
 	if (!ft_strncmp(node->args[0], "export", 7) && !node->args[1])
