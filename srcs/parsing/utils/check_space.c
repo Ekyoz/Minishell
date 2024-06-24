@@ -131,7 +131,7 @@ static void	init_quote(int quote_list[2][2], char **cmd)
 	quote_list[0][1] = (int)ft_strlen(cmd[0]) * 2;
 	quote_list[1][0] = (int)ft_arrlen(cmd);
 	quote_list[1][1] = (int)ft_strlen(cmd[0]) * 2;
-	if (quoted(cmd))
+	if (quoted(cmd, false))
 	{
 		get_first_quote(cmd, quote_list[0], &c_quote, (int [2]){-1, -1});
 		get_last_quote(cmd, quote_list[1], &c_quote, (int [2]){-1, -1});

@@ -17,7 +17,7 @@ static void	check_quotes_in_string(char *str, int *single_quote,
 static void	check_single_quote(char *in_quote, int *single_quote);
 static void	check_double_quote(char *in_quote, int *double_quote);
 
-int	quoted(char **cmd)
+int	quoted(char **cmd, bool msg)
 {
 	int		i;
 	int		single_quote;
@@ -37,7 +37,8 @@ int	quoted(char **cmd)
 		return (0);
 	if (single_quote % 2 != 0 || double_quote % 2 != 0)
 	{
-		ft_putstr_fd("Minihell: quote error\n", 2);
+		if (msg)
+			ft_putstr_fd("Minihell: quote error\n", 2);
 		return (-1);
 	}
 	return (1);

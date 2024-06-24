@@ -24,9 +24,9 @@ char	**quote(char **cmd, t_env *env, int *no_expandable, int last_line[2])
 	int		last_quote[2];
 	char	cquote;
 
-	if (quoted(cmd) == -1)
+	if (quoted(cmd, true) == -1)
 		return (free_array(&cmd), free(no_expandable), NULL);
-	if (quoted(cmd) == 0)
+	if (quoted(cmd, true) == 0)
 		return (expand_array(cmd, env, no_expandable));
 	i = -1;
 	temp_cmd = ft_arrdup(cmd);

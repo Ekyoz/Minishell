@@ -270,7 +270,7 @@ char				**redir(char **cmd);
 char				**quote(char **cmd, t_env *env, int *no_expandable,
 						int last_quote[2]);
 char				**clean_space(char **cmd);
-int					quoted(char **cmd);
+int					quoted(char **cmd, bool msg);
 void				get_first_quote(char **cmd, int pos[2], char *c_quote,
 						int last_line[2]);
 void				get_last_quote(char **cmd, int pos[2], char *c_quote,
