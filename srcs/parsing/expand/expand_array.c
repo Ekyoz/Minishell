@@ -30,9 +30,9 @@ char	**expand_array(char **cmd, t_env *env, int *no_expandable)
 			i[1]++;
 			continue ;
 		}
-		while (++i[2] < (int)ft_strlen(cmd[i[0]]))
+		while (++i[2] < (int)ft_strlen(cmd[i[0]]) - 1)
 		{
-			if (handle_special_cases(cmd, i[0]) == 1)
+			if (handle_special_cases(cmd, i[0]) == 1 && i[1] > 0)
 				i[2] += ft_strchar(cmd[i[0]], '$') - 1;
 			if (cmd[i[0]][i[2]] == '$' && cmd[i[0]][i[2] + 1] != '\0')
 			{

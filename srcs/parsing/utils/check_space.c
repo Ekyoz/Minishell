@@ -30,8 +30,10 @@ bool	check_command(char **cmd)
 		j = -1;
 		if (!check_token(cmd[i]))
 			return (free_array(&cmd), false);
-		while (cmd[i][++j] && (j < quote_list[0][1] || j > quote_list[1][1]))
+		while (cmd[i][++j])
 		{
+			if (j > quote_list[0][1] && j < quote_list[1][1])
+				continue ;
 			if (get_int_type(is_token(cmd[i], j)) == 2)
 			{
 				cmd[i] = handle_redir_append_heredoc(cmd[i], j);
