@@ -87,4 +87,3 @@ void	clear_token(t_token **head)
 	}
 	*head = NULL;
 }
-
