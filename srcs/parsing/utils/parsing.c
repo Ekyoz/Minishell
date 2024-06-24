@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alexandre <atresall@student.42lyon.fr>     +#+  +:+       +#+        */
+/*   By: bpoyet <bpoyet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 17:24:14 by alexandre         #+#    #+#             */
-/*   Updated: 2024/06/21 17:24:14 by alexandre        ###   ########.fr       */
+/*   Updated: 2024/06/24 13:36:34 by bpoyet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	append_token_redir(char **c_redirs, t_token **head, int *ex_here)
 	{
 		if (is_token(c_redirs[i_redirs], 0) == TOKEN_REDIR_HEREDOC)
 		{
-			if (ex_here[ex_here_pos] == i_redirs)
+			if (ex_here[ex_here_pos] != i_redirs)
 			{
 				app_token(c_redirs, head, i_redirs, "1");
 				ex_here_pos++;
